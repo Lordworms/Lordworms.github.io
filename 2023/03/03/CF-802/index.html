@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>分类 | Waiting for the dawn</title>
+        <title>CF_802 | Waiting for the dawn</title>
         <meta name="author" content="Yanxin Xiang">
         <meta name="description" content="">
         <meta name="keywords" content="">
@@ -126,13 +126,20 @@
     </div>
 </nav>
 
-                <div id="archives">
-    
-    <div class="categories-tags">
+                <div class="article">
+    <div>
+        <h1>CF_802 </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/3/3
+        </span>
         
-        
-        <span>
-            <a href="/categories/Algorithm/" style="background: #ffa2c4">
+        <span class="category">
+            <a href="/categories/Algorithm/">
                 <span class="icon">
                     <i class="fa-solid fa-bookmark fa-fw"></i>
                 </span>
@@ -141,18 +148,38 @@
         </span>
         
         
-        
-        <span>
-            <a href="/categories/%E6%96%B0%E7%9A%84%E5%BC%80%E5%A7%8B/" style="background: #00bcd4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                -新的开始
-            </a>
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/CodeForces/" style="color: #ffa2c4">CodeForces</a>
+            </span>
+            
         </span>
         
-        
     </div>
+    
+    <div class="content" v-pre>
+        <p>802 div 2的6道题，这场比较简单<br/><br>A<br>显然先从原点走到第一行的最后一个点然后向下走最方便，我们直接计算即可</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">solve</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  ll n,m;</span><br><span class="line">  cin&gt;&gt;n&gt;&gt;m;</span><br><span class="line">  ll one=(<span class="number">1</span>+m)*m/<span class="number">2</span>;</span><br><span class="line">  ll two=(n<span class="number">-1</span>)*m;</span><br><span class="line">  ll three=(n<span class="number">-1</span>)*n*m/<span class="number">2</span>;</span><br><span class="line">  cout&lt;&lt;one+two+three&lt;&lt;<span class="string">&#x27;\n&#x27;</span>;</span><br><span class="line">  <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<br/>
+B
+<br/>
+C
+D
+E
+F
+    </div>
+    
+    
+    
+    
+    
+    
     
 </div>
 
@@ -179,6 +206,11 @@
         </div>
         <script src="/js/functions.js"></script>
 <script src="/js/particlex.js"></script>
+
+
+
+
+
 
 
     </body>
