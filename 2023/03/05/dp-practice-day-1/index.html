@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>分类 | Waiting for the dawn</title>
+        <title>dp_practice_day_1 | Waiting for the dawn</title>
         <meta name="author" content="Yanxin Xiang">
         <meta name="description" content="">
         <meta name="keywords" content="">
@@ -126,13 +126,20 @@
     </div>
 </nav>
 
-                <div id="archives">
-    
-    <div class="categories-tags">
+                <div class="article">
+    <div>
+        <h1>dp_practice_day_1 </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/3/5
+        </span>
         
-        
-        <span>
-            <a href="/categories/Algorithm/" style="background: #ffa2c4">
+        <span class="category">
+            <a href="/categories/Algorithm/">
                 <span class="icon">
                     <i class="fa-solid fa-bookmark fa-fw"></i>
                 </span>
@@ -141,18 +148,147 @@
         </span>
         
         
-        
-        <span>
-            <a href="/categories/%E6%96%B0%E7%9A%84%E5%BC%80%E5%A7%8B/" style="background: #00bcd4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                -新的开始
-            </a>
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/dp/" style="color: #03a9f4">dp</a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/dp-practice-plan/" style="color: #00a596">dp_practice_plan</a>
+            </span>
+            
         </span>
         
-        
     </div>
+    
+    <div class="content" v-pre>
+        <p>今天就切了三道水题，别的时间都在写编译器</p>
+<p>1.CF 1227C</p>
+<p>水题，没啥好说的，每一个区间去求对应的方案数即可</p>
+<pre><code class="C++">void solve()
+&#123;
+  int n,k;cin&gt;&gt;n&gt;&gt;k;
+  string s;cin&gt;&gt;s;
+  ll ans=0;
+  unordered_set&lt;char&gt;st;
+  for(int i=0;i&lt;k;++i)
+  &#123;
+    char c;cin&gt;&gt;c;
+    st.insert(c);
+  &#125;
+  int l=0,r=0;
+  while(r&lt;n)
+  &#123;
+    while(r&lt;n&amp;&amp;st.count(s[r]))++r;
+    ll len=r-l;
+    ans+=(len+1)*len/2;
+    ++r;
+    l=r;
+  &#125;
+  cout&lt;&lt;ans&lt;&lt;&#39;\n&#39;;
+  return;
+&#125;
+</code></pre>
+<ol start="2">
+<li>CF 467C</li>
+</ol>
+<p>经典的区间dp，转移方程很好想，就是${dp[i][j]&#x3D;max(dp[i][j],dp[i-m][j-1]+sum[i]-sum[i-])}$</p>
+<pre><code class="C++">void solve()
+&#123;
+  int n,m,k;
+  cin&gt;&gt;n&gt;&gt;m&gt;&gt;k;
+  vector dp(n+1,vector&lt;ll&gt;(k+1));
+  vector&lt;ll&gt;sum(n+1);
+  for(int i=1;i&lt;=n;++i)
+  &#123;
+    cin&gt;&gt;sum[i];
+    sum[i]+=sum[i-1];
+  &#125;
+  for(int i=m;i&lt;=n;++i)
+  &#123;
+    for(int j=1;j&lt;=k;++j)
+    &#123;
+      dp[i][j]=dp[i-1][j];
+      if(j*m&gt;i)break;
+      dp[i][j]=max(dp[i][j],dp[i-m][j-1]+sum[i]-sum[i-m]);
+    &#125;
+  &#125;
+  cout&lt;&lt;dp[n][k]&lt;&lt;&#39;\n&#39;;
+  return;
+&#125;
+</code></pre>
+<ol start="3">
+<li>CF 296B</li>
+</ol>
+<p>容斥题，我们可以先预处理出对应位置上的3种不同情况和总情况数,即sa[i]&#x3D;&#x3D;sb[i] sa[i]&gt;&#x3D;sb[i] sa[i]&lt;&#x3D;sb[i]，根据容斥定理，答案即为：</p>
+<p> ∏a[i] - ∏b[i] - ∏c[i] + ∏d[i]</p>
+<p>至少有一对满足情况&#x3D;所有情况 - 所有都不满足第一种- 所有都不满足第二种 + 两者交集</p>
+<pre><code class="C++">void solve()
+&#123;
+  int n;cin&gt;&gt;n;
+  string sa,sb;
+  cin&gt;&gt;sa&gt;&gt;sb;
+  vector&lt;ll&gt;a(n),b(n),c(n),d(n);//represent 1.the total number of situation 2. sa[i]&gt;=sb[i] 3.sa[i]&lt;=sb[i] 4. sa[i]==sb[i]
+  // then the answer is A-B-C+D
+  for(int i=0;i&lt;n;++i)
+  &#123;
+    if(sa[i]==&#39;?&#39;&amp;&amp;sb[i]==&#39;?&#39;)
+    &#123;
+        a[i]=100;
+        b[i]=55;
+        c[i]=55;
+        d[i]=10;
+    &#125;
+    else if(sa[i]==&#39;?&#39;)
+    &#123;
+        a[i]=10;
+        b[i]=10-(sb[i]-&#39;0&#39;);
+        c[i]=sb[i]-&#39;0&#39;+1;
+        d[i]=1;
+    &#125;
+    else if(sb[i]==&#39;?&#39;)
+    &#123;
+        a[i]=10;
+        c[i]=10-(sa[i]-&#39;0&#39;);
+        b[i]=sa[i]-&#39;0&#39;+1;
+        d[i]=1;
+    &#125;
+    else
+    &#123;
+        a[i]=1;
+        b[i]=(sa[i]&gt;=sb[i]);
+        c[i]=(sa[i]&lt;=sb[i]);
+        d[i]=(sa[i]==sb[i]);
+    &#125;
+    if(i&gt;0)
+    &#123;
+        a[i]=(a[i]*a[i-1])%MOD;
+        b[i]=(b[i]*b[i-1])%MOD;
+        c[i]=(c[i]*c[i-1])%MOD;
+        d[i]=(d[i]*d[i-1])%MOD;
+    &#125;
+  &#125;
+  ll ans=a[n-1]-b[n-1]-c[n-1]+d[n-1];
+  if(ans&lt;0)ans+=MOD;
+  cout&lt;&lt;ans&lt;&lt;&#39;\n&#39;;
+  return;
+&#125;
+</code></pre>
+<p>明天还得写OS的作业，感觉LSM又要鸽一天了，毕竟🐭🐭我已经准备回家搞二次元了！</p>
+
+    </div>
+    
+    
+    
+    
+    
+    
     
 </div>
 
@@ -179,6 +315,11 @@
         </div>
         <script src="/js/functions.js"></script>
 <script src="/js/particlex.js"></script>
+
+
+
+
+
 
 
     </body>
