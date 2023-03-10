@@ -155,12 +155,12 @@
             
             <span class="tag">
                 
-                <a href="/tags/dp/" style="color: #00a596">dp</a>
+                <a href="/tags/dp/" style="color: #ffa2c4">dp</a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/dp-practice-plan/" style="color: #00bcd4">dp_practice_plan</a>
+                <a href="/tags/dp-practice-plan/" style="color: #ffa2c4">dp_practice_plan</a>
             </span>
             
         </span>
@@ -173,9 +173,9 @@
 <p>1.当前遍历到第几个字符</p>
 <p>2.当前字符在哪一段中</p>
 <p>之后是转移</p>
-<p>1.当前字符为’a’,那么有三种情况<br>    dp[i][0]&#x3D;dp[i-1][0]+1<br>    dp[i][1]&#x3D;dp[i-1][1]<br>    dp[i][2]&#x3D;max(dp[i-1][1],dp[i-1][2])</p>
-<p>2.当前字符为’b’,也有三种情况(经典废话<br>    dp[i][0]&#x3D;dp[i-1][0]<br>    dp[i][2]&#x3D;dp[i-1][2]<br>    dp[i][1]&#x3D;max(dp[i-1][0]+1,dp[i-1][1]+1)</p>
-<pre><code class="C++">void solve()
+<p>1.当前字符为’a’,那么有三种情况<br>    dp[i][0]=dp[i-1][0]+1<br>    dp[i][1]=dp[i-1][1]<br>    dp[i][2]=max(dp[i-1][1],dp[i-1][2])</p>
+<p>2.当前字符为’b’,也有三种情况(经典废话<br>    dp[i][0]=dp[i-1][0]<br>    dp[i][2]=dp[i-1][2]<br>    dp[i][1]=max(dp[i-1][0]+1,dp[i-1][1]+1)</p>
+<pre><code class="lang-C++">void solve()
 &#123;
   string s;
   cin&gt;&gt;s;

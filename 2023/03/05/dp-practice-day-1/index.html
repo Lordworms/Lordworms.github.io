@@ -155,7 +155,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/dp/" style="color: #03a9f4">dp</a>
+                <a href="/tags/dp/" style="color: #ffa2c4">dp</a>
             </span>
             
             <span class="tag">
@@ -171,7 +171,7 @@
         <p>今天就切了三道水题，别的时间都在写编译器</p>
 <p>1.CF 1227C</p>
 <p>水题，没啥好说的，每一个区间去求对应的方案数即可</p>
-<pre><code class="C++">void solve()
+<pre><code class="lang-C++">void solve()
 &#123;
   int n,k;cin&gt;&gt;n&gt;&gt;k;
   string s;cin&gt;&gt;s;
@@ -195,11 +195,11 @@
   return;
 &#125;
 </code></pre>
-<ol start="2">
+<ol>
 <li>CF 467C</li>
 </ol>
-<p>经典的区间dp，转移方程很好想，就是${dp[i][j]&#x3D;max(dp[i][j],dp[i-m][j-1]+sum[i]-sum[i-])}$</p>
-<pre><code class="C++">void solve()
+<p>经典的区间dp，转移方程很好想，就是${dp[i][j]=max(dp[i][j],dp[i-m][j-1]+sum[i]-sum[i-])}$</p>
+<pre><code class="lang-C++">void solve()
 &#123;
   int n,m,k;
   cin&gt;&gt;n&gt;&gt;m&gt;&gt;k;
@@ -223,13 +223,13 @@
   return;
 &#125;
 </code></pre>
-<ol start="3">
+<ol>
 <li>CF 296B</li>
 </ol>
-<p>容斥题，我们可以先预处理出对应位置上的3种不同情况和总情况数,即sa[i]&#x3D;&#x3D;sb[i] sa[i]&gt;&#x3D;sb[i] sa[i]&lt;&#x3D;sb[i]，根据容斥定理，答案即为：</p>
+<p>容斥题，我们可以先预处理出对应位置上的3种不同情况和总情况数,即sa[i]==sb[i] sa[i]&gt;=sb[i] sa[i]&lt;=sb[i]，根据容斥定理，答案即为：</p>
 <p> ∏a[i] - ∏b[i] - ∏c[i] + ∏d[i]</p>
-<p>至少有一对满足情况&#x3D;所有情况 - 所有都不满足第一种- 所有都不满足第二种 + 两者交集</p>
-<pre><code class="C++">void solve()
+<p>至少有一对满足情况=所有情况 - 所有都不满足第一种- 所有都不满足第二种 + 两者交集</p>
+<pre><code class="lang-C++">void solve()
 &#123;
   int n;cin&gt;&gt;n;
   string sa,sb;

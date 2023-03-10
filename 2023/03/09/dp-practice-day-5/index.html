@@ -155,12 +155,12 @@
             
             <span class="tag">
                 
-                <a href="/tags/dp/" style="color: #00a596">dp</a>
+                <a href="/tags/dp/" style="color: #00bcd4">dp</a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/dp-practice-plan/" style="color: #00bcd4">dp_practice_plan</a>
+                <a href="/tags/dp-practice-plan/" style="color: #ffa2c4">dp_practice_plan</a>
             </span>
             
         </span>
@@ -170,7 +170,7 @@
     <div class="content" v-pre>
         <p>CF 347 C</p>
 <p>一道记忆化搜索题，没太多好说的，注意记忆化搜索的方式以及vis数组的更改</p>
-<pre><code class="C++">void solve()&#123;
+<pre><code class="lang-C++">void solve()&#123;
   int n,m;cin&gt;&gt;n&gt;&gt;m;
   auto check=[&amp;](int x,int y)&#123;
     return x&gt;=1&amp;&amp;x&lt;=n&amp;&amp;y&gt;=1&amp;y&lt;=m;
@@ -223,8 +223,8 @@
 </code></pre>
 <p>CF 402D</p>
 <p>刚开始看到的时候有点不好下手</p>
-<p>首先我们判断，肯定是要从后往前进行操作，因为从前往后的话会导致你之后的操作无效(前面都变成gcd&#x3D;1了)<br>题目中的f的值就是这个数含有的good prime数量 -bad prime数量<br>对应去求即可</p>
-<pre><code class="C++">int a[N],g[N];
+<p>首先我们判断，肯定是要从后往前进行操作，因为从前往后的话会导致你之后的操作无效(前面都变成gcd=1了)<br>题目中的f的值就是这个数含有的good prime数量 -bad prime数量<br>对应去求即可</p>
+<pre><code class="lang-C++">int a[N],g[N];
 int gcd(int a,int b)&#123;
   return b==0 ? a : gcd(b,a%b);
 &#125;
@@ -271,7 +271,7 @@ void solve()&#123;
     int x;cin&gt;&gt;x;
     bad.insert(x);
   &#125;
-  
+
   int ans=0,d=1;
   for(int i=n;i&gt;=1;--i)&#123;
     if(check(g[i]/d))&#123;
@@ -290,8 +290,8 @@ void solve()&#123;
 <p>CF 703J</p>
 <p>一开始也是完全没头绪，ans1很好求，就是把杯子按照体积排序，然后选杯子就可以了</p>
 <p>ans2的话，看题解发现是用01背包</p>
-<p>令dp[i][j][k]为前i个杯子，选了j个，总体积为k的不移动的水的最大值，那么有以下转移<br>dp[j][k]&#x3D;max(dp[j][k],dp[j-1][k-now_vol]+now_rem)<br>注意要逆序枚举,因为是01背包</p>
-<pre><code class="C++">struct bt&#123;
+<p>令dp[i][j][k]为前i个杯子，选了j个，总体积为k的不移动的水的最大值，那么有以下转移<br>dp[j][k]=max(dp[j][k],dp[j-1][k-now_vol]+now_rem)<br>注意要逆序枚举,因为是01背包</p>
+<pre><code class="lang-C++">struct bt&#123;
     int rem,vol;
 &#125;;
 void solve()&#123;

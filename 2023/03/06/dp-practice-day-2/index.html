@@ -160,7 +160,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/dp-practice-plan/" style="color: #03a9f4">dp_practice_plan</a>
+                <a href="/tags/dp-practice-plan/" style="color: #ffa2c4">dp_practice_plan</a>
             </span>
             
         </span>
@@ -173,9 +173,9 @@
 <li>CF 362C</li>
 </ol>
 <p>首先读懂题意，这就是冒泡排序的一轮而已,那么很显然，逆序对的数量就是需要交换的数量，然后，对于一次交换i和j,对总的逆序对的影响为</p>
-<p>总的&#x3D;原本总的+[i,j]内比a[i]大的数+[i,j]内比a[j]小的数-[i,j]内比a[i]小的数-[i,j]内比a[j]大的数</p>
+<p>总的=原本总的+[i,j]内比a[i]大的数+[i,j]内比a[j]小的数-[i,j]内比a[i]小的数-[i,j]内比a[j]大的数</p>
 <p>注意我们加减的时候直接取[i][j]就可以了，如果[i+1][j-1]什么的会越界</p>
-<pre><code class="c++">void solve()
+<pre><code class="lang-c++">void solve()
 &#123;
   int n;cin&gt;&gt;n;
   vector&lt;int&gt;a(n+1);
@@ -231,11 +231,11 @@
   return;
 &#125;
 </code></pre>
-<ol start="2">
+<ol>
 <li>CF 148E</li>
 </ol>
 <p>第一眼看上去确实很像分组背包，那么考虑对应的求法，我们只需要预处理出每行对应数量的最大价值，然后套分组背包的板子即可，注意分组背包要<font color=red size=10>先枚举容量再枚举物品</font></p>
-<pre><code class="C++">void solve()
+<pre><code class="lang-C++">void solve()
 &#123;
   int n,m;cin&gt;&gt;n&gt;&gt;m;
   vector&lt;vector&lt;int&gt;&gt;ori(n+1);
@@ -285,13 +285,13 @@
   return;
 &#125;
 </code></pre>
-<ol start="3">
+<ol>
 <li>CF 533B</li>
 </ol>
-<p>树型dp板子题，首先我们让dp[i][1&#x2F;0]表示以i为根的子树，其节点数量为奇&#x2F;偶的最大价值，那么考虑转移，很显然当前节点的奇数个节点的解可以由子节点的奇数&#x2F;偶数转移。</p>
+<p>树型dp板子题，首先我们让dp[i][1/0]表示以i为根的子树，其节点数量为奇/偶的最大价值，那么考虑转移，很显然当前节点的奇数个节点的解可以由子节点的奇数/偶数转移。</p>
 <p>需要注意的一点是，由于此题限制了节点数量为偶数，那么在进入搜索的时候需要把dp[i][1]设置为-INF</p>
 <p>最终答案为dp[1][1] (包括了1)</p>
-<pre><code class="C++">void solve()
+<pre><code class="lang-C++">void solve()
 &#123;
   int n;cin&gt;&gt;n;
   vector&lt;ll&gt;a(n+1);

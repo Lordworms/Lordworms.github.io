@@ -155,7 +155,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/CodeForces/" style="color: #00a596">CodeForces</a>
+                <a href="/tags/CodeForces/" style="color: #ff7d73">CodeForces</a>
             </span>
             
         </span>
@@ -164,7 +164,7 @@
     
     <div class="content" v-pre>
         <p>802 div 2的6道题，这场比较简单<br/><br>A<br>显然先从原点走到第一行的最后一个点然后向下走最方便，我们直接计算即可</p>
-<pre><code class="C++">void solve()
+<pre><code class="lang-C++">void solve()
 &#123;
   ll n,m;
   cin&gt;&gt;n&gt;&gt;m;
@@ -175,11 +175,9 @@
   return;
 &#125;
 </code></pre>
-<br/>
-B
-
+<p><br/><br>B</p>
 <p>由于我们需要创造出回文数，那么如果第一位为9，我们创建多一位的回文数也就是全为1，否则我们创建全为9的回文数</p>
-<pre><code class="C++">void solve()
+<pre><code class="lang-C++">void solve()
 &#123;
   int n;cin&gt;&gt;n;
   vector&lt;int&gt;a(n);
@@ -246,11 +244,11 @@ B
 </code></pre>
 <p>C</p>
 <p>针对范围的相同类型修改，我们一般直接考虑差分，这里也是一样，我们直接把对应的几种操作方式进行对照</p>
-<p>1.a[1-&gt;i]-&#x3D;1 -&gt; b[1]+&#x3D;1 b[i+1]+&#x3D;1</p>
-<p>2.a[i-&gt;n]-&#x3D;1 -&gt; b[i]-&#x3D;1</p>
-<p>3.a[1-&gt;n]+&#x3D;1 -&gt; b[1]+&#x3D;1</p>
+<p>1.a[1-&gt;i]-=1 -&gt; b[1]+=1 b[i+1]+=1</p>
+<p>2.a[i-&gt;n]-=1 -&gt; b[i]-=1</p>
+<p>3.a[1-&gt;n]+=1 -&gt; b[1]+=1</p>
 <p>最后别忘了处理b[1],注意开longlong，我这里#define int ll了已经</p>
-<pre><code class="C++">void solve()
+<pre><code class="lang-C++">void solve()
 &#123;
   int n;cin&gt;&gt;n;
   vector&lt;int&gt;a(n+1),b(n+1);
@@ -276,7 +274,7 @@ B
 </code></pre>
 <p>D<br>贪心题，首先我们考虑什么样的情况无解，那就是前i个容器的体积的和要大于i个水龙头打开的放水量，所以我们取最大的平均值，如果大于那么就无解</p>
 <p>之后的水龙头数量很简单，就是体积和除以时间即可</p>
-<pre><code class="C++">void solve()
+<pre><code class="lang-C++">void solve()
 &#123;
   ll n;cin&gt;&gt;n;
   vector&lt;ll&gt;a(n+1);
@@ -308,7 +306,7 @@ B
 <p>E</p>
 <p>首先我们考虑什么时候输出2，对于每一个需要交换的点来说，他身边最多有4个点无效，所以对于一次交换来说，我们最多改变5个点的正确性</p>
 <p>之后我们模拟点对的交换即可，需要注意这种情况不要反复枚举,如果两个点对在一个6x6的块中</p>
-<pre><code class="C++">vector&lt;vector&lt;int&gt;&gt;dir=&#123;&#123;0,0&#125;,&#123;-1,0&#125;,&#123;1,0&#125;,&#123;0,-1&#125;,&#123;0,1&#125;&#125;;
+<pre><code class="lang-C++">vector&lt;vector&lt;int&gt;&gt;dir=&#123;&#123;0,0&#125;,&#123;-1,0&#125;,&#123;1,0&#125;,&#123;0,-1&#125;,&#123;0,1&#125;&#125;;
 void solve()
 &#123;
   int n,m;
