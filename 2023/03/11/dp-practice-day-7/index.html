@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>CF_800 | Waiting for the dawn</title>
+        <title>dp practice day 7 | Waiting for the dawn</title>
         <meta name="author" content="Yanxin Xiang">
         <meta name="description" content="">
         <meta name="keywords" content="">
@@ -132,14 +132,14 @@
 
                 <div class="article">
     <div>
-        <h1>CF_800 </h1>
+        <h1>dp practice day 7 </h1>
     </div>
     <div class="info">
         <span class="date">
             <span class="icon">
                 <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
-            2023/3/4
+            2023/3/11
         </span>
         
         <span class="category">
@@ -159,7 +159,12 @@
             
             <span class="tag">
                 
-                <a href="/tags/CodeForces/" style="color: #ff7d73">CodeForces</a>
+                <a href="/tags/dp/" style="color: #ffa2c4">dp</a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/dp-practice-plan/" style="color: #ffa2c4">dp_practice_plan</a>
             </span>
             
         </span>
@@ -167,166 +172,141 @@
     </div>
     
     <div class="content" v-pre>
-        <p>800 div 2的6道题，这场全是思维题<br/><br>A</p>
-<p>照着差值最小去构造即可</p>
-<pre><code class="lang-C++">void solve()
-&#123;
-  int a,b;
-  cin&gt;&gt;a&gt;&gt;b;
-  string ans;
-  for(int i=0;i&lt;min(a,b);++i)
-  &#123;
-    ans+=&#39;0&#39;;
-    ans+=&#39;1&#39;;
-  &#125;
-  if(a&gt;b)
-  &#123;
-    ans+=string(a-b,&#39;0&#39;);
-  &#125;
-  else
-  &#123;
-    ans+=string(b-a,&#39;1&#39;);
-  &#125;
-  cout&lt;&lt;ans&lt;&lt;&#39;\n&#39;;
-  return;
-&#125;
-</code></pre>
-<p><br/><br>B</p>
-<p>我们有两种操作，第一种 ${01}=1$ 第二种${10}=0$</p>
-<p>现在考虑什么样的情况是无解的，我们枚举一下，发现 ${011}$ ${100}$这两种情况都是无解的，而这两种情况的最后两位都相同，直接猜结论，最后两位是否相同等价于一个数组是否有解，证明也很好证</p>
-<pre><code class="lang-C++">void solve()
-&#123;
-  int n;cin&gt;&gt;n;
-  string s;cin&gt;&gt;s;
-  ll ans=1;
-  for(int i=1;i&lt;n;++i)
-  &#123;
-    if(s[i]!=s[i-1])
-    &#123;
-        ans+=i+1;
-    &#125;
-    else ans++;
-  &#125;
-  cout&lt;&lt;ans&lt;&lt;&#39;\n&#39;;
-  return;
-&#125;
-</code></pre>
-<p>C</p>
-<p>很巧妙的一道题，首先由于增加减少的操作数相同，所以如果数组的和不为0肯定无解。</p>
-<p>我们最后要返回原点，有一段距离的值需要进行平衡（一段操作是无效的），又因为我们只能够增加当前值，减少后面的值，所以如果有一段的前缀和小于0，那么肯定是无解的</p>
-<p>那么最后，对于前缀和等于0的部分，我们进行一个判断，如果当前已经收敛了，那么随后如果还有前缀和&gt;0的段，那么肯定无法构造出来</p>
-<pre><code class="lang-C++">void solve()
-&#123;
-  int n;
-  cin&gt;&gt;n;
-  vector&lt;ll&gt;pre(n+1);
-  for(int i=1;i&lt;=n;++i)
-  &#123;
-    cin&gt;&gt;pre[i];
-    pre[i]+=pre[i-1];
-  &#125;
-  if(pre[n]!=0)
-  &#123;
-    cout&lt;&lt;&quot;NO\n&quot;;
-    return;
-  &#125;
-  bool ispre_zero=false;
-  for(int i=1;i&lt;=n;++i)
-  &#123;
-    if(pre[i]==0)
-    &#123;
-        ispre_zero=true;
-        continue;
-    &#125;
-    if(ispre_zero)
-    &#123;
-        if(pre[i]!=0)
-        &#123;
-            cout&lt;&lt;&quot;NO\n&quot;;
-            return;
+        <p>三道大水题，选的太成功惹！<br>01背包+树形dp+combo</p>
+<p>CF 687C<br>类似01背包的格式，给你一堆硬币，问你在能组成k的条件下还能组成一些其他什么别的数<br>类似01背包的转移<br>dp[i][j]表示在能够组成i的时候，能否组成j</p>
+<p>$dp[i+a[k]][j]=d[i+a[k]][j+a[k]]=(dp[i][j]==1)$</p>
+<pre><code class="lang-C++">void solve()&#123;
+  int n,k;
+  cin&gt;&gt;n&gt;&gt;k;
+  vector&lt;int&gt;a(n+1);
+  for(int i=1;i&lt;=n;++i)cin&gt;&gt;a[i];
+  vector dp(k+1,vector&lt;int&gt;(k+1));
+  dp[0][0]=1;
+  for(int i=0;i&lt;=n;++i)&#123;
+    for(int v1=k;v1&gt;=0;--v1)&#123;
+        for(int v2=k;v2&gt;=0;--v2)&#123;
+            if(dp[v1][v2]&amp;&amp;v1+a[i]&lt;=k)&#123;
+                dp[v1+a[i]][v2]=dp[v1+a[i]][v2+a[i]]=1;
+            &#125;
         &#125;
     &#125;
-    if(pre[i]&lt;0)
-    &#123;
-        cout&lt;&lt;&quot;NO\n&quot;;
+  &#125;
+  vector&lt;int&gt;ans;
+  for(int i=0;i&lt;=k;++i)&#123;
+    if(dp[k][i])&#123;
+        ans.push_back(i);
+    &#125;
+  &#125;
+  cout&lt;&lt;ans.size()&lt;&lt;&#39;\n&#39;;
+  for(int i=0;i&lt;ans.size();++i)&#123;
+    cout&lt;&lt;ans[i]&lt;&lt;&quot; \n&quot;[i==ans.size()-1];
+  &#125;
+  return;
+&#125;
+</code></pre>
+<p>CF 685B</p>
+<p>树形dp，首先我们可以先把每棵树的重儿子求出来(dfs)<br>之后了解一个性质，<font color=red>一颗树的重心总在重儿子的重心和根的路径上</font><br>所以我们只需要从重儿子的重心开始向上爬，就能够找到重心惹</p>
+<pre><code class="lang-C++">void solve()&#123;
+  int n,q;cin&gt;&gt;n&gt;&gt;q;
+  vector&lt;int&gt;fa(n+1),ans(n+1),hson(n+1),siz(n+1);
+  vector&lt;vector&lt;int&gt;&gt;E(n+1);
+  for(int i=2;i&lt;=n;++i)&#123;
+    int x;cin&gt;&gt;x;
+    E[x].push_back(i);
+    fa[i]=x;
+  &#125;
+  function&lt;void(int)&gt;dfs1=[&amp;](int now)&#123;
+    siz[now]=1;
+    for(int v:E[now])&#123;
+        dfs1(v);
+        siz[now]+=siz[v];
+        if(siz[v]&gt;siz[hson[now]])&#123;
+            hson[now]=v;
+        &#125;
+    &#125;
+  &#125;;
+  function&lt;void(int)&gt;dfs2=[&amp;](int now)&#123;
+    if(!hson[now])&#123;
+        ans[now]=now;
         return;
     &#125;
+    for(int v:E[now])&#123;
+        dfs2(v);
+    &#125;
+    if(2*siz[hson[now]]&lt;=siz[now])&#123;
+        ans[now]=now;
+    &#125;
+    else&#123;
+        for(int v=ans[hson[now]];v!=now;v=fa[v])&#123;
+            if(max(siz[hson[v]],siz[now]-siz[v])*2&lt;=siz[now])&#123;
+                ans[now]=v;
+                break;
+            &#125;
+        &#125;
+    &#125;
+  &#125;;
+  dfs1(1);
+  dfs2(1);
+  while(q--)&#123;
+    int v;cin&gt;&gt;v;
+    cout&lt;&lt;ans[v]&lt;&lt;&#39;\n&#39;;
   &#125;
-  cout&lt;&lt;&quot;YES\n&quot;;
   return;
 &#125;
 </code></pre>
-<p>D</p>
-<p>同样很巧妙的一道题(所以说这场全是智力题)</p>
-<p>这道题最关键的部分就是，所有儿子的id都比父母节点的id要大，而原修改序列又是从根到叶结点的</p>
-<p>因此我们对于每次询问，可以先把小于l[i]的叶子结点直接设为r[i]，这样做的好处是因为修改序列是递减的，所以我们给了祖先结点们更多的调整空间，当我们修改儿子后，直接把对应的值加到父亲节点中，然后从n-&gt;1进行处理。</p>
-<pre><code class="lang-C++">void solve()
+<p>CF 689E<br>给你一堆区间，让你每次选k个，问能够每次选k个的区间和的和为多少</p>
+<p>首先考虑对于一个元素来说，如果有cnt个区间选中了他，那么他的贡献为${C_{cnt}^k}$ 知道这个了之后，就类似滑动窗口每次去取就好了</p>
+<pre><code class="lang-C++">ll quick_pow(ll x,ll exp,int p)
 &#123;
-  int n;cin&gt;&gt;n;
-  vector&lt;int&gt;pa(n+1);
-  for(int i=2;i&lt;=n;++i)
+      ll ans=1;
+      while(exp)
+      &#123;
+        if(exp&amp;1)ans=ans*x%p;
+        exp&gt;&gt;=1;
+        x=x*x%p;
+      &#125;
+      return ans;
+&#125;
+ll inv[MAXN],fac[MAXN];
+void init(int n,int p)
+&#123;
+  memset(inv,0,sizeof(inv));
+  memset(fac,0,sizeof(fac));
+  inv[0]=fac[0]=1;
+  for(int i=1;i&lt;=n;++i)
   &#123;
-    cin&gt;&gt;pa[i];
+    fac[i]=fac[i-1]*i%p;
   &#125;
-  vector&lt;int&gt;l(n+1),r(l);
-  vector&lt;ll&gt;a(n+1);
-  for(int i=1;i&lt;=n;++i)cin&gt;&gt;l[i]&gt;&gt;r[i];
-  int ans=0;
-  for(int i=n;i&gt;=1;--i)
-  &#123;
-    if(a[i]&lt;l[i])a[i]=r[i],++ans;
-    if(a[i]&gt;r[i])a[i]=r[i];
-    a[pa[i]]+=a[i];
+  inv[n]=quick_pow(fac[n],p-2,p)%p;
+  for(int i=n;i&gt;=1;--i)inv[i-1]=inv[i]*i%p;
+&#125;
+ll C(ll n,ll m,ll p)
+&#123;
+  if(m&gt;n||m&lt;0)return 0;
+  return fac[n]*inv[n-m]%p*inv[m]%p;
+&#125;
+void solve()&#123;
+  int n,k;cin&gt;&gt;n&gt;&gt;k;
+  using pii=pair&lt;int,int&gt;;
+  vector&lt;pii&gt;vec;
+  for(int i=1;i&lt;=n;++i)&#123;
+    int l,r;
+    cin&gt;&gt;l&gt;&gt;r;
+    vec.push_back(&#123;l-1,1&#125;);
+    vec.push_back(&#123;r,-1&#125;);
+  &#125;
+  sort(vec.begin(),vec.end());
+  ll cnt=0,ans=0,left=-1;
+  for(auto pi:vec)&#123;
+    ans=(ans+C(cnt,k,MOD)*(pi.first-left))%MOD;
+    left=pi.first;
+    cnt+=pi.second;
   &#125;
   cout&lt;&lt;ans&lt;&lt;&#39;\n&#39;;
   return;
 &#125;
 </code></pre>
-<p>E</p>
-<p>一开始一点头绪都没有的一道题,本来以为是概率，结果其实是贪心题</p>
-<p>首先需要反向建边，因为正向的话处理环更麻烦</p>
-<p>首先我们先看应该采取什么样的策略来进行删边，很显然，由于每次我们选择的路是随机的，那么最坏的情况就是我们每次都选择最远的路，那么我们删除的话应该删除最远的边，然后我们思考边权是什么，很显然就是该节点的入度（反向建边），我们每次按照dijistra的方式更新即可</p>
-<pre><code class="lang-C++">void solve()
-&#123;
-  priority_queue&lt;pii,vector&lt;pii&gt;,greater&lt;pii&gt;&gt;q;
-  int n,m;cin&gt;&gt;n&gt;&gt;m;
-  vector&lt;vector&lt;int&gt;&gt;E(n+1);
-  vector&lt;int&gt;deg(n+1);
-  for(int i=0;i&lt;m;++i)
-  &#123;
-    int x,y;cin&gt;&gt;x&gt;&gt;y;
-    E[y].push_back(x);
-    ++deg[x];
-  &#125;
-  q.push(&#123;0,n&#125;);
-  vector&lt;int&gt;vis(n+1);
-  vector&lt;ll&gt;dis(n+1,(ll)MOD);
-  dis[n]=0;
-  while(!q.empty())
-  &#123;
-    auto [d,now]=q.top();
-    q.pop();
-    if(vis[now])continue;
-    vis[now]=1;
-    for(int v:E[now])
-    &#123;
-        if(d+deg[v]&lt;dis[v])
-        &#123;
-            dis[v]=d+deg[v];
-            q.push(&#123;dis[v],v&#125;);
-        &#125;
-        --deg[v];
-    &#125;
-  &#125;
-  cout&lt;&lt;dis[1]&lt;&lt;&#39;\n&#39;;
-  return;
-&#125;
-</code></pre>
-<p>F</p>
-<p>感觉没完全懂，就不在这瞎jb写了，似懂非懂了属于是，依旧贴一个大佬的解答</p>
-<p>(<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43346722/article/details/127250722">https://blog.csdn.net/weixin_43346722/article/details/127250722</a>)</p>
-<p>这场自己做的时候D没做出来（不知道什么时候能稳定出D），最近没那么多时间扑在算法上了，感觉每天一套DIV2可能不太行的通，从明天开始开始做专题吧，每天三道专题,先从dp开始吧！<br>先从DP开始，之后明天把KV的LSM tree给写了。</p>
-<p>（又是没干啥事的一天，我这条懒🐶真是辛苦了呢！）</p>
+<p>OK,今天的水题完成惹，开始写OS的复习惹</p>
 
     </div>
     
