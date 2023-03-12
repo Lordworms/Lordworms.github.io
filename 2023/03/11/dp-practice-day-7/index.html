@@ -159,12 +159,12 @@
             
             <span class="tag">
                 
-                <a href="/tags/dp/" style="color: #ffa2c4">dp</a>
+                <a href="/tags/dp/" style="color: #ff7d73">dp</a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/dp-practice-plan/" style="color: #ffa2c4">dp_practice_plan</a>
+                <a href="/tags/dp-practice-plan/" style="color: #ff7d73">dp_practice_plan</a>
             </span>
             
         </span>
@@ -205,7 +205,7 @@
 &#125;
 </code></pre>
 <p>CF 685B</p>
-<p>树形dp，首先我们可以先把每棵树的重儿子求出来(dfs)<br>之后了解一个性质，<font color=red>一颗树的重心总在重儿子的重心和根的路径上</font><br>所以我们只需要从重儿子的重心开始向上爬，就能够找到重心惹</p>
+<p>树形dp，首先我们可以先把每棵树的重儿子求出来(dfs)<br>之后了解一个性质，<font color="red">一颗树的重心总在重儿子的重心和根的路径上</font><br>所以我们只需要从重儿子的重心开始向上爬，就能够找到重心惹</p>
 <pre><code class="lang-C++">void solve()&#123;
   int n,q;cin&gt;&gt;n&gt;&gt;q;
   vector&lt;int&gt;fa(n+1),ans(n+1),hson(n+1),siz(n+1);
