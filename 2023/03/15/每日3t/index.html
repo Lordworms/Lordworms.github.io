@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>分类 | Waiting for the dawn</title>
+        <title>每日3t | Waiting for the dawn</title>
         <meta name="author" content="Yanxin Xiang">
         <meta name="description" content="">
         <meta name="keywords" content="">
@@ -130,66 +130,159 @@
     </div>
 </nav>
 
-                <div id="archives">
-    
-    <div class="categories-tags">
-        
-        
-        <span>
-            <a href="/tags/CodeForces/" style="background: #ffa2c4">
-                <span class="icon">
-                    <i class="fa-solid fa-tags fa-fw"></i>
-                </span>
-                CodeForces
-            </a>
+                <div class="article">
+    <div>
+        <h1>每日3t </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/3/15
         </span>
         
         
-        
-        <span>
-            <a href="/tags/dp/" style="background: #00bcd4">
-                <span class="icon">
-                    <i class="fa-solid fa-tags fa-fw"></i>
-                </span>
-                dp
-            </a>
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/daily/" style="color: #00a596">daily</a>
+            </span>
+            
         </span>
-        
-        
-        
-        <span>
-            <a href="/tags/dp-practice-plan/" style="background: #00bcd4">
-                <span class="icon">
-                    <i class="fa-solid fa-tags fa-fw"></i>
-                </span>
-                dp_practice_plan
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/tags/introduction/" style="background: #00bcd4">
-                <span class="icon">
-                    <i class="fa-solid fa-tags fa-fw"></i>
-                </span>
-                -introduction
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/tags/daily/" style="background: #00a596">
-                <span class="icon">
-                    <i class="fa-solid fa-tags fa-fw"></i>
-                </span>
-                daily
-            </a>
-        </span>
-        
         
     </div>
+    
+    <div class="content" v-pre>
+        <p>CF 733D</p>
+<p>哈希题，把对应的最短边的信息哈希存一下即可</p>
+<pre><code class="lang-C++">struct rec&#123;
+    int a,b,c;
+&#125;;
+using pii=pair&lt;ll,ll&gt;;
+void solve()&#123;
+  int n;cin&gt;&gt;n;
+  vector&lt;rec&gt;recs(n);
+  map&lt;pii,pii&gt;mp;
+  ll ans=-1,left=-1,right=-1,flag=false;
+  for(int i=0;i&lt;n;++i)&#123;
+    vector&lt;ll&gt;sq(3);
+    for(int i=0;i&lt;3;++i)&#123;
+        cin&gt;&gt;sq[i];
+    &#125;
+    sort(sq.begin(),sq.end());
+    if(sq[0]&gt;ans)&#123;
+        flag=false;
+        ans=sq[0];
+        left=i;
+    &#125;
+    auto pr=make_pair(sq[1],sq[2]);
+    if(mp.find(pr)==mp.end())&#123;
+        mp[pr]=make_pair(i,sq[0]);
+        continue;
+    &#125;
+    ll new_max=std::min(&#123;sq[2],sq[1],mp[pr].second+sq[0]&#125;);
+    if(new_max&gt;ans)&#123;
+        ans=new_max;
+        left=mp[pr].first;
+        right=i;
+        flag=true;
+    &#125;
+    if(sq[0]&gt;mp[pr].second)&#123;
+        mp[pr].second=sq[0];
+        mp[pr].first=i;
+    &#125;
+  &#125;
+  if(!flag)&#123;
+    cout&lt;&lt;1&lt;&lt;&#39;\n&#39;;
+    cout&lt;&lt;left+1;
+  &#125;else&#123;
+    cout&lt;&lt;2&lt;&lt;&#39;\n&#39;;
+    cout&lt;&lt;left+1&lt;&lt;&#39; &#39;&lt;&lt;right+1&lt;&lt;&#39;\n&#39;;
+  &#125;
+  return;
+&#125;
+</code></pre>
+<p>CF 739B</p>
+<p>树上搜索+差分</p>
+<pre><code class="lang-C++">void solve()&#123;
+  int n;cin&gt;&gt;n;
+  vector&lt;int&gt;a(n);
+  for(int i=0;i&lt;n;++i)cin&gt;&gt;a[i];
+  vector&lt;vector&lt;int&gt;&gt;E(n),cost(E);
+  for(int i=1;i&lt;n;++i)&#123;
+    int p,w;cin&gt;&gt;p&gt;&gt;w;
+    --p;
+    E[i].push_back(p);
+    E[p].push_back(i);
+    cost[i].push_back(w);
+    cost[p].push_back(w);
+  &#125;
+  vector&lt;int&gt;ans(n),dis(n);
+  vector&lt;pii&gt;que;
+  function&lt;void(int,int)&gt;dfs=[&amp;](int x,int f)&#123;
+    ans[x]=1;
+    int pos=lower_bound(que.begin(),que.end(),make_pair(dis[x]-a[x],0ll))-que.begin()-1;//find the previous 
+    if(pos&gt;=0)&#123;
+        ans[que[pos].second]--;
+    &#125;
+    que.push_back(&#123;dis[x],x&#125;);
+    for(int i=0;i&lt;E[x].size();++i)&#123;
+        int v=E[x][i],c=cost[x][i];
+        if(v==f)continue;
+        dis[v]=dis[x]+c;
+        dfs(v,x);
+        ans[x]+=ans[v];
+    &#125;
+    que.pop_back();
+  &#125;;
+  dfs(0,-1);
+  for(int i=0;i&lt;n;++i)&#123;
+    cout&lt;&lt;ans[i]-1&lt;&lt;&#39; &#39;;
+  &#125;
+  return;
+&#125;
+</code></pre>
+<p>CF 14C</p>
+<p>简单逻辑题</p>
+<pre><code class="lang-C++">void solve()&#123;
+  int x=0,y=0;
+  map&lt;pii,int&gt;mp;
+  for(int i=0;i&lt;4;++i)&#123;
+    int x1,y1,x2,y2;
+    cin&gt;&gt;x1&gt;&gt;y1&gt;&gt;x2&gt;&gt;y2;
+    x+=(y1==y2)&amp;&amp;(x1!=x2);
+    y+=(x1==x2)&amp;&amp;(y1!=y2);
+    mp[make_pair(x1,y1)]++;
+    mp[make_pair(x2,y2)]++;
+  &#125;
+  bool check=(x==2)&amp;&amp;(y==2);
+  for(auto it:mp)&#123;
+    if(it.second!=2)&#123;
+      check=false;
+    &#125;
+  &#125;
+  if(check)&#123;
+    cout&lt;&lt;&quot;YES\n&quot;;
+  &#125;else&#123;
+    cout&lt;&lt;&quot;NO\n&quot;;
+  &#125;
+  return;
+&#125;
+</code></pre>
+<p>再也不熬了！！！傻逼无头骑士，看了我两个晚上了，难顶，今天必须给他看完，明天开始背八股惹</p>
+
+    </div>
+    
+    
+    
+    
+    
+    
     
 </div>
 
@@ -216,6 +309,11 @@
         </div>
         <script src="/js/functions.js"></script>
 <script src="/js/particlex.js"></script>
+
+
+
+
+
 
 
     </body>
