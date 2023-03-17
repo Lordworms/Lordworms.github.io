@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>每日3t | Waiting for the dawn</title>
+        <title>daily 3 | Waiting for the dawn</title>
         <meta name="author" content="Yanxin Xiang">
         <meta name="description" content="">
         <meta name="keywords" content="">
@@ -132,14 +132,14 @@
 
                 <div class="article">
     <div>
-        <h1>每日3t </h1>
+        <h1>daily 3 </h1>
     </div>
     <div class="info">
         <span class="date">
             <span class="icon">
                 <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
-            2023/3/15
+            2023/3/17
         </span>
         
         
@@ -150,7 +150,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/daily/" style="color: #ff7d73">daily</a>
+                <a href="/tags/daily/" style="color: #ffa2c4">daily</a>
             </span>
             
         </span>
@@ -158,123 +158,114 @@
     </div>
     
     <div class="content" v-pre>
-        <p>CF 733D</p>
-<p>哈希题，把对应的最短边的信息哈希存一下即可</p>
-<pre><code class="lang-C++">struct rec&#123;
-    int a,b,c;
-&#125;;
-using pii=pair&lt;ll,ll&gt;;
+        <p>CF 722C</p>
+<p>区间并查集，对于某个点来说，如果他左侧/右侧的点已经被加入集合中去了，那么就把该点的值加入对应的集合，我们倒着进行添加即可</p>
+<pre><code class="lang-C++">vector&lt;int&gt;fa;
+vector&lt;ll&gt;sum;
+int find(int x)&#123;
+  return fa[x]==x?x:fa[x]=find(fa[x]);
+&#125;
+void merge(int x,int y)&#123;
+  int fx=find(x),fy=find(y);
+  if(fx==fy)return;
+  sum[fx]+=sum[fy];
+  fa[fy]=fx;
+&#125;
 void solve()&#123;
   int n;cin&gt;&gt;n;
-  vector&lt;rec&gt;recs(n);
-  map&lt;pii,pii&gt;mp;
-  ll ans=-1,left=-1,right=-1,flag=false;
-  for(int i=0;i&lt;n;++i)&#123;
-    vector&lt;ll&gt;sq(3);
-    for(int i=0;i&lt;3;++i)&#123;
-        cin&gt;&gt;sq[i];
+  fa.resize(n+1);
+  sum.resize(n+1);
+  iota(fa.begin(),fa.end(),0);
+  vector&lt;int&gt;ord(n+1),vis(n+2);
+  for(int i=1;i&lt;=n;++i)cin&gt;&gt;sum[i];
+  for(int i=1;i&lt;=n;++i)cin&gt;&gt;ord[i];
+  vector&lt;ll&gt;ans(n+1);
+  ll res=0;
+  for(int i=n;i&gt;=1;--i)&#123;
+    ans[i]=res;
+    if(vis[ord[i]-1])&#123;
+      merge(ord[i]-1,ord[i]);
     &#125;
-    sort(sq.begin(),sq.end());
-    if(sq[0]&gt;ans)&#123;
-        flag=false;
-        ans=sq[0];
-        left=i;
+    if(vis[ord[i]+1])&#123;
+      merge(ord[i]+1,ord[i]);
     &#125;
-    auto pr=make_pair(sq[1],sq[2]);
-    if(mp.find(pr)==mp.end())&#123;
-        mp[pr]=make_pair(i,sq[0]);
-        continue;
-    &#125;
-    ll new_max=std::min(&#123;sq[2],sq[1],mp[pr].second+sq[0]&#125;);
-    if(new_max&gt;ans)&#123;
-        ans=new_max;
-        left=mp[pr].first;
-        right=i;
-        flag=true;
-    &#125;
-    if(sq[0]&gt;mp[pr].second)&#123;
-        mp[pr].second=sq[0];
-        mp[pr].first=i;
-    &#125;
+    int f=find(ord[i]);
+    res=max(res,sum[find(ord[i])]);
+    vis[ord[i]]=1;
   &#125;
-  if(!flag)&#123;
-    cout&lt;&lt;1&lt;&lt;&#39;\n&#39;;
-    cout&lt;&lt;left+1;
-  &#125;else&#123;
-    cout&lt;&lt;2&lt;&lt;&#39;\n&#39;;
-    cout&lt;&lt;left+1&lt;&lt;&#39; &#39;&lt;&lt;right+1&lt;&lt;&#39;\n&#39;;
+  for(int i=1;i&lt;=n;++i)&#123;
+    cout&lt;&lt;ans[i]&lt;&lt;&quot;\n&quot;;
   &#125;
   return;
 &#125;
 </code></pre>
-<p>CF 739B</p>
-<p>树上搜索+差分</p>
+<p>CF 731F</p>
+<p>后缀和好题,我们知道，对于某个落在 [k<em>a[i],(k+1) \</em> a[i]的数，最终取值是k*a[i]，那么我们对后缀取后缀和，然后每一段进行计算，注意不要重复计算，标记vis数组即可</p>
 <pre><code class="lang-C++">void solve()&#123;
-  int n;cin&gt;&gt;n;
-  vector&lt;int&gt;a(n);
-  for(int i=0;i&lt;n;++i)cin&gt;&gt;a[i];
-  vector&lt;vector&lt;int&gt;&gt;E(n),cost(E);
-  for(int i=1;i&lt;n;++i)&#123;
-    int p,w;cin&gt;&gt;p&gt;&gt;w;
-    --p;
-    E[i].push_back(p);
-    E[p].push_back(i);
-    cost[i].push_back(w);
-    cost[p].push_back(w);
+  int n;
+  cin&gt;&gt;n;
+  vector&lt;int&gt;a(n+1);
+  vector&lt;ll&gt;sum(MAXN),vis(sum);
+  for(int i=1;i&lt;=n;++i)&#123;
+    cin&gt;&gt;a[i];
+    sum[a[i]]++;
   &#125;
-  vector&lt;int&gt;ans(n),dis(n);
-  vector&lt;pii&gt;que;
-  function&lt;void(int,int)&gt;dfs=[&amp;](int x,int f)&#123;
-    ans[x]=1;
-    int pos=lower_bound(que.begin(),que.end(),make_pair(dis[x]-a[x],0ll))-que.begin()-1;//find the previous 
-    if(pos&gt;=0)&#123;
-        ans[que[pos].second]--;
+  sort(a.begin()+1,a.end());
+  for(int i=a[n]-1;i&gt;=0;--i)&#123;
+    sum[i]+=sum[i+1];
+  &#125;
+  ll ans=0;
+  for(int i=1;i&lt;=n;++i)&#123;
+    if(vis[a[i]])continue;
+    ll res=0;
+    int cnt=1;
+    for(int j=a[i];j&lt;=a[n];j+=a[i])&#123;
+      res+=sum[j]*a[i];
+      vis[j]=1;
     &#125;
-    que.push_back(&#123;dis[x],x&#125;);
-    for(int i=0;i&lt;E[x].size();++i)&#123;
-        int v=E[x][i],c=cost[x][i];
-        if(v==f)continue;
-        dis[v]=dis[x]+c;
-        dfs(v,x);
-        ans[x]+=ans[v];
+    ans=max(ans,res);
+    vis[a[i]]=1;
+  &#125;
+  cout&lt;&lt;ans&lt;&lt;&#39;\n&#39;;
+  return;
+&#125;
+</code></pre>
+<p>CF 721D</p>
+<p>不会做，看了题解发现是低能题<br>首先我们可以证明，对绝对值比较小的数进行操作比较好(这里就不证明了，很sb)<br>然后我们拿个set存数就好了</p>
+<pre><code class="lang-C++">using pii=pair&lt;ll,int&gt;;
+void solve()&#123;
+  int n,k,x;
+  cin&gt;&gt;n&gt;&gt;k&gt;&gt;x;
+  vector&lt;ll&gt;a(n+1);
+  bool sign=false;
+  set&lt;pii&gt;st;
+  for(int i=1;i&lt;=n;++i)&#123;
+    cin&gt;&gt;a[i];
+    if(a[i]&lt;0)&#123;
+        sign=!sign;
     &#125;
-    que.pop_back();
-  &#125;;
-  dfs(0,-1);
-  for(int i=0;i&lt;n;++i)&#123;
-    cout&lt;&lt;ans[i]-1&lt;&lt;&#39; &#39;;
+    st.insert(&#123;abs(a[i]),i&#125;);
+  &#125;
+  for(int i=1;i&lt;=k;++i)&#123;
+    auto id=st.begin()-&gt;second;
+    st.erase(st.begin());
+    if(a[id]&lt;0)sign=!sign;
+    if(sign)&#123;
+        a[id]+=x;
+    &#125;
+    else
+    &#123;
+        a[id]-=x;
+    &#125;
+    if(a[id]&lt;0)sign=!sign;
+    st.insert(&#123;abs(a[id]),id&#125;);
+  &#125;
+  for(int i=1;i&lt;=n;++i)&#123;
+    cout&lt;&lt;a[i]&lt;&lt;&quot; \n&quot;[i==n];
   &#125;
   return;
 &#125;
 </code></pre>
-<p>CF 14C</p>
-<p>简单逻辑题</p>
-<pre><code class="lang-C++">void solve()&#123;
-  int x=0,y=0;
-  map&lt;pii,int&gt;mp;
-  for(int i=0;i&lt;4;++i)&#123;
-    int x1,y1,x2,y2;
-    cin&gt;&gt;x1&gt;&gt;y1&gt;&gt;x2&gt;&gt;y2;
-    x+=(y1==y2)&amp;&amp;(x1!=x2);
-    y+=(x1==x2)&amp;&amp;(y1!=y2);
-    mp[make_pair(x1,y1)]++;
-    mp[make_pair(x2,y2)]++;
-  &#125;
-  bool check=(x==2)&amp;&amp;(y==2);
-  for(auto it:mp)&#123;
-    if(it.second!=2)&#123;
-      check=false;
-    &#125;
-  &#125;
-  if(check)&#123;
-    cout&lt;&lt;&quot;YES\n&quot;;
-  &#125;else&#123;
-    cout&lt;&lt;&quot;NO\n&quot;;
-  &#125;
-  return;
-&#125;
-</code></pre>
-<p>再也不熬了！！！傻逼无头骑士，看了我两个晚上了，难顶，今天必须给他看完，明天开始背八股惹</p>
 
     </div>
     

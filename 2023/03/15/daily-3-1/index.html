@@ -139,7 +139,7 @@
             <span class="icon">
                 <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
-            2023/3/16
+            2023/3/15
         </span>
         
         
@@ -150,7 +150,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/daily/" style="color: #ff7d73">daily</a>
+                <a href="/tags/daily/" style="color: #00bcd4">daily</a>
             </span>
             
         </span>
@@ -158,165 +158,123 @@
     </div>
     
     <div class="content" v-pre>
-        <p>3 道混合题</p>
-<p>CF 631C</p>
-<p>首先可以发现，对于某个长度为rk的操作序列来说，在其之前的长度小于rk的操作序列都是无效的，那么可以用栈处理出一个递减的序列</p>
-<p>之后我们先把从r[st[0]]到n的数先赋给最后的数组，因为这部分是不变的</p>
-<p>之后我们开始对其后的元素操作，我们知道该操作是没有后效行的，也就是说，只对之前的元素有用，那么我们从r[st[0]]遍历到1，按照对应的操作类别进行添加数就可以了</p>
-<pre><code class="lang-C++">void solve()&#123;
-  int n,m;cin&gt;&gt;n&gt;&gt;m;
-  vector&lt;int&gt;a(n+1),t(m+1),r(m+1),st;
-  for(int i=1;i&lt;=n;++i)cin&gt;&gt;a[i];
-  for(int i=1;i&lt;=m;++i)&#123;
-    cin&gt;&gt;t[i]&gt;&gt;r[i];
-    while(st.size()&amp;&amp;r[st.back()]&lt;r[i])st.pop_back();
-    st.push_back(i);
-  &#125;
-  vector&lt;int&gt;ans(n+1);
-  for(int i=r[st[0]]+1;i&lt;=n;++i)ans[i]=a[i];
-  sort(a.begin()+1,a.begin()+1+r[st[0]]);
-  r.push_back(0);
-  st.push_back(r.size()-1);
-  int start=1,ed=r[st[0]];
-  for(int i=0;i&lt;st.size()-1;++i)&#123;
-    for(int j=r[st[i]];j&gt;r[st[i+1]];--j)&#123;
-        if(t[st[i]]==1)&#123;
-            ans[j]=a[ed--];
-        &#125;else&#123;
-            ans[j]=a[start++];
-        &#125;
-    &#125;
-  &#125;
-  for(int i=1;i&lt;=n;++i)&#123;
-    cout&lt;&lt;ans[i]&lt;&lt;&quot; \n&quot;[i==n];
-  &#125;
-  return;
-&#125;
-</code></pre>
-<p>CF 633C</p>
-<p>开始没有思路，看了题解发现是trie+dp</p>
-<p>dp的思想很好处理，因为这就和硬币组合一样，那么怎么能把其中O(n)的遍历改成O(logn)呢？用字典树存一下就好惹，然后存一下trace</p>
-<pre><code class="lang-C++">void solve()&#123;
-  int n;
-  string s;
-  cin&gt;&gt;n&gt;&gt;s;
-  int k;cin&gt;&gt;k;
-  vector tree(n&lt;&lt;7,vector&lt;int&gt;(26));//2^7
-  vector&lt;int&gt;id(n&lt;&lt;7);
-  int cnt=0;
-  auto insert=[&amp;](string ss,int now)&#123;
-    int cur=0;
-    for(int i=0;i&lt;ss.size();++i)&#123;
-        int index=ss[i]&gt;=&#39;A&#39;&amp;&amp;ss[i]&lt;=&#39;Z&#39;?ss[i]-&#39;A&#39;:ss[i]-&#39;a&#39;;
-        if(!tree[cur][index])&#123;
-            tree[cur][index]=++cnt;
-        &#125;
-        cur=tree[cur][index];
-        if(i==s.size()-1)tree[cur][index]++;
-    &#125;
-    id[cur]=now;
-  &#125;;
-  vector&lt;string&gt;dic(k+1);
-  for(int i=1;i&lt;=k;++i)&#123;
-    cin&gt;&gt;dic[i];
-    insert(dic[i],i);
-  &#125;
-  vector&lt;int&gt;dp(n+1);
-  for(int i=0;i&lt;n;++i)&#123;
-    int cur=0;
-    for(int j=i;j&gt;=0;--j)&#123;
-        int index=s[j]&gt;=&#39;A&#39;&amp;&amp;s[j]&lt;=&#39;Z&#39;?s[j]-&#39;A&#39;:s[j]-&#39;a&#39;;
-        if(!tree[cur][index])break;
-        cur=tree[cur][index];
-        if(id[cur]&amp;&amp;(j==0||dp[j-1]))&#123;
-            dp[i]=id[cur];
-            break;
-        &#125;  
-    &#125;
-  &#125;
-  int status=n-1;
-  vector&lt;string&gt;ans;
-  while(status&gt;=0&amp;&amp;dp[status])&#123;
-    ans.push_back(dic[dp[status]]);
-    status-=dic[dp[status]].size();
-  &#125;
-  for(int i=ans.size()-1;i&gt;=0;--i)&#123;
-    cout&lt;&lt;ans[i]&lt;&lt;&quot; \n&quot;[i==0];
-  &#125;
-  return;
-&#125;
-</code></pre>
-<p>CF 629D</p>
-<p>线段树+dp<br>题比较水，没太多好说的，注意一开始build的时候不要用原值，直接赋0</p>
-<pre><code class="lang-C++">const double esp=1e-6;
-const double PI=3.1415926;
-struct node&#123;
-    ll v;
-    int id;
+        <p>CF 733D</p>
+<p>哈希题，把对应的最短边的信息哈希存一下即可</p>
+<pre><code class="lang-C++">struct rec&#123;
+    int a,b,c;
 &#125;;
-ll tree[MAXN&lt;&lt;4];
-vector&lt;node&gt;arr;
-void build(int l,int r,int c)&#123;
-    if(l==r)&#123;
-        tree[c]=0;
-        return;
-    &#125;
-    int m=(l+r)&gt;&gt;1;
-    build(l,m,c&lt;&lt;1);
-    build(m+1,r,c&lt;&lt;1|1);
-&#125;
-ll query(int l,int r,int ql,int qr,int c)&#123;
-    if(ql&lt;=l&amp;&amp;r&lt;=qr)&#123;
-        return tree[c];
-    &#125;
-    int m=(l+r)&gt;&gt;1;
-    ll ans=0;
-    if(ql&lt;=m)&#123;
-        ans=max(ans,query(l,m,ql,qr,c&lt;&lt;1));
-    &#125;
-    if(qr&gt;m)&#123;
-        ans=max(ans,query(m+1,r,ql,qr,c&lt;&lt;1|1));
-    &#125;
-    return ans;
-&#125;
-void update(int l,int r,int c,int id,ll v)&#123;
-    if(l==r)&#123;
-        tree[c]=v;
-        return;
-    &#125;
-    int m=(l+r)&gt;&gt;1;
-    if(id&lt;=m)update(l,m,c&lt;&lt;1,id,v);
-    else if(id&gt;m)update(m+1,r,c&lt;&lt;1|1,id,v);
-    tree[c]=max(tree[c&lt;&lt;1],tree[c&lt;&lt;1|1]);
-&#125;
+using pii=pair&lt;ll,ll&gt;;
 void solve()&#123;
   int n;cin&gt;&gt;n;
-  arr.resize(n+1);
-  vector&lt;ll&gt;dp(n+1);//means the answer of cake end with i
-  dp[0]=1;
-  for(int i=1;i&lt;=n;++i)&#123;
-    ll r,h;cin&gt;&gt;r&gt;&gt;h;
-    arr[i].v=r*r*h;
-    arr[i].id=i;
+  vector&lt;rec&gt;recs(n);
+  map&lt;pii,pii&gt;mp;
+  ll ans=-1,left=-1,right=-1,flag=false;
+  for(int i=0;i&lt;n;++i)&#123;
+    vector&lt;ll&gt;sq(3);
+    for(int i=0;i&lt;3;++i)&#123;
+        cin&gt;&gt;sq[i];
+    &#125;
+    sort(sq.begin(),sq.end());
+    if(sq[0]&gt;ans)&#123;
+        flag=false;
+        ans=sq[0];
+        left=i;
+    &#125;
+    auto pr=make_pair(sq[1],sq[2]);
+    if(mp.find(pr)==mp.end())&#123;
+        mp[pr]=make_pair(i,sq[0]);
+        continue;
+    &#125;
+    ll new_max=std::min(&#123;sq[2],sq[1],mp[pr].second+sq[0]&#125;);
+    if(new_max&gt;ans)&#123;
+        ans=new_max;
+        left=mp[pr].first;
+        right=i;
+        flag=true;
+    &#125;
+    if(sq[0]&gt;mp[pr].second)&#123;
+        mp[pr].second=sq[0];
+        mp[pr].first=i;
+    &#125;
   &#125;
-  sort(arr.begin()+1,arr.end(),[&amp;](node a,node b)&#123;
-    if(fabs(a.v-b.v)&lt;esp)return a.id&gt;b.id;
-    return a.v&lt;b.v;
-  &#125;);
-  double ans=0;
-  build(1,n,1);
-  for(int i=1;i&lt;=n;++i)&#123;
-    int id=arr[i].id;
-    ll res=query(1,n,1,id,1)+arr[i].v;
-    update(1,n,1,id,res);
-    ans=max(ans,res*1.0);
+  if(!flag)&#123;
+    cout&lt;&lt;1&lt;&lt;&#39;\n&#39;;
+    cout&lt;&lt;left+1;
+  &#125;else&#123;
+    cout&lt;&lt;2&lt;&lt;&#39;\n&#39;;
+    cout&lt;&lt;left+1&lt;&lt;&#39; &#39;&lt;&lt;right+1&lt;&lt;&#39;\n&#39;;
   &#125;
-  ans*=PI;
-  cout.precision(9);
-  cout&lt;&lt;ans&lt;&lt;&#39;\n&#39;;
+  return;
 &#125;
 </code></pre>
-<p>被找实习的逼事搞的够恶心，今天凌晨睡觉阿里打了仨电话都没接到，最近作息有点烂，真不能乱熬夜了，未来坎坷啊少年。</p>
+<p>CF 739B</p>
+<p>树上搜索+差分</p>
+<pre><code class="lang-C++">void solve()&#123;
+  int n;cin&gt;&gt;n;
+  vector&lt;int&gt;a(n);
+  for(int i=0;i&lt;n;++i)cin&gt;&gt;a[i];
+  vector&lt;vector&lt;int&gt;&gt;E(n),cost(E);
+  for(int i=1;i&lt;n;++i)&#123;
+    int p,w;cin&gt;&gt;p&gt;&gt;w;
+    --p;
+    E[i].push_back(p);
+    E[p].push_back(i);
+    cost[i].push_back(w);
+    cost[p].push_back(w);
+  &#125;
+  vector&lt;int&gt;ans(n),dis(n);
+  vector&lt;pii&gt;que;
+  function&lt;void(int,int)&gt;dfs=[&amp;](int x,int f)&#123;
+    ans[x]=1;
+    int pos=lower_bound(que.begin(),que.end(),make_pair(dis[x]-a[x],0ll))-que.begin()-1;//find the previous 
+    if(pos&gt;=0)&#123;
+        ans[que[pos].second]--;
+    &#125;
+    que.push_back(&#123;dis[x],x&#125;);
+    for(int i=0;i&lt;E[x].size();++i)&#123;
+        int v=E[x][i],c=cost[x][i];
+        if(v==f)continue;
+        dis[v]=dis[x]+c;
+        dfs(v,x);
+        ans[x]+=ans[v];
+    &#125;
+    que.pop_back();
+  &#125;;
+  dfs(0,-1);
+  for(int i=0;i&lt;n;++i)&#123;
+    cout&lt;&lt;ans[i]-1&lt;&lt;&#39; &#39;;
+  &#125;
+  return;
+&#125;
+</code></pre>
+<p>CF 14C</p>
+<p>简单逻辑题</p>
+<pre><code class="lang-C++">void solve()&#123;
+  int x=0,y=0;
+  map&lt;pii,int&gt;mp;
+  for(int i=0;i&lt;4;++i)&#123;
+    int x1,y1,x2,y2;
+    cin&gt;&gt;x1&gt;&gt;y1&gt;&gt;x2&gt;&gt;y2;
+    x+=(y1==y2)&amp;&amp;(x1!=x2);
+    y+=(x1==x2)&amp;&amp;(y1!=y2);
+    mp[make_pair(x1,y1)]++;
+    mp[make_pair(x2,y2)]++;
+  &#125;
+  bool check=(x==2)&amp;&amp;(y==2);
+  for(auto it:mp)&#123;
+    if(it.second!=2)&#123;
+      check=false;
+    &#125;
+  &#125;
+  if(check)&#123;
+    cout&lt;&lt;&quot;YES\n&quot;;
+  &#125;else&#123;
+    cout&lt;&lt;&quot;NO\n&quot;;
+  &#125;
+  return;
+&#125;
+</code></pre>
+<p>再也不熬了！！！傻逼无头骑士，看了我两个晚上了，难顶，今天必须给他看完，明天开始背八股惹</p>
 
     </div>
     
