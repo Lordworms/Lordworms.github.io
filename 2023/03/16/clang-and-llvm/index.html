@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>Tags: CodeForces | Waiting for the dawn</title>
+        <title>clang and llvm | Waiting for the dawn</title>
         <meta name="author" content="Yanxin Xiang">
         <meta name="description" content="">
         <meta name="keywords" content="">
@@ -130,182 +130,62 @@
     </div>
 </nav>
 
-                <div id="archives">
-    
-    <div class="categories-tags">
+                <div class="article">
+    <div>
+        <h1>clang and llvm </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/3/16
+        </span>
         
-        
-        <span>
-            <a href="/tags/CodeForces/" style="background: linear-gradient(120deg, #9abbf7 0%, #ffbbf4 100%)">
+        <span class="category">
+            <a href="/categories/compiler/">
                 <span class="icon">
-                    <i class="fa-solid fa-tags fa-fw"></i>
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
                 </span>
-                CodeForces
+                compiler
             </a>
         </span>
         
         
-        
-        
-        
-        <span>
-            <a href="/tags/interview/" style="background: #03a9f4">
-                <span class="icon">
-                    <i class="fa-solid fa-tags fa-fw"></i>
-                </span>
-                interview
-            </a>
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/llvm/" style="color: #00a596">llvm</a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/clang/" style="color: #ff7d73">clang</a>
+            </span>
+            
         </span>
-        
-        
-        
-        <span>
-            <a href="/tags/C/" style="background: #ffa2c4">
-                <span class="icon">
-                    <i class="fa-solid fa-tags fa-fw"></i>
-                </span>
-                C++
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/tags/llvm/" style="background: #03a9f4">
-                <span class="icon">
-                    <i class="fa-solid fa-tags fa-fw"></i>
-                </span>
-                llvm
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/tags/clang/" style="background: #ff7d73">
-                <span class="icon">
-                    <i class="fa-solid fa-tags fa-fw"></i>
-                </span>
-                clang
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/tags/dp/" style="background: #03a9f4">
-                <span class="icon">
-                    <i class="fa-solid fa-tags fa-fw"></i>
-                </span>
-                dp
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/tags/dp-practice-plan/" style="background: #00bcd4">
-                <span class="icon">
-                    <i class="fa-solid fa-tags fa-fw"></i>
-                </span>
-                dp_practice_plan
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/tags/introduction/" style="background: #ff7d73">
-                <span class="icon">
-                    <i class="fa-solid fa-tags fa-fw"></i>
-                </span>
-                -introduction
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/tags/daily/" style="background: #03a9f4">
-                <span class="icon">
-                    <i class="fa-solid fa-tags fa-fw"></i>
-                </span>
-                daily
-            </a>
-        </span>
-        
         
     </div>
     
-    <div class="timeline">
-        <div class="timeline-tail"></div>
-        <div class="timeline-content">
-            <div class="item-time">2023/3/4</div>
-            <a href="/2023/03/04/CF-800/">
-                <h3>CF_800</h3>
-            </a>
-            <div class="info">
-                
-                <span class="category">
-                    <a href="/categories/Algorithm/">
-                        <span class="icon">
-                            <i class="fa-solid fa-bookmark fa-fw"></i>
-                        </span>
-                        Algorithm
-                    </a>
-                </span>
-                
-                
-                <span class="tags">
-                    <span class="icon">
-                        <i class="fa-solid fa-tags fa-fw"></i>
-                    </span>
-                    
-                    <span class="tag">
-                        
-                        <a href="/tags/CodeForces/" style="color: #ff7d73">CodeForces</a>
-                    </span>
-                    
-                </span>
-                
-            </div>
-        </div>
+    <div class="content" v-pre>
+        <ol>
+<li>clang生成IR<pre><code>clang -emit-llvm -S input_file_name -o output_file_name.ll
+</code></pre></li>
+<li>IR生成二进制<pre><code>llvm-gcc -S input_file_name -o output_file_name
+</code></pre></li>
+</ol>
+
     </div>
     
-    <div class="timeline">
-        <div class="timeline-tail"></div>
-        <div class="timeline-content">
-            <div class="item-time">2023/3/3</div>
-            <a href="/2023/03/03/CF-802/">
-                <h3>CF_802</h3>
-            </a>
-            <div class="info">
-                
-                <span class="category">
-                    <a href="/categories/Algorithm/">
-                        <span class="icon">
-                            <i class="fa-solid fa-bookmark fa-fw"></i>
-                        </span>
-                        Algorithm
-                    </a>
-                </span>
-                
-                
-                <span class="tags">
-                    <span class="icon">
-                        <i class="fa-solid fa-tags fa-fw"></i>
-                    </span>
-                    
-                    <span class="tag">
-                        
-                        <a href="/tags/CodeForces/" style="color: #03a9f4">CodeForces</a>
-                    </span>
-                    
-                </span>
-                
-            </div>
-        </div>
-    </div>
+    
+    
+    
+    
+    
     
 </div>
 
@@ -332,6 +212,11 @@
         </div>
         <script src="/js/functions.js"></script>
 <script src="/js/particlex.js"></script>
+
+
+
+
+
 
 
     </body>
