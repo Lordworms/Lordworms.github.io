@@ -150,12 +150,12 @@
             
             <span class="tag">
                 
-                <a href="/tags/interview/" style="color: #ff7d73">interview</a>
+                <a href="/tags/interview/" style="color: #00bcd4">interview</a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/C/" style="color: #ff7d73">C++</a>
+                <a href="/tags/C/" style="color: #00a596">C++</a>
             </span>
             
         </span>
@@ -417,6 +417,50 @@ int main()&#123;
 <p>原因：C++ 是静态绑定语言，编译器管理栈上对象的生命周期，编译器在为类对象分配栈空间时，会先检查类的析构函数的访问性。若析构函数不可访问，则不能在栈上创建对象。</p>
 <p>2.只能在栈上<br>方法：将 new 和 delete 重载为私有</p>
 <p>原因：在堆上生成对象，使用 new 关键词操作，其过程分为两阶段：第一阶段，使用 new 在堆上寻找可用内存，分配给对象；第二阶段，调用构造函数生成对象。将 new 操作设置为私有，那么第一阶段就无法完成，就不能够在堆上生成对象。</p>
+<h4 id="22-delete"><a href="#22-delete" class="headerlink" title="22. =delete"></a>22. =delete</h4><p>声明为=delete之后就不允许对应的隐式转换了</p>
+<pre><code class="lang-C++">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+void print(double a)=delete;
+void print(int a)&#123;
+    cout&lt;&lt;a&lt;&lt;&#39;\n&#39;;
+&#125;
+int main()&#123;
+  print(1);
+  return 0;
+&#125;
+</code></pre>
+<h4 id="23-继承"><a href="#23-继承" class="headerlink" title="23. 继承"></a>23. 继承</h4><div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>public</th>
+<th>protected</th>
+<th>private</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>公有继承</td>
+<td>public</td>
+<td>protected</td>
+<td>不可见</td>
+</tr>
+<tr>
+<td>私有继承</td>
+<td>private</td>
+<td>private</td>
+<td>不可见</td>
+</tr>
+<tr>
+<td>保护继承</td>
+<td>protected</td>
+<td>protected</td>
+<td>不可见</td>
+</tr>
+</tbody>
+</table>
+</div>
 
     </div>
     

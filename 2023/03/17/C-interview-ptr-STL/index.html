@@ -1,0 +1,513 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>C++ -interview ptr&amp;STL | Waiting for the dawn</title>
+        <meta name="author" content="Yanxin Xiang">
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+        <link rel="icon" href="https://s2.loli.net/2023/03/03/LNHQJzc54fgYDMd.jpg">
+        <script src="https://cdn.staticfile.org/vue/3.2.45/vue.global.prod.min.js"></script>
+        <script src="https://cdn.staticfile.org/highlight.js/11.7.0/highlight.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/11.7.0/styles/github.min.css">
+        <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/6.2.1/css/all.min.css">
+        
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+        
+        
+        <script src="https://cdn.staticfile.org/KaTeX/0.16.4/katex.min.js"></script>
+        <script src="https://cdn.staticfile.org/KaTeX/0.16.4/contrib/auto-render.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.staticfile.org/KaTeX/0.16.4/katex.min.css">
+        
+        
+        <link rel="stylesheet" href="/css/fonts.min.css">
+        <link rel="stylesheet" href="/css/particlex.css">
+    <meta name="generator" content="Hexo 6.3.0"></head>
+    <body>
+        <div id="loading" style="height: 100vh; width: 100vw; left: 0; top: 0; position: fixed; display: flex; z-index: 2147483647; background: #fff; transition: opacity 0.3s ease-out; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; pointer-events: none">
+    <div style="width: 50vmin; height: 50vmin; margin: auto; padding: 50px; border-radius: 50%; display: flex; border: solid 10px #a3ddfb">
+        <div style="margin: auto; text-align: center">
+            <h2>LOADING</h2>
+            <p>加载过慢请开启缓存，浏览器默认开启</p>
+            <img src="/images/loading.gif" style="height: 50px; border-radius: 0">
+        </div>
+    </div>
+</div>
+
+        <div id="layout">
+            <transition name="into">
+            <div id="main" v-show="showpage" style="display: -not-none">
+                <nav id="menu">
+    <div class="desktop-menu">
+        <a class="title" href="/">
+            <span>WAITING FOR THE DAWN</span>
+        </a>
+        
+        <a href="/">
+            <i class="fa-solid fa-house fa-fw"></i>
+            <span>&ensp;Home</span>
+        </a>
+        
+        <a href="/about">
+            <i class="fa-solid fa-id-card fa-fw"></i>
+            <span>&ensp;About</span>
+        </a>
+        
+        <a href="/archives">
+            <i class="fa-solid fa-box-archive fa-fw"></i>
+            <span>&ensp;Archives</span>
+        </a>
+        
+        <a href="/categories">
+            <i class="fa-solid fa-bookmark fa-fw"></i>
+            <span>&ensp;Categories</span>
+        </a>
+        
+        <a href="/tags">
+            <i class="fa-solid fa-tags fa-fw"></i>
+            <span>&ensp;Tags</span>
+        </a>
+        
+    </div>
+    <div :class="&quot;phone-menu &quot; + menushow" id="phone-menu">
+        <div class="curtain" @click="menushow = !menushow" v-show="menushow"></div>
+        <div class="title" @click="menushow = !menushow">
+            <i class="fa-solid fa-bars fa-fw"></i>
+            <span>&emsp;WAITING FOR THE DAWN</span>
+        </div>
+        <transition name="slide">
+        <div class="items" v-show="menushow">
+            
+            <a href="/">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-house fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Home</div>
+                </div>
+            </a>
+            
+            <a href="/about">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-id-card fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">About</div>
+                </div>
+            </a>
+            
+            <a href="/archives">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-box-archive fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Archives</div>
+                </div>
+            </a>
+            
+            <a href="/categories">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-bookmark fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Categories</div>
+                </div>
+            </a>
+            
+            <a href="/tags">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-tags fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Tags</div>
+                </div>
+            </a>
+            
+        </div>
+        </transition>
+    </div>
+</nav>
+
+                <div class="article">
+    <div>
+        <h1>C++ -interview ptr&amp;STL </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/3/17
+        </span>
+        
+        
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/interview/" style="color: #ffa2c4">interview</a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/C/" style="color: #ffa2c4">C++</a>
+            </span>
+            
+        </span>
+        
+    </div>
+    
+    <div class="content" v-pre>
+        <h1 id="Smart-pointer"><a href="#Smart-pointer" class="headerlink" title="Smart pointer"></a>Smart pointer</h1><h2 id="1-shared-pointer"><a href="#1-shared-pointer" class="headerlink" title="1.shared pointer"></a>1.shared pointer</h2><p>shared pointer允许多个指针指向某个内存区域</p>
+<p>以下为简单实现</p>
+<pre><code class="lang-C++">class Counter&#123;
+    private:
+        uint64_t cnt=0;
+    public:
+        Counter():cnt(0)&#123;&#125;
+        Counter(const Counter&amp; c)=delete;
+        Counter&amp; operator=(const Counter&amp; c)=delete;
+        ~Counter()&#123;&#125;
+        void reset()&#123;
+            this-&gt;cnt=0;
+        &#125;
+        uint64_t get()&#123;
+            return this-&gt;cnt;
+        &#125;
+        void operator++()&#123;
+            this-&gt;cnt++;
+        &#125;
+        void operator++(int)&#123;
+            this-&gt;cnt++;
+        &#125;
+        void operator--()&#123;
+            this-&gt;cnt--;
+        &#125;
+        void operator--(int)&#123;
+            this-&gt;cnt--;
+        &#125;
+        friend ofstream&amp; operator&lt;&lt;(ofstream&amp; out,const Counter&amp; c)&#123;
+            out&lt;&lt;c.cnt&lt;&lt;&#39;\n&#39;;
+            return out;
+        &#125;
+&#125;;
+template&lt;typename T&gt;
+class Shared_ptr&#123;
+    private:
+        Counter* counter;
+        T* ptr;
+    public:
+        explicit Shared_ptr(T* ptr=nullptr)&#123;
+            this-&gt;counter=new Counter();
+            this-&gt;ptr=ptr;
+            (*this-&gt;counter)++;
+        &#125;
+        Shared_ptr(Shared_ptr&lt;T&gt;&amp; sp)&#123;
+            this-&gt;counter=sp.counter;
+            this-&gt;ptr=sp.ptr;
+            (*this-&gt;counter)++;
+        &#125;
+        T* get()&#123;
+            return this-&gt;ptr;
+        &#125;
+        uint64_t get_cnt()&#123;
+            return this-&gt;counter-&gt;get();
+        &#125;
+        T&amp; operator*()&#123;
+            return *this-&gt;ptr;
+        &#125;
+        T* operator-&gt;()&#123;
+            return this-&gt;ptr;
+        &#125;
+        ~Shared_ptr()&#123;
+            (*counter)--;
+            if(this-&gt;counter-&gt;get()==0)&#123;
+                delete counter;
+                delete this-&gt;ptr;
+            &#125;
+        &#125;
+        friend ostream&amp; operator&lt;&lt;(ostream&amp; out,Shared_ptr&lt;T&gt;&amp;ptr)&#123;//watch out for the &amp;,if not then call Shared_ptr(Shared_ptr&lt;T&gt;&amp; sp)
+            out&lt;&lt;&quot;address is&quot;&lt;&lt;ptr.get()&lt;&lt;&#39;\n&#39;;
+            out&lt;&lt;&quot;counter is&quot;&lt;&lt;ptr.get_cnt()&lt;&lt;&#39;\n&#39;;
+            return out;
+        &#125;
+&#125;;
+</code></pre>
+<h2 id="2-unique-ptr"><a href="#2-unique-ptr" class="headerlink" title="2.unique_ptr"></a>2.unique_ptr</h2><p>没有构造函数，所以不支持普通的拷贝和赋值操作<br>不允许copy和赋值操作</p>
+<h2 id="3-weak-ptr"><a href="#3-weak-ptr" class="headerlink" title="3. weak_ptr"></a>3. weak_ptr</h2><p>1.weak_ptr只能从shared_ptr对象构建。</p>
+<p>2.weak_ptr并不影响动态对象的生命周期，即其存在与否并不影响对象的引用计数器。当weak_ptr所指向的对象因为shared_ptr计数器为0而被释放后，那么weak_ptr的lock方法将返回空。</p>
+<p>3.weak_ptr并没有重载operator-&gt;和operator *操作符，因此不可直接通过weak_ptr使用对象。</p>
+<p>4.提供了expired()与lock()成员函数，前者用于判断weak_ptr指向的对象是否已被销毁，后者返回其所指对象的shared_ptr智能指针(对象销毁时返回”空“shared_ptr)，如果返回shared_ptr，那么计数器会加1.</p>
+<p>解决了如下问题<br>1 当你想使用对象，但是并不管理对象，并且在需要时可以返回对象的shared_ptr时，则使用</p>
+<p>2.解决shared_ptr的循环引用问题</p>
+<pre><code class="lang-C++">class A;
+class B&#123;
+   public:
+   ~B() &#123;
+     std::cout &lt;&lt; &quot;B destory, a_ptr use_count:&quot; &lt;&lt; a_ptr.use_count() &lt;&lt; &quot;\n&quot;;
+   &#125;
+
+   std::shared_ptr&lt;A&gt; a_ptr;
+ &#125;;
+
+class A&#123;
+public:
+    ~A() &#123;
+        std::cout &lt;&lt; &quot;A destory, b_ptr use_count:&quot; &lt;&lt; b_ptr.use_count() &lt;&lt; &quot;\n&quot;;
+    &#125;
+
+    std::shared_ptr&lt;B&gt; b_ptr;
+&#125;;
+int main()&#123;
+  shared_ptr&lt;int&gt;p1(new int(3));
+  shared_ptr&lt;int&gt;p2(p1);
+  weak_ptr&lt;int&gt;pp1(p1);
+  cout&lt;&lt;pp1.use_count()&lt;&lt;&#39;\n&#39;;
+  p2.reset();
+  cout&lt;&lt;pp1.use_count()&lt;&lt;&#39;\n&#39;;
+  cout&lt;&lt;*pp1.lock()&lt;&lt;&#39;\n&#39;;
+  p1.reset();
+  cout&lt;&lt;pp1.use_count()&lt;&lt;&#39;\n&#39;;
+  cout&lt;&lt;pp1.expired()&lt;&lt;&#39;\n&#39;;
+
+  std::shared_ptr&lt;A&gt; a(new A());
+  std::shared_ptr&lt;B&gt; b(new B());
+  a-&gt;b_ptr=b;
+  b-&gt;a_ptr=a;
+
+  std::cout &lt;&lt; &quot;A:&quot; &lt;&lt; a.use_count() &lt;&lt; &quot;\n&quot;;
+  std::cout &lt;&lt; &quot;B:&quot; &lt;&lt; b.use_count() &lt;&lt; &quot;\n&quot;;
+  return 0;
+&#125;
+</code></pre>
+<h2 id="4-auto-ptr"><a href="#4-auto-ptr" class="headerlink" title="4.auto ptr"></a>4.auto ptr</h2><p>被废弃，主要支持以下功能<br>1.支持拷贝构造<br>2.支持赋值拷贝<br>3.支持operator-&gt;/operator*解引用<br>4.支持指针变量重置<br>5.保证指针持有者唯一</p>
+<p>会有很多所有权转移的问题，比如如下的代码</p>
+<pre><code class="lang-C++">std::auto_ptr&lt;People&gt; one = peoples[5];
+</code></pre>
+<p>这会把所有权进行交换，这是因为auto ptr实现了=，然后所有权就交换了</p>
+<p>auto_ptr 可以赋值拷贝，复制拷贝后所有权转移；unqiue_ptr 无拷贝赋值语义，但实现了move 语义；<br>auto_ptr 对象不能管理数组（析构调用 delete），unique_ptr 可以管理数组（析构调用 delete[] ）；</p>
+<h1 id="Cast"><a href="#Cast" class="headerlink" title="Cast"></a>Cast</h1><h2 id="static-cast"><a href="#static-cast" class="headerlink" title="static_cast"></a>static_cast</h2><p>1.本质上是C强制转换的替代品,因为C的强制转换不好找，所以采用static_cast</p>
+<p>2.对于C风格的强制转换来说，假如你把一个char<em>强制转换成int\</em>，这在C里面是可以实现的，但是运行的时候是会出错的，但是如果你使用static_cast，那么预编译的时候就会出错，让你没法编译惹</p>
+<p>3.对于私有继承基类的子类来说，是不允许转换为基类指针的，但是用C强制转换可以，所以我们需要用static_cast来在预编译的时候发现错误</p>
+<p>4.有时候，假如两个子类都继承同一个基类，你分别把该两个子类转换为基类，然后把拿到的转换为另一个子类，这样做在static_cast的时候可以过编译，所以我们在这种情况下不该使用它</p>
+<p>5.处理void*的时候，记得用static_cast!</p>
+<pre><code class="lang-C++">class Int&#123;
+    private:
+        int x;
+    public:
+        Int(int a):x(a)&#123;
+            cout&lt;&lt;&quot;call contructor!\n&quot;;
+        &#125;
+        operator string()&#123;
+            cout&lt;&lt;&quot;call operator!\n&quot;;
+            return to_string(this-&gt;x);
+        &#125;
+        int value()&#123;
+            return this-&gt;x;
+        &#125;
+        friend ostream&amp; operator&lt;&lt;(ostream&amp; out,Int&amp; a)&#123;
+            out&lt;&lt;a.x&lt;&lt;&#39;\n&#39;;
+            return out;
+        &#125;
+&#125;;
+class Dad&#123;
+
+&#125;;
+class Son:private Dad&#123;
+
+&#125;;
+class Son_1:public Dad&#123;
+
+&#125;;
+class Son_2:public Dad&#123;
+
+&#125;;
+int main()&#123;
+
+  float a_f=1.1;
+  int a_i=static_cast&lt;int&gt;(a_f);
+  assert(a_i==1);
+
+  Int obj(3);
+  cout&lt;&lt;obj&lt;&lt;&#39;\n&#39;;
+  string obj_str=static_cast&lt;string&gt;(obj);
+  assert(obj_str==&quot;3&quot;);
+
+  obj=static_cast&lt;Int&gt;(9);
+  assert(obj.value()==9);
+
+  int* b_int=new int;
+  char* b_char=new char;
+  //b_int=(int*)(b_char);//could pass,but wrong in runing
+
+  // b_int=static_cast&lt;int*&gt;(b_char);//fail since static_cast would check!
+
+  Son s;
+  //Dad* d=(Dad*)&amp;s;//could pass wrong in runing since it is private inherient
+
+  //Dad* d=static_cast&lt;Dad*&gt;(&amp;s);//could not pass unless it is public
+
+  Son_1 s1;
+  Son_2 s2;
+  Dad* d1=static_cast&lt;Dad*&gt;(&amp;s1);
+  Dad* d2=static_cast&lt;Dad*&gt;(&amp;s2);
+
+  Son_2* s22=static_cast&lt;Son_2*&gt;(d1);//should never use static_cast!
+  Son_1* s11=static_cast&lt;Son_1*&gt;(d2);
+
+  int i=10;
+  void* ptr=static_cast&lt;void*&gt;(&amp;i);//always use static_cast
+  int* new_i=static_cast&lt;int*&gt;(ptr);
+  return 0;
+&#125;
+</code></pre>
+<h2 id="2-dynamic-cast"><a href="#2-dynamic-cast" class="headerlink" title="2. dynamic cast"></a>2. dynamic cast</h2><p>1.dynamic_cast是用于处理static_cast的上一个问题的</p>
+<p>2.用于在正确的时候对基类向子类进行cast</p>
+<p>3.需要多态的特性才能进行使用(至少有一个virtual function)</p>
+<p>4.runtime check 所以性能你懂的</p>
+<p>5.如果转换的新类型是引用类型，throw一个错误</p>
+<pre><code class="lang-C++">class Dad&#123;
+    virtual void print()&#123;
+        cout&lt;&lt;&quot;I am a dad\n&quot;;
+    &#125;
+&#125;;
+class Son:public Dad&#123;
+    void print()override&#123;
+        cout&lt;&lt;&quot;I am a son\n&quot;;
+    &#125;
+&#125;;
+class Daughter:public Dad&#123;
+    void print()override&#123;
+        cout&lt;&lt;&quot;I am a Daughter!\n&quot;;
+    &#125;
+&#125;;
+int main()&#123;
+  Son son1;
+  Dad* d=dynamic_cast&lt;Dad*&gt;(&amp;son1);
+  assert(d!=nullptr);
+  Daughter* dau=dynamic_cast&lt;Daughter*&gt;(d);
+  assert(dau==nullptr);
+  try&#123;
+    Daughter&amp; dd=dynamic_cast&lt;Daughter&amp;&gt;(son1);
+  &#125;catch(std::exception&amp; e)&#123;
+    std::cout&lt;&lt;e.what()&lt;&lt;&quot;wrong!&quot;&lt;&lt;&#39;\n&#39;;
+  &#125;
+  return 0;
+&#125;
+</code></pre>
+<h2 id="3-reinterpret-cast"><a href="#3-reinterpret-cast" class="headerlink" title="3. reinterpret_cast"></a>3. reinterpret_cast</h2><p>1.用于对某个结构体的重interpret</p>
+<p>2.需要很小心的使用</p>
+<p>3.用于位的重定义</p>
+<pre><code class="lang-C++">class Man&#123;
+    public:
+    void say_man()&#123;
+        cout&lt;&lt;&quot;I am a man\n&quot;;
+    &#125;
+&#125;;
+class Woman&#123;
+    public:
+    void say_woman()&#123;
+        cout&lt;&lt;&quot;I am a woman\n&quot;;
+    &#125;
+&#125;;
+struct node&#123;
+    int x,y;
+    char c;
+    bool b;
+&#125;;
+int main()&#123;
+  Man* m=new Man;
+  Woman* w=new Woman;
+
+  m-&gt;say_man();
+  Man* new_man=reinterpret_cast&lt;Man*&gt;(w);//should not use it!
+  new_man-&gt;say_man();
+
+  //when you should use re_interpret_cast
+  node s;
+  s.y=1;s.c=&#39;a&#39;;s.x=2;s.b=false;
+  int* p=reinterpret_cast&lt;int*&gt;(&amp;s);
+  cout&lt;&lt;*p&lt;&lt;&#39;\n&#39;;
+  ++p;
+  cout&lt;&lt;*p&lt;&lt;&#39;\n&#39;;
+  ++p;
+  cout&lt;&lt;*(reinterpret_cast&lt;char*&gt;(p))&lt;&lt;&#39;\n&#39;;
+  return 0;
+&#125;
+</code></pre>
+<h2 id="4-const-cast"><a href="#4-const-cast" class="headerlink" title="4.const_cast"></a>4.const_cast</h2><p>用于删除 const、volatile 和 __unaligned 特性（如将 const int 类型转换为 int 类型 ）</p>
+<p>需要原数据不是constant</p>
+<p>另一个用法是当你需要往某个需要变量的函数里传constant的时候，需要用const_cast来取消constant</p>
+<pre><code class="lang-C++">void transfer(int* x)&#123;
+    cout&lt;&lt;&quot;1\n&quot;;
+&#125;
+int main()&#123;
+  const int a=1;
+  const int* b=&amp;a;
+  int* c=const_cast&lt;int*&gt;(b);// now removed the const
+  *c=2;//invalid and undefine behavior, should not use!
+  cout&lt;&lt;a&lt;&lt;&#39;\n&#39;;//would not change,since compiler would directly write the constant value for print
+
+  int aa=1;
+  const int* bb=&amp;aa;
+  int* cc=const_cast&lt;int*&gt;(bb);
+  *cc=3;
+  cout&lt;&lt;aa&lt;&lt;&#39;\n&#39;;
+
+  const int v=1;
+  const int* pv=&amp;v;
+
+  transfer(const_cast&lt;int*&gt;(pv));//ok
+  //transfer(pv);//panic!
+  return 0;
+&#125;
+</code></pre>
+<p>搞完了，下节更STL的逼东西，明天更网络和OS</p>
+
+    </div>
+    
+    
+    
+    
+    
+    
+    
+</div>
+
+                <footer id="footer">
+    <div class="footer-wrap">
+        <div>
+            &copy;
+            2022 - 2023 Waiting for the dawn
+            <span class="footer-icon">
+                <i class="fa-solid fa-font-awesome fa-fw"></i>
+            </span>
+            &commat;Yanxin Xiang
+        </div>
+        <div>Based on the <a target="_blank" rel="noopener" href="https://hexo.io">Hexo Engine</a> &amp; <a target="_blank" rel="noopener" href="https://github.com/argvchs/hexo-theme-particlex">ParticleX Theme</a></div>
+        
+    </div>
+</footer>
+
+            </div>
+            </transition>
+            <div id="showimg">
+                <img id="showimg-content">
+            </div>
+        </div>
+        <script src="/js/functions.js"></script>
+<script src="/js/particlex.js"></script>
+
+
+
+
+
+
+
+    </body>
+</html>
