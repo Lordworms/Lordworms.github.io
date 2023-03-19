@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>dp practice_day 5 | Waiting for the dawn</title>
+        <title>rust learning writing | Waiting for the dawn</title>
         <meta name="author" content="Yanxin Xiang">
         <meta name="description" content="">
         <meta name="keywords" content="">
@@ -132,207 +132,44 @@
 
                 <div class="article">
     <div>
-        <h1>dp practice_day 5 </h1>
+        <h1>rust learning writing </h1>
     </div>
     <div class="info">
         <span class="date">
             <span class="icon">
                 <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
-            2023/3/9
+            2023/3/18
         </span>
         
-        <span class="category">
-            <a href="/categories/Algorithm/">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                Algorithm
-            </a>
-        </span>
-        
-        
-        <span class="tags">
-            <span class="icon">
-                <i class="fa-solid fa-tags fa-fw"></i>
-            </span>
-            
-            <span class="tag">
-                
-                <a href="/tags/dp/" style="color: #00a596">dp</a>
-            </span>
-            
-            <span class="tag">
-                
-                <a href="/tags/dp-practice-plan/" style="color: #ff7d73">dp_practice_plan</a>
-            </span>
-            
-        </span>
         
     </div>
     
     <div class="content" v-pre>
-        <p>CF 347 C</p>
-<p>一道记忆化搜索题，没太多好说的，注意记忆化搜索的方式以及vis数组的更改</p>
-<pre><code class="lang-C++">void solve()&#123;
-  int n,m;cin&gt;&gt;n&gt;&gt;m;
-  auto check=[&amp;](int x,int y)&#123;
-    return x&gt;=1&amp;&amp;x&lt;=n&amp;&amp;y&gt;=1&amp;y&lt;=m;
-  &#125;;
-  vector&lt;vector&lt;char&gt;&gt;mp(n+1,vector&lt;char&gt;(m+1));
-  vector&lt;vector&lt;bool&gt;&gt;vis(n+1,vector&lt;bool&gt;(m+1,false));
-  vector&lt;vector&lt;int&gt;&gt;dis(n+1,vector&lt;int&gt;(m+1));
-  auto check_char=[&amp;](int x,int y,int tx,int ty)&#123;
-    return mp[x][y]==&#39;D&#39;&amp;&amp;mp[tx][ty]==&#39;I&#39;||mp[x][y]==&#39;I&#39;&amp;&amp;mp[tx][ty]==&#39;M&#39;||mp[x][y]==&#39;M&#39;&amp;&amp;mp[tx][ty]==&#39;A&#39;||mp[x][y]==&#39;A&#39;&amp;&amp;mp[tx][ty]==&#39;D&#39;;
-  &#125;;
-  for(int i=1;i&lt;=n;++i)&#123;
-    for(int j=1;j&lt;=m;++j)&#123;
-        cin&gt;&gt;mp[i][j];
-    &#125;
-  &#125;
-  int ans=0;
-  function&lt;void(int,int)&gt;dfs=[&amp;](int x,int y)&#123;
-    if(dis[x][y])return;
-    vis[x][y]=1;
-    dis[x][y]=1;
-    for(int i=0;i&lt;4;++i)&#123;
-        int tx=x+dir[i][0];
-        int ty=y+dir[i][1];
-        if(!check(tx,ty)||!check_char(x,y,tx,ty))continue;
-        if(vis[tx][ty])&#123;
-            cout&lt;&lt;&quot;Poor Inna!\n&quot;;
-            exit(0);
-        &#125;
-        dfs(tx,ty);
-        dis[x][y]=max(dis[x][y],dis[tx][ty]+1);
-    &#125;
-    vis[x][y]=0;
-  &#125;;
-  for(int i=1;i&lt;=n;++i)&#123;
-    for(int j=1;j&lt;=m;++j)&#123;
-        if(mp[i][j]==&#39;D&#39;&amp;&amp;!vis[i][j])&#123;//did not appear in other situation
-            dfs(i,j);
-            ans=max(dis[i][j],ans);
-        &#125;
-    &#125;
-  &#125;
-  ans/=4;
-  if(ans==0)&#123;
-    cout&lt;&lt;&quot;Poor Dima!\n&quot;;
-  &#125;else&#123;
-    cout&lt;&lt;ans&lt;&lt;&#39;\n&#39;;
-  &#125;
-  return;
+        <ol>
+<li>PartialEq PartialOrd trait</li>
+</ol>
+<p>让你可以自由地定义=和不=<br>让你可以自由地定义&gt;和&lt;</p>
+<ol>
+<li>一个标准的单元测试应该这样写<pre><code class="lang-Rust">#[cfg(test)]
+pub mod test&#123;
+ use crate::heap::test::Node;
+ #[test]
+ pub fn test_partial_eq()&#123;
+     let node_1=Node&#123;
+         value:2,
+         pos:3,
+     &#125;;
+     let node_2=Node&#123;
+         value:3,
+         pos:4,
+     &#125;;
+     assert!(node_1!=node_2);
+ &#125;
 &#125;
 </code></pre>
-<p>CF 402D</p>
-<p>刚开始看到的时候有点不好下手</p>
-<p>首先我们判断，肯定是要从后往前进行操作，因为从前往后的话会导致你之后的操作无效(前面都变成gcd=1了)<br>题目中的f的值就是这个数含有的good prime数量 -bad prime数量<br>对应去求即可</p>
-<pre><code class="lang-C++">int a[N],g[N];
-int gcd(int a,int b)&#123;
-  return b==0 ? a : gcd(b,a%b);
-&#125;
-set&lt;int&gt;bad;
-pii get_pair(int x)&#123;
-    int posi=0,neg=0;
-    for(int i=2,t=sqrt(x);i&lt;=t;++i)&#123;
-        int cnt=0;
-        while(x%i==0)&#123;
-            x/=i;
-            ++cnt;
-        &#125;
-        if(!cnt)continue;
-        if(bad.count(i))&#123;
-            neg+=cnt;
-        &#125;else&#123;
-            posi+=cnt;
-        &#125;
-    &#125;
-    if(x!=1)&#123;
-        if(bad.count(x))&#123;
-            neg++;
-        &#125;else&#123;
-            posi++;
-        &#125;
-    &#125;
-    return pii(posi,neg);
-&#125;;
-bool check(int x)&#123;
-    pii pr=get_pair(x);
-    return pr.first&lt;pr.second;
-&#125;
-void solve()&#123;
-  int n,m;cin&gt;&gt;n&gt;&gt;m;
-  for(int i=1;i&lt;=n;++i)&#123;
-    cin&gt;&gt;a[i];
-    if(i==1)&#123;
-        g[i]=a[i];
-    &#125;else&#123;
-        g[i]=gcd(a[i],g[i-1]);
-    &#125;
-  &#125;
-  for(int i=1;i&lt;=m;++i)&#123;
-    int x;cin&gt;&gt;x;
-    bad.insert(x);
-  &#125;
-
-  int ans=0,d=1;
-  for(int i=n;i&gt;=1;--i)&#123;
-    if(check(g[i]/d))&#123;
-        d=g[i];
-    &#125;
-    a[i]/=d;
-  &#125;
-  for(int i=1;i&lt;=n;++i)&#123;
-    pii pr=get_pair(a[i]);
-    ans+=pr.first-pr.second;
-  &#125;
-  cout&lt;&lt;ans&lt;&lt;&#39;\n&#39;;
-  return;
-&#125;
-</code></pre>
-<p>CF 703J</p>
-<p>一开始也是完全没头绪，ans1很好求，就是把杯子按照体积排序，然后选杯子就可以了</p>
-<p>ans2的话，看题解发现是用01背包</p>
-<p>令dp[i][j][k]为前i个杯子，选了j个，总体积为k的不移动的水的最大值，那么有以下转移<br>dp[j][k]=max(dp[j][k],dp[j-1][k-now_vol]+now_rem)<br>注意要逆序枚举,因为是01背包</p>
-<pre><code class="lang-C++">struct bt&#123;
-    int rem,vol;
-&#125;;
-void solve()&#123;
-  int n;cin&gt;&gt;n;
-  vector&lt;bt&gt;a(n+1);
-  ll total=0;
-  for(int i=1;i&lt;=n;++i)&#123;
-    cin&gt;&gt;a[i].rem;
-    total+=a[i].rem;
-  &#125;
-  for(int i=1;i&lt;=n;++i)&#123;
-    cin&gt;&gt;a[i].vol;
-  &#125;
-  sort(a.begin()+1,a.end(),[&amp;](bt a,bt b)&#123;
-    return a.vol&gt;b.vol;
-  &#125;);
-  int ans1=0;
-  ll sum=0;
-  while(total&gt;sum)sum+=a[++ans1].vol;
-  vector dp(n+1,vector&lt;ll&gt;(sum+1,-1000000));
-  dp[0][0]=0;
-  for(int i=1;i&lt;=n;++i)&#123;
-    for(int j=ans1;j&gt;=1;--j)&#123;
-        for(ll k=sum;k&gt;=a[i].vol;--k)&#123;
-            dp[j][k]=max(dp[j][k],dp[j-1][k-a[i].vol]+a[i].rem);
-        &#125;
-    &#125;
-  &#125;
-  ll ans2=0;
-  for(int i=total;i&lt;=sum;++i)&#123;
-    ans2=max(ans2,dp[ans1][i]);
-  &#125;
-  cout&lt;&lt;ans1&lt;&lt;&#39; &#39;&lt;&lt;total-ans2&lt;&lt;&#39;\n&#39;;
-  return;
-&#125;
-</code></pre>
-<p>明天复习OS，写一下在NU上的CS的笔记吧，惹啊！</p>
+</li>
+</ol>
 
     </div>
     

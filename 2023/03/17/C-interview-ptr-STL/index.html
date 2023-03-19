@@ -155,7 +155,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/C/" style="color: #ffa2c4">C++</a>
+                <a href="/tags/C/" style="color: #00bcd4">C++</a>
             </span>
             
         </span>
@@ -163,7 +163,7 @@
     </div>
     
     <div class="content" v-pre>
-        <h1 id="Smart-pointer"><a href="#Smart-pointer" class="headerlink" title="Smart pointer"></a>Smart pointer</h1><h2 id="1-shared-pointer"><a href="#1-shared-pointer" class="headerlink" title="1.shared pointer"></a>1.shared pointer</h2><p>shared pointer允许多个指针指向某个内存区域</p>
+        <h1 id="Smart-pointer"><a href="#Smart-pointer" class="headerlink" title="Smart pointer"></a>Smart pointer</h1><h2 id="1-shared-pointer"><a href="#1-shared-pointer" class="headerlink" title="1.shared pointer"></a>1.shared pointer</h2><p>读线程安全，写需要加锁<br>shared pointer允许多个指针指向某个内存区域</p>
 <p>以下为简单实现</p>
 <pre><code class="lang-C++">class Counter&#123;
     private:
