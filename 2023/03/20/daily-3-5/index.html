@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>每日3t | Waiting for the dawn</title>
+        <title>daily 3 | Waiting for the dawn</title>
         <meta name="author" content="Yanxin Xiang">
         <meta name="description" content="">
         <meta name="keywords" content="">
@@ -132,14 +132,23 @@
 
                 <div class="article">
     <div>
-        <h1>每日3t </h1>
+        <h1>daily 3 </h1>
     </div>
     <div class="info">
         <span class="date">
             <span class="icon">
                 <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
-            2023/3/15
+            2023/3/20
+        </span>
+        
+        <span class="category">
+            <a href="/categories/algorithm/">
+                <span class="icon">
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
+                </span>
+                algorithm
+            </a>
         </span>
         
         
@@ -150,7 +159,17 @@
             
             <span class="tag">
                 
-                <a href="/tags/daily/" style="color: #ff7d73">daily</a>
+                <a href="/tags/daily/" style="color: #00a596">daily</a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/stack/" style="color: #03a9f4">stack</a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/tree-array/" style="color: #00bcd4">tree array</a>
             </span>
             
         </span>
@@ -158,123 +177,113 @@
     </div>
     
     <div class="content" v-pre>
-        <p>CF 733D</p>
-<p>哈希题，把对应的最短边的信息哈希存一下即可</p>
-<pre><code class="lang-C++">struct rec&#123;
-    int a,b,c;
+        <p>CF 26B</p>
+<p>水题，基本上就是个括号序列的裸体，记得不要乱清空now_len</p>
+<pre><code class="lang-C++">void solve()&#123;
+  string s;
+  cin&gt;&gt;s;
+  vector&lt;char&gt;st;
+  int last_len=0;
+  int ans=0;
+  for(int i=0;i&lt;s.size();++i)&#123;
+    if(s[i]==&#39;(&#39;)&#123;
+        st.push_back(s[i]);
+    &#125;else&#123;
+        while(st.size()&amp;&amp;st.back()==&#39;)&#39;)st.pop_back();
+        if(st.size())&#123;
+            last_len+=2;
+            ans=max(ans,last_len);
+            st.pop_back();
+        &#125;
+    &#125;
+  &#125;
+  cout&lt;&lt;ans&lt;&lt;&#39;\n&#39;;
+  return;
+&#125;
+</code></pre>
+<p>CF 976C</p>
+<p>思维题，把对应的序列按照l升序，r降序进行排列，然后判断就好了</p>
+<pre><code class="lang-C++">struct node&#123;
+    int l,r,id;
 &#125;;
-using pii=pair&lt;ll,ll&gt;;
 void solve()&#123;
-  int n;cin&gt;&gt;n;
-  vector&lt;rec&gt;recs(n);
-  map&lt;pii,pii&gt;mp;
-  ll ans=-1,left=-1,right=-1,flag=false;
+  int n;
+  cin&gt;&gt;n;
+  vector&lt;node&gt;a(n);
   for(int i=0;i&lt;n;++i)&#123;
-    vector&lt;ll&gt;sq(3);
-    for(int i=0;i&lt;3;++i)&#123;
-        cin&gt;&gt;sq[i];
-    &#125;
-    sort(sq.begin(),sq.end());
-    if(sq[0]&gt;ans)&#123;
-        flag=false;
-        ans=sq[0];
-        left=i;
-    &#125;
-    auto pr=make_pair(sq[1],sq[2]);
-    if(mp.find(pr)==mp.end())&#123;
-        mp[pr]=make_pair(i,sq[0]);
-        continue;
-    &#125;
-    ll new_max=std::min(&#123;sq[2],sq[1],mp[pr].second+sq[0]&#125;);
-    if(new_max&gt;ans)&#123;
-        ans=new_max;
-        left=mp[pr].first;
-        right=i;
-        flag=true;
-    &#125;
-    if(sq[0]&gt;mp[pr].second)&#123;
-        mp[pr].second=sq[0];
-        mp[pr].first=i;
+    cin&gt;&gt;a[i].l&gt;&gt;a[i].r;
+    a[i].id=i;
+  &#125;
+  sort(a.begin(),a.end(),[&amp;](node a,node b)&#123;
+    return a.l==b.l?a.r&gt;b.r:a.l&lt;b.l;
+  &#125;);
+  for(int i=0;i&lt;n-1;++i)&#123;
+    if(a[i].r&gt;=a[i+1].r)&#123;
+        cout&lt;&lt;a[i+1].id+1&lt;&lt;&#39; &#39;&lt;&lt;a[i].id+1&lt;&lt;&#39;\n&#39;;
+        return;
     &#125;
   &#125;
-  if(!flag)&#123;
-    cout&lt;&lt;1&lt;&lt;&#39;\n&#39;;
-    cout&lt;&lt;left+1;
-  &#125;else&#123;
-    cout&lt;&lt;2&lt;&lt;&#39;\n&#39;;
-    cout&lt;&lt;left+1&lt;&lt;&#39; &#39;&lt;&lt;right+1&lt;&lt;&#39;\n&#39;;
-  &#125;
+  cout&lt;&lt;-1&lt;&lt;&#39; &#39;&lt;&lt;-1&lt;&lt;&#39;\n&#39;;
   return;
 &#125;
 </code></pre>
-<p>CF 739B</p>
-<p>树上搜索+差分</p>
-<pre><code class="lang-C++">void solve()&#123;
-  int n;cin&gt;&gt;n;
-  vector&lt;int&gt;a(n);
-  for(int i=0;i&lt;n;++i)cin&gt;&gt;a[i];
-  vector&lt;vector&lt;int&gt;&gt;E(n),cost(E);
-  for(int i=1;i&lt;n;++i)&#123;
-    int p,w;cin&gt;&gt;p&gt;&gt;w;
-    --p;
-    E[i].push_back(p);
-    E[p].push_back(i);
-    cost[i].push_back(w);
-    cost[p].push_back(w);
-  &#125;
-  vector&lt;int&gt;ans(n),dis(n);
-  vector&lt;pii&gt;que;
-  function&lt;void(int,int)&gt;dfs=[&amp;](int x,int f)&#123;
-    ans[x]=1;
-    int pos=lower_bound(que.begin(),que.end(),make_pair(dis[x]-a[x],0ll))-que.begin()-1;//find the previous 
-    if(pos&gt;=0)&#123;
-        ans[que[pos].second]--;
+<p>CF 1354D</p>
+<p>树状数组板子题，加了个二分，每次用二分判断第k个元素</p>
+<pre><code class="lang-C++">#define lowbit(x) x&amp;-x
+void solve()&#123;
+  int n,k;cin&gt;&gt;n&gt;&gt;k;
+  vector&lt;int&gt;tree(n+1);
+  auto add=[&amp;](int x,int v)&#123;
+    while(x&lt;=n)&#123;
+        tree[x]+=v;
+        x+=lowbit(x);
     &#125;
-    que.push_back(&#123;dis[x],x&#125;);
-    for(int i=0;i&lt;E[x].size();++i)&#123;
-        int v=E[x][i],c=cost[x][i];
-        if(v==f)continue;
-        dis[v]=dis[x]+c;
-        dfs(v,x);
-        ans[x]+=ans[v];
-    &#125;
-    que.pop_back();
   &#125;;
-  dfs(0,-1);
+  auto query=[&amp;](int x)&#123;
+    ll ans=0;
+    while(x)&#123;
+        ans+=tree[x];
+        x-=lowbit(x);
+    &#125;
+    return ans;
+  &#125;;
+  auto getk=[&amp;](int x)&#123;
+    int l=1,r=n;
+    while(l&lt;=r)&#123;
+        int m=(l+r)&gt;&gt;1;
+        int tmp=query(m);
+        if(tmp&lt;x)&#123;
+            l=m+1;
+        &#125;else&#123;
+            r=m-1;
+        &#125;
+    &#125;
+    return l;
+  &#125;;
   for(int i=0;i&lt;n;++i)&#123;
-    cout&lt;&lt;ans[i]-1&lt;&lt;&#39; &#39;;
+    int x;cin&gt;&gt;x;
+    add(x,1);
   &#125;
-  return;
-&#125;
-</code></pre>
-<p>CF 14C</p>
-<p>简单逻辑题</p>
-<pre><code class="lang-C++">void solve()&#123;
-  int x=0,y=0;
-  map&lt;pii,int&gt;mp;
-  for(int i=0;i&lt;4;++i)&#123;
-    int x1,y1,x2,y2;
-    cin&gt;&gt;x1&gt;&gt;y1&gt;&gt;x2&gt;&gt;y2;
-    x+=(y1==y2)&amp;&amp;(x1!=x2);
-    y+=(x1==x2)&amp;&amp;(y1!=y2);
-    mp[make_pair(x1,y1)]++;
-    mp[make_pair(x2,y2)]++;
-  &#125;
-  bool check=(x==2)&amp;&amp;(y==2);
-  for(auto it:mp)&#123;
-    if(it.second!=2)&#123;
-      check=false;
+  for(int i=0;i&lt;k;++i)&#123;
+    int x;cin&gt;&gt;x;
+    if(x&gt;0)&#123;
+        add(x,1);
+    &#125;else&#123;
+        int qn=query(n);
+        int id=getk(-x);
+        add(id,-1);
     &#125;
   &#125;
-  if(check)&#123;
-    cout&lt;&lt;&quot;YES\n&quot;;
+  if(query(n)==0)&#123;
+    cout&lt;&lt;0&lt;&lt;&#39;\n&#39;;
   &#125;else&#123;
-    cout&lt;&lt;&quot;NO\n&quot;;
+    cout&lt;&lt;getk(1)&lt;&lt;&#39;\n&#39;;
   &#125;
   return;
 &#125;
 </code></pre>
-<p>再也不熬了！！！傻逼无头骑士，看了我两个晚上了，难顶，今天必须给他看完，明天开始背八股惹</p>
+<p>小睡一会儿，待会起来把网络背了，晚上看B和B+树，然后健身吧</p>
+<p>我终于明白熬夜不是一种堕落，而是对现实的反抗了，难绷</p>
 
     </div>
     
