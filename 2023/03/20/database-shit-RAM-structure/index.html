@@ -1,0 +1,259 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>database shit -RAM structure | Waiting for the dawn</title>
+        <meta name="author" content="Yanxin Xiang">
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+        <link rel="icon" href="https://s2.loli.net/2023/03/03/LNHQJzc54fgYDMd.jpg">
+        <script src="https://cdn.staticfile.org/vue/3.2.45/vue.global.prod.min.js"></script>
+        <script src="https://cdn.staticfile.org/highlight.js/11.7.0/highlight.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/11.7.0/styles/github.min.css">
+        <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/6.2.1/css/all.min.css">
+        
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+        
+        
+        <script src="https://cdn.staticfile.org/KaTeX/0.16.4/katex.min.js"></script>
+        <script src="https://cdn.staticfile.org/KaTeX/0.16.4/contrib/auto-render.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.staticfile.org/KaTeX/0.16.4/katex.min.css">
+        
+        
+        <link rel="stylesheet" href="/css/fonts.min.css">
+        <link rel="stylesheet" href="/css/particlex.css">
+    <meta name="generator" content="Hexo 6.3.0"></head>
+    <body>
+        <div id="loading" style="height: 100vh; width: 100vw; left: 0; top: 0; position: fixed; display: flex; z-index: 2147483647; background: #fff; transition: opacity 0.3s ease-out; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; pointer-events: none">
+    <div style="width: 50vmin; height: 50vmin; margin: auto; padding: 50px; border-radius: 50%; display: flex; border: solid 10px #a3ddfb">
+        <div style="margin: auto; text-align: center">
+            <h2>LOADING</h2>
+            <p>加载过慢请开启缓存，浏览器默认开启</p>
+            <img src="/images/loading.gif" style="height: 50px; border-radius: 0">
+        </div>
+    </div>
+</div>
+
+        <div id="layout">
+            <transition name="into">
+            <div id="main" v-show="showpage" style="display: -not-none">
+                <nav id="menu">
+    <div class="desktop-menu">
+        <a class="title" href="/">
+            <span>WAITING FOR THE DAWN</span>
+        </a>
+        
+        <a href="/">
+            <i class="fa-solid fa-house fa-fw"></i>
+            <span>&ensp;Home</span>
+        </a>
+        
+        <a href="/about">
+            <i class="fa-solid fa-id-card fa-fw"></i>
+            <span>&ensp;About</span>
+        </a>
+        
+        <a href="/archives">
+            <i class="fa-solid fa-box-archive fa-fw"></i>
+            <span>&ensp;Archives</span>
+        </a>
+        
+        <a href="/categories">
+            <i class="fa-solid fa-bookmark fa-fw"></i>
+            <span>&ensp;Categories</span>
+        </a>
+        
+        <a href="/tags">
+            <i class="fa-solid fa-tags fa-fw"></i>
+            <span>&ensp;Tags</span>
+        </a>
+        
+    </div>
+    <div :class="&quot;phone-menu &quot; + menushow" id="phone-menu">
+        <div class="curtain" @click="menushow = !menushow" v-show="menushow"></div>
+        <div class="title" @click="menushow = !menushow">
+            <i class="fa-solid fa-bars fa-fw"></i>
+            <span>&emsp;WAITING FOR THE DAWN</span>
+        </div>
+        <transition name="slide">
+        <div class="items" v-show="menushow">
+            
+            <a href="/">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-house fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Home</div>
+                </div>
+            </a>
+            
+            <a href="/about">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-id-card fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">About</div>
+                </div>
+            </a>
+            
+            <a href="/archives">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-box-archive fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Archives</div>
+                </div>
+            </a>
+            
+            <a href="/categories">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-bookmark fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Categories</div>
+                </div>
+            </a>
+            
+            <a href="/tags">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-tags fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Tags</div>
+                </div>
+            </a>
+            
+        </div>
+        </transition>
+    </div>
+</nav>
+
+                <div class="article">
+    <div>
+        <h1>database shit -RAM structure </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/3/20
+        </span>
+        
+        <span class="category">
+            <a href="/categories/database/">
+                <span class="icon">
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
+                </span>
+                database
+            </a>
+        </span>
+        
+        
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/database/" style="color: #ffa2c4">database</a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/RAM/" style="color: #03a9f4">RAM</a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/data-structure/" style="color: #ff7d73">data structure</a>
+            </span>
+            
+        </span>
+        
+    </div>
+    
+    <div class="content" v-pre>
+        <p>到了主攻了</p>
+<p>我们知道，目前主流的sql数据库采用的是B+tree的结构,Nosql大多采用LSM tree，今天先把这三种结构说一哈</p>
+<h2 id="B-tree-amp-B-tree"><a href="#B-tree-amp-B-tree" class="headerlink" title="B tree &amp; B+ tree"></a>B tree &amp; B+ tree</h2><h3 id="B-tree"><a href="#B-tree" class="headerlink" title="B tree"></a>B tree</h3><p>首先，我们得清楚，对于数据库系统来说，最重要的地方就是要减少磁盘IO，因为很慢！<br>那么Btree有些什么性质呢？</p>
+<p>1.高度为O(logn)但是常数小很多</p>
+<p>2.一个节点的大小和磁盘页的大小相当，根节点一直保存在主存中</p>
+<p>3.一次读取造成logn -1次磁盘读取</p>
+<p>4.对于t-1阶的b tree来说，每个节点的孩子节点数量在[t,2t],所以key的数量在[t-1,2t-1]</p>
+<p>5.对于一颗b树来说，高度为${height&lt;=log_{t}(n+1)/2}$<br><img src="https://media.geeksforgeeks.org/wp-content/uploads/20200506235136/output253.png" alt="avator"></p>
+<h4 id="B-tree的操作"><a href="#B-tree的操作" class="headerlink" title="B tree的操作"></a>B tree的操作</h4><p>1.查找</p>
+<p>很简单，每个节点遍历一下就好了</p>
+<p>2.插入</p>
+<p>分为以下几步</p>
+<p>1.查看当前根节点的key数量是否为2*t-1,如果是转2，不是转5</p>
+<p>2.创建新节点，让新的空节点为根，转到3</p>
+<p>3.新节点插入根节点，转到4</p>
+<p>4.把根节点分裂，分成两份，转到5</p>
+<p>5.该节点是否为叶结点，是转6，不是转7</p>
+<p>6.二分找到适合的位置，插入</p>
+<p>7.是否到达2k-1？是的话分裂，不是继续转5</p>
+<p>3.删除</p>
+<p>先给出一个前提，我们只在有t个key的时候进行删除</p>
+<p>分为以下几种情况</p>
+<p>1.直接删除叶子，叶子也可以删（t）</p>
+<p>直接删了就好了</p>
+<p>2.删除内部节点，左孩子有t个key</p>
+<p>把左孩子里最大的移动到删除位置即可</p>
+<p>3.删除内部节点，右孩子有t个key</p>
+<p>把右孩子最小的移动到删除位置即可</p>
+<p>4.删除内部节点，两个孩子都只有t-1个key</p>
+<p>把内部节点和右孩子都移动到左孩子中，现在有2t-1个key，那么我们直接删除对应节点</p>
+<p>5.删除某节点，但是其父亲节点只有t-1个key</p>
+<p>把父亲节点的兄弟节点移动到靠左的节点中（父亲或者兄弟），然后把爷爷节点移动到靠左的节点中，然后再删除对应的节点</p>
+<p>6.删除某节点，某节点只有t-1个key，兄弟节点右t个key<br>把父亲节点的值移动到删除位置，把兄弟节点的最小值移动到父亲节点</p>
+<p>和B+树的区别</p>
+<p>1.B树的每个节点都存储了key和data，而B+树的data存储在叶子节点上。<br>B+树非叶子节点仅存储key不存储data，这样一个节点就可以存储更多的key。可以使得B+树相对B树来说更矮（IO次数就是树的高度），所以与磁盘交换的IO操作次数更少。</p>
+<p>2.B+树所有叶子节点构成一个有序链表，按主键排序来遍历全部记录，能更好支持范围查找。<br>由于数据顺序排列并且相连，所以便于区间查找和搜索。而B树则需要进行每一层的递归遍历，相邻的元素可能在内存中不相邻，所以缓存命中性没有B+树好。</p>
+<p>3.B+树所有的查询都要从根节点查找到叶子节点，查询性能更稳定；而B树，每个节点都可能查找到数据，需要在叶子节点和内部节点不停的往返移动，所以不稳定。</p>
+
+    </div>
+    
+    
+    
+    
+    
+    
+    
+</div>
+
+                <footer id="footer">
+    <div class="footer-wrap">
+        <div>
+            &copy;
+            2022 - 2023 Waiting for the dawn
+            <span class="footer-icon">
+                <i class="fa-solid fa-font-awesome fa-fw"></i>
+            </span>
+            &commat;Yanxin Xiang
+        </div>
+        <div>Based on the <a target="_blank" rel="noopener" href="https://hexo.io">Hexo Engine</a> &amp; <a target="_blank" rel="noopener" href="https://github.com/argvchs/hexo-theme-particlex">ParticleX Theme</a></div>
+        
+    </div>
+</footer>
+
+            </div>
+            </transition>
+            <div id="showimg">
+                <img id="showimg-content">
+            </div>
+        </div>
+        <script src="/js/functions.js"></script>
+<script src="/js/particlex.js"></script>
+
+
+
+
+
+
+
+    </body>
+</html>

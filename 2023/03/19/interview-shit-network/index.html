@@ -159,12 +159,12 @@
             
             <span class="tag">
                 
-                <a href="/tags/interview/" style="color: #ff7d73">interview</a>
+                <a href="/tags/interview/" style="color: #00bcd4">interview</a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/computer-network/" style="color: #ffa2c4">computer network</a>
+                <a href="/tags/computer-network/" style="color: #ff7d73">computer network</a>
             </span>
             
         </span>
@@ -299,6 +299,68 @@
 <td>5**</td>
 <td>服务器错误，服务器在处理请求的过程中发生了错误</td>
 <td>500:服务器内部错误，无法完成请求<br>501:服务器不支持请求的功能，无法完成请求</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="3-三次握手"><a href="#3-三次握手" class="headerlink" title="3.三次握手"></a>3.三次握手</h2><p>1.第一次握手：客户端向服务器发送SYN信息，SYN设置为1 序列号seq=x,第一次握手后客户端为SYN-SENT,服务端为LISTEN</p>
+<p>2.第二次握手：服务端收到客户端报文后，随机生成一个起始序列号y，然后给客户端恢复一段报文，其中SYN=1,ACK=1,序列号seq=y,确认号ack=x+1此时服务端状态变为SYN-RCVD</p>
+<p>3.客户端收到服务端的豹纹后，会再向服务端发送报文</p>
+<p><img src="https://i.ibb.co/CwjgHTY/WX20230320-152225-2x.png" alt="avator"></p>
+<h2 id><a href="#" class="headerlink" title="#"></a>#</h2><h2 id="浏览器中输入URL返回页的过程"><a href="#浏览器中输入URL返回页的过程" class="headerlink" title="浏览器中输入URL返回页的过程"></a>浏览器中输入URL返回页的过程</h2><p>1、解析URL得到发送给web的信息，并生产 HTTP 请求信息</p>
+<p>2、查询服务器域名对应的** IP 地址，这个过程中涉及到DNS解析。</p>
+<p>3、通过 DNS 获取到 IP 后，就可以把 HTTP 的传输⼯作交给操作系统中的协议栈。</p>
+<p>4、经过TCP三次握手建立连接进行数据传输。</p>
+<p>5、TCP 模块在执行连接、收发、断开等各阶段操作时，都需要委托 IP 模块将数据封装成网络包发送给通信对象。</p>
+<p>6、生成了 IP 头部之后，接下来网络包还需要在 IP 头部的前面加上 MAC 头部。</p>
+<p>7、后续还会经过网卡、交换机和路由器到对端，然后就是一个反向的过程。</p>
+<h2 id="TCP-UDP区别"><a href="#TCP-UDP区别" class="headerlink" title="TCP UDP区别"></a>TCP UDP区别</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>种类</th>
+<th>特点</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TCP</td>
+<td>1.面向连接<br>2.提供可靠的服务<br>3.面向字节流<br>4.有拥塞控制<br>5.每一条TCP连接只能是1对1的<br>6.首部开销20字节</td>
+<td></td>
+</tr>
+<tr>
+<td>UDP</td>
+<td>1.不面向连接,无连接的，即发送数据前不需要建立连接<br>2.不保证可靠交付<br>3.面向报文的<br>4.没有拥塞控制，网络出现拥塞不会让源主机的发送速率降低<br>5.UDP支持一对一，一对多和多对多的通信方式<br>6.UDP首部开销小，只有8个字节</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="TCP的拥塞控制"><a href="#TCP的拥塞控制" class="headerlink" title="TCP的拥塞控制"></a>TCP的拥塞控制</h2><p>用于防止过多的数据注入到网络中<br>慢开始、拥塞避免、快重传、快恢复<br>|类型|特点||<br>|-|-|-|<br>|慢启动|先把拥塞窗口设置为一个最大报文段的数值，然后按指数加倍，到达门限后，按照线性增加||<br>|拥塞避免|每次发送方发现网络出现拥塞，先把上限设置为出现拥塞的一半然后把当前cwnd重新设置为1，然后重新执行慢启动算法||<br>|快速重传|接收方每收到一个失序的报文就立刻发出重复确认，发送方收到三个连续重复确认后，把门限减半，然后吧cwnd设置为慢开始门限减半后的数值，然后重新执行线性增加||</p>
+<h2 id="cookie-session-token"><a href="#cookie-session-token" class="headerlink" title="cookie session token"></a>cookie session token</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>特点</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>cookie</td>
+<td>1.存储在客户端<br>2.</td>
+<td></td>
+</tr>
+<tr>
+<td>session</td>
+<td>1.</td>
+<td>比cookie安全，存储在服务端</td>
+</tr>
+<tr>
+<td>token</td>
+<td></td>
+<td></td>
 </tr>
 </tbody>
 </table>
