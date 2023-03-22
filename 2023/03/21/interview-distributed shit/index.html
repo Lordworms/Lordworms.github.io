@@ -150,7 +150,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/interview/" style="color: #00bcd4">interview</a>
+                <a href="/tags/interview/" style="color: #03a9f4">interview</a>
             </span>
             
             <span class="tag">
@@ -290,6 +290,126 @@
 <p>缺点：微服务多了可能导致环形监听。</p>
 <p>基于命令：<br><img src="https://i.ibb.co/yBSxxg3/IMG-4-F190-C15063-B-1.jpg" alt="avator"></p>
 <p>优点：避免了业务方的环形依赖，可维护，减少了复杂度，不用监听不同服务的类型</p>
+<h1 id="共识算法"><a href="#共识算法" class="headerlink" title="共识算法"></a>共识算法</h1><h2 id="Raft"><a href="#Raft" class="headerlink" title="Raft"></a>Raft</h2><p>什么是Raft,相比于Paxos，Raft最大的特性就是易于理解,且状态简化</p>
+<p>共区分为三个问题，分别为</p>
+<p>1.领导者选举</p>
+<p>2.日志复制</p>
+<p>3.安全性</p>
+<h3 id="复制状态机"><a href="#复制状态机" class="headerlink" title="复制状态机"></a>复制状态机</h3><p>核心思想：相同的初始状态+相同的输入=相同的结束状态</p>
+<p>多个节点上，从相同的初始状态，执行相同的一串命令，产生相同的最终状态</p>
+<p>在Raft中，leader将客户端请求封装到一个个的log entry中，将这些log entries复制到所有的follower节点，然后大家按相同顺序应用log entries中的command，根据核心思想，那么大家结束状态肯定一一致</p>
+<h3 id="状态简化"><a href="#状态简化" class="headerlink" title="状态简化"></a>状态简化</h3><p>在任何一个时刻，Raft的每一个服务器节点都处于 leader follower或者candidate这三个状态之一,只需要考虑状态的切换就可以了</p>
+<p><img src="https://i.ibb.co/zm5Zcr0/IMG-6231876-EE908-1.jpg" alt="avator"></p>
+<p>Raft把时间分成任意长度的任期，任期用连续的整数标记</p>
+<p>每一段任期从一次选举开始，在某些情况下，这一任期会以没有leader（相同票数/都没超过一半）结束，一个新的任期很快会重新开始。Raft保证在任意一个任期内，最多只有一个leader</p>
+<h3 id="节点通信"><a href="#节点通信" class="headerlink" title="节点通信"></a>节点通信</h3><p>Raft中服务器之间通过 RPC进行通信，且Raft中只有两种主要的RPC</p>
+<p>1.请求投票</p>
+<p>由candidate在选举期间发起</p>
+<p>2.追加条目</p>
+<p>由leader发起，用来复制日志和提供一种心跳机制</p>
+<p>服务器在通信的时候会交换当前任期号，如果一个服务器的当前任期号比其他的小，那么会把任期号更新为较大的那一个</p>
+<p>如果一个candidate或者leader发现自己的任期号过期了，会立即回到follower状态</p>
+<p>如果一个节点接收到一个包含过期的任期号的请求，他会直接拒绝这个请求</p>
+<h3 id="1-领导者选举"><a href="#1-领导者选举" class="headerlink" title="1.领导者选举"></a>1.领导者选举</h3><p>Raft内部有一种心跳机制,如果存在leader，那么他就会周期性地向所有follower发送心跳，来维持自己的地位，如果follower一段时间内没有收到心跳，那么他就会认为系统中没有可用的leader了，那么就开始选举</p>
+<p>开始一个选举过程后，follower先增加自己的当前任期号，并转换为candidate状态，然后投票给自己，并且并行的通过RPC给其他节点发送投票请求</p>
+<p>对于一个节点来说最终会有三种结果：<br>1.它获得了超过半数选票赢得了选举 -&gt; 成为主并开始发送心跳</p>
+<p>2.其他节点赢得了选举 -&gt;收到新的leader心跳后，如果新leader的任期号不小于自己当前的任期号，那么从candidate-&gt;follower</p>
+<p>3.一段时间后没有任何获胜者，每个candidate在一个自己的超时时间后增加任期号并开始重新选举</p>
+<p><img src="https://i.ibb.co/F5sHG0x/IMG-9-C34-AE810-A63-1.jpg" alt="avator"><br>消息如图所示<br><img src="https://i.ibb.co/cbTGmp6/IMG-CE5-F9-F7-E2-CC5-1.jpg" alt="avator"></p>
+<p>follower的投票采用先来先得的原则投出选票</p>
+<h3 id="2-日志复制"><a href="#2-日志复制" class="headerlink" title="2.日志复制"></a>2.日志复制</h3><p>Leader被选举出后，开始为客户端请求提供服务，怎么知道谁是leader呢？</p>
+<p>随机向某个节点发送请求：<br>如果为leader，ok。 如果为follower，那么通过心跳拿leader。 如果宕机了，那么重复</p>
+<p>leader接收到客户端的指令后，会把指令作为一个新的条目追加到日志中去</p>
+<p>一条日志需要有三个信息</p>
+<p>1.状态机指令</p>
+<p>2.leader的任期号</p>
+<p>3.日志号（日志索引）</p>
+<p>leader并行发送追加条目 RPC给follower，让他们复制该条目，当该条目被超过半数的follower复制后，leader就可以在本地执行该指令并把结果返回客户端</p>
+<p>把本地提交指令，也就是leader应用日志与状态机这一步，称为提交</p>
+<p>只需要超过半数就可以提交(包括leader)</p>
+<p>那么如果出问题，Raft怎么样才能让出问题的节点获取到完整的日志呢？</p>
+<p>这里有三种情况</p>
+<p>1.follower没有响应（慢了）</p>
+<p>leader不断地发送追加条目请求，哪怕leader已经回复了客户端（已经提交）</p>
+<p>2.follower崩溃后恢复</p>
+<p>Raft追加条目的一致性检查(leader发送每个追加条目的时候，会添加上前一个日志的索引位置还有任期号，如果follower在它的日志中找不到前一个日志，那么就拒收，然后leader再发送前一个日志，可以二分优化)生效，保证follower能够按序恢复</p>
+<p>3.leader宕机</p>
+<p>可能leader上有未提交的日志，对外来说是无所谓的，因为客户端会认为此次失败了，但是leader恢复后会出现问题，因为会发生冲突，老leader收到appendRPC，之后一致性检查出现问题，强制floower复制leader的日志</p>
+<p>（没有提交，所以可以丢弃）</p>
+<p>这样的日志复制，可以保证</p>
+<p>1.只要过半服务器能正常运行，Raft就可以接受，复制并应用新的日志条目</p>
+<p>2.在正常条件下，新的日志条目可以在一个RPC来回中被复制给集群中的过半机器</p>
+<p>3.耽搁运行慢的follower不会影响整体的性能</p>
+<p>追加条目的消息</p>
+<p><img src="https://i.ibb.co/1nM7ckd/IMG-8-E1-EE0332-F78-1.jpg" alt="avator"></p>
+<h3 id="3-安全性"><a href="#3-安全性" class="headerlink" title="3.安全性"></a>3.安全性</h3><p>由于Raft追求易理解性,所以日志是没有空洞的，但是如果leader有问题，你的日志也可能是有问题的，所以Raft通过几个补充规则完善了这个算法</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>表现</th>
+<th>处理方式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>leader宕机处理：选举限制</td>
+<td>如果一个follower落后了leader若干条日志(但没有漏任意一个任期)，那么下次选举中，它依旧有可能当选leader，但无法补上，造成状态机的不一致</td>
+<td>保证被选举出来的leader包括所有的已经提交的日志条目。由request RPC的消息条目实现，由于请求投票的request中最后有candidate的最后一个日志号还有最后一个日志的任期，假设当前follower的日志比candidate要新，那么拒绝投票</td>
+</tr>
+<tr>
+<td>leader宕机处理：新leader是否提交之前任期内的日志条目</td>
+<td>前leader在提交某个日志条目前崩溃了</td>
+<td>以后的leader会尝试完成该日志条目的”复制”(no 提交),即尝试复制，只有当前任期内的日志条目才通过计算副本数目的方式来提交，然后提交的时候会把之前的日志条目间接地提交</td>
+</tr>
+<tr>
+<td>follower和candidate宕机</td>
+<td></td>
+<td>如果follower和candidate都崩溃了，那么后续发送给他们的RequestVote和AppendEntries都会失败，Raft通过无限的重试来处理这种失败，如果崩溃的机器重启了，那么这些RPC就会成功的完成</td>
+</tr>
+<tr>
+<td>时间和可用性限制</td>
+<td>平均故障时间&gt;&gt;选举超时时间(10ms-500ms)&gt;&gt;广播时间（0.5-20ms）（由硬件决定）</td>
+<td>Raft不依赖客观事件，哪怕因为网络或其他因素，造成后发的RPC先到，也不会影响Raft的正确性</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Raft的提交：<br>单点提交(leader 提交)&lt;-&gt;集群提交(全部，使用心跳包发送leader commit参数，告诉follower是否能提交)</p>
+<h3 id="4-集群成员变更"><a href="#4-集群成员变更" class="headerlink" title="4.集群成员变更"></a>4.集群成员变更</h3><p>在需要改变集群配置（增减节点，替换宕机机器）的时候，Raft可以进行配置变更自动化</p>
+<p>最大的问题是变更过程中不会出现同一任期的两个leader（脑裂问题：由于原配置可以出现leader，新配置也可以出现leader）</p>
+<p>Raft采用一种两阶段的方法：</p>
+<p>集群先切换到一个过渡的配置，称为联合一致</p>
+<p>1.第一阶段，leader发起$C_{old,new}$使整个集群进入联合一致状态，此时，所有的RPC都要在新旧两个配置中都达到大多数才算成功</p>
+<p>2.第二阶段，leader发起$C_{new}$使整个集群进入新配置状态，此时，所有RPC只要在新配置下到达大多数就算成功</p>
+<font color="red">一旦某个服务器将该新配置日志条目增加到自己的日志中，他就会用该配置来做出未来所有的决策（服务器总是使用它日志中最新的配置，无论该配置日志是否被提交)</font>
+
+<p>大概有以下三种情况</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>情况</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>leader在$C_{old,new}$未提交时宕机</td>
+<td>不会出现问题，因为需要都满足才行</td>
+</tr>
+<tr>
+<td>leader在$C<em>{old,new}$已提交但$C</em>{new}$未发起时宕机</td>
+<td>已经符合这种情况了</td>
+</tr>
+<tr>
+<td>leader在$C_{new}$已发起时宕机</td>
+<td>也不会有问题，因为没有Cnew的节点选举成功后也会发送Cnew</td>
+</tr>
+</tbody>
+</table>
+</div>
 
     </div>
     

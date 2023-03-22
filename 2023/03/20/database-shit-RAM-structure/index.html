@@ -164,12 +164,12 @@
             
             <span class="tag">
                 
-                <a href="/tags/RAM/" style="color: #00bcd4">RAM</a>
+                <a href="/tags/RAM/" style="color: #03a9f4">RAM</a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/data-structure/" style="color: #00bcd4">data structure</a>
+                <a href="/tags/data-structure/" style="color: #ff7d73">data structure</a>
             </span>
             
         </span>
@@ -178,6 +178,56 @@
     
     <div class="content" v-pre>
         <p>到了主攻了</p>
+<h2 id="存储结构的分类"><a href="#存储结构的分类" class="headerlink" title="存储结构的分类"></a>存储结构的分类</h2><p>in place update: 就地更新结构，如B和B+树，直接覆盖旧的记录来存储更新内容，读的性能更高</p>
+<p>out of place update: 异位更新结构，如LSM tree，新的内容存储到新的位置，而不是覆盖老的结构，由于是顺序写，写入性能更高</p>
+<p>SSD因为随机读减少了寻道时间，LSM对SSD上的写更加友好</p>
+<p>存储结构的共性：</p>
+<p>1.适合磁盘存储</p>
+<p>2.允许并发操作：对B树来说，需要锁上所有有问题的节点（SMO操作）</p>
+<h2 id="两种不同的控制并发的锁"><a href="#两种不同的控制并发的锁" class="headerlink" title="两种不同的控制并发的锁"></a>两种不同的控制并发的锁</h2><p>lock是逻辑锁，latch是物理锁</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>Locks</th>
+<th>Latch</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>隔离级</td>
+<td>用户事务</td>
+<td>线程</td>
+</tr>
+<tr>
+<td>保护对象</td>
+<td>库中数据</td>
+<td>内存中的数据结构</td>
+</tr>
+<tr>
+<td>持续时间</td>
+<td>整个事务周期</td>
+<td>临界区代码读写后</td>
+</tr>
+<tr>
+<td>类型</td>
+<td>共享，互斥等</td>
+<td>读，写等</td>
+</tr>
+<tr>
+<td>死锁机制</td>
+<td>监测并解决</td>
+<td>避免死锁的出现</td>
+</tr>
+<tr>
+<td>持续时间</td>
+<td>长</td>
+<td>短</td>
+</tr>
+</tbody>
+</table>
+</div>
 <p>我们知道，目前主流的sql数据库采用的是B+tree的结构,Nosql大多采用LSM tree，今天先把这三种结构说一哈</p>
 <h2 id="B-tree-amp-B-tree"><a href="#B-tree-amp-B-tree" class="headerlink" title="B tree &amp; B+ tree"></a>B tree &amp; B+ tree</h2><h3 id="B-tree"><a href="#B-tree" class="headerlink" title="B tree"></a>B tree</h3><p>首先，我们得清楚，对于数据库系统来说，最重要的地方就是要减少磁盘IO，因为很慢！<br>那么Btree有些什么性质呢？</p>
 <p>1.高度为O(logn)但是常数小很多</p>
@@ -214,6 +264,22 @@
 <p>1.B树的每个节点都存储了key和data，而B+树的data存储在叶子节点上。<br>B+树非叶子节点仅存储key不存储data，这样一个节点就可以存储更多的key。可以使得B+树相对B树来说更矮（IO次数就是树的高度），所以与磁盘交换的IO操作次数更少。</p>
 <p>2.B+树所有叶子节点构成一个有序链表，按主键排序来遍历全部记录，能更好支持范围查找。<br>由于数据顺序排列并且相连，所以便于区间查找和搜索。而B树则需要进行每一层的递归遍历，相邻的元素可能在内存中不相邻，所以缓存命中性没有B+树好。</p>
 <p>3.B+树所有的查询都要从根节点查找到叶子节点，查询性能更稳定；而B树，每个节点都可能查找到数据，需要在叶子节点和内部节点不停的往返移动，所以不稳定。</p>
+<h2 id="LSM-tree"><a href="#LSM-tree" class="headerlink" title="LSM tree"></a>LSM tree</h2><p>写入过程：<br>1.首先记录write ahead log (类似redo log)</p>
+<p>2.有序写入active memtable(结构为redis的跳表，这是唯一可变的结构)</p>
+<p>3.active memtable写满了之后转换为immutable memtable.</p>
+<p>4.immutable达到指定数量后，将其落盘到磁盘的L0层，这步操作也叫minor merge,通常对这一步操作直接落盘，所以L0层可能有重复数据</p>
+<p>5.L0层满了之后，会出发关键的major merge操作，也就是compaction,把L0和L<br>进行合并，称之为SSTable，就是一个小型的聚簇索引，这个结构整体不可变</p>
+<p>6.compaction向下合并的过程中碰到同key数据，那么就合并，如果遇到更高层的新的数据，那么就被覆盖</p>
+<p>7.读取的过程就是从上到下，一层一层扫描，可以使用布隆过滤器(对每个key做哈希，做成一个bit数组)加速扫描，用来筛选该层中是否包含我们要查找的数据，可能返回假阳性结果，多个哈希函数</p>
+<p>不同的合并策略：</p>
+<p>leveling merge:每次把该层和下一层进行合并</p>
+<p>tiering merge，每次把当层相邻合并，并写入下一层</p>
+<p>并发：<br>1.memtable 落盘操作</p>
+<p>2.compaction过程</p>
+<p>优化方案：<br>1.流水线技术，把读取，合并，写入三个操作以流水线形式执行</p>
+<p>2.复用组件，在合并的过程中识别出不变的部分并且保留</p>
+<p>3.在compaction结束后主动更新cache</p>
+<p>4.单独硬件执行Compaction<br><img src="https://i.ibb.co/hRKVWYh/IMG-F6-DF125-BFA82-1.jpg" alt="avator"></p>
 
     </div>
     

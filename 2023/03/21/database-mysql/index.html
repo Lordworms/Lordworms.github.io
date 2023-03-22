@@ -150,12 +150,12 @@
             
             <span class="tag">
                 
-                <a href="/tags/mysql/" style="color: #ffa2c4">mysql</a>
+                <a href="/tags/mysql/" style="color: #ff7d73">mysql</a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/database/" style="color: #ff7d73">database</a>
+                <a href="/tags/database/" style="color: #03a9f4">database</a>
             </span>
             
         </span>
@@ -364,6 +364,79 @@
 <p>left join:返回所有的左表记录，就算右表没有对应的记录也是一样（谁call left join谁就是左表）</p>
 <p>right join:返回右表的所有记录，就算左表没有也一样（谁call right join谁就是左表）</p>
 <p>full join:left join和right join共同</p>
+<p>31.乐观锁和悲观锁</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>特点</th>
+<th>流程</th>
+<th>实现</th>
+<th>缺点</th>
+<th>总结</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>乐观锁</td>
+<td>在操作数据时非常乐观，认为别的线程不会修改数据，所以不会上锁,但是在更新的时候会判断在次期间有没有别的线程修改更新过这个数据</td>
+<td>1.两个线程，直接获取同步资源数据，不会加锁，执行各自的操作。<br>2.更新同步资源之前，判断资源是否被其他线程修改<br>3.如果没有被其他线程修改，直接更新内存中同步资源的值<br>4.如果被修改了，那么根据需要执行不同的操作，直接报错或者重试</td>
+<td>1.CAS实现。2.基于MVCC来实现，version版本号</td>
+<td></td>
+<td>适合读操作多的场景，不加锁的特点能使其读操作的性能大幅度提升</td>
+</tr>
+<tr>
+<td>悲观锁</td>
+<td>在操作数据的时候比较悲观，每次去拿数据的时候认为别的线程也会想要去拿这个数据，所以每次在拿到数据的时候就会上锁，这样别的线程就会被阻塞直到它拿到锁</td>
+<td>1.多个线程尝试获取锁<br>2.若A加锁成功，那么B只能等待A释放锁之后才能操作，B处于阻塞状态<br>3.线程A释放同步锁，然后CPU会唤醒等待的线程，即线程B会再次尝试获取锁<br>4.B获得锁，执行操作</td>
+<td>1.传统的关系型数据库都采用这种锁，入行锁，表锁，读锁，写锁</td>
+<td>需要阻塞，效率低下，死锁的可能性很大</td>
+<td>适合写操作多的场景，先加锁，再写数据库</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>32.慢sql的调优思路</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>方法</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>慢查询日志记录慢SQL</td>
+<td>需要手动打开，使用long_query_time来定位超过多少秒的sql语句，然后定位分析</td>
+<td></td>
+</tr>
+<tr>
+<td>explain分析SQL的执行计划</td>
+<td>定位出慢的sql之后，使用explain查看SQL执行计划,通过type看对应的性能好坏</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>profile分析执行耗时</td>
+<td>explain只是看到SQL的预估计划，要了解真正的执行线程状态以及消耗的时间，需要使用profile,默认是关闭的，打开后可以看到对应的执行结果</td>
+<td></td>
+</tr>
+<tr>
+<td>Optimizer Trace分析详情</td>
+<td>profile只能看执行耗时，但无法看到真正的执行过程，这时候用Optimizer Trace可以跟踪执行语句的解析优化执行的全过程</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>多数慢sql和索引有关系</p>
+<p>33.脏读，幻读，不可重复读</p>
+<p>1.脏读是指在一个事务处理过程里读取了另一个未提交的事务中的数据。</p>
+<p>2.不可重复读是指在对于数据库中的某行记录，一个事务范围内多次查询却返回了不同的数据值，这是由</p>
+<p>3.于在查询间隔，另一个事务修改了数据并提交了。<br>幻读是当某个事务在读取某个范围内的记录时，另外一个事务又在该范围内插入了新的记录。对幻读的正确理解是一个事务内的读取操作的结论不能支撑之后业务的执行。假设事务要新增一条记录，主键为id，在新增之前执行了select，没有发现id为xxx的记录，但插入时出现主键冲突，这就属于幻读，读取不到记录却发现主键冲突是因为记录实际上已经被其他的事务插入了，但当前事务不可见。</p>
 
     </div>
     

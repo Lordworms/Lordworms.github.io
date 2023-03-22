@@ -150,12 +150,12 @@
             
             <span class="tag">
                 
-                <a href="/tags/interview/" style="color: #00a596">interview</a>
+                <a href="/tags/interview/" style="color: #ffa2c4">interview</a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/C/" style="color: #ff7d73">C++</a>
+                <a href="/tags/C/" style="color: #ffa2c4">C++</a>
             </span>
             
         </span>
@@ -230,7 +230,7 @@
 </tbody>
 </table>
 </div>
-<h3 id="3-this指针"><a href="#3-this指针" class="headerlink" title="3.this指针"></a>3.this指针</h3><p>1.this不是一个常规变量，不能取得this的地址</p>
+<h3 id="3-this指针"><a href="#3-this指针" class="headerlink" title="3.this指针"></a>3.this指针</h3><p>1.this不是一个常规变量，不能取得this的地址,存在栈上</p>
 <h3 id="4-inline"><a href="#4-inline" class="headerlink" title="4.inline"></a>4.inline</h3><pre><code>clang -emit-llvm -S inline_test.cpp -o inline_test.ll
 </code></pre><p>1.相当于LLVM中间层里的inline操作，直接把对应函数的函数体粘贴到调用的地方<br>2.和宏相比,多了类型检查<br>3.不能包含循环/递归/switch(亲测C20已经可以switch,递归，循环了)<br>4.在类声明中定义的函数，除了虚函数的其他函数都会自动隐式地当成内联函数。</p>
 <p>编译器对 inline 函数的处理步骤<br>1.将 inline 函数体复制到 inline 函数调用点处；<br>2.为所用 inline 函数中的局部变量分配内存空间；<br>3.将 inline 函数的的输入参数和返回值映射到调用方法的局部变量空间中；<br>4.如果 inline 函数有多个返回点，将其转变为 inline 函数代码块末尾的分支（使用 GOTO）。</p>
@@ -461,6 +461,8 @@ int main()&#123;
 </tbody>
 </table>
 </div>
+<h4 id="24-虚函数表"><a href="#24-虚函数表" class="headerlink" title="24.虚函数表"></a>24.虚函数表</h4><p>1.虚表是一个指针数组，其元素是虚函数的指针，每个元素对应一个虚函数的函数指针。需要指出的是，普通的函数即非虚函数，其调用并不需要经过虚表，所以虚表的元素并不包括普通函数的函数指针。<br>2.虚表内的条目，即虚函数指针的赋值发生在编译器的编译阶段，也就是说在代码的编译阶段，虚表就可以构造出来了。</p>
+<p>虚函数表放在类对象的最前面</p>
 
     </div>
     
