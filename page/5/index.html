@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>clang and llvm | Waiting for the dawn</title>
+        <title>Waiting for the dawn</title>
         <meta name="author" content="Yanxin Xiang">
         <meta name="description" content="">
         <meta name="keywords" content="">
@@ -130,62 +130,156 @@
     </div>
 </nav>
 
-                <div class="article">
-    <div>
-        <h1>clang and llvm </h1>
+                <div id="home-head">
+    <div id="home-background" style="background-image: url(https://wallpapercave.com/wp/wp4495406.png)"></div>
+    
+    <div id="home-info" @click="homeclick">
+        <span class="loop"></span>
+        <span class="loop"></span>
+        <span class="loop"></span>
+        <span class="loop"></span>
+        <span class="info">
+            <div class="wrap">
+                <h1>Waiting for the dawn</h1>
+                <h3></h3>
+                <h5></h5>
+            </div>
+        </span>
     </div>
-    <div class="info">
+    
+</div>
+<div id="home-posts-wrap" class="">
+    <div id="home-posts">
+        <div id="posts">
+            
+
+<div class="post">
+    <a href="/2023/03/02/hello/">
+        <h2 class="post-title">hello</h2>
+    </a>
+    <div class="category-and-date">
+        
+        <span class="category">
+            <a href="/categories/%E6%96%B0%E7%9A%84%E5%BC%80%E5%A7%8B/">
+                <span class="icon">
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
+                </span>
+                -新的开始
+            </a>
+        </span>
+        
         <span class="date">
             <span class="icon">
                 <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
-            2023/3/16
+            2023/3/2
         </span>
         
-        <span class="category">
-            <a href="/categories/compiler/">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                compiler
+        
+    </div>
+    <div class="description">
+        <div class="content" v-pre>
+            
+            <p>之前都是在博客园区写博客，这里搭好了就在这里弄吧，这个博客主要更新数据库/编译器相关的内容和知识，也会更新一些人生感悟。</p>
+
+            
+        </div>
+    </div>
+    <div class="post-tags">
+        
+        <span class="icon">
+            <i class="fa-solid fa-tags fa-fw"></i>
+        </span>
+        
+        
+        <span class="tag">
+            
+            <a href="/tags/introduction/" style="color: #ffa2c4">
+                -introduction
             </a>
         </span>
         
+    </div>
+    <a href="/2023/03/02/hello/" class="go-post">阅读全文</a>
+</div>
+
+
+            <div class="page-current">
+    <div class="prev">
         
-        <span class="tags">
-            <span class="icon">
-                <i class="fa-solid fa-tags fa-fw"></i>
-            </span>
+        <a class="page-num" href="/page/4/">
+            <i class="fa-solid fa-caret-left fa-fw"></i>
+        </a>
+        
+    </div>
+    <div class="page-index">
+        
+        <span>
             
-            <span class="tag">
+            <a class="page-num" href="/">1</a>
+            <span class="page-omit">...</span>
+            
+            
                 
-                <a href="/tags/llvm/" style="color: #00bcd4">llvm</a>
-            </span>
-            
-            <span class="tag">
                 
-                <a href="/tags/clang/" style="color: #03a9f4">clang</a>
-            </span>
+                <a class="page-num" href="/page/3">3</a>
+                
             
+            <a class="page-num" href="/page/4/">4</a>
         </span>
         
+        <span class="current">5</span>
+        
+    </div>
+    <div class="next">
+        
+    </div>
+</div>
+
+        </div>
     </div>
     
-    <div class="content" v-pre>
-        <ol>
-<li>clang生成IR<pre><code>clang -emit-llvm -S input_file_name -o output_file_name.ll
-</code></pre></li>
-<li>IR生成二进制<pre><code>llvm-gcc -S input_file_name -o output_file_name
-</code></pre></li>
-</ol>
+    <div id="home-card">
+        <div id="card-div">
+    <div class="card-style" style="width: 300px">
+        <div class="avatar">
+            <img src="https://s2.loli.net/2023/03/03/LNHQJzc54fgYDMd.jpg" alt="avatar">
+        </div>
+        <div class="name">Yanxin Xiang</div>
+        <div class="description">
+            <p>First Year Master student in Northwestern University</p>
+
+        </div>
+        
+        <div class="icon-links">
+            
+            <span class="icon-link">
+                <a target="_blank" rel="noopener" href="https://www.linkedin.com/in/yanxin-xiang-715317236/">
+                    <i class="fa-brands fa-linkedin fa-fw"></i>
+                </a>
+            </span>
+            
+            <span class="icon-link">
+                <a target="_blank" rel="noopener" href="https://github.com/Lordworms">
+                    <i class="fa-brands fa-github fa-fw"></i>
+                </a>
+            </span>
+            
+        </div>
+        
+        
+        <div class="friend-links">
+            
+            <div class="friend-link">
+                <a target="_blank" rel="noopener" href="https://drive.google.com/file/d/19BVQz_uwtxvLU6X7wv5oHr7GoCgKfvy8/view?usp=share_link">CV</a>
+            </div>
+            
+        </div>
+        
+    </div>
+</div>
 
     </div>
-    
-    
-    
-    
-    
-    
     
 </div>
 
@@ -212,11 +306,6 @@
         </div>
         <script src="/js/functions.js"></script>
 <script src="/js/particlex.js"></script>
-
-
-
-
-
 
 
     </body>
