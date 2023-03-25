@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>Categories: -新的开始 | Waiting for the dawn</title>
+        <title>daily 1 | Waiting for the dawn</title>
         <meta name="author" content="Yanxin Xiang">
         <meta name="description" content="">
         <meta name="keywords" content="">
@@ -130,114 +130,94 @@
     </div>
 </nav>
 
-                <div id="archives">
-    
-    <div class="categories-tags">
-        
-        
-        <span>
-            <a href="/categories/Algorithm/" style="background: #03a9f4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                Algorithm
-            </a>
+                <div class="article">
+    <div>
+        <h1>daily 1 </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/3/24
         </span>
         
         
-        
-        <span>
-            <a href="/categories/compiler/" style="background: #03a9f4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                compiler
-            </a>
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/daily/" style="color: #ffa2c4">daily</a>
+            </span>
+            
         </span>
-        
-        
-        
-        <span>
-            <a href="/categories/algorithm/" style="background: #03a9f4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                algorithm
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/categories/database/" style="background: #ffa2c4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                database
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/categories/%E6%96%B0%E7%9A%84%E5%BC%80%E5%A7%8B/" style="background: linear-gradient(120deg, #9abbf7 0%, #ffbbf4 100%)">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                -新的开始
-            </a>
-        </span>
-        
-        
-        
-        
-        
-        <span>
-            <a href="/categories/interview/" style="background: #03a9f4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                interview
-            </a>
-        </span>
-        
         
     </div>
     
-    <div class="timeline">
-        <div class="timeline-tail"></div>
-        <div class="timeline-content">
-            <div class="item-time">2023/3/2</div>
-            <a href="/2023/03/02/hello/">
-                <h3>hello</h3>
-            </a>
-            <div class="info">
-                
-                <span class="category">
-                    <a href="/categories/%E6%96%B0%E7%9A%84%E5%BC%80%E5%A7%8B/">
-                        <span class="icon">
-                            <i class="fa-solid fa-bookmark fa-fw"></i>
-                        </span>
-                        -新的开始
-                    </a>
-                </span>
-                
-                
-                <span class="tags">
-                    <span class="icon">
-                        <i class="fa-solid fa-tags fa-fw"></i>
-                    </span>
-                    
-                    <span class="tag">
-                        
-                        <a href="/tags/introduction/" style="color: #00a596">-introduction</a>
-                    </span>
-                    
-                </span>
-                
-            </div>
-        </div>
+    <div class="content" v-pre>
+        <p>今天又只做了一题，因为熬夜面阿里，把我搞的浑身难受，明天绝对要恢复333333333</p>
+<p>CF 900C</p>
+<p>树状数组+思维</p>
+<p>一个数如果前面有i-2个数比他小，那么删除那个最大的，可以多获得一个record</p>
+<p>如果i-1个数比他小，那么删除最大的，会减少一条记录，我们遍历一下就好了</p>
+<pre><code class="lang-C++">#define lowbit(x) x&amp;-x
+void solve()&#123;
+  int n;
+  cin&gt;&gt;n;
+  vector&lt;int&gt;a(n);
+  for(int i=0;i&lt;n;++i)&#123;
+    cin&gt;&gt;a[i];
+  &#125;
+  vector&lt;int&gt;tree(n+1);
+  auto add=[&amp;](int x,int v)&#123;
+    while(x&lt;=n)&#123;
+        tree[x]+=v;
+        x+=lowbit(x);
+    &#125;
+  &#125;;
+  auto sum=[&amp;](int x)&#123;
+    ll ans=0;
+    while(x)&#123;
+        ans+=tree[x];
+        x-=lowbit(x);
+    &#125;
+    return ans;
+  &#125;;
+  int maxx=0,ans=-1;
+  vector&lt;int&gt;cnt(n+1);
+  for(int i=0;i&lt;n;++i)&#123;
+    maxx=max(a[i],maxx);
+    int res=sum(a[i]);
+    if(res==i-1)&#123;
+        cnt[maxx]++;
+    &#125;else if(res==i)&#123;
+        cnt[maxx]--;
+    &#125;
+    add(a[i],1);
+  &#125;
+  int ansi=1;
+  for(int i=1;i&lt;=n;++i)&#123;
+    if(cnt[i]&gt;ans)&#123;
+        ans=cnt[i];
+        ansi=i;
+    &#125;
+  &#125;
+  cout&lt;&lt;ansi&lt;&lt;&#39;\n&#39;;
+  return;
+&#125;
+</code></pre>
+<p>准备下阿里复试吧，腾讯云今年好像没太多hc，我感觉泡池子了，难绷</p>
+
     </div>
+    
+    
+    
+    
+    
+    
     
 </div>
 
@@ -264,6 +244,11 @@
         </div>
         <script src="/js/functions.js"></script>
 <script src="/js/particlex.js"></script>
+
+
+
+
+
 
 
     </body>

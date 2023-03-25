@@ -150,7 +150,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/interview/" style="color: #03a9f4">interview</a>
+                <a href="/tags/interview/" style="color: #00a596">interview</a>
             </span>
             
             <span class="tag">
@@ -463,6 +463,9 @@ int main()&#123;
 </div>
 <h4 id="24-虚函数表"><a href="#24-虚函数表" class="headerlink" title="24.虚函数表"></a>24.虚函数表</h4><p>1.虚表是一个指针数组，其元素是虚函数的指针，每个元素对应一个虚函数的函数指针。需要指出的是，普通的函数即非虚函数，其调用并不需要经过虚表，所以虚表的元素并不包括普通函数的函数指针。<br>2.虚表内的条目，即虚函数指针的赋值发生在编译器的编译阶段，也就是说在代码的编译阶段，虚表就可以构造出来了。</p>
 <p>虚函数表放在类对象的最前面</p>
+<h4 id="25-delete和delete"><a href="#25-delete和delete" class="headerlink" title="25 delete和delete []"></a>25 delete和delete []</h4><p>auto arr[]</p>
+<p>delete arr:调用 arr[0]的析构函数</p>
+<p>delete arr[] 分别调用arr每一个元素的析构函数</p>
 
     </div>
     

@@ -150,12 +150,12 @@
             
             <span class="tag">
                 
-                <a href="/tags/database/" style="color: #ff7d73">database</a>
+                <a href="/tags/mysql/" style="color: #00bcd4">mysql</a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/mysql/" style="color: #ff7d73">mysql</a>
+                <a href="/tags/database/" style="color: #03a9f4">database</a>
             </span>
             
         </span>
@@ -375,6 +375,7 @@
 <th>实现</th>
 <th>缺点</th>
 <th>总结</th>
+<th>使用场景</th>
 </tr>
 </thead>
 <tbody>
@@ -385,6 +386,7 @@
 <td>1.CAS实现。2.基于MVCC来实现，version版本号</td>
 <td></td>
 <td>适合读操作多的场景，不加锁的特点能使其读操作的性能大幅度提升</td>
+<td>适用于高并发的场景</td>
 </tr>
 <tr>
 <td>悲观锁</td>
@@ -393,6 +395,7 @@
 <td>1.传统的关系型数据库都采用这种锁，入行锁，表锁，读锁，写锁</td>
 <td>需要阻塞，效率低下，死锁的可能性很大</td>
 <td>适合写操作多的场景，先加锁，再写数据库</td>
+<td>适用于冲突比较多或者重试代价大的时候</td>
 </tr>
 </tbody>
 </table>

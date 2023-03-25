@@ -159,12 +159,12 @@
             
             <span class="tag">
                 
-                <a href="/tags/interview/" style="color: #00a596">interview</a>
+                <a href="/tags/interview/" style="color: #ff7d73">interview</a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/computer-network/" style="color: #00a596">computer network</a>
+                <a href="/tags/computer-network/" style="color: #ffa2c4">computer network</a>
             </span>
             
         </span>
@@ -238,7 +238,7 @@
 </tr>
 <tr>
 <td>HTTP/3.0</td>
-<td>1.传输层采用了新的协议QUIC <br>2.在UDP的基础上开发，所以如果有stream里的数据丢失，可以快速重传，并且第一次连接的时候也不需要三次握手了，直接tLS就行了</td>
+<td>1.传输层采用了新的协议QUIC <br>2.在UDP的基础上开发，所以如果有stream里的数据丢失，可以快速重传(QUIC每发送一组数据就对这组数据进行异或运算，并将结果作为一个校验和包发送出去。如果前面这组数据中出现了丢包的情况，就可以通过校验和与其他包来还原出丢包的数据，避免了重传带来的损耗。)，并且第一次连接的时候也不需要三次握手了，直接tLS就行了</td>
 </tr>
 </tbody>
 </table>
@@ -288,7 +288,7 @@
 <tr>
 <td>3**</td>
 <td>重定向，需要进一步的操作以完成请求</td>
-<td>301:永久移动。请求的资源已被永久的移动到新URI，返回信息会包括新的URI，浏览器会自动定向到新URI。今后任何新的请求都应使用新的URI代替</td>
+<td>301:永久移动。请求的资源已被永久的移动到新URI，返回信息会包括新的URI，浏览器会自动定向到新URI。今后任何新的请求都应使用新的URI代替<br>302:此响应代码表示所请求资源的 URI 已 暂时 更改。未来可能会对 URI 进行进一步的改变。因此，客户机应该在将来的请求中使用这个相同的 URI。</td>
 </tr>
 <tr>
 <td>4**</td>
