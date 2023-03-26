@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>dp practice_day 5 | Waiting for the dawn</title>
+        <title>daily 3 | Waiting for the dawn</title>
         <meta name="author" content="Yanxin Xiang">
         <meta name="description" content="">
         <meta name="keywords" content="">
@@ -132,23 +132,14 @@
 
                 <div class="article">
     <div>
-        <h1>dp practice_day 5 </h1>
+        <h1>daily 3 </h1>
     </div>
     <div class="info">
         <span class="date">
             <span class="icon">
                 <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
-            2023/3/9
-        </span>
-        
-        <span class="category">
-            <a href="/categories/Algorithm/">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                Algorithm
-            </a>
+            2023/3/26
         </span>
         
         
@@ -159,12 +150,17 @@
             
             <span class="tag">
                 
-                <a href="/tags/dp/" style="color: #ffa2c4">dp</a>
+                <a href="/tags/daily/" style="color: #00a596">daily</a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/dp-practice-plan/" style="color: #03a9f4">dp_practice_plan</a>
+                <a href="/tags/Codeforces/" style="color: #ff7d73">Codeforces</a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/dp/" style="color: #03a9f4">dp</a>
             </span>
             
         </span>
@@ -172,167 +168,112 @@
     </div>
     
     <div class="content" v-pre>
-        <p>CF 347 C</p>
-<p>一道记忆化搜索题，没太多好说的，注意记忆化搜索的方式以及vis数组的更改</p>
+        <p>今天腾讯笔试做的有点差，还好不影响，刚刚做完题了去健个身然后背八股了</p>
+<p>CF 254 C</p>
+<p>思维题</p>
+<p>首先我们可以统计出每个字符在s和t中分别出现了多少次，然后我们遍历s，每次找到对应cnt1[x]&gt;cnt2[x]的位置，因为这个位置肯定需要变化，然后我们遍历26个字母，这里有一个技巧，如果你正好可以发现现在就可以替换的(j&lt;x且cnt1[j]&lt;cnt2[j])那么肯定要直接修改，但是如果你对应的cnt2[x]的位置=0，这表示在t中不需要当前元素，那么也要修改。其余的情况表明t中需要x这个元素，那么我们就之后再改</p>
 <pre><code class="lang-C++">void solve()&#123;
-  int n,m;cin&gt;&gt;n&gt;&gt;m;
-  auto check=[&amp;](int x,int y)&#123;
-    return x&gt;=1&amp;&amp;x&lt;=n&amp;&amp;y&gt;=1&amp;y&lt;=m;
-  &#125;;
-  vector&lt;vector&lt;char&gt;&gt;mp(n+1,vector&lt;char&gt;(m+1));
-  vector&lt;vector&lt;bool&gt;&gt;vis(n+1,vector&lt;bool&gt;(m+1,false));
-  vector&lt;vector&lt;int&gt;&gt;dis(n+1,vector&lt;int&gt;(m+1));
-  auto check_char=[&amp;](int x,int y,int tx,int ty)&#123;
-    return mp[x][y]==&#39;D&#39;&amp;&amp;mp[tx][ty]==&#39;I&#39;||mp[x][y]==&#39;I&#39;&amp;&amp;mp[tx][ty]==&#39;M&#39;||mp[x][y]==&#39;M&#39;&amp;&amp;mp[tx][ty]==&#39;A&#39;||mp[x][y]==&#39;A&#39;&amp;&amp;mp[tx][ty]==&#39;D&#39;;
-  &#125;;
-  for(int i=1;i&lt;=n;++i)&#123;
-    for(int j=1;j&lt;=m;++j)&#123;
-        cin&gt;&gt;mp[i][j];
-    &#125;
+  string s,t;
+  cin&gt;&gt;s&gt;&gt;t;
+  //we need to find those places that cnt1[s[i]]&gt;cnt2[s[i]],then transform them
+  vector&lt;int&gt;cnt1(26),cnt2(26);
+  for(int i=0;i&lt;s.size();++i)&#123;
+    cnt1[s[i]-&#39;A&#39;]++;
+    cnt2[t[i]-&#39;A&#39;]++;
   &#125;
   int ans=0;
-  function&lt;void(int,int)&gt;dfs=[&amp;](int x,int y)&#123;
-    if(dis[x][y])return;
-    vis[x][y]=1;
-    dis[x][y]=1;
-    for(int i=0;i&lt;4;++i)&#123;
-        int tx=x+dir[i][0];
-        int ty=y+dir[i][1];
-        if(!check(tx,ty)||!check_char(x,y,tx,ty))continue;
-        if(vis[tx][ty])&#123;
-            cout&lt;&lt;&quot;Poor Inna!\n&quot;;
-            exit(0);
+  for(int i=0;i&lt;s.size();++i)&#123;
+    int x=s[i]-&#39;A&#39;;
+    if(cnt1[x]&gt;cnt2[x])&#123;
+      for(int j=0;j&lt;26;++j)&#123;
+        if(cnt1[j]&lt;cnt2[j])&#123;
+          if(j&lt;x||!cnt2[x])&#123;
+            cnt2[j]--;
+            s[i]=j+&#39;A&#39;;
+            ++ans;
+          &#125;else&#123;
+            cnt2[x]--;
+          &#125;
+          break;
         &#125;
-        dfs(tx,ty);
-        dis[x][y]=max(dis[x][y],dis[tx][ty]+1);
-    &#125;
-    vis[x][y]=0;
-  &#125;;
-  for(int i=1;i&lt;=n;++i)&#123;
-    for(int j=1;j&lt;=m;++j)&#123;
-        if(mp[i][j]==&#39;D&#39;&amp;&amp;!vis[i][j])&#123;//did not appear in other situation
-            dfs(i,j);
-            ans=max(dis[i][j],ans);
-        &#125;
+      &#125;
+      cnt1[x]--;//subtract it in s
     &#125;
   &#125;
-  ans/=4;
-  if(ans==0)&#123;
-    cout&lt;&lt;&quot;Poor Dima!\n&quot;;
-  &#125;else&#123;
-    cout&lt;&lt;ans&lt;&lt;&#39;\n&#39;;
-  &#125;
+  cout&lt;&lt;ans&lt;&lt;&#39;\n&#39;&lt;&lt;s&lt;&lt;&#39;\n&#39;;
   return;
 &#125;
 </code></pre>
-<p>CF 402D</p>
-<p>刚开始看到的时候有点不好下手</p>
-<p>首先我们判断，肯定是要从后往前进行操作，因为从前往后的话会导致你之后的操作无效(前面都变成gcd=1了)<br>题目中的f的值就是这个数含有的good prime数量 -bad prime数量<br>对应去求即可</p>
-<pre><code class="lang-C++">int a[N],g[N];
-int gcd(int a,int b)&#123;
-  return b==0 ? a : gcd(b,a%b);
+<p>CF 9D</p>
+<p>思维+dp</p>
+<p>另使用i个节点且树的高度小于j的答案数为dp[i][j]</p>
+<p>那么转移方程很好写</p>
+<p>dp[i][j]+=dp[left][j-1]*dp[i-left-1][j-1];<br>分别枚举i,left,j就好了</p>
+<pre><code class="lang-C++">void solve()&#123;
+  int n,h;
+  cin&gt;&gt;n&gt;&gt;h;
+  vector dp(n+1,vector&lt;ll&gt;(n+1));//dp[i][j] means using i nodes and the depth is less than j
+  for(int height=1;height&lt;=n;++height)&#123;
+    dp[0][height-1]=1;
+    for(int total_nodes=1;total_nodes&lt;=n;++total_nodes)&#123;
+        for(int left=0;left&lt;total_nodes;++left)&#123;//number of left nodes
+            dp[total_nodes][height]+=dp[left][height-1]*dp[total_nodes-left-1][height-1];
+        &#125;
+    &#125;
+  &#125;
+  cout&lt;&lt;dp[n][n]-dp[n][h-1]&lt;&lt;&#39;\n&#39;;
+  return;
 &#125;
-set&lt;int&gt;bad;
-pii get_pair(int x)&#123;
-    int posi=0,neg=0;
-    for(int i=2,t=sqrt(x);i&lt;=t;++i)&#123;
-        int cnt=0;
-        while(x%i==0)&#123;
-            x/=i;
-            ++cnt;
-        &#125;
-        if(!cnt)continue;
-        if(bad.count(i))&#123;
-            neg+=cnt;
-        &#125;else&#123;
-            posi+=cnt;
-        &#125;
+</code></pre>
+<p>CF 1117D</p>
+<p>首先可以容易写出转移方程</p>
+<p>dp[i]=dp[i-1]+dp[i-m]</p>
+<p>然后用矩阵快速幂优化就好啦</p>
+<pre><code class="lang-C++">ll n,m;
+struct Mat&#123;
+    ll mat[110][110];
+    Mat()&#123;&#125;;
+    Mat operator*(Mat const &amp;b)const
+    &#123;
+        Mat res;
+        memset(res.mat,0,sizeof(res.mat));
+        for(int k=0;k&lt;m;++k)
+           for(int i=0;i&lt;m;++i)
+               for(int j=0;j&lt;m;++j)
+                  res.mat[i][j]=(res.mat[i][j]+(this-&gt;mat[i][k]*b.mat[k][j]))%MOD;
+        return res;    
     &#125;
-    if(x!=1)&#123;
-        if(bad.count(x))&#123;
-            neg++;
-        &#125;else&#123;
-            posi++;
-        &#125;
-    &#125;
-    return pii(posi,neg);
 &#125;;
-bool check(int x)&#123;
-    pii pr=get_pair(x);
-    return pr.first&lt;pr.second;
+Mat mat_pow(Mat A,ll k)&#123;
+    Mat res;
+    memset(res.mat,0,sizeof(res.mat));
+    for(int i=0;i&lt;m;++i)
+        res.mat[i][i]=1;
+    while(k&gt;0)
+    &#123;
+        if(k&amp;1)res=res*A;
+        A=A*A;
+        k=k&gt;&gt;1;
+    &#125;
+    return res;
 &#125;
 void solve()&#123;
-  int n,m;cin&gt;&gt;n&gt;&gt;m;
-  for(int i=1;i&lt;=n;++i)&#123;
-    cin&gt;&gt;a[i];
-    if(i==1)&#123;
-        g[i]=a[i];
-    &#125;else&#123;
-        g[i]=gcd(a[i],g[i-1]);
-    &#125;
+  cin&gt;&gt;n&gt;&gt;m;
+  if(n&lt;m)&#123;
+    cout&lt;&lt;1&lt;&lt;&#39;\n&#39;;
+    return;
   &#125;
-  for(int i=1;i&lt;=m;++i)&#123;
-    int x;cin&gt;&gt;x;
-    bad.insert(x);
-  &#125;
-
-  int ans=0,d=1;
-  for(int i=n;i&gt;=1;--i)&#123;
-    if(check(g[i]/d))&#123;
-        d=g[i];
-    &#125;
-    a[i]/=d;
-  &#125;
-  for(int i=1;i&lt;=n;++i)&#123;
-    pii pr=get_pair(a[i]);
-    ans+=pr.first-pr.second;
-  &#125;
-  cout&lt;&lt;ans&lt;&lt;&#39;\n&#39;;
+  Mat base,A;
+  A.mat[0][0]=A.mat[0][m-1]=1;
+  for(int i=1;i&lt;m;++i)A.mat[i][i-1]=1;
+  for(int i=0;i&lt;m;++i)base.mat[i][0]=1;
+  A=mat_pow(A,n-m+1);
+  base=A*base;
+  cout&lt;&lt;base.mat[0][0]&lt;&lt;&#39;\n&#39;;
   return;
 &#125;
 </code></pre>
-<p>CF 703J</p>
-<p>一开始也是完全没头绪，ans1很好求，就是把杯子按照体积排序，然后选杯子就可以了</p>
-<p>ans2的话，看题解发现是用01背包</p>
-<p>令dp[i][j][k]为前i个杯子，选了j个，总体积为k的不移动的水的最大值，那么有以下转移<br>dp[j][k]=max(dp[j][k],dp[j-1][k-now_vol]+now_rem)<br>注意要逆序枚举,因为是01背包</p>
-<pre><code class="lang-C++">struct bt&#123;
-    int rem,vol;
-&#125;;
-void solve()&#123;
-  int n;cin&gt;&gt;n;
-  vector&lt;bt&gt;a(n+1);
-  ll total=0;
-  for(int i=1;i&lt;=n;++i)&#123;
-    cin&gt;&gt;a[i].rem;
-    total+=a[i].rem;
-  &#125;
-  for(int i=1;i&lt;=n;++i)&#123;
-    cin&gt;&gt;a[i].vol;
-  &#125;
-  sort(a.begin()+1,a.end(),[&amp;](bt a,bt b)&#123;
-    return a.vol&gt;b.vol;
-  &#125;);
-  int ans1=0;
-  ll sum=0;
-  while(total&gt;sum)sum+=a[++ans1].vol;
-  vector dp(n+1,vector&lt;ll&gt;(sum+1,-1000000));
-  dp[0][0]=0;
-  for(int i=1;i&lt;=n;++i)&#123;
-    for(int j=ans1;j&gt;=1;--j)&#123;
-        for(ll k=sum;k&gt;=a[i].vol;--k)&#123;
-            dp[j][k]=max(dp[j][k],dp[j-1][k-a[i].vol]+a[i].rem);
-        &#125;
-    &#125;
-  &#125;
-  ll ans2=0;
-  for(int i=total;i&lt;=sum;++i)&#123;
-    ans2=max(ans2,dp[ans1][i]);
-  &#125;
-  cout&lt;&lt;ans1&lt;&lt;&#39; &#39;&lt;&lt;total-ans2&lt;&lt;&#39;\n&#39;;
-  return;
-&#125;
-</code></pre>
-<p>明天复习OS，写一下在NU上的CS的笔记吧，惹啊！</p>
+<p>感觉自己还是好👎，哎，真的感觉没有自己的容身之所了，下去锻炼一下，回来继续背八股吧</p>
 
     </div>
     
