@@ -150,12 +150,12 @@
             
             <span class="tag">
                 
-                <a href="/tags/interview/" style="color: #ffa2c4">interview</a>
+                <a href="/tags/interview/" style="color: #03a9f4">interview</a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/C/" style="color: #03a9f4">C++</a>
+                <a href="/tags/C/" style="color: #00bcd4">C++</a>
             </span>
             
         </span>
@@ -463,10 +463,10 @@ int main()&#123;
 </div>
 <h4 id="24-虚函数表"><a href="#24-虚函数表" class="headerlink" title="24.虚函数表"></a>24.虚函数表</h4><p>1.虚表是一个指针数组，其元素是虚函数的指针，每个元素对应一个虚函数的函数指针。需要指出的是，普通的函数即非虚函数，其调用并不需要经过虚表，所以虚表的元素并不包括普通函数的函数指针。<br>2.虚表内的条目，即虚函数指针的赋值发生在编译器的编译阶段，也就是说在代码的编译阶段，虚表就可以构造出来了。</p>
 <p>虚函数表放在类对象的最前面</p>
-<h4 id="25-delete和delete"><a href="#25-delete和delete" class="headerlink" title="25 delete和delete []"></a>25 delete和delete []</h4><p>auto arr[]</p>
+<h4 id="25-delete和delete"><a href="#25-delete和delete" class="headerlink" title="25.delete和delete []"></a>25.delete和delete []</h4><p>auto arr[]</p>
 <p>delete arr:调用 arr[0]的析构函数</p>
 <p>delete arr[] 分别调用arr每一个元素的析构函数</p>
-<h4 id="26-i-和-i谁快"><a href="#26-i-和-i谁快" class="headerlink" title="26 i++和++i谁快"></a>26 i++和++i谁快</h4><p>++i快</p>
+<h4 id="26-i-和-i谁快"><a href="#26-i-和-i谁快" class="headerlink" title="26.i++和++i谁快"></a>26.i++和++i谁快</h4><p>++i快</p>
 <p>++i相当于</p>
 <pre><code class="lang-C++"> i  =  i  +   1 ;
  return  i;
@@ -476,6 +476,30 @@ int main()&#123;
  i  =  i + 1 ;
  return  j;
 </code></pre>
+<h4 id="27-override"><a href="#27-override" class="headerlink" title="27.override"></a>27.override</h4><p>override 关键字可以放在子类中重写父类的虚函数声明的末尾，用于显式地声明该函数是对父类虚函数的重写，从而告诉编译器进行检查。如果子类中的函数与父类中的函数不完全一致，编译器会在编译时报错，从而避免了潜在的错误。如果子类中的函数与父类中的函数完全一致，那么 override 关键字不会对程序的运行产生任何影响。</p>
+<h4 id="28-构造函数里能调用虚函数吗"><a href="#28-构造函数里能调用虚函数吗" class="headerlink" title="28.构造函数里能调用虚函数吗"></a>28.构造函数里能调用虚函数吗</h4><p>可以。</p>
+<p>在对象构造过程中，先调用基类构造函数，然后再调用派生类构造函数。当基类的构造函数调用虚函数时，由于此时派生类尚未构造完毕，因此实际调用的是基类的虚函数。这可能导致一些未定义的行为或者出现问题。</p>
+<p>因此，建议在构造函数中避免调用虚函数，或者将虚函数设置为纯虚函数，这样在编译时就会报错，避免出现运行时错误。如果确实需要在构造函数中调用虚函数，可以使用普通函数替代，或者将虚函数调用延迟到对象构造完毕后再进行。</p>
+<h4 id="29-哪些变量存在栈上，哪些存在堆上"><a href="#29-哪些变量存在栈上，哪些存在堆上" class="headerlink" title="29.哪些变量存在栈上，哪些存在堆上"></a>29.哪些变量存在栈上，哪些存在堆上</h4><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>位置</th>
+<th>常见变量</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>栈</td>
+<td>1.函数内的自动变量(int a=10;)2.函数参数。3.局部对象</td>
+</tr>
+<tr>
+<td>堆</td>
+<td>new 或者malloc出来的对象</td>
+</tr>
+</tbody>
+</table>
+</div>
 
     </div>
     

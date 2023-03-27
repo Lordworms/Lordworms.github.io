@@ -150,12 +150,12 @@
             
             <span class="tag">
                 
-                <a href="/tags/interview/" style="color: #ffa2c4">interview</a>
+                <a href="/tags/interview/" style="color: #00a596">interview</a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/C/" style="color: #00a596">C++</a>
+                <a href="/tags/C/" style="color: #ff7d73">C++</a>
             </span>
             
         </span>
@@ -347,6 +347,15 @@ struct __deque_iterator&#123;
 <p>(3)neither is nil</p>
 <p>找对应的右子树的最小节点，然后把该节点当成根，然后删除对应节点，接入本来的节点的父节点中去，并修改颜色</p>
 <p>c. delete_fixup<br>修改对应颜色</p>
+<h2 id="6-unordered-map的扩张的方式"><a href="#6-unordered-map的扩张的方式" class="headerlink" title="6.unordered_map的扩张的方式"></a>6.unordered_map的扩张的方式</h2><p>在C++ STL中，unordered_map是使用哈希表来实现的，其扩张方式如下：</p>
+<p>1.当插入新元素时，如果元素数量已经达到了负载因子(load factor)的阈值，就需要对哈希表进行扩张操作。</p>
+<p>2.扩张操作会创建一个新的哈希表，将旧哈希表中的所有元素重新哈希到新哈希表中。</p>
+<p>3.扩张后的新哈希表的大小为原哈希表大小的两倍，并重新计算新的负载因子阈值。</p>
+<p>4.扩张操作的具体实现可以是：分配新哈希表的空间，将旧哈希表中的所有元素遍历并重新插入到新哈希表中。</p>
+<h2 id="7-unordered-map解决冲突的方式"><a href="#7-unordered-map解决冲突的方式" class="headerlink" title="7.unordered_map解决冲突的方式"></a>7.unordered_map解决冲突的方式</h2><p>1.链表法（Separate Chaining）：将相同哈希值的元素链接到同一个链表中。当发生哈希冲突时，新元素会被插入到对应的链表中。</p>
+<p>2.开放地址法（Open Addressing）：在哈希表中找到一个空闲的位置来存储发生哈希冲突的元素。常见的开放地址法有线性探测、二次探测和双重哈希等。</p>
+<p>3.建立更多的桶（Bucket）：增加哈希表的大小，通过增加桶的数量来减少哈希冲突的概率。</p>
+<p>在std::unordered_map中，默认使用链表法来解决哈希冲突。当发生哈希冲突时，新元素会被插入到链表的尾部。然而，在某些情况下，链表法可能会导致性能下降，因为链表的遍历和访问操作可能会增加缓存不命中的数量。在这种情况下，可以考虑使用其他的解决哈希冲突的方法，例如开放地址法或二叉树等。可以通过自定义哈希函数和比较函数来实现这些解决哈希冲突的方法。</p>
 <p>reference from (<a target="_blank" rel="noopener" href="https://blog.csdn.net/vjhghjghj/article/details/88647336/?utm_medium=distribute.pc_relevant.none-task-blog-2~default~baidujs_baidulandingword~default-0--blog-78110973.pc_relevant_3mothn_strategy_recovery&amp;spm=1001.2101.3001.4242.1&amp;utm_relevant_index=2">https://blog.csdn.net/vjhghjghj/article/details/88647336/?utm_medium=distribute.pc_relevant.none-task-blog-2~default~baidujs_baidulandingword~default-0--blog-78110973.pc_relevant_3mothn_strategy_recovery&amp;spm=1001.2101.3001.4242.1&amp;utm_relevant_index=2</a>)</p>
 <p>(reference from <a target="_blank" rel="noopener" href="https://www.jianshu.com/p/e136ec79235c">https://www.jianshu.com/p/e136ec79235c</a>)</p>
 

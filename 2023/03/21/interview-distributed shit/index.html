@@ -150,12 +150,12 @@
             
             <span class="tag">
                 
-                <a href="/tags/interview/" style="color: #00a596">interview</a>
+                <a href="/tags/interview/" style="color: #00bcd4">interview</a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/distributed-lock/" style="color: #03a9f4">distributed lock</a>
+                <a href="/tags/distributed-lock/" style="color: #ff7d73">distributed lock</a>
             </span>
             
         </span>
@@ -410,7 +410,17 @@
 </tbody>
 </table>
 </div>
-
+<h2 id="Paxos"><a href="#Paxos" class="headerlink" title="Paxos"></a>Paxos</h2><h3 id="Basic-Paxos"><a href="#Basic-Paxos" class="headerlink" title="Basic Paxos"></a>Basic Paxos</h3><p>角色<br>|角色|功能|<br>|-|-|<br>|Client|请求发起者|<br>|Proposer|接受client请求，向集群发起提议，起到冲突调节的作用|<br>|Acceptor|提议投票和接受者，只有在行程法定人数时，提议才会被最终接受|<br>|Learner|提议接受者，备份，对集群一致性没有影响|</p>
+<p>流程</p>
+<p>1.Prepare</p>
+<p>Proposer提出一个提案，编号为N,此N大于这个Proposer之前提出的提案编号，请求acceptor的quorum接受</p>
+<p>2.Promise</p>
+<p>如果N大于此acceptor之前接受的任何提案，则接受，否则拒绝</p>
+<p>3.Accept</p>
+<p>如果达到了多数派，proposer会发出accept请求，次请求包含提案编号N，以及内容</p>
+<p>4.Accepted</p>
+<p>如果此acceptor在此期间没有收到任何大于N的提案，则接受此提案内容，否则忽略</p>
+<h3 id="Multi-Paxos"><a href="#Multi-Paxos" class="headerlink" title="Multi Paxos"></a>Multi Paxos</h3><h3 id="Fast-Paxos"><a href="#Fast-Paxos" class="headerlink" title="Fast Paxos"></a>Fast Paxos</h3>
     </div>
     
     

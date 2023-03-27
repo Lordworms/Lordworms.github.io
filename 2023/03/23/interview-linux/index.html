@@ -150,12 +150,12 @@
             
             <span class="tag">
                 
-                <a href="/tags/interview/" style="color: #03a9f4">interview</a>
+                <a href="/tags/interview/" style="color: #ff7d73">interview</a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/linux/" style="color: #00bcd4">linux</a>
+                <a href="/tags/linux/" style="color: #00a596">linux</a>
             </span>
             
         </span>
@@ -213,6 +213,31 @@
 </table>
 </div>
 <p>区别:孤儿进程是父进程已退出，子进程未退出；而僵尸进程是父进程未退出，子进程已退出。</p>
+<h2 id="sync和fsync"><a href="#sync和fsync" class="headerlink" title="sync和fsync"></a>sync和fsync</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>特点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>sync</td>
+<td>将文件系统缓存中的所有数据写入磁盘，包括文件数据和元数据，但并不会强制磁盘进行写入操作。这意味着，一些磁盘可能只是将数据缓存到了它们的缓冲区中，并没有真正写入磁盘。因此，使用sync命令不能完全保证数据的持久化。</td>
+</tr>
+<tr>
+<td>fsync</td>
+<td>命令将文件系统缓存中指定文件的数据写入磁盘，并强制磁盘进行写入操作。这样，fsync可以保证写入的数据已经被持久化，并可以在系统发生故障时恢复。但是，由于fsync需要等待数据写入磁盘，因此它的执行速度比sync慢。</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>sync适用于在执行重要操作之前，刷新文件系统缓存；而fsync适用于在写入文件后，保证文件已经被持久化。fsync可以提供更高的数据可靠性，但是需要付出更高的性能代价。</p>
+<h2 id="文件IO"><a href="#文件IO" class="headerlink" title="文件IO"></a>文件IO</h2><p>1.打开文件 fopen</p>
+<p>2.fread/fwrite用于二进制读写</p>
+<p>3.fscanf/fprintf 用于文本数据的读写</p>
+<p>4.fseek用于移动文件指针的位置</p>
 
     </div>
     

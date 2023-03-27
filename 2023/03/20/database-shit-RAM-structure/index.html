@@ -159,17 +159,17 @@
             
             <span class="tag">
                 
-                <a href="/tags/database/" style="color: #ffa2c4">database</a>
+                <a href="/tags/database/" style="color: #03a9f4">database</a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/RAM/" style="color: #03a9f4">RAM</a>
+                <a href="/tags/RAM/" style="color: #00a596">RAM</a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/data-structure/" style="color: #00bcd4">data structure</a>
+                <a href="/tags/data-structure/" style="color: #ffa2c4">data structure</a>
             </span>
             
         </span>
@@ -268,7 +268,7 @@
 <p>2.有序写入active memtable(结构为redis的跳表，这是唯一可变的结构)</p>
 <p>3.active memtable写满了之后转换为immutable memtable.</p>
 <p>4.immutable达到指定数量后，将其落盘到磁盘的L0层，这步操作也叫minor merge,通常对这一步操作直接落盘，所以L0层可能有重复数据</p>
-<p>5.L0层满了之后，会出发关键的major merge操作，也就是compaction,把L0和L<br>进行合并，称之为SSTable，就是一个小型的聚簇索引，这个结构整体不可变</p>
+<p>5.L0层满了之后，会出发关键的major merge操作，也就是compaction,把L0和L<br>进行合并，称之为SSTable，就是一个小型的聚簇索引，这个结构整体不可变（跳表存索引）</p>
 <p>6.compaction向下合并的过程中碰到同key数据，那么就合并，如果遇到更高层的新的数据，那么就被覆盖</p>
 <p>7.读取的过程就是从上到下，一层一层扫描，可以使用布隆过滤器(对每个key做哈希，做成一个bit数组)加速扫描，用来筛选该层中是否包含我们要查找的数据，可能返回假阳性结果，多个哈希函数</p>
 <p>不同的合并策略：</p>
@@ -280,6 +280,13 @@
 <p>2.复用组件，在合并的过程中识别出不变的部分并且保留</p>
 <p>3.在compaction结束后主动更新cache</p>
 <p>4.单独硬件执行Compaction<br><img src="https://i.ibb.co/hRKVWYh/IMG-F6-DF125-BFA82-1.jpg" alt="avator"></p>
+<h3 id="LSM-tree的索引"><a href="#LSM-tree的索引" class="headerlink" title="LSM tree的索引"></a>LSM tree的索引</h3><p>在LSM Tree的顶层，通常使用内存中的数据结构，如B+树或哈希表等来实现索引。这些数据结构可以快速响应读写操作，适合处理频繁访问的数据。</p>
+<p>在LSM Tree的底层，通常使用SSTable（Sorted String Table）或者类似的数据结构来存储索引。SSTable将数据按照key排序并存储在文件中，同时维护一个索引文件，可以支持快速的查找和范围查询操作。SSTable中的索引通常是基于Bloom Filter或者Skip List等数据结构实现的。</p>
+<h3 id="LSM-tree的compaction"><a href="#LSM-tree的compaction" class="headerlink" title="LSM tree的compaction"></a>LSM tree的compaction</h3><p>合并成一个新的SSTable，并将其中的重复记录合并，并按照键的有序性进行排序，最终将其写入一个新的文件中。通过Compaction操作，可以将多个小的SSTable合并成一个大的SSTable，从而提高查询效率，同时也可以释放磁盘空间，避免数据的冗余存储。</p>
+<h3 id="LSM-tree的数据恢复"><a href="#LSM-tree的数据恢复" class="headerlink" title="LSM tree的数据恢复"></a>LSM tree的数据恢复</h3><p>一般来说，LSM树中的数据恢复可以分为两个阶段：恢复元数据和恢复数据。</p>
+<p>恢复元数据：当LSM树中的某个SSTable文件损坏或丢失时，需要先恢复该文件的元数据信息，以便后续能够正确地读取和处理数据。元数据信息通常包括SSTable文件的基本信息、索引信息和数据块的位置信息等。</p>
+<p>恢复数据：恢复数据的过程需要读取多个SSTable文件，并将它们合并成一个新的SSTable文件。在合并的过程中，需要按照键的有序性进行排序，并去除重复的记录，最终生成一个新的SSTable文件。在生成新的SSTable文件之后，还需要将其合并到LSM树中，以确保LSM树中的数据是完整的。</p>
+<p>需要注意的是，在LSM树中，由于数据是分层存储的，因此在进行数据恢复时，需要从底层的SSTable文件开始读取数据，并逐层向上进行合并。</p>
 
     </div>
     
