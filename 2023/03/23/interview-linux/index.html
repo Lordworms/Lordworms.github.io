@@ -150,12 +150,12 @@
             
             <span class="tag">
                 
-                <a href="/tags/interview/" style="color: #ffa2c4">interview</a>
+                <a href="/tags/interview/" style="color: #03a9f4">interview</a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/linux/" style="color: #03a9f4">linux</a>
+                <a href="/tags/linux/" style="color: #00bcd4">linux</a>
             </span>
             
         </span>
@@ -163,8 +163,7 @@
     </div>
     
     <div class="content" v-pre>
-        <p>1.linux 读写文件的过程</p>
-<p>清楚一点，linux的进程里维护了一张当前已经打开的文件描述符表</p>
+        <h2 id="linux-读写文件的过程"><a href="#linux-读写文件的过程" class="headerlink" title="linux 读写文件的过程"></a>linux 读写文件的过程</h2><p>清楚一点，linux的进程里维护了一张当前已经打开的文件描述符表</p>
 <p>而系统维护了另外两张表:</p>
 <p>1.打开文件表</p>
 <p>2.inode表</p>
@@ -188,6 +187,32 @@
 </tbody>
 </table>
 </div>
+<h2 id="kill-9-和kill-15的区别"><a href="#kill-9-和kill-15的区别" class="headerlink" title="kill 9 和kill 15的区别"></a>kill 9 和kill 15的区别</h2><p>kill -9会强制终止进程，无论进程是否愿意终止，它会立即杀死进程并释放资源。这是一种非常强硬的方法，可能会导致进程无法正常清理和关闭。因此，使用kill -9命令应该是最后的手段。</p>
+<p>kill -15会向进程发送一个终止信号(SIGTERM)，通知进程要求它自行关闭。这个信号会给进程一个机会来完成清理工作和资源释放等工作。如果进程不响应，可以再使用kill -9强制终止。使用kill -15可以更加温和地关闭进程，允许进程进行清理和关闭。</p>
+<h2 id="僵尸进程，孤儿进程以及其解决方式"><a href="#僵尸进程，孤儿进程以及其解决方式" class="headerlink" title="僵尸进程，孤儿进程以及其解决方式"></a>僵尸进程，孤儿进程以及其解决方式</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>特点</th>
+<th>解决方式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>僵尸进程</td>
+<td>是指一个进程使用fork函数创建子进程，如果子进程退出，而父进程并没有调用wait()或者waitpid()系统调用取得子进程的终止状态，那么子进程的进程描述符仍然保存在系统中，占用系统资源</td>
+<td>1.在fork子进程之后我们都要及时使用wait系统调用。2.使用kill命令</td>
+</tr>
+<tr>
+<td>孤儿进程</td>
+<td>是指一个父进程退出后，而它的一个或多个子进程还在运行，那么这些子进程将成为孤儿进程</td>
+<td>init进程会定期处理</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>区别:孤儿进程是父进程已退出，子进程未退出；而僵尸进程是父进程未退出，子进程已退出。</p>
 
     </div>
     

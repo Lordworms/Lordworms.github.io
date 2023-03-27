@@ -150,12 +150,12 @@
             
             <span class="tag">
                 
-                <a href="/tags/interview/" style="color: #ff7d73">interview</a>
+                <a href="/tags/interview/" style="color: #ffa2c4">interview</a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/C/" style="color: #ff7d73">C++</a>
+                <a href="/tags/C/" style="color: #03a9f4">C++</a>
             </span>
             
         </span>
@@ -466,6 +466,16 @@ int main()&#123;
 <h4 id="25-delete和delete"><a href="#25-delete和delete" class="headerlink" title="25 delete和delete []"></a>25 delete和delete []</h4><p>auto arr[]</p>
 <p>delete arr:调用 arr[0]的析构函数</p>
 <p>delete arr[] 分别调用arr每一个元素的析构函数</p>
+<h4 id="26-i-和-i谁快"><a href="#26-i-和-i谁快" class="headerlink" title="26 i++和++i谁快"></a>26 i++和++i谁快</h4><p>++i快</p>
+<p>++i相当于</p>
+<pre><code class="lang-C++"> i  =  i  +   1 ;
+ return  i;
+</code></pre>
+<p>i++相当于</p>
+<pre><code class="lang-C++"> int  j  =  i;
+ i  =  i + 1 ;
+ return  j;
+</code></pre>
 
     </div>
     
