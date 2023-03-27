@@ -150,12 +150,12 @@
             
             <span class="tag">
                 
-                <a href="/tags/interview/" style="color: #03a9f4">interview</a>
+                <a href="/tags/interview/" style="color: #ffa2c4">interview</a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/C/" style="color: #03a9f4">C++</a>
+                <a href="/tags/C/" style="color: #ff7d73">C++</a>
             </span>
             
         </span>
@@ -239,6 +239,7 @@ class Shared_ptr&#123;
 &#125;;
 </code></pre>
 <h2 id="2-unique-ptr"><a href="#2-unique-ptr" class="headerlink" title="2.unique_ptr"></a>2.unique_ptr</h2><p>没有构造函数，所以不支持普通的拷贝和赋值操作<br>不允许copy和赋值操作</p>
+<p>unique具有唯一性，对指向的对象值存在唯一的unique_ptr。unique_ptr不可复制，赋值，但是move()可以转换对象的所有权，局部变量的返回值除外。与shared_ptr相比，若自定义删除器，需要在声明处指定删除器类型，而shared不需要，shared自定义删除器只需要指定删除器对象即可，在赋值时，可以随意赋值，删除器对象也会被赋值给新的对象。</p>
 <h2 id="3-weak-ptr"><a href="#3-weak-ptr" class="headerlink" title="3. weak_ptr"></a>3. weak_ptr</h2><p>1.weak_ptr只能从shared_ptr对象构建。</p>
 <p>2.weak_ptr并不影响动态对象的生命周期，即其存在与否并不影响对象的引用计数器。当weak_ptr所指向的对象因为shared_ptr计数器为0而被释放后，那么weak_ptr的lock方法将返回空。</p>
 <p>3.weak_ptr并没有重载operator-&gt;和operator *操作符，因此不可直接通过weak_ptr使用对象。</p>
