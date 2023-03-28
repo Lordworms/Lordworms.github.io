@@ -150,12 +150,12 @@
             
             <span class="tag">
                 
-                <a href="/tags/database/" style="color: #00bcd4">database</a>
+                <a href="/tags/database/" style="color: #ffa2c4">database</a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/redis/" style="color: #ffa2c4">redis</a>
+                <a href="/tags/redis/" style="color: #00bcd4">redis</a>
             </span>
             
         </span>
@@ -166,6 +166,7 @@
         <p>1.特点<br>a.kv存储，底层使用unordered_map，可以达到O(1)存储。</p>
 <p>b.封装了epoll，高效的网络io模型</p>
 <p>c.高效的线程模型</p>
+<p>d.接收客户端请求-&gt;解析请求 -&gt;进行数据读写等操作-&gt;发生数据给客户端是单线程的</p>
 <p>2.封装一个键值对的数据结构叫做一个entry。</p>
 <p>所有的键先对key完成一次hash，然后对hash table的长度进行求模，然后存放对应的指针</p>
 <p>使用链表法来解决冲突，使用头插法</p>
