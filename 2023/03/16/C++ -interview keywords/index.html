@@ -150,7 +150,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/interview/" style="color: #00a596">interview</a>
+                <a href="/tags/interview/" style="color: #03a9f4">interview</a>
             </span>
             
             <span class="tag">
@@ -512,6 +512,101 @@ int main()&#123;
 <p>特点：静态重定位的特点是在一个作业装入内存时，必须分配其要求的全部内存空间，如果没有足够的内存，则装入失败。作业一旦进入内存后，运行期间不能再移动，也不能再申请新的内存空间。</p>
 <p> 3.动态重定位(动态运行时装入)：编译、链接后的装入模块的地址都是从0开始的，装入程序把装入模块装入内存后，在程序真正执行时候进行地址转换。因此装入内后后所有地址依然是逻辑地址。这种方式需要一个重定位寄存器(存放装入模块存放的起始位置)的支持。采用动态重定位时允许程序在内存中发生移动。</p>
 <p>特点：并且可将程序分配到不连续的内存空间中；还可以只用装入部分程序代码即可运行，在程序运行时进行动态内存分配即可；便于程序段的共享，可以向用户提供一个比存储空间大得多的地址空间；</p>
+<h4 id="33-移动构造函数"><a href="#33-移动构造函数" class="headerlink" title="33.移动构造函数"></a>33.移动构造函数</h4><p>在 C++ 中，如果需要将一个对象传递给另一个函数或者从一个函数返回一个对象，通常需要进行复制构造函数或拷贝赋值运算符操作，这会涉及到对象的拷贝和内存分配，当对象较大或者拷贝次数频繁时，这样的操作会导致程序性能下降。</p>
+<p>例子如下</p>
+<pre><code class="lang-C++">#include &lt;iostream&gt;
+#include &lt;cstring&gt;
+
+class MyString &#123;
+public:
+    // Default constructor
+    MyString() : m_Buffer(nullptr), m_Size(0) &#123;&#125;
+
+    // Constructor with string literal
+    MyString(const char* str) &#123;
+        m_Size = std::strlen(str);
+        m_Buffer = new char[m_Size + 1];
+        std::strcpy(m_Buffer, str);
+    &#125;
+
+    // Move constructor
+    MyString(MyString&amp;&amp; other) noexcept &#123;
+        m_Buffer = other.m_Buffer;
+        m_Size = other.m_Size;
+        other.m_Buffer = nullptr;
+        other.m_Size = 0;
+    &#125;
+
+    // Destructor
+    ~MyString() &#123;
+        if (m_Buffer != nullptr) &#123;
+            delete[] m_Buffer;
+        &#125;
+    &#125;
+
+    // Copy constructor
+    MyString(const MyString&amp; other) &#123;
+        m_Size = other.m_Size;
+        m_Buffer = new char[m_Size + 1];
+        std::strcpy(m_Buffer, other.m_Buffer);
+    &#125;
+
+    // Copy assignment operator
+    MyString&amp; operator=(const MyString&amp; other) &#123;
+        if (this != &amp;other) &#123;
+            delete[] m_Buffer;
+            m_Size = other.m_Size;
+            m_Buffer = new char[m_Size + 1];
+            std::strcpy(m_Buffer, other.m_Buffer);
+        &#125;
+        return *this;
+    &#125;
+
+    // Move assignment operator
+    MyString&amp; operator=(MyString&amp;&amp; other) noexcept &#123;
+        if (this != &amp;other) &#123;
+            delete[] m_Buffer;
+            m_Buffer = other.m_Buffer;
+            m_Size = other.m_Size;
+            other.m_Buffer = nullptr;
+            other.m_Size = 0;
+        &#125;
+        return *this;
+    &#125;
+
+    // Getter for buffer size
+    size_t size() const &#123;
+        return m_Size;
+    &#125;
+
+    // Getter for buffer pointer
+    const char* c_str() const &#123;
+        return m_Buffer;
+    &#125;
+
+private:
+    char* m_Buffer;
+    size_t m_Size;
+&#125;;
+
+int main() &#123;
+    // Create a MyString object using a string literal
+    MyString str1(&quot;Hello, world!&quot;);
+
+    // Create another MyString object by moving str1
+    MyString str2(std::move(str1));
+
+    // Print the contents of str2
+    std::cout &lt;&lt; &quot;str2: &quot; &lt;&lt; str2.c_str() &lt;&lt; std::endl;
+
+    return 0;
+&#125;
+</code></pre>
+<h4 id="34-constexpr-和const"><a href="#34-constexpr-和const" class="headerlink" title="34.constexpr 和const"></a>34.constexpr 和const</h4><p>const 表示一个变量或者对象是不可修改的，即它的值在初始化之后不能被改变。它可以用于变量、函数参数、函数返回值和成员函数等。使用 const 可以确保代码的正确性和安全性，防止不必要的修改。</p>
+<p>constexpr 表示一个表达式在编译时就可以被计算出来，并且结果可以作为常量使用。它可以用于变量、函数和类的成员函数等。使用 constexpr 可以提高代码的性能和安全性，避免在运行时进行重复的计算。</p>
+<h4 id="35-noexcept"><a href="#35-noexcept" class="headerlink" title="35. noexcept"></a>35. noexcept</h4><p>noexcept 是 C++11 引入的一个关键字，表示一个函数或者表达式是否会抛出异常。当在函数或者表达式后面添加 noexcept 关键字时，意味着它不会抛出异常。如果一个函数或者表达式可能会抛出异常，我们不应该使用 noexcept 关键字。</p>
+<p>noexcept 关键字可以用于函数的声明和定义中。函数声明后面添加 noexcept 关键字表示该函数不会抛出异常，而函数定义后面添加 noexcept 关键字表示该函数在运行时不会抛出异常。</p>
+<p>noexcept 关键字的使用有助于提高代码的性能和安全性。由于不需要进行异常处理，函数的调用和执行速度可以更快。此外，noexcept 关键字还可以帮助编译器进行一些优化，例如移动语义和函数返回值优化等。</p>
 
     </div>
     

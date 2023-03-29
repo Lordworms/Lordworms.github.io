@@ -155,7 +155,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/C/" style="color: #00a596">C++</a>
+                <a href="/tags/C/" style="color: #03a9f4">C++</a>
             </span>
             
         </span>
@@ -468,7 +468,29 @@ int main()&#123;
   return 0;
 &#125;
 </code></pre>
-<p>搞完了，下节更STL的逼东西，明天更网络和OS</p>
+<h2 id="shared-ptr的问题"><a href="#shared-ptr的问题" class="headerlink" title="shared_ptr的问题"></a>shared_ptr的问题</h2><pre><code class="lang-C++">#include &lt;bits/stdc++.h&gt;
+
+using namespace std;
+
+class A&#123;
+public:
+    A()&#123;&#125;;
+    A(int a): age(a) &#123;&#125;;
+    ~A()&#123;&#125;;
+private:
+    int age;
+&#125;;
+
+int main()    &#123;
+    A *a = new A(10);
+    shared_ptr&lt;A&gt; p1(a);
+    shared_ptr&lt;A&gt; p2(a);
+&#125;
+</code></pre>
+<p>当p1和p2超出作用域被销毁时，仍旧不会销毁，这个时候use_cnt都是1，我们需要这样修复</p>
+<pre><code class="lang-C++">shared_ptr&lt;A&gt; p1(new A(10));
+shared_ptr&lt;A&gt; p2(p1);
+</code></pre>
 
     </div>
     
