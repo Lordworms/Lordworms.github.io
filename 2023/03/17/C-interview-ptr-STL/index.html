@@ -491,6 +491,21 @@ int main()    &#123;
 <pre><code class="lang-C++">shared_ptr&lt;A&gt; p1(new A(10));
 shared_ptr&lt;A&gt; p2(p1);
 </code></pre>
+<h2 id="可以直接构造一个weak-ptr吗？"><a href="#可以直接构造一个weak-ptr吗？" class="headerlink" title="可以直接构造一个weak_ptr吗？"></a>可以直接构造一个weak_ptr吗？</h2><p>可以构造一个 weak_ptr 对象，但是需要注意它所引用的对象必须已经被一个 shared_ptr 管理。这是因为 weak_ptr 并不拥有资源，它只是对一个 shared_ptr 所管理的对象进行弱引用，可以用于观察这个对象的状态，但是并不会增加资源的引用计数。</p>
+<h2 id="std-move"><a href="#std-move" class="headerlink" title="std::move"></a>std::move</h2><p>1.强制转换左值为右值引用</p>
+<pre><code class="lang-C++">std::string str = &quot;Hello&quot;;
+std::string&amp;&amp; rref = std::move(str);
+</code></pre>
+<p>2.使用移动语义进行赋值操作</p>
+<pre><code class="lang-C++">std::vector&lt;int&gt; v1 = &#123;1, 2, 3&#125;;
+std::vector&lt;int&gt; v2;
+v2 = std::move(v1);
+</code></pre>
+<p>3.使用移动语义进行参数传递</p>
+<pre><code class="lang-C++">void func(std::vector&lt;int&gt;&amp;&amp; v);
+std::vector&lt;int&gt; v = &#123;1, 2, 3&#125;;
+func(std::move(v));
+</code></pre>
 
     </div>
     
