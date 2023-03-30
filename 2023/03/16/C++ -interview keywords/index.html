@@ -150,7 +150,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/interview/" style="color: #ffa2c4">interview</a>
+                <a href="/tags/interview/" style="color: #00bcd4">interview</a>
             </span>
             
             <span class="tag">
@@ -607,6 +607,9 @@ int main() &#123;
 <h4 id="35-noexcept"><a href="#35-noexcept" class="headerlink" title="35. noexcept"></a>35. noexcept</h4><p>noexcept 是 C++11 引入的一个关键字，表示一个函数或者表达式是否会抛出异常。当在函数或者表达式后面添加 noexcept 关键字时，意味着它不会抛出异常。如果一个函数或者表达式可能会抛出异常，我们不应该使用 noexcept 关键字。</p>
 <p>noexcept 关键字可以用于函数的声明和定义中。函数声明后面添加 noexcept 关键字表示该函数不会抛出异常，而函数定义后面添加 noexcept 关键字表示该函数在运行时不会抛出异常。</p>
 <p>noexcept 关键字的使用有助于提高代码的性能和安全性。由于不需要进行异常处理，函数的调用和执行速度可以更快。此外，noexcept 关键字还可以帮助编译器进行一些优化，例如移动语义和函数返回值优化等。</p>
+<h4 id="36-内存中子类和父类的布局"><a href="#36-内存中子类和父类的布局" class="headerlink" title="36.内存中子类和父类的布局"></a>36.内存中子类和父类的布局</h4><p>1.每个类都有虚指针和虚表；</p>
+<p>2.如果不是虚继承，那么子类将父类的虚指针继承下来，并指向自身的虚表（发生在对象构造时）。有多少个虚函数，虚表里面的项就会有多少。多重继承时，可能存在多个的基类虚表与虚指针；</p>
+<p>3.如果是虚继承，那么子类会有两份虚指针，一份指向自己的虚表，另一份指向虚基表，多重继承时虚基表与虚基表指针有且只有一份。</p>
 
     </div>
     
