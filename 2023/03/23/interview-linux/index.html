@@ -150,12 +150,12 @@
             
             <span class="tag">
                 
-                <a href="/tags/interview/" style="color: #ffa2c4">interview</a>
+                <a href="/tags/interview/" style="color: #ff7d73">interview</a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/linux/" style="color: #00a596">linux</a>
+                <a href="/tags/linux/" style="color: #ffa2c4">linux</a>
             </span>
             
         </span>
@@ -238,6 +238,10 @@
 <p>2.fread/fwrite用于二进制读写</p>
 <p>3.fscanf/fprintf 用于文本数据的读写</p>
 <p>4.fseek用于移动文件指针的位置</p>
+<h2 id="linux进程调度"><a href="#linux进程调度" class="headerlink" title="linux进程调度"></a>linux进程调度</h2><p>Linux内核使用的进程调度算法是基于时间片轮转的多级反馈队列调度算法。</p>
+<p>在这种算法中，所有可运行的进程被分成多个优先级队列，每个队列具有不同的时间片大小，高优先级队列的时间片更短，低优先级队列的时间片更长。当一个进程运行完它的时间片后，它被放回到它所在的队列的末尾，如果该队列有更高优先级的进程，则该进程会被挂起，而更高优先级的进程会被调度运行。</p>
+<p>当一个进程在队列中等待了一段时间后，它的优先级会下降，这样它就有更长的时间片来运行，而且也能避免出现饥饿现象。Linux内核的进程调度器也会使用一些其他的策略，例如进程优先级、CPU利用率等，来决定进程的调度顺序。</p>
+<p>需要注意的是，Linux内核的进程调度器是可配置的，可以使用不同的调度算法来适应不同的场景和需求。</p>
 
     </div>
     
