@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>daily 2 | Waiting for the dawn</title>
+        <title>daily 3 | Waiting for the dawn</title>
         <meta name="author" content="Yanxin Xiang">
         <meta name="description" content="">
         <meta name="keywords" content="">
@@ -132,7 +132,7 @@
 
                 <div class="article">
     <div>
-        <h1>daily 2 </h1>
+        <h1>daily 3 </h1>
     </div>
     <div class="info">
         <span class="date">
@@ -150,7 +150,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/daily/" style="color: #00a596">daily</a>
+                <a href="/tags/daily/" style="color: #00bcd4">daily</a>
             </span>
             
         </span>
@@ -224,6 +224,43 @@ void solve()&#123;
     ans=min(ans,dp[(1&lt;&lt;m)-1]+1ll*fri[i].k*b);
   &#125;
   cout&lt;&lt;(ans&gt;=INF?-1:ans)&lt;&lt;&#39;\n&#39;;
+  return;
+&#125;
+</code></pre>
+<p>CF 11D<br>另一道装压<br>dp[sta][id]表示当前经过的点状态集合为sta，当前的点为id的情况<br>记得转移的时候要减去m，因为这m条边多算了（重边），然后二元以上的环会多算</p>
+<pre><code class="lang-C++">#define lowbit(x) (x&amp;-x)
+void solve()&#123;
+  int n,m;
+  cin&gt;&gt;n&gt;&gt;m;
+  vector&lt;vector&lt;ll&gt;&gt;dp(1ll&lt;&lt;n,vector&lt;ll&gt;(n));
+  vector&lt;vector&lt;int&gt;&gt;mp(n,vector&lt;int&gt;(n));
+  for(int i=0;i&lt;m;++i)&#123;
+    int u,v;
+    cin&gt;&gt;u&gt;&gt;v;
+    --u,--v;
+    mp[u][v]=mp[v][u]=1;
+  &#125;
+  ll ans=0;
+  for(int i=0;i&lt;n;++i)dp[1&lt;&lt;i][i]=1;
+  for(int sta=0;sta&lt;(1&lt;&lt;n);++sta)&#123;
+    for(int id=0;id&lt;n;++id)&#123;
+        if(!dp[sta][id])&#123;
+            continue;
+        &#125;
+        for(int k=0;k&lt;n;++k)&#123;
+            if(!mp[id][k])continue;
+            if(lowbit(sta)&gt;(1&lt;&lt;k))continue;
+            if(1&lt;&lt;k&amp;sta)&#123;
+                if(1&lt;&lt;k==lowbit(sta))&#123;
+                    ans+=dp[sta][id];
+                &#125;
+            &#125;else&#123;
+                dp[sta|(1&lt;&lt;k)][k]+=dp[sta][id];// if did not run on it then walk!
+            &#125;
+        &#125;
+    &#125;
+  &#125; 
+  cout&lt;&lt;((ans-m)&gt;&gt;1)&lt;&lt;&#39;\n&#39;;//minus the common road 
   return;
 &#125;
 </code></pre>
