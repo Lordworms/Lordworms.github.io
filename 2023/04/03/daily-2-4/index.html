@@ -139,7 +139,7 @@
             <span class="icon">
                 <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
-            2023/3/30
+            2023/4/3
         </span>
         
         
@@ -150,7 +150,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/daily/" style="color: #ff7d73">daily</a>
+                <a href="/tags/daily/" style="color: #ffa2c4">daily</a>
             </span>
             
         </span>
@@ -158,59 +158,79 @@
     </div>
     
     <div class="content" v-pre>
-        <p>CF 417A</p>
-<p>文字理解题，如题意，要么用c个选n个，要么用x*d个选x个</p>
-<p>那么分别考虑即可</p>
+        <p>CF 780C<br>按题目的意思搜就好了，因为你dfs的时候本来就要保存一下cur和fa</p>
 <pre><code class="lang-C++">void solve()&#123;
-  int c,d,n,m,k;
-  cin&gt;&gt;c&gt;&gt;d&gt;&gt;n&gt;&gt;m&gt;&gt;k;
-  int sum=n*m-k;
-  if(sum&lt;=0)&#123;
-    cout&lt;&lt;0&lt;&lt;&#39;\n&#39;;
-    return;
+  int n;cin&gt;&gt;n;
+  vector&lt;vector&lt;int&gt;&gt;E(n+1);
+  for(int i=0;i&lt;n-1;++i)&#123;
+    int x,y;cin&gt;&gt;x&gt;&gt;y;
+    E[x].push_back(y);
+    E[y].push_back(x);
   &#125;
-  int cnt=sum/n;
-  int rem=sum%n;
-  int ans=cnt*min(c,n*d)+min(rem*d,c);
-  cout&lt;&lt;ans&lt;&lt;&quot;\n&quot;;
+  vector&lt;int&gt;color(n+1);
+  int cnt=0;
+  function&lt;void(int,int)&gt;dfs=[&amp;](int u,int f)&#123;
+    int c=0;
+    for(int v:E[u])&#123;
+        if(v!=f)&#123;
+            ++c;
+            while(c==color[u]||c==color[f])++c;
+            color[v]=c;
+            cnt=max(cnt,c);
+        &#125;
+    &#125;
+    for(int v:E[u])&#123;
+        if(v!=f)&#123;
+            dfs(v,u);
+        &#125;
+    &#125;
+  &#125;;
+  color[1]=1;
+  dfs(1,1);
+  cout&lt;&lt;cnt&lt;&lt;&#39;\n&#39;;
+  for(int i=1;i&lt;=n;++i)&#123;
+    cout&lt;&lt;color[i]&lt;&lt;&quot; \n&quot;[i==n];
+  &#125;
   return;
 &#125;
 </code></pre>
-<p>CF 459E</p>
-<p>也是简单题</p>
-<p>考虑每条边只会对比该边小的边产生影响，所以我们对边按照权值排序<br>之后就和最长上升子序列一样了</p>
-<pre><code class="lang-C++">struct edge&#123;
-    int from,to,w;
-&#125;;
+<p>CF 401D</p>
+<p>数位dp板子，但是又感觉像爆搜</p>
+<p>把每一位保存下来，对应st存状态，注意不能有前导0并且每一位都要用</p>
+<pre><code class="lang-C++">ll dp[1&lt;&lt;N][101];
 void solve()&#123;
-  int n,m;cin&gt;&gt;n&gt;&gt;m;
-  vector&lt;pair&lt;int,int&gt;&gt;state;
-  vector&lt;int&gt;dp(n+1);
-  vector&lt;edge&gt;E(m+1);
-  int ans=0;
-  auto calc=[&amp;]()&#123;
-    for(auto pi:state)&#123;
-        dp[pi.first]=max(dp[pi.first],pi.second);
-        ans=max(dp[pi.first],ans);
+  vector&lt;int&gt;num;
+  ll n,m;
+  cin&gt;&gt;n&gt;&gt;m;
+  memset(dp,-1,sizeof(dp));
+  while(n)&#123;
+    num.push_back(n%10);
+    n/=10;
+  &#125;
+  int len=num.size();
+  sort(num.begin(),num.end());
+  function&lt;ll(int,int,int)&gt;dfs=[&amp;](int pos,int st,ll mod)&#123;
+    if(!pos)return (ll)(mod==0);
+    if(~dp[st][mod])return dp[st][mod];
+    ll res=0;
+    for(int i=0;i&lt;len;++i)&#123;
+        if(!((st&amp;(1&lt;&lt;i)))&amp;&amp;(i==0||num[i]!=num[i-1]||(st&amp;(1&lt;&lt;(i-1)))))&#123;
+            res+=dfs(pos-1,st|(1&lt;&lt;i),(mod*10+num[i])%m);
+        &#125;
     &#125;
-    state.clear();
-  &#125;;    
-  for(int i=1;i&lt;=m;++i)&#123;
-    cin&gt;&gt;E[i].from&gt;&gt;E[i].to&gt;&gt;E[i].w;
+    return dp[st][mod]=res;
+  &#125;;
+  ll ans=0;
+  for(int i=0;i&lt;len;++i)&#123;
+    if(num[i]&amp;&amp;(i==0||num[i]!=num[i-1]))&#123;
+        ans+=dfs(len-1,1&lt;&lt;i,num[i]%m);
+    &#125;
   &#125;
-  sort(E.begin()+1,E.end(),[&amp;](edge a,edge b)&#123;
-    return a.w&lt;b.w;
-  &#125;);
-  for(int i=1;i&lt;=m;++i)&#123;
-    if(E[i].w!=E[i-1].w)calc();
-    state.push_back(&#123;E[i].to,dp[E[i].from]+1&#125;);
-  &#125;
-  calc();
   cout&lt;&lt;ans&lt;&lt;&#39;\n&#39;;
   return;
 &#125;
 </code></pre>
-<p>晚上字节二面和明天早上蚂蚁二面加油啦，确实蛮想去做oceanbase的，啊啊啊啊<br>干巴喽</p>
+<p>晚上鹅厂3面了，阿里和字节应该都稳了，等蚂蚁，能不能快点</p>
 
     </div>
     
