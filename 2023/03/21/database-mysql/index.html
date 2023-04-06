@@ -1,0 +1,494 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>database -mysql | Waiting for the dawn</title>
+        <meta name="author" content="Yanxin Xiang">
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+        <link rel="icon" href="https://i.ibb.co/sszdSW8/IMG-2691.jpg">
+        <script src="https://cdn.staticfile.org/vue/3.2.45/vue.global.prod.min.js"></script>
+        <script src="https://cdn.staticfile.org/highlight.js/11.7.0/highlight.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/11.7.0/styles/github.min.css">
+        <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/6.2.1/css/all.min.css">
+        
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+        
+        
+        <script src="https://cdn.staticfile.org/KaTeX/0.16.4/katex.min.js"></script>
+        <script src="https://cdn.staticfile.org/KaTeX/0.16.4/contrib/auto-render.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.staticfile.org/KaTeX/0.16.4/katex.min.css">
+        
+        
+        <link rel="stylesheet" href="/css/fonts.min.css">
+        <link rel="stylesheet" href="/css/particlex.css">
+    <meta name="generator" content="Hexo 6.3.0"></head>
+    <body>
+        <div id="loading" style="height: 100vh; width: 100vw; left: 0; top: 0; position: fixed; display: flex; z-index: 2147483647; background: #fff; transition: opacity 0.3s ease-out; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; pointer-events: none">
+    <div style="width: 50vmin; height: 50vmin; margin: auto; padding: 50px; border-radius: 50%; display: flex; border: solid 10px #a3ddfb">
+        <div style="margin: auto; text-align: center">
+            <h2>LOADING</h2>
+            <p>加载过慢请开启缓存，浏览器默认开启</p>
+            <img src="/images/loading.gif" style="height: 50px; border-radius: 0">
+        </div>
+    </div>
+</div>
+
+        <div id="layout">
+            <transition name="into">
+            <div id="main" v-show="showpage" style="display: -not-none">
+                <nav id="menu">
+    <div class="desktop-menu">
+        <a class="title" href="/">
+            <span>WAITING FOR THE DAWN</span>
+        </a>
+        
+        <a href="/">
+            <i class="fa-solid fa-house fa-fw"></i>
+            <span>&ensp;Home</span>
+        </a>
+        
+        <a href="/about">
+            <i class="fa-solid fa-id-card fa-fw"></i>
+            <span>&ensp;About</span>
+        </a>
+        
+        <a href="/archives">
+            <i class="fa-solid fa-box-archive fa-fw"></i>
+            <span>&ensp;Archives</span>
+        </a>
+        
+        <a href="/categories">
+            <i class="fa-solid fa-bookmark fa-fw"></i>
+            <span>&ensp;Categories</span>
+        </a>
+        
+        <a href="/tags">
+            <i class="fa-solid fa-tags fa-fw"></i>
+            <span>&ensp;Tags</span>
+        </a>
+        
+    </div>
+    <div :class="&quot;phone-menu &quot; + menushow" id="phone-menu">
+        <div class="curtain" @click="menushow = !menushow" v-show="menushow"></div>
+        <div class="title" @click="menushow = !menushow">
+            <i class="fa-solid fa-bars fa-fw"></i>
+            <span>&emsp;WAITING FOR THE DAWN</span>
+        </div>
+        <transition name="slide">
+        <div class="items" v-show="menushow">
+            
+            <a href="/">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-house fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Home</div>
+                </div>
+            </a>
+            
+            <a href="/about">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-id-card fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">About</div>
+                </div>
+            </a>
+            
+            <a href="/archives">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-box-archive fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Archives</div>
+                </div>
+            </a>
+            
+            <a href="/categories">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-bookmark fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Categories</div>
+                </div>
+            </a>
+            
+            <a href="/tags">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-tags fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Tags</div>
+                </div>
+            </a>
+            
+        </div>
+        </transition>
+    </div>
+</nav>
+
+                <div class="article">
+    <div>
+        <h1>database -mysql </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/3/21
+        </span>
+        
+        
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/database/" style="color: #ffa2c4">database</a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/mysql/" style="color: #ff7d73">mysql</a>
+            </span>
+            
+        </span>
+        
+    </div>
+    
+    <div class="content" v-pre>
+        <p>1.聚集索引和非聚集索引</p>
+<p>聚集索引叶子结点存放一整行的信息，物理和逻辑上都是连续的，查询快，插入慢，一个表只能有一个</p>
+<p>非聚集索引一个表可以有多个，逻辑上连续，物理上不连续，插入快，查找慢</p>
+<p>2.mysql每页大小16KB，每页中不但要存record，也要存record的页表，Btree的页也是一样大小</p>
+<p>3.对于一颗高度为2的B+树来说，假设一条记录10B，那么一个节点能存16*1024条数据，同样能够存16*1024*1024条，那么高度为三的话再乘1024</p>
+<p>4.最左前缀原则：和where的顺序没有关系，假设联合索引是(b,c,d)那么就要考察你给的where条件里有没有b,只要给了b就可以（最左边）</p>
+<p>5.回表：从联合索引找到主键，然后去聚集索引找对应的数据块（如果不完整的话）</p>
+<p>6.联合索引有时候不一定比全表扫描块，在范围查找联合索引的时候，由于需要回表，所以有时候会比直接全表扫描慢，越精确越好</p>
+<p>7.覆盖索引，你当前需要查询的字段恰好就在你使用的索引的B+树中</p>
+<p>8.存不完整的数据对于相同大小的页来说可能存的更多</p>
+<p>9.order by 导致索引失效</p>
+<p>同样可以全标扫描和走索引，对于全表扫描来说，在内存中排序，没有回表操作，</p>
+<p>但是走索引不需要排序，但是需要回表，所以会导致order by失效</p>
+<p>10.mysql强制转换，字符转换为0，数字字符串转换为对应的数字</p>
+<p>11.查询的时候对字段进行了操作（加减、强制转换），那么就用不了索引</p>
+<p>12.InnoDB和MyISAM</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>特点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>InnoDB</td>
+<td>默认引擎，被设计来处理大量的短期事物</td>
+</tr>
+<tr>
+<td>MyISAM</td>
+<td>1. 5.1及之前的版本的默认存储引擎<br>2.不支持食物和行级锁，崩溃后无法安全恢复<br>3.同时对整张表枷锁，很容易因为表锁的问题导致性能问题</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>区别</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>特点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>InnoDB</td>
+<td>1.支持事物。2.支持外键。3.聚集索引。4.没保存。5.最小锁粒度是行锁</td>
+</tr>
+<tr>
+<td>MyISAM</td>
+<td>1.不支持事物。2.不支持外键。3.非聚集索引。4.保存了整个表的行数。5.最小锁粒度是表锁</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>13.mysql事务</p>
+<p>优化主要是sql的优化，除了索引之外，还有sql执行、持久化的速度</p>
+<p>14.buffer pool<br><img src="https://i.ibb.co/X51pDZQ/WX20230321-112111-2x.png" alt="avator"><br>就是类似于一片缓存<br>mysql默认128MB</p>
+<p>buffer pool淘汰算法：类似内存换页</p>
+<p>有三个链表</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>free链表</td>
+<td>1.含有一个base node,存有数量和当前链表的头节点、尾节点<br>2.之后的控制块对应页<br>3.插入的时候读入对应页，然后读取到控制块，然后从链表中删除<br>3.修改后变为脏页，对于mysql而言，后台有个线程定时把脏页持久化</td>
+</tr>
+<tr>
+<td>flush链表</td>
+<td>1.专门记录当前哪些控制块是脏页。</td>
+</tr>
+<tr>
+<td>lru链表</td>
+<td>1.记录置换的情况，加在链表头部。2.全表扫描会把buffer pool原本很有用的数据淘汰。3.会有热数据区域和冷数据区域，只对冷数据区域进行操作，如果第二次访问和第一次访问时间差大于1s，移动到热数据区域（若大于那么就很有可能是全表扫描）（mysql为5:3）</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>15.redolog</p>
+<p>单个logfile为48MB，一个满了之后写另外一个（会触发checkpoint如果写满了的话，会把所有页持久化到磁盘），可以把大小变大，但是重启的话使用redo log会更慢</p>
+<p>update语句的过程：<br>a.更新buffer pool（不能直接持久化）<br>b.生成redo log对象(当前执行的sql)<br>b0.写redo log(prepare状态)<br>b1.更新binlog<br>b2.写undolog<br>c.commit<br>d.持久化redo log(redo log是顺序io，因为早就开辟好了)(处于submit状态)</p>
+<p>不能直接持久化的原因：<br>1.可能只改了一行，但是不需要持久化16KB</p>
+<p>2.顺序io和随机io：</p>
+<p>因为你的record在逻辑上是连续的，但是在物理上不连续</p>
+<p>redo log的作用：<br>基于redolog还原出新数据</p>
+<p>innodb_flush_log_at_trx_commit:</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>值</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>事务提交的时候，不立即进行持久化，把任务交给后台线程去做</td>
+</tr>
+<tr>
+<td>1</td>
+<td>立即持久化</td>
+</tr>
+<tr>
+<td>2</td>
+<td>立即写到操作系统的缓冲区(在内存)，如果数据库挂了，操作系统没挂，持久型还是可以保证</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>16.binlog</p>
+<p>binlog也是记录的当前执行的语句，主从同步的时候要用(发给从服务器)<br>binlog属于mysql server，不关心底层存储引擎，redo log是innodb的</p>
+<p>17.undolog</p>
+<p>记录的是之前数据的sql</p>
+<p>18.Double write buffer</p>
+<p>双写buffer，操作系统的页是4KB，所以当你想写一页Innodb的页的话，需要分四次来写，但是可能出错，所以为了解决这个问题，在磁盘里加了个DW buffer，虽然这样还是会有问题，但是假如出问题了，你会去拿最老的一页，不会出问题，加上redo log就好了。如果写成功了，就把对应的redolog对象删了<br>如果可以保证原子性的话，就不需要了</p>
+<p>19.Change Buffer</p>
+<p>写缓冲区，专门用来优化写SQL的，你修改某一页的同时，还需要修改索引页</p>
+<p>在有change buffer的时候，只把数据页丢进buffer pool，然后把update语句存入change buffer，之后有其他的sql需要查询对应索引页，这个时候再去修改索引页，然后再放入buffer pool</p>
+<p>也需要定时去持久化，如果写操作比较多，需要调大</p>
+<p>20.索引优化</p>
+<p>21.mysql锁</p>
+<p>22.mysql的隔离等级</p>
+<p>1.Serializable (串行化)：通过强制事务排序，使之不可能相互冲突，从而解决幻读问题。</p>
+<p>2.Repeatable read (可重复读)：MySQL的默认事务隔离级别，它确保同一事务的多个实例在并发读取数据时，会看到同样的数据行，解决了不可重复读的问题。</p>
+<p>3.Read committed (读已提交)：一个事务只能看见已经提交事务所做的改变。可避免脏读的发生。</p>
+<p>4.Read uncommitted (读未提交)：所有事务都可以看到其他未提交事务的执行结果。</p>
+<p>23.ACID<br>1.原子性是指事务包含的所有操作要么全部成功，要么全部失败回滚。(redo log undo log):undolog实现</p>
+<p>2.一致性是指一个事务执行之前和执行之后都必须处于一致性状态。比如a与b账户共有1000块，两人之间转账之后无论成功还是失败，它们的账户总和还是1000。()：是数据库的基本要求，依托于其他三点</p>
+<p>3.隔离性。跟隔离级别相关，如read committed，一个事务只能读到已经提交的修改。MVCC实现</p>
+<p>4.持久性是指一个事务一旦被提交了，那么对数据库中的数据的改变就是永久性的，即便是在数据库系统遇到故障的情况下也不会丢失提交事务的操作。redolog实现（二阶段提交，先写WAL）</p>
+<p>24.MCVCC(Multi Version Concurency Control) 锁 事务</p>
+<p>加锁是ok，但是会降低效率</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>方式</th>
+<th>特点</th>
+<th>一般语句</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>当前读</td>
+<td>最新版本，读取最新的数据</td>
+<td>1.select …lock in shared mode<br>2.select …for update</td>
+</tr>
+<tr>
+<td>快照读</td>
+<td>读取的是历史版本的记录</td>
+<td>1.select …</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>对于不同的隔离等级，MVCC是怎么做的</p>
+<p>1.首先MVCC每一行会有一些隐藏的记录</p>
+<p>a.DB_TRX_ID:创建或者修改该记录的事物id(最近一次)</p>
+<p>b.DB_ROW_ID:隐藏主键</p>
+<p>c.DB_ROW_PTR:回滚指针,指向上一个的历史版本，上一个历史版本保存在undolog中，如果事务失败，需要回滚。</p>
+<p>2.readview:事务在进行快照读的时候产生的读视图</p>
+<p>3.undolog</p>
+<p>包括</p>
+<p>1.trx_list：系统活跃的事务id</p>
+<p>2.up_limit_id：列表中事务最小的id</p>
+<p>3.low_limit_id:系统尚未分配的下一个事务id</p>
+<p>RC每次生成新的readview,RR只有第一次快照读的时候才生成readview，之后读都会用第一次的readview</p>
+<p>25.SQL的优化</p>
+<p>1.添加索引<br>2.看执行计划<br>3.优化SQL语句<br>4.分库分表<br>5.表结构设计</p>
+<p>26.幻读</p>
+<p>幻读就是快照读和当前读联合使用时候，你读范围的时候，别人插了一下，导致出现重复主键的问题</p>
+<p>RR没有解决幻读，通过间隙锁解决</p>
+<p>27.mysql主从同步</p>
+<p>通过binlog 实现,可以从一个主节点复制到一个或多个从节点，mysql默认采用异步复制的方式，可以复制特定的数据库、特定的表</p>
+<p>使用场景：</p>
+<p>1.主库有一条sql语句需要锁表让主库负责写，从库负责读</p>
+<p>2.做数据的热备</p>
+<p>3.业务越来越大，需要多库的存储来降低磁盘I/O的频率</p>
+<p>28.mysql执行计划</p>
+<p>explain</p>
+<p>29.mysql的分库分表</p>
+<p>1.只分库不分表</p>
+<p>当数据库读或者写导致QPS过高</p>
+<p>2.只分表不分库</p>
+<p>单表数据量过高，通过减少单张表来提升查询速度</p>
+<p>3.都分</p>
+<p>连接也不够，单表数据量也很大</p>
+<p>30.sql的join</p>
+<p>inner join:只返回on后面的值存在的记录</p>
+<p>left join:返回所有的左表记录，就算右表没有对应的记录也是一样（谁call left join谁就是左表）</p>
+<p>right join:返回右表的所有记录，就算左表没有也一样（谁call right join谁就是左表）</p>
+<p>full join:left join和right join共同</p>
+<p>31.乐观锁和悲观锁</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>特点</th>
+<th>流程</th>
+<th>实现</th>
+<th>缺点</th>
+<th>总结</th>
+<th>使用场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>乐观锁</td>
+<td>在操作数据时非常乐观，认为别的线程不会修改数据，所以不会上锁,但是在更新的时候会判断在次期间有没有别的线程修改更新过这个数据</td>
+<td>1.两个线程，直接获取同步资源数据，不会加锁，执行各自的操作。<br>2.更新同步资源之前，判断资源是否被其他线程修改<br>3.如果没有被其他线程修改，直接更新内存中同步资源的值<br>4.如果被修改了，那么根据需要执行不同的操作，直接报错或者重试</td>
+<td>1.CAS实现。2.基于MVCC来实现，version版本号</td>
+<td></td>
+<td>适合读操作多的场景，不加锁的特点能使其读操作的性能大幅度提升</td>
+<td>适用于高并发的场景</td>
+</tr>
+<tr>
+<td>悲观锁</td>
+<td>在操作数据的时候比较悲观，每次去拿数据的时候认为别的线程也会想要去拿这个数据，所以每次在拿到数据的时候就会上锁，这样别的线程就会被阻塞直到它拿到锁</td>
+<td>1.多个线程尝试获取锁<br>2.若A加锁成功，那么B只能等待A释放锁之后才能操作，B处于阻塞状态<br>3.线程A释放同步锁，然后CPU会唤醒等待的线程，即线程B会再次尝试获取锁<br>4.B获得锁，执行操作</td>
+<td>1.传统的关系型数据库都采用这种锁，入行锁，表锁，读锁，写锁</td>
+<td>需要阻塞，效率低下，死锁的可能性很大</td>
+<td>适合写操作多的场景，先加锁，再写数据库</td>
+<td>适用于冲突比较多或者重试代价大的时候</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>32.慢sql的调优思路</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>方法</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>慢查询日志记录慢SQL</td>
+<td>需要手动打开，使用long_query_time来定位超过多少秒的sql语句，然后定位分析</td>
+<td></td>
+</tr>
+<tr>
+<td>explain分析SQL的执行计划</td>
+<td>定位出慢的sql之后，使用explain查看SQL执行计划,通过type看对应的性能好坏</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td>profile分析执行耗时</td>
+<td>explain只是看到SQL的预估计划，要了解真正的执行线程状态以及消耗的时间，需要使用profile,默认是关闭的，打开后可以看到对应的执行结果</td>
+<td></td>
+</tr>
+<tr>
+<td>Optimizer Trace分析详情</td>
+<td>profile只能看执行耗时，但无法看到真正的执行过程，这时候用Optimizer Trace可以跟踪执行语句的解析优化执行的全过程</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>多数慢sql和索引有关系</p>
+<p>33.脏读，幻读，不可重复读</p>
+<p>1.脏读是指在一个事务处理过程里读取了另一个未提交的事务中的数据。</p>
+<p>2.不可重复读是指在对于数据库中的某行记录，一个事务范围内多次查询却返回了不同的数据值，这是由</p>
+<p>3.于在查询间隔，另一个事务修改了数据并提交了。<br>幻读是当某个事务在读取某个范围内的记录时，另外一个事务又在该范围内插入了新的记录。对幻读的正确理解是一个事务内的读取操作的结论不能支撑之后业务的执行。假设事务要新增一条记录，主键为id，在新增之前执行了select，没有发现id为xxx的记录，但插入时出现主键冲突，这就属于幻读，读取不到记录却发现主键冲突是因为记录实际上已经被其他的事务插入了，但当前事务不可见。</p>
+<p>34.什么是临时表</p>
+<p>数据库中的临时表是一种特殊的表，用于存储临时性数据，只存在于当前数据库连接的生命周期内，数据库连接断开后，临时表就会被自动删除。</p>
+<p>在 SQL Server 中，临时表分为两种：局部临时表和全局临时表。局部临时表只能在当前连接中访问，而全局临时表可以跨连接访问。</p>
+<p>在 MySQL 中，也支持临时表，临时表名称前需要加上 “tmp_” 前缀，当会话结束后，临时表也会被自动删除。</p>
+<p>35.MVCC并没有完全解决幻读问题，在可重复读的隔离级别下，如果一个事务在读取了一些行后，另一个事务插入了一些新行，那么该事务再读取这些行的时候仍可能会发生幻读问题</p>
+<p>串行化隔离级别下，幻读问题不会发生</p>
+<p>36.可重复读是怎么实现的</p>
+<p>实现可重复读的方式，主要是通过使用多版本并发控制（MVCC）来实现。在 MVCC 中，每个事务读取的都是自己开启时的数据版本，而对于修改操作，则不是直接对数据进行修改，而是将修改操作作为一个新的版本写入到数据库中。这样，在同一事务中多次读取同一数据时，都会读取到同一个数据版本，因此可以实现可重复读。</p>
+<p>另外，为了避免脏读和不可重复读等问题，数据库在实现可重复读时，还需要使用锁机制和 MVCC 相结合的方式来控制并发访问。比如，可以使用行级锁、间隙锁等来避免并发修改导致的问题，同时使用 MVCC 来实现可重复读的要求。</p>
+
+    </div>
+    
+    
+    
+    
+    
+    
+    
+</div>
+
+                <footer id="footer">
+    <div class="footer-wrap">
+        <div>
+            &copy;
+            2022 - 2023 Waiting for the dawn
+            <span class="footer-icon">
+                <i class="fa-solid fa-font-awesome fa-fw"></i>
+            </span>
+            &commat;Yanxin Xiang
+        </div>
+        <div>Based on the <a target="_blank" rel="noopener" href="https://hexo.io">Hexo Engine</a> &amp; <a target="_blank" rel="noopener" href="https://github.com/argvchs/hexo-theme-particlex">ParticleX Theme</a></div>
+        
+    </div>
+</footer>
+
+            </div>
+            </transition>
+            <div id="showimg">
+                <img id="showimg-content">
+            </div>
+        </div>
+        <script src="/js/functions.js"></script>
+<script src="/js/particlex.js"></script>
+
+
+
+
+
+
+
+    </body>
+</html>

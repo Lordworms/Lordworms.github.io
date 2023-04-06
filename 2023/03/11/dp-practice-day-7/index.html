@@ -1,0 +1,352 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>dp practice day 7 | Waiting for the dawn</title>
+        <meta name="author" content="Yanxin Xiang">
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+        <link rel="icon" href="https://i.ibb.co/sszdSW8/IMG-2691.jpg">
+        <script src="https://cdn.staticfile.org/vue/3.2.45/vue.global.prod.min.js"></script>
+        <script src="https://cdn.staticfile.org/highlight.js/11.7.0/highlight.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/11.7.0/styles/github.min.css">
+        <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/6.2.1/css/all.min.css">
+        
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+        
+        
+        <script src="https://cdn.staticfile.org/KaTeX/0.16.4/katex.min.js"></script>
+        <script src="https://cdn.staticfile.org/KaTeX/0.16.4/contrib/auto-render.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.staticfile.org/KaTeX/0.16.4/katex.min.css">
+        
+        
+        <link rel="stylesheet" href="/css/fonts.min.css">
+        <link rel="stylesheet" href="/css/particlex.css">
+    <meta name="generator" content="Hexo 6.3.0"></head>
+    <body>
+        <div id="loading" style="height: 100vh; width: 100vw; left: 0; top: 0; position: fixed; display: flex; z-index: 2147483647; background: #fff; transition: opacity 0.3s ease-out; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; pointer-events: none">
+    <div style="width: 50vmin; height: 50vmin; margin: auto; padding: 50px; border-radius: 50%; display: flex; border: solid 10px #a3ddfb">
+        <div style="margin: auto; text-align: center">
+            <h2>LOADING</h2>
+            <p>加载过慢请开启缓存，浏览器默认开启</p>
+            <img src="/images/loading.gif" style="height: 50px; border-radius: 0">
+        </div>
+    </div>
+</div>
+
+        <div id="layout">
+            <transition name="into">
+            <div id="main" v-show="showpage" style="display: -not-none">
+                <nav id="menu">
+    <div class="desktop-menu">
+        <a class="title" href="/">
+            <span>WAITING FOR THE DAWN</span>
+        </a>
+        
+        <a href="/">
+            <i class="fa-solid fa-house fa-fw"></i>
+            <span>&ensp;Home</span>
+        </a>
+        
+        <a href="/about">
+            <i class="fa-solid fa-id-card fa-fw"></i>
+            <span>&ensp;About</span>
+        </a>
+        
+        <a href="/archives">
+            <i class="fa-solid fa-box-archive fa-fw"></i>
+            <span>&ensp;Archives</span>
+        </a>
+        
+        <a href="/categories">
+            <i class="fa-solid fa-bookmark fa-fw"></i>
+            <span>&ensp;Categories</span>
+        </a>
+        
+        <a href="/tags">
+            <i class="fa-solid fa-tags fa-fw"></i>
+            <span>&ensp;Tags</span>
+        </a>
+        
+    </div>
+    <div :class="&quot;phone-menu &quot; + menushow" id="phone-menu">
+        <div class="curtain" @click="menushow = !menushow" v-show="menushow"></div>
+        <div class="title" @click="menushow = !menushow">
+            <i class="fa-solid fa-bars fa-fw"></i>
+            <span>&emsp;WAITING FOR THE DAWN</span>
+        </div>
+        <transition name="slide">
+        <div class="items" v-show="menushow">
+            
+            <a href="/">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-house fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Home</div>
+                </div>
+            </a>
+            
+            <a href="/about">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-id-card fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">About</div>
+                </div>
+            </a>
+            
+            <a href="/archives">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-box-archive fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Archives</div>
+                </div>
+            </a>
+            
+            <a href="/categories">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-bookmark fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Categories</div>
+                </div>
+            </a>
+            
+            <a href="/tags">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-tags fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Tags</div>
+                </div>
+            </a>
+            
+        </div>
+        </transition>
+    </div>
+</nav>
+
+                <div class="article">
+    <div>
+        <h1>dp practice day 7 </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/3/11
+        </span>
+        
+        <span class="category">
+            <a href="/categories/Algorithm/">
+                <span class="icon">
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
+                </span>
+                Algorithm
+            </a>
+        </span>
+        
+        
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/dp/" style="color: #03a9f4">dp</a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/dp-practice-plan/" style="color: #ff7d73">dp_practice_plan</a>
+            </span>
+            
+        </span>
+        
+    </div>
+    
+    <div class="content" v-pre>
+        <p>三道大水题，选的太成功惹！<br>01背包+树形dp+combo</p>
+<p>CF 687C<br>类似01背包的格式，给你一堆硬币，问你在能组成k的条件下还能组成一些其他什么别的数<br>类似01背包的转移<br>dp[i][j]表示在能够组成i的时候，能否组成j</p>
+<p>$dp[i+a[k]][j]=d[i+a[k]][j+a[k]]=(dp[i][j]==1)$</p>
+<pre><code class="lang-C++">void solve()&#123;
+  int n,k;
+  cin&gt;&gt;n&gt;&gt;k;
+  vector&lt;int&gt;a(n+1);
+  for(int i=1;i&lt;=n;++i)cin&gt;&gt;a[i];
+  vector dp(k+1,vector&lt;int&gt;(k+1));
+  dp[0][0]=1;
+  for(int i=0;i&lt;=n;++i)&#123;
+    for(int v1=k;v1&gt;=0;--v1)&#123;
+        for(int v2=k;v2&gt;=0;--v2)&#123;
+            if(dp[v1][v2]&amp;&amp;v1+a[i]&lt;=k)&#123;
+                dp[v1+a[i]][v2]=dp[v1+a[i]][v2+a[i]]=1;
+            &#125;
+        &#125;
+    &#125;
+  &#125;
+  vector&lt;int&gt;ans;
+  for(int i=0;i&lt;=k;++i)&#123;
+    if(dp[k][i])&#123;
+        ans.push_back(i);
+    &#125;
+  &#125;
+  cout&lt;&lt;ans.size()&lt;&lt;&#39;\n&#39;;
+  for(int i=0;i&lt;ans.size();++i)&#123;
+    cout&lt;&lt;ans[i]&lt;&lt;&quot; \n&quot;[i==ans.size()-1];
+  &#125;
+  return;
+&#125;
+</code></pre>
+<p>CF 685B</p>
+<p>树形dp，首先我们可以先把每棵树的重儿子求出来(dfs)<br>之后了解一个性质，<font color="red">一颗树的重心总在重儿子的重心和根的路径上</font><br>所以我们只需要从重儿子的重心开始向上爬，就能够找到重心惹</p>
+<pre><code class="lang-C++">void solve()&#123;
+  int n,q;cin&gt;&gt;n&gt;&gt;q;
+  vector&lt;int&gt;fa(n+1),ans(n+1),hson(n+1),siz(n+1);
+  vector&lt;vector&lt;int&gt;&gt;E(n+1);
+  for(int i=2;i&lt;=n;++i)&#123;
+    int x;cin&gt;&gt;x;
+    E[x].push_back(i);
+    fa[i]=x;
+  &#125;
+  function&lt;void(int)&gt;dfs1=[&amp;](int now)&#123;
+    siz[now]=1;
+    for(int v:E[now])&#123;
+        dfs1(v);
+        siz[now]+=siz[v];
+        if(siz[v]&gt;siz[hson[now]])&#123;
+            hson[now]=v;
+        &#125;
+    &#125;
+  &#125;;
+  function&lt;void(int)&gt;dfs2=[&amp;](int now)&#123;
+    if(!hson[now])&#123;
+        ans[now]=now;
+        return;
+    &#125;
+    for(int v:E[now])&#123;
+        dfs2(v);
+    &#125;
+    if(2*siz[hson[now]]&lt;=siz[now])&#123;
+        ans[now]=now;
+    &#125;
+    else&#123;
+        for(int v=ans[hson[now]];v!=now;v=fa[v])&#123;
+            if(max(siz[hson[v]],siz[now]-siz[v])*2&lt;=siz[now])&#123;
+                ans[now]=v;
+                break;
+            &#125;
+        &#125;
+    &#125;
+  &#125;;
+  dfs1(1);
+  dfs2(1);
+  while(q--)&#123;
+    int v;cin&gt;&gt;v;
+    cout&lt;&lt;ans[v]&lt;&lt;&#39;\n&#39;;
+  &#125;
+  return;
+&#125;
+</code></pre>
+<p>CF 689E<br>给你一堆区间，让你每次选k个，问能够每次选k个的区间和的和为多少</p>
+<p>首先考虑对于一个元素来说，如果有cnt个区间选中了他，那么他的贡献为${C_{cnt}^k}$ 知道这个了之后，就类似滑动窗口每次去取就好了</p>
+<pre><code class="lang-C++">ll quick_pow(ll x,ll exp,int p)
+&#123;
+      ll ans=1;
+      while(exp)
+      &#123;
+        if(exp&amp;1)ans=ans*x%p;
+        exp&gt;&gt;=1;
+        x=x*x%p;
+      &#125;
+      return ans;
+&#125;
+ll inv[MAXN],fac[MAXN];
+void init(int n,int p)
+&#123;
+  memset(inv,0,sizeof(inv));
+  memset(fac,0,sizeof(fac));
+  inv[0]=fac[0]=1;
+  for(int i=1;i&lt;=n;++i)
+  &#123;
+    fac[i]=fac[i-1]*i%p;
+  &#125;
+  inv[n]=quick_pow(fac[n],p-2,p)%p;
+  for(int i=n;i&gt;=1;--i)inv[i-1]=inv[i]*i%p;
+&#125;
+ll C(ll n,ll m,ll p)
+&#123;
+  if(m&gt;n||m&lt;0)return 0;
+  return fac[n]*inv[n-m]%p*inv[m]%p;
+&#125;
+void solve()&#123;
+  int n,k;cin&gt;&gt;n&gt;&gt;k;
+  using pii=pair&lt;int,int&gt;;
+  vector&lt;pii&gt;vec;
+  for(int i=1;i&lt;=n;++i)&#123;
+    int l,r;
+    cin&gt;&gt;l&gt;&gt;r;
+    vec.push_back(&#123;l-1,1&#125;);
+    vec.push_back(&#123;r,-1&#125;);
+  &#125;
+  sort(vec.begin(),vec.end());
+  ll cnt=0,ans=0,left=-1;
+  for(auto pi:vec)&#123;
+    ans=(ans+C(cnt,k,MOD)*(pi.first-left))%MOD;
+    left=pi.first;
+    cnt+=pi.second;
+  &#125;
+  cout&lt;&lt;ans&lt;&lt;&#39;\n&#39;;
+  return;
+&#125;
+</code></pre>
+<p>OK,今天的水题完成惹，开始写OS的复习惹</p>
+
+    </div>
+    
+    
+    
+    
+    
+    
+    
+</div>
+
+                <footer id="footer">
+    <div class="footer-wrap">
+        <div>
+            &copy;
+            2022 - 2023 Waiting for the dawn
+            <span class="footer-icon">
+                <i class="fa-solid fa-font-awesome fa-fw"></i>
+            </span>
+            &commat;Yanxin Xiang
+        </div>
+        <div>Based on the <a target="_blank" rel="noopener" href="https://hexo.io">Hexo Engine</a> &amp; <a target="_blank" rel="noopener" href="https://github.com/argvchs/hexo-theme-particlex">ParticleX Theme</a></div>
+        
+    </div>
+</footer>
+
+            </div>
+            </transition>
+            <div id="showimg">
+                <img id="showimg-content">
+            </div>
+        </div>
+        <script src="/js/functions.js"></script>
+<script src="/js/particlex.js"></script>
+
+
+
+
+
+
+
+    </body>
+</html>

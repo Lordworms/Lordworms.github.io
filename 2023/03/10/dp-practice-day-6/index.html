@@ -1,0 +1,326 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>dp practice_day 6 | Waiting for the dawn</title>
+        <meta name="author" content="Yanxin Xiang">
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+        <link rel="icon" href="https://i.ibb.co/sszdSW8/IMG-2691.jpg">
+        <script src="https://cdn.staticfile.org/vue/3.2.45/vue.global.prod.min.js"></script>
+        <script src="https://cdn.staticfile.org/highlight.js/11.7.0/highlight.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/11.7.0/styles/github.min.css">
+        <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/6.2.1/css/all.min.css">
+        
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+        
+        
+        <script src="https://cdn.staticfile.org/KaTeX/0.16.4/katex.min.js"></script>
+        <script src="https://cdn.staticfile.org/KaTeX/0.16.4/contrib/auto-render.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.staticfile.org/KaTeX/0.16.4/katex.min.css">
+        
+        
+        <link rel="stylesheet" href="/css/fonts.min.css">
+        <link rel="stylesheet" href="/css/particlex.css">
+    <meta name="generator" content="Hexo 6.3.0"></head>
+    <body>
+        <div id="loading" style="height: 100vh; width: 100vw; left: 0; top: 0; position: fixed; display: flex; z-index: 2147483647; background: #fff; transition: opacity 0.3s ease-out; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; pointer-events: none">
+    <div style="width: 50vmin; height: 50vmin; margin: auto; padding: 50px; border-radius: 50%; display: flex; border: solid 10px #a3ddfb">
+        <div style="margin: auto; text-align: center">
+            <h2>LOADING</h2>
+            <p>加载过慢请开启缓存，浏览器默认开启</p>
+            <img src="/images/loading.gif" style="height: 50px; border-radius: 0">
+        </div>
+    </div>
+</div>
+
+        <div id="layout">
+            <transition name="into">
+            <div id="main" v-show="showpage" style="display: -not-none">
+                <nav id="menu">
+    <div class="desktop-menu">
+        <a class="title" href="/">
+            <span>WAITING FOR THE DAWN</span>
+        </a>
+        
+        <a href="/">
+            <i class="fa-solid fa-house fa-fw"></i>
+            <span>&ensp;Home</span>
+        </a>
+        
+        <a href="/about">
+            <i class="fa-solid fa-id-card fa-fw"></i>
+            <span>&ensp;About</span>
+        </a>
+        
+        <a href="/archives">
+            <i class="fa-solid fa-box-archive fa-fw"></i>
+            <span>&ensp;Archives</span>
+        </a>
+        
+        <a href="/categories">
+            <i class="fa-solid fa-bookmark fa-fw"></i>
+            <span>&ensp;Categories</span>
+        </a>
+        
+        <a href="/tags">
+            <i class="fa-solid fa-tags fa-fw"></i>
+            <span>&ensp;Tags</span>
+        </a>
+        
+    </div>
+    <div :class="&quot;phone-menu &quot; + menushow" id="phone-menu">
+        <div class="curtain" @click="menushow = !menushow" v-show="menushow"></div>
+        <div class="title" @click="menushow = !menushow">
+            <i class="fa-solid fa-bars fa-fw"></i>
+            <span>&emsp;WAITING FOR THE DAWN</span>
+        </div>
+        <transition name="slide">
+        <div class="items" v-show="menushow">
+            
+            <a href="/">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-house fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Home</div>
+                </div>
+            </a>
+            
+            <a href="/about">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-id-card fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">About</div>
+                </div>
+            </a>
+            
+            <a href="/archives">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-box-archive fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Archives</div>
+                </div>
+            </a>
+            
+            <a href="/categories">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-bookmark fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Categories</div>
+                </div>
+            </a>
+            
+            <a href="/tags">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-tags fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Tags</div>
+                </div>
+            </a>
+            
+        </div>
+        </transition>
+    </div>
+</nav>
+
+                <div class="article">
+    <div>
+        <h1>dp practice_day 6 </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/3/10
+        </span>
+        
+        <span class="category">
+            <a href="/categories/Algorithm/">
+                <span class="icon">
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
+                </span>
+                Algorithm
+            </a>
+        </span>
+        
+        
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/dp/" style="color: #03a9f4">dp</a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/dp-practice-plan/" style="color: #00bcd4">dp_practice_plan</a>
+            </span>
+            
+        </span>
+        
+    </div>
+    
+    <div class="content" v-pre>
+        <p>今天总感觉写的有点想吐，就只写2题然后去写LSM了(明天补上剩下的)</p>
+<p>CF 1067A</p>
+<p>首先还是确定状态状态，先看数据的范围1-200那么我们可以包含当前的值的所有情况来做我们的状态，然后考虑当前值和前面的值的关系，有= &gt; &lt;三种</p>
+<p>那么我们令dp[i][j][0/1/2]为当前遍历到第i个元素，当前元素的取值为j，当前元素比前一个元素 相等/小于/大于的解</p>
+<p>那么转移也很好实现</p>
+<p>$dp[i][j][0]=dp[i-1][j][0]+dp[i-1][j][1]+dp[i-1][j][2]$</p>
+<p>$dp[i][j][2]=\sum_{k=1}^{j-1}{dp[i-1][k][0]+dp[i-1][k][1]+dp[i-1][k][2]}$</p>
+<p>$dp[i][j][1]=\sum_{k=j+1}^{200}{dp[i-1][k][0]+dp[i-1][k][1]}$</p>
+<p>需要注意的是计算小于的时候需要去掉前一个元素比前前个元素大的情况<br>另外对于第一个元素来说</p>
+<pre><code class="lang-C++">ll dp[N][201][3];////0 eq, 1 less 2 greater
+void solve()&#123;
+  int n;cin&gt;&gt;n;
+  vector&lt;int&gt;a(n+1);
+  for(int i=1;i&lt;=n;++i)cin&gt;&gt;a[i];
+  if(a[1]==-1)&#123;
+    for(int i=1;i&lt;=200;++i)&#123;
+        dp[1][i][2]=1;
+    &#125;
+  &#125;else&#123;
+    dp[1][a[1]][2]=1;
+  &#125;
+
+  for(int i=2;i&lt;=n;++i)&#123; 
+    int sum=0;
+    for(int j=1;j&lt;=200;++j)&#123;
+        if(a[i]==-1||a[i]==j)&#123;
+            dp[i][j][0]=(dp[i-1][j][0]+dp[i-1][j][1]+dp[i-1][j][2])%MOD;
+            dp[i][j][2]=sum%MOD;
+        &#125;
+        sum=(sum+dp[i-1][j][0]+dp[i-1][j][1]+dp[i-1][j][2])%MOD;
+    &#125;
+    sum=0;
+    //calculate less than previous
+    for(int j=200;j&gt;=1;--j)&#123;
+        if(a[i]==-1||a[i]==j)&#123;
+            dp[i][j][1]=sum%MOD;
+        &#125;
+        sum=(sum+(dp[i-1][j][0]+dp[i-1][j][1]))%MOD;
+    &#125;
+  &#125;
+  ll ans=0;
+  for(int i=1;i&lt;=200;++i)&#123;
+    ans=(ans+(dp[n][i][0]+dp[n][i][1]))%MOD;
+  &#125;
+  cout&lt;&lt;ans&lt;&lt;&#39;\n&#39;;
+  return;
+&#125;
+</code></pre>
+<p>CF 8C</p>
+<p>首先看到数据范围，直接想到状压<br>那么转移也很好写了<br>需要注意的是每次只处理一次转移，然后break，不然会重复枚举，导致TLE</p>
+<pre><code class="lang-C++">void solve()&#123;
+  int x,y;
+  cin&gt;&gt;x&gt;&gt;y;
+  int n;cin&gt;&gt;n;
+  vector&lt;int&gt;a(n+1),b(a);
+  a[n]=x,b[n]=y;
+  for(int i=0;i&lt;n;++i)&#123;
+    cin&gt;&gt;a[i]&gt;&gt;b[i];
+  &#125;
+  auto calc=[&amp;](int i,int j)&#123;
+    return abs(a[i]-a[j])*abs(a[i]-a[j])+abs(b[i]-b[j])*abs(b[i]-b[j]);
+  &#125;;
+  vector dis(n+1,vector&lt;int&gt;(n+1));
+  for(int i=0;i&lt;=n;++i)&#123;
+    for(int j=0;j&lt;=n;++j)&#123;
+        dis[i][j]=calc(i,j);
+    &#125;
+  &#125;
+  vector&lt;int&gt;pre(1&lt;&lt;(n+1));
+  vector&lt;int&gt;dp(1&lt;&lt;(n+1),INF);
+  dp[0]=0;
+  for(int i=0;i&lt;(1&lt;&lt;n);++i)&#123;
+    if(dp[i]==INF)continue;
+    for(int j=0;j&lt;n;++j)&#123;
+        if(((1&lt;&lt;j)&amp;i)==0)&#123;
+            for(int k=j;k&lt;n;++k)&#123;
+                if(((1&lt;&lt;k)&amp;i)==0)&#123;
+                    int d=dis[j][k]+dis[j][n]+dis[k][n];
+                    int nxt=i|(1&lt;&lt;j)|(1&lt;&lt;k);
+                    if(dp[nxt]&gt;dp[i]+d)&#123;
+                        dp[nxt]=dp[i]+d;
+                        pre[nxt]=i;
+                    &#125;
+                &#125;
+            &#125;
+        break;//just transfer first time
+        &#125;
+    &#125;
+  &#125;
+  cout&lt;&lt;dp[(1&lt;&lt;n)-1]&lt;&lt;&#39;\n&#39;;
+  vector&lt;int&gt;ans;
+  for(int i=(1&lt;&lt;n)-1;i!=0;i=pre[i])&#123;
+    ans.push_back(0);
+    int tmp=pre[i]^i;
+    int cnt=0;
+    for(int j=0;j&lt;n;++j)&#123;
+        if((1&lt;&lt;j)&amp;tmp)&#123;
+            ans.push_back(j+1);
+        &#125;
+    &#125;
+  &#125;
+  ans.push_back(0);
+  for(int i=ans.size()-1;i&gt;=0;--i)&#123;
+    cout&lt;&lt;ans[i]&lt;&lt;&quot; \n&quot;[i==0];
+  &#125;
+  return;
+&#125;
+</code></pre>
+<p>晚上看看SQL的代码吧，明天总结一下OS，哎，今天又摆了</p>
+
+    </div>
+    
+    
+    
+    
+    
+    
+    
+</div>
+
+                <footer id="footer">
+    <div class="footer-wrap">
+        <div>
+            &copy;
+            2022 - 2023 Waiting for the dawn
+            <span class="footer-icon">
+                <i class="fa-solid fa-font-awesome fa-fw"></i>
+            </span>
+            &commat;Yanxin Xiang
+        </div>
+        <div>Based on the <a target="_blank" rel="noopener" href="https://hexo.io">Hexo Engine</a> &amp; <a target="_blank" rel="noopener" href="https://github.com/argvchs/hexo-theme-particlex">ParticleX Theme</a></div>
+        
+    </div>
+</footer>
+
+            </div>
+            </transition>
+            <div id="showimg">
+                <img id="showimg-content">
+            </div>
+        </div>
+        <script src="/js/functions.js"></script>
+<script src="/js/particlex.js"></script>
+
+
+
+
+
+
+
+    </body>
+</html>

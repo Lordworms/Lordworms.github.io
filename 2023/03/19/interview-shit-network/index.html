@@ -1,0 +1,473 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>interview shit network | Waiting for the dawn</title>
+        <meta name="author" content="Yanxin Xiang">
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+        <link rel="icon" href="https://i.ibb.co/sszdSW8/IMG-2691.jpg">
+        <script src="https://cdn.staticfile.org/vue/3.2.45/vue.global.prod.min.js"></script>
+        <script src="https://cdn.staticfile.org/highlight.js/11.7.0/highlight.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/11.7.0/styles/github.min.css">
+        <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/6.2.1/css/all.min.css">
+        
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+        
+        
+        <script src="https://cdn.staticfile.org/KaTeX/0.16.4/katex.min.js"></script>
+        <script src="https://cdn.staticfile.org/KaTeX/0.16.4/contrib/auto-render.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.staticfile.org/KaTeX/0.16.4/katex.min.css">
+        
+        
+        <link rel="stylesheet" href="/css/fonts.min.css">
+        <link rel="stylesheet" href="/css/particlex.css">
+    <meta name="generator" content="Hexo 6.3.0"></head>
+    <body>
+        <div id="loading" style="height: 100vh; width: 100vw; left: 0; top: 0; position: fixed; display: flex; z-index: 2147483647; background: #fff; transition: opacity 0.3s ease-out; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; pointer-events: none">
+    <div style="width: 50vmin; height: 50vmin; margin: auto; padding: 50px; border-radius: 50%; display: flex; border: solid 10px #a3ddfb">
+        <div style="margin: auto; text-align: center">
+            <h2>LOADING</h2>
+            <p>加载过慢请开启缓存，浏览器默认开启</p>
+            <img src="/images/loading.gif" style="height: 50px; border-radius: 0">
+        </div>
+    </div>
+</div>
+
+        <div id="layout">
+            <transition name="into">
+            <div id="main" v-show="showpage" style="display: -not-none">
+                <nav id="menu">
+    <div class="desktop-menu">
+        <a class="title" href="/">
+            <span>WAITING FOR THE DAWN</span>
+        </a>
+        
+        <a href="/">
+            <i class="fa-solid fa-house fa-fw"></i>
+            <span>&ensp;Home</span>
+        </a>
+        
+        <a href="/about">
+            <i class="fa-solid fa-id-card fa-fw"></i>
+            <span>&ensp;About</span>
+        </a>
+        
+        <a href="/archives">
+            <i class="fa-solid fa-box-archive fa-fw"></i>
+            <span>&ensp;Archives</span>
+        </a>
+        
+        <a href="/categories">
+            <i class="fa-solid fa-bookmark fa-fw"></i>
+            <span>&ensp;Categories</span>
+        </a>
+        
+        <a href="/tags">
+            <i class="fa-solid fa-tags fa-fw"></i>
+            <span>&ensp;Tags</span>
+        </a>
+        
+    </div>
+    <div :class="&quot;phone-menu &quot; + menushow" id="phone-menu">
+        <div class="curtain" @click="menushow = !menushow" v-show="menushow"></div>
+        <div class="title" @click="menushow = !menushow">
+            <i class="fa-solid fa-bars fa-fw"></i>
+            <span>&emsp;WAITING FOR THE DAWN</span>
+        </div>
+        <transition name="slide">
+        <div class="items" v-show="menushow">
+            
+            <a href="/">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-house fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Home</div>
+                </div>
+            </a>
+            
+            <a href="/about">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-id-card fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">About</div>
+                </div>
+            </a>
+            
+            <a href="/archives">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-box-archive fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Archives</div>
+                </div>
+            </a>
+            
+            <a href="/categories">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-bookmark fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Categories</div>
+                </div>
+            </a>
+            
+            <a href="/tags">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-tags fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Tags</div>
+                </div>
+            </a>
+            
+        </div>
+        </transition>
+    </div>
+</nav>
+
+                <div class="article">
+    <div>
+        <h1>interview shit network </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/3/19
+        </span>
+        
+        <span class="category">
+            <a href="/categories/interview/">
+                <span class="icon">
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
+                </span>
+                interview
+            </a>
+        </span>
+        
+        
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/interview/" style="color: #00a596">interview</a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/computer-network/" style="color: #ffa2c4">computer network</a>
+            </span>
+            
+        </span>
+        
+    </div>
+    
+    <div class="content" v-pre>
+        <p>reference from(<a target="_blank" rel="noopener" href="https://ac.nowcoder.com/discuss/982903?type=5">https://ac.nowcoder.com/discuss/982903?type=5</a>)</p>
+<h2 id="1-网络体系"><a href="#1-网络体系" class="headerlink" title="1.网络体系"></a>1.网络体系</h2><h3 id="OSI七层体系结构"><a href="#OSI七层体系结构" class="headerlink" title="OSI七层体系结构"></a>OSI七层体系结构</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>分层</th>
+<th>作用</th>
+<th>协议</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>物理层</td>
+<td>通过媒介传输比特，确定机械及电气规范(比特bit)</td>
+<td>RJ45、Clock、IEEE802.3(中继器，集线器)</td>
+</tr>
+<tr>
+<td>数据链路层</td>
+<td>把比特组成帧，然后进行p2p的传递</td>
+<td>PPP,VLAN,MAC(网桥，交换机)</td>
+</tr>
+<tr>
+<td>网络层</td>
+<td>负责数据包从源到宿的传递和网际互连(包packet)</td>
+<td>IP,ICMP,RIP,IGRP</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>传输层|提供端到端的可靠报文传递和错误恢复(段Segment)|TCP,UDP,SPX|<br>|会话层|建立、管理和终止会话(会话协议数据单元SPDU)|NFS,SQL,RPC|<br>|表示层|对数据进行翻译、加密和压缩|JPEG,MPEG,ASII|<br>|应用层|允许访问OSI的手段|FTP,DNS,SMTP,WWW,NFS|</p>
+<h3 id="五层协议"><a href="#五层协议" class="headerlink" title="五层协议"></a>五层协议</h3><p>应用层 传输层 网络层 链路层 物理层</p>
+<h2 id="2-HTTP"><a href="#2-HTTP" class="headerlink" title="2. HTTP"></a>2. HTTP</h2><p>HTTP是超文本传输协议(HTTP 是在计算机世界的协议。它使计算机能够理解的语言确立了一种计算机之间交流通信的规范（两个以上的参与者），以及相关的各种控制和错误处理方式（行为约定和规范）。</p>
+<p>特点<br>1.无连接的协议，发送完消息后需要重连</p>
+<p>2.能够传输各种各样的数据，只要双方的机器能够阅读</p>
+<p>3.无状态的协议，发完就溜</p>
+<h3 id="和HTTPS的区别"><a href="#和HTTPS的区别" class="headerlink" title="和HTTPS的区别"></a>和HTTPS的区别</h3><p>1.HTTP 明文传输，数据都是未加密的，安全性较差，HTTPS（SSL+HTTP） 数据传输过程是加密的，安全性较好。</p>
+<p>2.使用 HTTPS 协议需要到 CA（Certificate Authority，数字证书认证机构） 申请证书，一般免费证书较少，因而需要一定费用。证书颁发机构如：Symantec、Comodo、GoDaddy 和 GlobalSign 等。</p>
+<p>3.HTTP 页面响应速度比 HTTPS 快，主要是因为 HTTP 使用 TCP 三次握手建立连接，客户端和服务器需要交换 3 个包，而 HTTPS除了 TCP 的三个包，还要加上 ssl 握手需要的 9 个包，所以一共是 12 个包。</p>
+<p>4.http 和 https 使用的是完全不同的连接方式，用的端口也不一样，前者是 80，后者是 443。</p>
+<h3 id="HTTP的进化"><a href="#HTTP的进化" class="headerlink" title="HTTP的进化"></a>HTTP的进化</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>协议</th>
+<th>特征</th>
+<th>缺点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>HTTP/1.0</td>
+<td>无状态+无连接</td>
+<td></td>
+</tr>
+<tr>
+<td>HTTP/1.1</td>
+<td>1.长连接：增加了一个connection的字段，通过keep-alive可以保持连接不断开 <br>2.请求管道化，是得请求能够并行传输，把请求队列迁移到服务器。<br>3.加入了缓存处理，有了新的字段cache-control 4.多TCP连接</td>
+<td>仍然无法解决头阻塞的问题（后面的请求必须等待前面请求的response）</td>
+</tr>
+<tr>
+<td>HTTP/2.0</td>
+<td>1.加入了帧和流的概念，采用二进制格式而非文本格式传输。<br>2.对每个流赋予对应的流id，所以不会阻塞 <br>3.加入了server push,可以一次发送多个文件。<br>4.header压缩</td>
+<td>1. server push可能被滥用。<br>2.混合模式的时候可能更慢，后端(支持HTTP2)和负载均衡(不支持HTTP2)不匹配</td>
+</tr>
+<tr>
+<td>HTTP/3.0</td>
+<td>1.传输层采用了新的协议QUIC <br>2.在UDP的基础上开发，所以如果有stream里的数据丢失，可以快速重传(QUIC每发送一组数据就对这组数据进行异或运算，并将结果作为一个校验和包发送出去。如果前面这组数据中出现了丢包的情况，就可以通过校验和与其他包来还原出丢包的数据，避免了重传带来的损耗。)，并且第一次连接的时候也不需要三次握手了，直接tLS就行了</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="常用的HTTP请求方式以及区别"><a href="#常用的HTTP请求方式以及区别" class="headerlink" title="常用的HTTP请求方式以及区别"></a>常用的HTTP请求方式以及区别</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>特点</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td>1.无法改变server<br>2.可缓存，请求的数据附加在URL之后，用?分割，多数据用&amp;连接<br>3.URL编码格式采用ASCII编码而非unicode，所有的非ASCII字符都需要编码后再传输<br>4.总的来说，在少量数据的时候用<br>5.安全性比较低z wzw</td>
+<td></td>
+</tr>
+<tr>
+<td>POST</td>
+<td>1.可以改变server<br>2.不可缓存，请求数据在HTTP的body里</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="常见的HTTP状态响应码"><a href="#常见的HTTP状态响应码" class="headerlink" title="常见的HTTP状态响应码"></a>常见的HTTP状态响应码</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>分类</th>
+<th>描述</th>
+<th>例子</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1**</td>
+<td>信息，服务器收到请求，需要请求者继续执行操作</td>
+<td>100:继续，客户端应该继续请求。<br>101:切换协议，服务器根据客户端的请求切换协议。只能切换到更高级的协议，例如，切换到HTTP的新版本协议</td>
+</tr>
+<tr>
+<td>2**</td>
+<td>成功，操作被成功接收并处理</td>
+<td>200:OK<br>201:已创建,成功请求并创建了新的资源<br>202:已接受。已经接受请求，但未处理完成</td>
+</tr>
+<tr>
+<td>3**</td>
+<td>重定向，需要进一步的操作以完成请求</td>
+<td>301:永久移动。请求的资源已被永久的移动到新URI，返回信息会包括新的URI，浏览器会自动定向到新URI。今后任何新的请求都应使用新的URI代替<br>302:此响应代码表示所请求资源的 URI 已 暂时 更改。未来可能会对 URI 进行进一步的改变。因此，客户机应该在将来的请求中使用这个相同的 URI。</td>
+</tr>
+<tr>
+<td>4**</td>
+<td>客户端错误，请求包含语法错误或者无法完成请求</td>
+<td>400:客户端请求的语法错误，服务器无法理解<br>401    :请求要求用户的身份认证</td>
+</tr>
+<tr>
+<td>5**</td>
+<td>服务器错误，服务器在处理请求的过程中发生了错误</td>
+<td>500:服务器内部错误，无法完成请求<br>501:服务器不支持请求的功能，无法完成请求</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="3-三次握手"><a href="#3-三次握手" class="headerlink" title="3.三次握手"></a>3.三次握手</h2><pre><code>客户端               状态：CLOSED                服务端               状态：CLOSED
+  |                                     |
+  |--------- SYN(seq=x) -------------&gt;  |             监听连接请求
+  |             状态：SYN-SENT           |
+  | &lt;------ SYN(seq=y),ACK(seq=x+1)---- |             等待连接请求
+  |             状态：SYN-RECEIVED       |
+  |--------- ACK(seq=y+1,ack=x+1)-----&gt; |             确认连接请求，准备传输数据
+  |             状态：ESTABLISHED        |
+  |                                     |
+</code></pre><p>1.第一次握手：客户端向服务器发送SYN信息，SYN设置为1 序列号seq=x,第一次握手后客户端为SYN-SENT,服务端为LISTEN</p>
+<p>2.第二次握手：服务端收到客户端报文后，随机生成一个起始序列号y，然后给客户端恢复一段报文，其中SYN=1,ACK=1,序列号seq=y,确认号ack=x+1此时服务端状态变为SYN-RCVD</p>
+<p>3.客户端收到服务端的豹纹后，会再向服务端发送报文</p>
+<p><img src="https://i.ibb.co/CwjgHTY/WX20230320-152225-2x.png" alt="avator"></p>
+<h3 id="不进行三次握手可能发生这些情况"><a href="#不进行三次握手可能发生这些情况" class="headerlink" title="不进行三次握手可能发生这些情况"></a>不进行三次握手可能发生这些情况</h3><p>1.资源浪费</p>
+<p>假设客户端向服务端发送了一个连接请求，但是服务端由于网络问题等原因没有收到请求，而客户端在等待服务端响应时，一直占用着本地的资源，比如说占用了一个端口号，这样就会导致其他客户端无法使用这个端口号，从而浪费了资源。而服务端在没有收到请求的情况下，也可能会占用一些资源，比如说占用了一个线程等待请求的到来，从而浪费了服务器的资源。</p>
+<p>2.数据混乱</p>
+<p>假设客户端发送了一个请求，但由于网络延迟等原因，服务端接收到了多个请求，此时客户端会认为连接已经建立成功，开始发送数据，但由于服务端接收到了多个请求，所以不知道客户端发送的具体数据是哪个请求对应的，就会导致数据传输的混乱，从而造成数据的重复发送或丢失。</p>
+<p>3.安全问题</p>
+<p>假设客户端发送了一个连接请求，但这个请求是由黑客伪造的，黑客可以伪造一个IP地址和端口号，从而欺骗服务端，让服务端认为是合法的请求，如果没有进行握手，就无法验证请求的真实性，这样就有可能会访问到服务端的敏感信息，比如说数据库密码等。</p>
+<h3 id="三次握手的字段交换"><a href="#三次握手的字段交换" class="headerlink" title="三次握手的字段交换"></a>三次握手的字段交换</h3><p>除了ACK SYN SEQ之外，还有TCP头部和IP头部等协议头部信息</p>
+<h3 id="两次握手行不行"><a href="#两次握手行不行" class="headerlink" title="两次握手行不行"></a>两次握手行不行</h3><p>不行，如果服务端发送的ACK+SYN丢失，那么会出现问题</p>
+<h2 id="4-四次挥手"><a href="#4-四次挥手" class="headerlink" title="4.四次挥手"></a>4.四次挥手</h2><pre><code>客户端             状态：ESTABLISHED          服务端             状态：ESTABLISHED
+  |                                         |
+  |--------- FIN(seq=x) ---------------&gt;   |             客户端发送FIN报文段，请求关闭连接
+  |             状态：FIN-WAIT-1            |
+  | &lt;------ ACK(seq=x+1,ack=y) ---------- |             服务端返回ACK报文段，确认收到FIN报文段
+  |             状态：FIN-WAIT-2            |
+  |                                         |
+  |                                         |
+  | &lt;------ FIN(seq=y) ------------------ |             服务端发送FIN报文段，请求关闭连接
+  |             状态：TIME-WAIT             |
+  |--------- ACK(seq=y+1,ack=x+1) -----&gt;   |             客户端返回ACK报文段，确认收到FIN报文段，进入TIME-WAIT状态
+  |             状态：CLOSE-WAIT            |
+  |                                         |
+  |                                         |
+  |             状态：LAST-ACK              |             客户端发送ACK报文段，终止连接
+  | &lt;------ ACK(seq=x+1,ack=y+1) ----------|             服务端进入CLOSED状态
+  |                                         |
+  |                                         |
+</code></pre><p>1.A的应用进程先向其TCP发出连接释放报文段（FIN=1，seq=u），并停止再发送数据，主动关闭TCP连接，进入FIN-WAIT-1（终止等待1）状态，等待B的确认。</p>
+<p>2.B收到连接释放报文段后即发出确认报文段（ACK=1，ack=u+1，seq=v），B进入CLOSE-WAIT（关闭等待）状态，此时的TCP处于半关闭状态，A到B的连接释放。</p>
+<p>3.A收到B的确认后，进入FIN-WAIT-2（终止等待2）状态，等待B发出的连接释放报文段。</p>
+<p>4.B发送完数据，就会发出连接释放报文段（FIN=1，ACK=1，seq=w，ack=u+1），B进入LAST-ACK（最后确认）状态，等待A的确认。</p>
+<p>5.<br>A收到B的连接释放报文段后，对此发出确认报文段（ACK=1，seq=u+1，ack=w+1），A进入TIME-WAIT（时间等待）状态。此时TCP未释放掉，需要经过时间等待计时器设置的时间2MSL（最大报文段生存时间）后，A才进入CLOSED状态。B收到A发出的确认报文段后关闭连接，若没收到A发出的确认报文段，B就会重传连接释放报文段。</p>
+<h3 id="三次挥手行不行"><a href="#三次挥手行不行" class="headerlink" title="三次挥手行不行"></a>三次挥手行不行</h3><p>具体来说，当客户端发送最后一个ACK报文，告知服务端自己已经完成数据的接收，服务端会进入LAST_ACK状态，等待客户端的确认。如果这个ACK报文丢失了，服务端就无法得知客户端已经完成关闭，因此无法将自己的连接释放，这就导致了“半开（half-open）”连接，即服务端仍然会认为自己和客户端的连接是打开状态，浪费了网络资源。</p>
+<p>为了解决这个问题，四次挥手增加了一个额外的ACK报文，即最后一个ACK报文，以确保双方都能确认连接已经关闭。</p>
+<h2 id="浏览器中输入URL返回页的过程"><a href="#浏览器中输入URL返回页的过程" class="headerlink" title="浏览器中输入URL返回页的过程"></a>浏览器中输入URL返回页的过程</h2><p>1、解析URL得到发送给web的信息，并生产 HTTP 请求信息</p>
+<p>2、查询服务器域名对应的** IP 地址，这个过程中涉及到DNS解析。</p>
+<p>3、通过 DNS 获取到 IP 后，就可以把 HTTP 的传输⼯作交给操作系统中的协议栈。</p>
+<p>4、经过TCP三次握手建立连接进行数据传输。</p>
+<p>5、TCP 模块在执行连接、收发、断开等各阶段操作时，都需要委托 IP 模块将数据封装成网络包发送给通信对象。</p>
+<p>6、生成了 IP 头部之后，接下来网络包还需要在 IP 头部的前面加上 MAC 头部。</p>
+<p>7、后续还会经过网卡、交换机和路由器到对端，然后就是一个反向的过程。</p>
+<h2 id="TCP-UDP区别"><a href="#TCP-UDP区别" class="headerlink" title="TCP UDP区别"></a>TCP UDP区别</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>种类</th>
+<th>特点</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TCP</td>
+<td>1.面向连接<br>2.提供可靠的服务<br>3.面向字节流<br>4.有拥塞控制<br>5.每一条TCP连接只能是1对1的<br>6.首部开销20字节</td>
+<td></td>
+</tr>
+<tr>
+<td>UDP</td>
+<td>1.不面向连接,无连接的，即发送数据前不需要建立连接<br>2.不保证可靠交付<br>3.面向报文的<br>4.没有拥塞控制，网络出现拥塞不会让源主机的发送速率降低<br>5.UDP支持一对一，一对多和多对多的通信方式<br>6.UDP首部开销小，只有8个字节</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="TCP的拥塞控制"><a href="#TCP的拥塞控制" class="headerlink" title="TCP的拥塞控制"></a>TCP的拥塞控制</h2><p>用于防止过多的数据注入到网络中<br>慢开始、拥塞避免、快重传、快恢复<br>|类型|特点||<br>|-|-|-|<br>|慢启动|先把拥塞窗口设置为一个最大报文段的数值，然后按指数加倍，到达门限后，按照线性增加||<br>|拥塞避免|每次发送方发现网络出现拥塞，先把上限设置为出现拥塞的一半然后把当前cwnd重新设置为1，然后重新执行慢启动算法||<br>|快速重传|接收方每收到一个失序的报文就立刻发出重复确认，发送方收到三个连续重复确认后，把门限减半，然后吧cwnd设置为慢开始门限减半后的数值，然后重新执行线性增加||</p>
+<h2 id="cookie-session-token"><a href="#cookie-session-token" class="headerlink" title="cookie session token"></a>cookie session token</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>区别</th>
+<th>coockie</th>
+<th>session</th>
+<th>token</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>存储位置</td>
+<td>客户端</td>
+<td>服务器</td>
+<td>服务器</td>
+</tr>
+<tr>
+<td>存储内容</td>
+<td>存储少量的文本信息，如用户ID、用户名</td>
+<td>可以存储更多的用户信息，包括登录状态、权限信息等</td>
+<td>可以存储更多的用户信息，包括登录状态、权限信息等</td>
+</tr>
+<tr>
+<td>安全性</td>
+<td>由于Cookie存储在客户端，因此可能存在安全风险</td>
+<td>Session和Token存储在服务器端，因此比Cookie更安全。</td>
+<td>Session和Token存储在服务器端，因此比Cookie更安全。</td>
+</tr>
+<tr>
+<td>过期时间</td>
+<td>Cookie可以设置过期时间</td>
+<td>Session通常在用户关闭浏览器时就会自动过期</td>
+<td>Token通常具有较长的过期时间，可以用于长期的身份验证</td>
+</tr>
+<tr>
+<td>访问限制</td>
+<td>Cookie存储在客户端，因此客户端可以直接访问和修改Cookie</td>
+<td>Session和Token存储在服务器端，客户端无法直接访问和修改Session和Token。</td>
+</tr>
+<tr>
+<td>适用范围</td>
+<td>Web应用程序</td>
+<td>Web应用程序</td>
+<td>Web服务和API</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id><a href="#" class="headerlink" title=" "></a> </h2>
+    </div>
+    
+    
+    
+    
+    
+    
+    
+</div>
+
+                <footer id="footer">
+    <div class="footer-wrap">
+        <div>
+            &copy;
+            2022 - 2023 Waiting for the dawn
+            <span class="footer-icon">
+                <i class="fa-solid fa-font-awesome fa-fw"></i>
+            </span>
+            &commat;Yanxin Xiang
+        </div>
+        <div>Based on the <a target="_blank" rel="noopener" href="https://hexo.io">Hexo Engine</a> &amp; <a target="_blank" rel="noopener" href="https://github.com/argvchs/hexo-theme-particlex">ParticleX Theme</a></div>
+        
+    </div>
+</footer>
+
+            </div>
+            </transition>
+            <div id="showimg">
+                <img id="showimg-content">
+            </div>
+        </div>
+        <script src="/js/functions.js"></script>
+<script src="/js/particlex.js"></script>
+
+
+
+
+
+
+
+    </body>
+</html>

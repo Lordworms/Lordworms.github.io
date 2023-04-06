@@ -1,0 +1,311 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>daily 3 | Waiting for the dawn</title>
+        <meta name="author" content="Yanxin Xiang">
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+        <link rel="icon" href="https://i.ibb.co/sszdSW8/IMG-2691.jpg">
+        <script src="https://cdn.staticfile.org/vue/3.2.45/vue.global.prod.min.js"></script>
+        <script src="https://cdn.staticfile.org/highlight.js/11.7.0/highlight.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/11.7.0/styles/github.min.css">
+        <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/6.2.1/css/all.min.css">
+        
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+        
+        
+        <script src="https://cdn.staticfile.org/KaTeX/0.16.4/katex.min.js"></script>
+        <script src="https://cdn.staticfile.org/KaTeX/0.16.4/contrib/auto-render.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.staticfile.org/KaTeX/0.16.4/katex.min.css">
+        
+        
+        <link rel="stylesheet" href="/css/fonts.min.css">
+        <link rel="stylesheet" href="/css/particlex.css">
+    <meta name="generator" content="Hexo 6.3.0"></head>
+    <body>
+        <div id="loading" style="height: 100vh; width: 100vw; left: 0; top: 0; position: fixed; display: flex; z-index: 2147483647; background: #fff; transition: opacity 0.3s ease-out; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; pointer-events: none">
+    <div style="width: 50vmin; height: 50vmin; margin: auto; padding: 50px; border-radius: 50%; display: flex; border: solid 10px #a3ddfb">
+        <div style="margin: auto; text-align: center">
+            <h2>LOADING</h2>
+            <p>加载过慢请开启缓存，浏览器默认开启</p>
+            <img src="/images/loading.gif" style="height: 50px; border-radius: 0">
+        </div>
+    </div>
+</div>
+
+        <div id="layout">
+            <transition name="into">
+            <div id="main" v-show="showpage" style="display: -not-none">
+                <nav id="menu">
+    <div class="desktop-menu">
+        <a class="title" href="/">
+            <span>WAITING FOR THE DAWN</span>
+        </a>
+        
+        <a href="/">
+            <i class="fa-solid fa-house fa-fw"></i>
+            <span>&ensp;Home</span>
+        </a>
+        
+        <a href="/about">
+            <i class="fa-solid fa-id-card fa-fw"></i>
+            <span>&ensp;About</span>
+        </a>
+        
+        <a href="/archives">
+            <i class="fa-solid fa-box-archive fa-fw"></i>
+            <span>&ensp;Archives</span>
+        </a>
+        
+        <a href="/categories">
+            <i class="fa-solid fa-bookmark fa-fw"></i>
+            <span>&ensp;Categories</span>
+        </a>
+        
+        <a href="/tags">
+            <i class="fa-solid fa-tags fa-fw"></i>
+            <span>&ensp;Tags</span>
+        </a>
+        
+    </div>
+    <div :class="&quot;phone-menu &quot; + menushow" id="phone-menu">
+        <div class="curtain" @click="menushow = !menushow" v-show="menushow"></div>
+        <div class="title" @click="menushow = !menushow">
+            <i class="fa-solid fa-bars fa-fw"></i>
+            <span>&emsp;WAITING FOR THE DAWN</span>
+        </div>
+        <transition name="slide">
+        <div class="items" v-show="menushow">
+            
+            <a href="/">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-house fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Home</div>
+                </div>
+            </a>
+            
+            <a href="/about">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-id-card fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">About</div>
+                </div>
+            </a>
+            
+            <a href="/archives">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-box-archive fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Archives</div>
+                </div>
+            </a>
+            
+            <a href="/categories">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-bookmark fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Categories</div>
+                </div>
+            </a>
+            
+            <a href="/tags">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-tags fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Tags</div>
+                </div>
+            </a>
+            
+        </div>
+        </transition>
+    </div>
+</nav>
+
+                <div class="article">
+    <div>
+        <h1>daily 3 </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/3/17
+        </span>
+        
+        
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/daily/" style="color: #03a9f4">daily</a>
+            </span>
+            
+        </span>
+        
+    </div>
+    
+    <div class="content" v-pre>
+        <p>CF 722C</p>
+<p>区间并查集，对于某个点来说，如果他左侧/右侧的点已经被加入集合中去了，那么就把该点的值加入对应的集合，我们倒着进行添加即可</p>
+<pre><code class="lang-C++">vector&lt;int&gt;fa;
+vector&lt;ll&gt;sum;
+int find(int x)&#123;
+  return fa[x]==x?x:fa[x]=find(fa[x]);
+&#125;
+void merge(int x,int y)&#123;
+  int fx=find(x),fy=find(y);
+  if(fx==fy)return;
+  sum[fx]+=sum[fy];
+  fa[fy]=fx;
+&#125;
+void solve()&#123;
+  int n;cin&gt;&gt;n;
+  fa.resize(n+1);
+  sum.resize(n+1);
+  iota(fa.begin(),fa.end(),0);
+  vector&lt;int&gt;ord(n+1),vis(n+2);
+  for(int i=1;i&lt;=n;++i)cin&gt;&gt;sum[i];
+  for(int i=1;i&lt;=n;++i)cin&gt;&gt;ord[i];
+  vector&lt;ll&gt;ans(n+1);
+  ll res=0;
+  for(int i=n;i&gt;=1;--i)&#123;
+    ans[i]=res;
+    if(vis[ord[i]-1])&#123;
+      merge(ord[i]-1,ord[i]);
+    &#125;
+    if(vis[ord[i]+1])&#123;
+      merge(ord[i]+1,ord[i]);
+    &#125;
+    int f=find(ord[i]);
+    res=max(res,sum[find(ord[i])]);
+    vis[ord[i]]=1;
+  &#125;
+  for(int i=1;i&lt;=n;++i)&#123;
+    cout&lt;&lt;ans[i]&lt;&lt;&quot;\n&quot;;
+  &#125;
+  return;
+&#125;
+</code></pre>
+<p>CF 731F</p>
+<p>后缀和好题,我们知道，对于某个落在 [k<em>a[i],(k+1) \</em> a[i]的数，最终取值是k*a[i]，那么我们对后缀取后缀和，然后每一段进行计算，注意不要重复计算，标记vis数组即可</p>
+<pre><code class="lang-C++">void solve()&#123;
+  int n;
+  cin&gt;&gt;n;
+  vector&lt;int&gt;a(n+1);
+  vector&lt;ll&gt;sum(MAXN),vis(sum);
+  for(int i=1;i&lt;=n;++i)&#123;
+    cin&gt;&gt;a[i];
+    sum[a[i]]++;
+  &#125;
+  sort(a.begin()+1,a.end());
+  for(int i=a[n]-1;i&gt;=0;--i)&#123;
+    sum[i]+=sum[i+1];
+  &#125;
+  ll ans=0;
+  for(int i=1;i&lt;=n;++i)&#123;
+    if(vis[a[i]])continue;
+    ll res=0;
+    int cnt=1;
+    for(int j=a[i];j&lt;=a[n];j+=a[i])&#123;
+      res+=sum[j]*a[i];
+      vis[j]=1;
+    &#125;
+    ans=max(ans,res);
+    vis[a[i]]=1;
+  &#125;
+  cout&lt;&lt;ans&lt;&lt;&#39;\n&#39;;
+  return;
+&#125;
+</code></pre>
+<p>CF 721D</p>
+<p>不会做，看了题解发现是低能题<br>首先我们可以证明，对绝对值比较小的数进行操作比较好(这里就不证明了，很sb)<br>然后我们拿个set存数就好了</p>
+<pre><code class="lang-C++">using pii=pair&lt;ll,int&gt;;
+void solve()&#123;
+  int n,k,x;
+  cin&gt;&gt;n&gt;&gt;k&gt;&gt;x;
+  vector&lt;ll&gt;a(n+1);
+  bool sign=false;
+  set&lt;pii&gt;st;
+  for(int i=1;i&lt;=n;++i)&#123;
+    cin&gt;&gt;a[i];
+    if(a[i]&lt;0)&#123;
+        sign=!sign;
+    &#125;
+    st.insert(&#123;abs(a[i]),i&#125;);
+  &#125;
+  for(int i=1;i&lt;=k;++i)&#123;
+    auto id=st.begin()-&gt;second;
+    st.erase(st.begin());
+    if(a[id]&lt;0)sign=!sign;
+    if(sign)&#123;
+        a[id]+=x;
+    &#125;
+    else
+    &#123;
+        a[id]-=x;
+    &#125;
+    if(a[id]&lt;0)sign=!sign;
+    st.insert(&#123;abs(a[id]),id&#125;);
+  &#125;
+  for(int i=1;i&lt;=n;++i)&#123;
+    cout&lt;&lt;a[i]&lt;&lt;&quot; \n&quot;[i==n];
+  &#125;
+  return;
+&#125;
+</code></pre>
+
+    </div>
+    
+    
+    
+    
+    
+    
+    
+</div>
+
+                <footer id="footer">
+    <div class="footer-wrap">
+        <div>
+            &copy;
+            2022 - 2023 Waiting for the dawn
+            <span class="footer-icon">
+                <i class="fa-solid fa-font-awesome fa-fw"></i>
+            </span>
+            &commat;Yanxin Xiang
+        </div>
+        <div>Based on the <a target="_blank" rel="noopener" href="https://hexo.io">Hexo Engine</a> &amp; <a target="_blank" rel="noopener" href="https://github.com/argvchs/hexo-theme-particlex">ParticleX Theme</a></div>
+        
+    </div>
+</footer>
+
+            </div>
+            </transition>
+            <div id="showimg">
+                <img id="showimg-content">
+            </div>
+        </div>
+        <script src="/js/functions.js"></script>
+<script src="/js/particlex.js"></script>
+
+
+
+
+
+
+
+    </body>
+</html>
