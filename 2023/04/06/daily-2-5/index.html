@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>daily 1 | Waiting for the dawn</title>
+        <title>daily 2 | Waiting for the dawn</title>
         <meta name="author" content="Yanxin Xiang">
         <meta name="description" content="">
         <meta name="keywords" content="">
@@ -132,14 +132,14 @@
 
                 <div class="article">
     <div>
-        <h1>daily 1 </h1>
+        <h1>daily 2 </h1>
     </div>
     <div class="info">
         <span class="date">
             <span class="icon">
                 <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
-            2023/3/31
+            2023/4/6
         </span>
         
         
@@ -150,7 +150,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/daily/" style="color: #03a9f4">daily</a>
+                <a href="/tags/daily/" style="color: #00a596">daily</a>
             </span>
             
         </span>
@@ -158,54 +158,62 @@
     </div>
     
     <div class="content" v-pre>
-        <p>今天开摆了，面的国内四个厂都进三面了应该</p>
-<p>许愿一下Oceanbase</p>
-<p>CF 416C</p>
-<p>对给的米还有桌子的容量排个序就好了，简单贪心</p>
-<pre><code class="lang-C++">struct group&#123;
-    int c,p,id;
-&#125;;
-struct table&#123;
-    int cap,id;
-&#125;;
-void solve()&#123;
-  int n;
-  cin&gt;&gt;n;
-  vector&lt;group&gt;arr(n);
-  for(int i=0;i&lt;n;++i)&#123;
-    cin&gt;&gt;arr[i].c&gt;&gt;arr[i].p;
-    arr[i].id=i;
+        <p>今天水了两题，明天终于要变正常了</p>
+<p>CF 349B</p>
+<p>构造题</p>
+<p>我们先把最大的位数给整出来，然后如果每次遍历剩下的位，如果能够达到对应的位数并且有多余的颜料那么接涂这个色</p>
+<pre><code class="lang-C++">void solve()&#123;
+  int v;cin&gt;&gt;v;
+  vector&lt;int&gt;a(10);
+  int minx=1e9;
+  for(int i=0;i&lt;9;++i)&#123;
+    cin&gt;&gt;a[i];
+    minx=min(a[i],minx);
   &#125;
-  int k;
-  cin&gt;&gt;k;
-  vector&lt;table&gt;r(k);
-  for(int i=0;i&lt;k;++i)&#123;
-    cin&gt;&gt;r[i].cap;
-    r[i].id=i;
+  int cnt=v/minx;
+  if(!cnt)&#123;
+    cout&lt;&lt;-1&lt;&lt;&#39;\n&#39;;
+    return;
   &#125;
-  sort(r.begin(),r.end(),[&amp;](table a,table b)&#123;
-    return a.cap&lt;b.cap;
-  &#125;);
-  sort(arr.begin(),arr.end(),[&amp;](group a ,group b)&#123;
-    return a.p&gt;b.p;
-  &#125;);
-  ll ans=0;
-  vector&lt;bool&gt;used(k);
-  vector&lt;pair&lt;int,int&gt;&gt;trace;
-  for(int i=0;i&lt;n;++i)&#123;
-    for(int j=0;j&lt;k;++j)&#123;
-        if(!used[j]&amp;&amp;r[j].cap&gt;=arr[i].c)&#123;
-            ans+=arr[i].p;
-            used[j]=1;
-            trace.push_back(&#123;arr[i].id+1,r[j].id+1&#125;);
+  while(cnt--)&#123;
+    int pick=-1;
+    for(int i=8;i&gt;=0;--i)&#123;
+        if((v-a[i])/minx==cnt&amp;&amp;v&gt;=a[i])&#123;
+            cout&lt;&lt;(i+1);
+            pick=i;
             break;
         &#125;
     &#125;
+    v-=a[pick];
   &#125;
-  cout&lt;&lt;trace.size()&lt;&lt;&#39; &#39;&lt;&lt;ans&lt;&lt;&#39;\n&#39;;
-  for(auto&amp; k:trace)&#123;
-    cout&lt;&lt;k.first&lt;&lt;&#39; &#39;&lt;&lt;k.second&lt;&lt;&#39;\n&#39;;
+  return;
+&#125;
+</code></pre>
+<p>CF 351B</p>
+<p>概率dp</p>
+<p>${dp[i]}$表示消除i对逆序对所需的操作数</p>
+<p>${dp[i]=dp[i-2]<em>0.5+2+dp[i]</em>0.5}$</p>
+<pre><code class="lang-C++">void solve()&#123;
+  int n;
+  cin&gt;&gt;n;
+  vector&lt;int&gt;a(n);
+  for(int i=0;i&lt;n;++i)cin&gt;&gt;a[i];
+  int cnt=0;
+  for(int i=1;i&lt;n;++i)&#123;
+    for(int j=0;j&lt;i;++j)&#123;
+        if(a[j]&gt;a[i])&#123;
+            ++cnt;
+        &#125;
+    &#125;
   &#125;
+  double ans=0;
+  if(cnt&amp;1)&#123;
+    ans=2*cnt-1;
+  &#125;else&#123;
+    ans=2*cnt;
+  &#125;
+  //dp[i]=0.5dp[i-2]+0.5*dp[i]+2;
+  printf(&quot;%.6f&quot;,ans);
   return;
 &#125;
 </code></pre>
