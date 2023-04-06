@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>分类 | Waiting for the dawn</title>
+        <title>dp practice_day 4 | Waiting for the dawn</title>
         <meta name="author" content="Yanxin Xiang">
         <meta name="description" content="">
         <meta name="keywords" content="">
@@ -130,13 +130,20 @@
     </div>
 </nav>
 
-                <div id="archives">
-    
-    <div class="categories-tags">
+                <div class="article">
+    <div>
+        <h1>dp practice_day 4 </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/3/8
+        </span>
         
-        
-        <span>
-            <a href="/categories/Algorithm/" style="background: #00a596">
+        <span class="category">
+            <a href="/categories/Algorithm/">
                 <span class="icon">
                     <i class="fa-solid fa-bookmark fa-fw"></i>
                 </span>
@@ -145,62 +152,66 @@
         </span>
         
         
-        
-        <span>
-            <a href="/categories/compiler/" style="background: #ff7d73">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                compiler
-            </a>
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/dp/" style="color: #ff7d73">dp</a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/dp-practice-plan/" style="color: #ffa2c4">dp_practice_plan</a>
+            </span>
+            
         </span>
-        
-        
-        
-        <span>
-            <a href="/categories/algorithm/" style="background: #03a9f4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                algorithm
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/categories/database/" style="background: #03a9f4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                database
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/categories/%E6%96%B0%E7%9A%84%E5%BC%80%E5%A7%8B/" style="background: #00bcd4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                -新的开始
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/categories/interview/" style="background: #00a596">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                interview
-            </a>
-        </span>
-        
         
     </div>
+    
+    <div class="content" v-pre>
+        <p>CF 877B</p>
+<p>依旧是先确认状态:</p>
+<p>1.当前遍历到第几个字符</p>
+<p>2.当前字符在哪一段中</p>
+<p>之后是转移</p>
+<p>1.当前字符为’a’,那么有三种情况<br>    dp[i][0]=dp[i-1][0]+1<br>    dp[i][1]=dp[i-1][1]<br>    dp[i][2]=max(dp[i-1][1],dp[i-1][2])</p>
+<p>2.当前字符为’b’,也有三种情况(经典废话<br>    dp[i][0]=dp[i-1][0]<br>    dp[i][2]=dp[i-1][2]<br>    dp[i][1]=max(dp[i-1][0]+1,dp[i-1][1]+1)</p>
+<pre><code class="lang-C++">void solve()
+&#123;
+  string s;
+  cin&gt;&gt;s;
+  int n=s.size();
+  vector dp(n,vector&lt;ll&gt;(3));
+  dp[0][0]=dp[0][2]=s[0]==&#39;a&#39;;
+  dp[0][1]=s[0]==&#39;b&#39;;
+  for(int i=1;i&lt;n;++i)
+  &#123;
+    if(s[i]==&#39;a&#39;)&#123;
+        dp[i][0]=dp[i-1][0]+1;
+        dp[i][1]=dp[i-1][1];
+        dp[i][2]=max(dp[i-1][1],dp[i-1][2])+1;
+    &#125;else&#123;
+        dp[i][1]=max(dp[i-1][0]+1,dp[i-1][1]+1);
+        dp[i][0]=dp[i-1][0];
+        dp[i][2]=dp[i-1][2];
+    &#125;
+  &#125;
+  cout&lt;&lt;std::max(&#123;dp[n-1][0],dp[n-1][1],dp[n-1][2]&#125;)&lt;&lt;&#39;\n&#39;;
+  return;
+&#125;
+</code></pre>
+<p>今天全天都在写paging lab，感觉还是有点收获的，今天的dp训练就开摆了，明天把虚存和操作系统的东西给整理一下</p>
+
+    </div>
+    
+    
+    
+    
+    
+    
     
 </div>
 
@@ -227,6 +238,11 @@
         </div>
         <script src="/js/functions.js"></script>
 <script src="/js/particlex.js"></script>
+
+
+
+
+
 
 
     </body>

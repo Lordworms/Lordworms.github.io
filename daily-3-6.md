@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>分类 | Waiting for the dawn</title>
+        <title>daily 3 | Waiting for the dawn</title>
         <meta name="author" content="Yanxin Xiang">
         <meta name="description" content="">
         <meta name="keywords" content="">
@@ -130,35 +130,20 @@
     </div>
 </nav>
 
-                <div id="archives">
-    
-    <div class="categories-tags">
-        
-        
-        <span>
-            <a href="/categories/Algorithm/" style="background: #00a596">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                Algorithm
-            </a>
+                <div class="article">
+    <div>
+        <h1>daily 3 </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/3/25
         </span>
         
-        
-        
-        <span>
-            <a href="/categories/compiler/" style="background: #ff7d73">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                compiler
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/categories/algorithm/" style="background: #03a9f4">
+        <span class="category">
+            <a href="/categories/algorithm/">
                 <span class="icon">
                     <i class="fa-solid fa-bookmark fa-fw"></i>
                 </span>
@@ -167,40 +152,221 @@
         </span>
         
         
-        
-        <span>
-            <a href="/categories/database/" style="background: #03a9f4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                database
-            </a>
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/daily/" style="color: #00bcd4">daily</a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/tree-array/" style="color: #00bcd4">tree array</a>
+            </span>
+            
         </span>
-        
-        
-        
-        <span>
-            <a href="/categories/%E6%96%B0%E7%9A%84%E5%BC%80%E5%A7%8B/" style="background: #00bcd4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                -新的开始
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/categories/interview/" style="background: #00a596">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                interview
-            </a>
-        </span>
-        
         
     </div>
+    
+    <div class="content" v-pre>
+        <p>CF 1742 A</p>
+<p>凑字数的</p>
+<pre><code class="lang-C++">void solve()&#123;
+  int a,b,c;
+  cin&gt;&gt;a&gt;&gt;b&gt;&gt;c;
+  bool f=(a+b==c)||(b+c==a)||(a+c==b);
+  cout&lt;&lt;(f?&quot;YES&quot;:&quot;NO&quot;)&lt;&lt;&#39;\n&#39;;
+  return;
+&#125;
+</code></pre>
+<p>CF  1076E</p>
+<p>学到了一个用树状数组做差分的方式</p>
+<p>add(a,v),add(b+1,-v)</p>
+<pre><code class="lang-C++">using pii=pair&lt;int,int&gt;;
+#define lowbit(x) x&amp;-x
+void solve()&#123;
+  int n;
+  cin&gt;&gt;n;
+  vector&lt;vector&lt;int&gt;&gt;E(n+1);
+  for(int i=0;i&lt;n-1;++i)&#123;
+    int a,b;
+    cin&gt;&gt;a&gt;&gt;b;
+    E[a].push_back(b);
+    E[b].push_back(a);
+  &#125;
+  int max_dep=0;
+  vector&lt;int&gt;dep(n+1);
+  function&lt;void(int,int)&gt;dfs=[&amp;](int x,int f)&#123;
+    dep[x]=dep[f]+1;
+    max_dep=max(dep[x],max_dep);
+    for(int v:E[x])&#123;
+        if(v!=f)&#123;
+            dfs(v,x);
+        &#125;
+    &#125;
+  &#125;;
+  dfs(1,1);
+  vector&lt;ll&gt;tree(max_dep+2);
+  auto add=[&amp;](int x,int v)&#123;
+    while(x&lt;=max_dep)&#123;
+        tree[x]+=v;
+        x+=lowbit(x);
+    &#125;
+  &#125;;
+  auto sum=[&amp;](int x)&#123;
+    ll ans=0;
+    while(x)&#123;
+        ans+=tree[x];
+        x-=lowbit(x);
+    &#125;
+    return ans;
+  &#125;;
+  vector&lt;ll&gt;ans(n+1);
+  vector&lt;vector&lt;pii&gt;&gt;query(n+1);
+  function&lt;void(int,int)&gt;calc=[&amp;](int x,int f)&#123;
+    for(auto&amp; k:query[x])&#123;
+        add(dep[x],k.second);
+        add(k.first+1,-k.second);
+    &#125;
+    ans[x]=sum(dep[x]);
+    for(int v:E[x])if(v!=f)calc(v,x);
+    for(auto&amp; k:query[x])&#123;
+        add(dep[x],-k.second);
+        add(k.first+1,k.second);
+    &#125;
+  &#125;;
+  int m;cin&gt;&gt;m;
+  for(int i=1;i&lt;=m;++i)&#123;
+    int v,d,x;
+    cin&gt;&gt;v&gt;&gt;d&gt;&gt;x;
+    query[v].emplace_back(min(dep[v]+d,max_dep),x);
+  &#125;
+  calc(1,1);
+  for(int i=1;i&lt;=n;++i)&#123;
+    cout&lt;&lt;ans[i]&lt;&lt;&quot; \n&quot;[i==n];
+  &#125;
+  return;
+&#125;
+</code></pre>
+<p>CF 1648C</p>
+<p>简单组合数，记得最后判定一下是不是本来前缀就相等</p>
+<pre><code class="lang-C++">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+using ll=long long;
+const int MOD=998244353;
+const int MAXN=200010;
+#define lowbit(x) x&amp;-x
+ll quick_pow(ll x,ll exp,int p)
+&#123;
+      ll ans=1;
+      while(exp)
+      &#123;
+        if(exp&amp;1)ans=ans*x%p;
+        exp&gt;&gt;=1;
+        x=x*x%p;
+      &#125;
+      return ans;
+&#125;
+ll inv[MAXN],fac[MAXN];
+void init(int n,int p)
+&#123;
+  memset(inv,0,sizeof(inv));
+  memset(fac,0,sizeof(fac));
+  inv[0]=fac[0]=1;
+  for(int i=1;i&lt;=n;++i)
+  &#123;
+    fac[i]=fac[i-1]*i%p;
+  &#125;
+  inv[n]=quick_pow(fac[n],p-2,p)%p;
+  for(int i=n;i&gt;=1;--i)inv[i-1]=inv[i]*i%p;
+&#125;
+ll C(ll n,ll m,ll p)
+&#123;
+  if(m&gt;n||m&lt;0)return 0;
+  return fac[n]*inv[n-m]%p*inv[m]%p;
+&#125;
+void solve()&#123;
+  int n,m;
+  cin&gt;&gt;n&gt;&gt;m;
+  vector&lt;int&gt;tree(MAXN+1);
+  auto add=[&amp;](int x,int v)&#123;
+    while(x&lt;=MAXN)&#123;
+      tree[x]+=v;
+      x+=lowbit(x);
+    &#125;
+  &#125;;
+  auto sum=[&amp;](int x)&#123;
+    ll ans=0;
+    while(x)&#123;
+      ans+=tree[x];
+      x-=lowbit(x);
+    &#125;
+    return ans;
+  &#125;;
+  vector&lt;int&gt;s(n+1),t(m+1);
+  vector&lt;int&gt;cnt(MAXN);
+  for(int i=1;i&lt;=n;++i)&#123;
+    cin&gt;&gt;s[i];
+    cnt[s[i]]++;
+    add(s[i],1);
+  &#125;
+  for(int i=1;i&lt;=m;++i)&#123;
+    cin&gt;&gt;t[i];
+  &#125;
+  ll total=1;
+  for(int i=0;i&lt;MAXN;++i)&#123;
+    if(cnt[i])&#123;
+      total=total*fac[cnt[i]]%MOD;
+    &#125;
+  &#125;
+  ll total_inv=quick_pow(total,MOD-2,MOD);
+  int lim=min(n,m);
+  int eq=1;
+  if(n&gt;=m)&#123;eq=0;&#125;
+  ll ans=0;
+  for(int i=1;i&lt;=lim;++i)&#123;
+    int p=sum(t[i]-1);
+    ans=(ans+fac[n-i]*p%MOD*total_inv%MOD)%MOD;
+    if(!cnt[t[i]])&#123;
+      eq=0;
+      break;
+    &#125;
+    total_inv=total_inv*cnt[t[i]]%MOD;
+    cnt[t[i]]--;
+    add(t[i],-1);
+  &#125;
+  ans+=eq;
+  ans%=MOD;
+  cout&lt;&lt;ans&lt;&lt;&#39;\n&#39;;
+  return;
+&#125;
+int main()&#123;
+  ios::sync_with_stdio(false);
+  cin.tie(nullptr);
+  #ifdef LOCAL
+  freopen(&quot;/Users/xiangyanxin/code/Algorithom/in.txt&quot;,&quot;r&quot;,stdin);
+  freopen(&quot;/Users/xiangyanxin/code/Algorithom/out.txt&quot;,&quot;w&quot;,stdout);
+  #endif
+  int T=1;
+  init(MAXN-1,MOD);
+  while(T--)&#123;
+    solve();
+  &#125;
+  return 0;
+&#125;
+</code></pre>
+<p>今天有点水，啊啊啊啊</p>
+
+    </div>
+    
+    
+    
+    
+    
+    
     
 </div>
 
@@ -227,6 +393,11 @@
         </div>
         <script src="/js/functions.js"></script>
 <script src="/js/particlex.js"></script>
+
+
+
+
+
 
 
     </body>

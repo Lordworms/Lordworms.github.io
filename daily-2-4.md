@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>分类 | Waiting for the dawn</title>
+        <title>daily 2 | Waiting for the dawn</title>
         <meta name="author" content="Yanxin Xiang">
         <meta name="description" content="">
         <meta name="keywords" content="">
@@ -130,77 +130,115 @@
     </div>
 </nav>
 
-                <div id="archives">
-    
-    <div class="categories-tags">
-        
-        
-        <span>
-            <a href="/categories/Algorithm/" style="background: #00a596">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                Algorithm
-            </a>
+                <div class="article">
+    <div>
+        <h1>daily 2 </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/4/3
         </span>
         
         
-        
-        <span>
-            <a href="/categories/compiler/" style="background: #ff7d73">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                compiler
-            </a>
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/daily/" style="color: #ff7d73">daily</a>
+            </span>
+            
         </span>
-        
-        
-        
-        <span>
-            <a href="/categories/algorithm/" style="background: #03a9f4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                algorithm
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/categories/database/" style="background: #03a9f4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                database
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/categories/%E6%96%B0%E7%9A%84%E5%BC%80%E5%A7%8B/" style="background: #00bcd4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                -新的开始
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/categories/interview/" style="background: #00a596">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                interview
-            </a>
-        </span>
-        
         
     </div>
+    
+    <div class="content" v-pre>
+        <p>CF 780C<br>按题目的意思搜就好了，因为你dfs的时候本来就要保存一下cur和fa</p>
+<pre><code class="lang-C++">void solve()&#123;
+  int n;cin&gt;&gt;n;
+  vector&lt;vector&lt;int&gt;&gt;E(n+1);
+  for(int i=0;i&lt;n-1;++i)&#123;
+    int x,y;cin&gt;&gt;x&gt;&gt;y;
+    E[x].push_back(y);
+    E[y].push_back(x);
+  &#125;
+  vector&lt;int&gt;color(n+1);
+  int cnt=0;
+  function&lt;void(int,int)&gt;dfs=[&amp;](int u,int f)&#123;
+    int c=0;
+    for(int v:E[u])&#123;
+        if(v!=f)&#123;
+            ++c;
+            while(c==color[u]||c==color[f])++c;
+            color[v]=c;
+            cnt=max(cnt,c);
+        &#125;
+    &#125;
+    for(int v:E[u])&#123;
+        if(v!=f)&#123;
+            dfs(v,u);
+        &#125;
+    &#125;
+  &#125;;
+  color[1]=1;
+  dfs(1,1);
+  cout&lt;&lt;cnt&lt;&lt;&#39;\n&#39;;
+  for(int i=1;i&lt;=n;++i)&#123;
+    cout&lt;&lt;color[i]&lt;&lt;&quot; \n&quot;[i==n];
+  &#125;
+  return;
+&#125;
+</code></pre>
+<p>CF 401D</p>
+<p>数位dp板子，但是又感觉像爆搜</p>
+<p>把每一位保存下来，对应st存状态，注意不能有前导0并且每一位都要用</p>
+<pre><code class="lang-C++">ll dp[1&lt;&lt;N][101];
+void solve()&#123;
+  vector&lt;int&gt;num;
+  ll n,m;
+  cin&gt;&gt;n&gt;&gt;m;
+  memset(dp,-1,sizeof(dp));
+  while(n)&#123;
+    num.push_back(n%10);
+    n/=10;
+  &#125;
+  int len=num.size();
+  sort(num.begin(),num.end());
+  function&lt;ll(int,int,int)&gt;dfs=[&amp;](int pos,int st,ll mod)&#123;
+    if(!pos)return (ll)(mod==0);
+    if(~dp[st][mod])return dp[st][mod];
+    ll res=0;
+    for(int i=0;i&lt;len;++i)&#123;
+        if(!((st&amp;(1&lt;&lt;i)))&amp;&amp;(i==0||num[i]!=num[i-1]||(st&amp;(1&lt;&lt;(i-1)))))&#123;
+            res+=dfs(pos-1,st|(1&lt;&lt;i),(mod*10+num[i])%m);
+        &#125;
+    &#125;
+    return dp[st][mod]=res;
+  &#125;;
+  ll ans=0;
+  for(int i=0;i&lt;len;++i)&#123;
+    if(num[i]&amp;&amp;(i==0||num[i]!=num[i-1]))&#123;
+        ans+=dfs(len-1,1&lt;&lt;i,num[i]%m);
+    &#125;
+  &#125;
+  cout&lt;&lt;ans&lt;&lt;&#39;\n&#39;;
+  return;
+&#125;
+</code></pre>
+<p>晚上鹅厂3面了，阿里和字节应该都稳了，等蚂蚁，能不能快点</p>
+
+    </div>
+    
+    
+    
+    
+    
+    
     
 </div>
 
@@ -227,6 +265,11 @@
         </div>
         <script src="/js/functions.js"></script>
 <script src="/js/particlex.js"></script>
+
+
+
+
+
 
 
     </body>

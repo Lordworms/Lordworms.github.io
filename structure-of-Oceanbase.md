@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>分类 | Waiting for the dawn</title>
+        <title>structure of Oceanbase | Waiting for the dawn</title>
         <meta name="author" content="Yanxin Xiang">
         <meta name="description" content="">
         <meta name="keywords" content="">
@@ -130,77 +130,49 @@
     </div>
 </nav>
 
-                <div id="archives">
-    
-    <div class="categories-tags">
-        
-        
-        <span>
-            <a href="/categories/Algorithm/" style="background: #00a596">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                Algorithm
-            </a>
+                <div class="article">
+    <div>
+        <h1>structure of Oceanbase </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/3/29
         </span>
         
         
-        
-        <span>
-            <a href="/categories/compiler/" style="background: #ff7d73">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                compiler
-            </a>
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/database/" style="color: #00a596">database</a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/Oceanbase/" style="color: #ffa2c4">Oceanbase</a>
+            </span>
+            
         </span>
-        
-        
-        
-        <span>
-            <a href="/categories/algorithm/" style="background: #03a9f4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                algorithm
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/categories/database/" style="background: #03a9f4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                database
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/categories/%E6%96%B0%E7%9A%84%E5%BC%80%E5%A7%8B/" style="background: #00bcd4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                -新的开始
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/categories/interview/" style="background: #00a596">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                interview
-            </a>
-        </span>
-        
         
     </div>
+    
+    <div class="content" v-pre>
+        <p>reference:知乎</p>
+<p>对于一个DB来说，我们首先来看sql吧</p>
+<h2 id="SQL部分"><a href="#SQL部分" class="headerlink" title="SQL部分"></a>SQL部分</h2><h2 id="事务部分"><a href="#事务部分" class="headerlink" title="事务部分"></a>事务部分</h2><h3 id="1-快照管理"><a href="#1-快照管理" class="headerlink" title="1.快照管理"></a>1.快照管理</h3><h2 id="引擎部分"><a href="#引擎部分" class="headerlink" title="引擎部分"></a>引擎部分</h2><h3 id="1-索引的构建"><a href="#1-索引的构建" class="headerlink" title="1.索引的构建"></a>1.索引的构建</h3>
+    </div>
+    
+    
+    
+    
+    
+    
     
 </div>
 
@@ -227,6 +199,11 @@
         </div>
         <script src="/js/functions.js"></script>
 <script src="/js/particlex.js"></script>
+
+
+
+
+
 
 
     </body>

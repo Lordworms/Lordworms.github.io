@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>分类 | Waiting for the dawn</title>
+        <title>interview OS | Waiting for the dawn</title>
         <meta name="author" content="Yanxin Xiang">
         <meta name="description" content="">
         <meta name="keywords" content="">
@@ -130,77 +130,107 @@
     </div>
 </nav>
 
-                <div id="archives">
-    
-    <div class="categories-tags">
-        
-        
-        <span>
-            <a href="/categories/Algorithm/" style="background: #00a596">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                Algorithm
-            </a>
+                <div class="article">
+    <div>
+        <h1>interview OS </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/3/22
         </span>
         
         
-        
-        <span>
-            <a href="/categories/compiler/" style="background: #ff7d73">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                compiler
-            </a>
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/interview/" style="color: #00bcd4">interview</a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/OS/" style="color: #ff7d73">OS</a>
+            </span>
+            
         </span>
-        
-        
-        
-        <span>
-            <a href="/categories/algorithm/" style="background: #03a9f4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                algorithm
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/categories/database/" style="background: #03a9f4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                database
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/categories/%E6%96%B0%E7%9A%84%E5%BC%80%E5%A7%8B/" style="background: #00bcd4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                -新的开始
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/categories/interview/" style="background: #00a596">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                interview
-            </a>
-        </span>
-        
         
     </div>
+    
+    <div class="content" v-pre>
+        <h2 id="1-进程和线程的区别"><a href="#1-进程和线程的区别" class="headerlink" title="1.进程和线程的区别"></a>1.进程和线程的区别</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>组成</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>进程</td>
+<td>1.数据段<br>2.程序段<br>3.进程控制块PCB</td>
+</tr>
+<tr>
+<td>线程</td>
+<td>1.寄存器<br>2.堆.<br>3.栈</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="进程切换为什么比线程切换开销大"><a href="#进程切换为什么比线程切换开销大" class="headerlink" title="进程切换为什么比线程切换开销大"></a>进程切换为什么比线程切换开销大</h3><p>这是由于进程切换的时候需要切换页表，导致TLB失效，所以此时会比较慢，但线程切换不需要</p>
+<h3 id="进程间的通信方式"><a href="#进程间的通信方式" class="headerlink" title="进程间的通信方式"></a>进程间的通信方式</h3><p>管道、系统IPC（包括消息队列、信号量、信号、共享内存等）、以及套接字socket</p>
+<p>最快的是共享内存</p>
+<h2 id="2-死锁的四个条件"><a href="#2-死锁的四个条件" class="headerlink" title="2.死锁的四个条件"></a>2.死锁的四个条件</h2><p>1.互斥条件：一个资源每次只能被一个进程使用。 </p>
+<p>2.请求与保持条件：一个进程因请求资源而阻塞时，对已获得的资源保持不放。 </p>
+<p>3.不剥夺条件:进程已获得的资源，在末使用完之前，不能强行剥夺。 </p>
+<p>4.循环等待条件:若干进程之间形成一种头尾相接的循环等待资源关系。</p>
+<h2 id="3-协程"><a href="#3-协程" class="headerlink" title="3.协程"></a>3.协程</h2><p>协程被称为用户态线程，让进程自己来创建对应的线程，来做到并发，关键思想在于控制流和退出</p>
+<h2 id="多线程并发控制的手段"><a href="#多线程并发控制的手段" class="headerlink" title="多线程并发控制的手段"></a>多线程并发控制的手段</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>手段</th>
+<th>特点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>互斥锁</td>
+<td>一个线程获取到互斥锁后，其他线程就无法访问该资源，直到该线程释放锁为止。</td>
+</tr>
+<tr>
+<td>读写锁</td>
+<td>读写锁允许多个线程同时读取共享资源，但是只允许一个线程写入共享资源。读写锁适用于读多写少的情况，可以提高程序的并发性能</td>
+</tr>
+<tr>
+<td>条件变量</td>
+<td>条件变量用于在多个线程之间传递信号</td>
+</tr>
+<tr>
+<td>信号量</td>
+<td>信号量是一种通用的同步原语，用于管理多个线程之间的共享资源。通过信号量，可以实现多个线程之间的同步和互斥</td>
+</tr>
+<tr>
+<td>无锁编程</td>
+<td>无锁编程是一种高效的并发编程技术，通过使用 CAS（Compare and Swap）等原子操作来实现对共享资源的访问。与锁相比，无锁编程能够避免锁带来的性能损失和死锁等问题，但需要更加复杂的编程技术。</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+    </div>
+    
+    
+    
+    
+    
+    
     
 </div>
 
@@ -227,6 +257,11 @@
         </div>
         <script src="/js/functions.js"></script>
 <script src="/js/particlex.js"></script>
+
+
+
+
+
 
 
     </body>

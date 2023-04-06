@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>分类 | Waiting for the dawn</title>
+        <title>daily 1 | Waiting for the dawn</title>
         <meta name="author" content="Yanxin Xiang">
         <meta name="description" content="">
         <meta name="keywords" content="">
@@ -130,77 +130,84 @@
     </div>
 </nav>
 
-                <div id="archives">
-    
-    <div class="categories-tags">
-        
-        
-        <span>
-            <a href="/categories/Algorithm/" style="background: #00a596">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                Algorithm
-            </a>
+                <div class="article">
+    <div>
+        <h1>daily 1 </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/4/4
         </span>
         
         
-        
-        <span>
-            <a href="/categories/compiler/" style="background: #ff7d73">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                compiler
-            </a>
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/daily/" style="color: #ff7d73">daily</a>
+            </span>
+            
         </span>
-        
-        
-        
-        <span>
-            <a href="/categories/algorithm/" style="background: #03a9f4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                algorithm
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/categories/database/" style="background: #03a9f4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                database
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/categories/%E6%96%B0%E7%9A%84%E5%BC%80%E5%A7%8B/" style="background: #00bcd4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                -新的开始
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/categories/interview/" style="background: #00a596">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                interview
-            </a>
-        </span>
-        
         
     </div>
+    
+    <div class="content" v-pre>
+        <p>CF 385C</p>
+<p>埃氏筛，记得把对应的范围减小一下就好了</p>
+<pre><code class="lang-C++">void solve()&#123;
+  vector&lt;int&gt;dp(MAXN),cnt(dp),vis(MAXN),prim(MAXN); 
+  int maxn=0; 
+  function&lt;void(int)&gt;init=[&amp;](int lim)&#123;
+    vis[1]=1;
+    for(int i=2;i&lt;=lim;++i)&#123;
+        if(!vis[i])&#123;
+            dp[i]+=cnt[i];
+            for(int j=2*i;j&lt;=lim;j+=i)&#123;
+                vis[j]=1;
+                dp[i]+=cnt[j];
+            &#125;
+        &#125;
+    &#125;
+  &#125;;
+  int n;
+  cin&gt;&gt;n;
+  for(int i=0;i&lt;n;++i)&#123;
+    int x;
+    cin&gt;&gt;x;
+    cnt[x]++;
+    maxn=max(x,maxn);
+  &#125;
+  init(maxn);
+  int q;
+  cin&gt;&gt;q;
+  for(int i=1;i&lt;=maxn;++i)&#123;
+    dp[i]+=dp[i-1];
+  &#125;
+  while(q--)&#123;
+    int l,r;
+    cin&gt;&gt;l&gt;&gt;r;
+    l=min(l-1,maxn);
+    r=min(r,maxn);
+    cout&lt;&lt;dp[r]-dp[l]&lt;&lt;&#39;\n&#39;;
+  &#125;
+  return;
+&#125;
+</code></pre>
+<p>累死了，今天调整作息。希望鹅厂能ok</p>
+
+    </div>
+    
+    
+    
+    
+    
+    
     
 </div>
 
@@ -227,6 +234,11 @@
         </div>
         <script src="/js/functions.js"></script>
 <script src="/js/particlex.js"></script>
+
+
+
+
+
 
 
     </body>

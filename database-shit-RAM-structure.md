@@ -1,0 +1,375 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>database shit -RAM structure | Waiting for the dawn</title>
+        <meta name="author" content="Yanxin Xiang">
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+        <link rel="icon" href="https://i.ibb.co/sszdSW8/IMG-2691.jpg">
+        <script src="https://cdn.staticfile.org/vue/3.2.45/vue.global.prod.min.js"></script>
+        <script src="https://cdn.staticfile.org/highlight.js/11.7.0/highlight.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/11.7.0/styles/github.min.css">
+        <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/6.2.1/css/all.min.css">
+        
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+        
+        
+        <script src="https://cdn.staticfile.org/KaTeX/0.16.4/katex.min.js"></script>
+        <script src="https://cdn.staticfile.org/KaTeX/0.16.4/contrib/auto-render.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.staticfile.org/KaTeX/0.16.4/katex.min.css">
+        
+        
+        <link rel="stylesheet" href="/css/fonts.min.css">
+        <link rel="stylesheet" href="/css/particlex.css">
+    <meta name="generator" content="Hexo 6.3.0"></head>
+    <body>
+        <div id="loading" style="height: 100vh; width: 100vw; left: 0; top: 0; position: fixed; display: flex; z-index: 2147483647; background: #fff; transition: opacity 0.3s ease-out; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; pointer-events: none">
+    <div style="width: 50vmin; height: 50vmin; margin: auto; padding: 50px; border-radius: 50%; display: flex; border: solid 10px #a3ddfb">
+        <div style="margin: auto; text-align: center">
+            <h2>LOADING</h2>
+            <p>加载过慢请开启缓存，浏览器默认开启</p>
+            <img src="/images/loading.gif" style="height: 50px; border-radius: 0">
+        </div>
+    </div>
+</div>
+
+        <div id="layout">
+            <transition name="into">
+            <div id="main" v-show="showpage" style="display: -not-none">
+                <nav id="menu">
+    <div class="desktop-menu">
+        <a class="title" href="/">
+            <span>WAITING FOR THE DAWN</span>
+        </a>
+        
+        <a href="/">
+            <i class="fa-solid fa-house fa-fw"></i>
+            <span>&ensp;Home</span>
+        </a>
+        
+        <a href="/about">
+            <i class="fa-solid fa-id-card fa-fw"></i>
+            <span>&ensp;About</span>
+        </a>
+        
+        <a href="/archives">
+            <i class="fa-solid fa-box-archive fa-fw"></i>
+            <span>&ensp;Archives</span>
+        </a>
+        
+        <a href="/categories">
+            <i class="fa-solid fa-bookmark fa-fw"></i>
+            <span>&ensp;Categories</span>
+        </a>
+        
+        <a href="/tags">
+            <i class="fa-solid fa-tags fa-fw"></i>
+            <span>&ensp;Tags</span>
+        </a>
+        
+    </div>
+    <div :class="&quot;phone-menu &quot; + menushow" id="phone-menu">
+        <div class="curtain" @click="menushow = !menushow" v-show="menushow"></div>
+        <div class="title" @click="menushow = !menushow">
+            <i class="fa-solid fa-bars fa-fw"></i>
+            <span>&emsp;WAITING FOR THE DAWN</span>
+        </div>
+        <transition name="slide">
+        <div class="items" v-show="menushow">
+            
+            <a href="/">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-house fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Home</div>
+                </div>
+            </a>
+            
+            <a href="/about">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-id-card fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">About</div>
+                </div>
+            </a>
+            
+            <a href="/archives">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-box-archive fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Archives</div>
+                </div>
+            </a>
+            
+            <a href="/categories">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-bookmark fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Categories</div>
+                </div>
+            </a>
+            
+            <a href="/tags">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-tags fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Tags</div>
+                </div>
+            </a>
+            
+        </div>
+        </transition>
+    </div>
+</nav>
+
+                <div class="article">
+    <div>
+        <h1>database shit -RAM structure </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/3/20
+        </span>
+        
+        <span class="category">
+            <a href="/categories/database/">
+                <span class="icon">
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
+                </span>
+                database
+            </a>
+        </span>
+        
+        
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/database/" style="color: #ff7d73">database</a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/RAM/" style="color: #03a9f4">RAM</a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/data-structure/" style="color: #00bcd4">data structure</a>
+            </span>
+            
+        </span>
+        
+    </div>
+    
+    <div class="content" v-pre>
+        <p>到了主攻了</p>
+<h2 id="存储结构的分类"><a href="#存储结构的分类" class="headerlink" title="存储结构的分类"></a>存储结构的分类</h2><p>in place update: 就地更新结构，如B和B+树，直接覆盖旧的记录来存储更新内容，读的性能更高</p>
+<p>out of place update: 异位更新结构，如LSM tree，新的内容存储到新的位置，而不是覆盖老的结构，由于是顺序写，写入性能更高</p>
+<p>SSD因为随机读减少了寻道时间，LSM对SSD上的写更加友好</p>
+<p>存储结构的共性：</p>
+<p>1.适合磁盘存储</p>
+<p>2.允许并发操作：对B树来说，需要锁上所有有问题的节点（SMO操作）</p>
+<h2 id="两种不同的控制并发的锁"><a href="#两种不同的控制并发的锁" class="headerlink" title="两种不同的控制并发的锁"></a>两种不同的控制并发的锁</h2><p>lock是逻辑锁，latch是物理锁</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>Locks</th>
+<th>Latch</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>隔离级</td>
+<td>用户事务</td>
+<td>线程</td>
+</tr>
+<tr>
+<td>保护对象</td>
+<td>库中数据</td>
+<td>内存中的数据结构</td>
+</tr>
+<tr>
+<td>持续时间</td>
+<td>整个事务周期</td>
+<td>临界区代码读写后</td>
+</tr>
+<tr>
+<td>类型</td>
+<td>共享，互斥等</td>
+<td>读，写等</td>
+</tr>
+<tr>
+<td>死锁机制</td>
+<td>监测并解决</td>
+<td>避免死锁的出现</td>
+</tr>
+<tr>
+<td>持续时间</td>
+<td>长</td>
+<td>短</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>我们知道，目前主流的sql数据库采用的是B+tree的结构,Nosql大多采用LSM tree，今天先把这三种结构说一哈</p>
+<h2 id="B-tree-amp-B-tree"><a href="#B-tree-amp-B-tree" class="headerlink" title="B tree &amp; B+ tree"></a>B tree &amp; B+ tree</h2><h3 id="B-tree"><a href="#B-tree" class="headerlink" title="B tree"></a>B tree</h3><p>首先，我们得清楚，对于数据库系统来说，最重要的地方就是要减少磁盘IO，因为很慢！<br>那么Btree有些什么性质呢？</p>
+<p>1.高度为O(logn)但是常数小很多</p>
+<p>2.一个节点的大小和磁盘页的大小相当，根节点一直保存在主存中</p>
+<p>3.一次读取造成logn -1次磁盘读取</p>
+<p>4.对于t-1阶的b tree来说，每个节点的孩子节点数量在[t,2t],所以key的数量在[t-1,2t-1]</p>
+<p>5.对于一颗b树来说，高度为${height&lt;=log_{t}(n+1)/2}$<br><img src="https://media.geeksforgeeks.org/wp-content/uploads/20200506235136/output253.png" alt="avator"></p>
+<h4 id="B-tree的操作"><a href="#B-tree的操作" class="headerlink" title="B tree的操作"></a>B tree的操作</h4><p>1.查找</p>
+<p>很简单，每个节点遍历一下就好了</p>
+<p>2.插入</p>
+<p>分为以下几步</p>
+<p>1.查看当前根节点的key数量是否为2*t-1,如果是转2，不是转5</p>
+<p>2.创建新节点，让新的空节点为根，转到3</p>
+<p>3.新节点插入根节点，转到4</p>
+<p>4.把根节点分裂，分成两份，转到5</p>
+<p>5.该节点是否为叶结点，是转6，不是转7</p>
+<p>6.二分找到适合的位置，插入</p>
+<p>7.是否到达2k-1？是的话分裂，不是继续转5</p>
+<p>3.删除</p>
+<p>先给出一个前提，我们只在有t个key的时候进行删除</p>
+<p>分为以下几种情况</p>
+<p>1.直接删除叶子，叶子也可以删（t）</p>
+<p>直接删了就好了</p>
+<p>2.删除内部节点，左孩子有t个key</p>
+<p>把左孩子里最大的移动到删除位置即可</p>
+<p>3.删除内部节点，右孩子有t个key</p>
+<p>把右孩子最小的移动到删除位置即可</p>
+<p>4.删除内部节点，两个孩子都只有t-1个key</p>
+<p>把内部节点和右孩子都移动到左孩子中，现在有2t-1个key，那么我们直接删除对应节点</p>
+<p>5.删除某节点，但是其父亲节点只有t-1个key</p>
+<p>把父亲节点的兄弟节点移动到靠左的节点中（父亲或者兄弟），然后把爷爷节点移动到靠左的节点中，然后再删除对应的节点</p>
+<p>6.删除某节点，某节点只有t-1个key，兄弟节点右t个key<br>把父亲节点的值移动到删除位置，把兄弟节点的最小值移动到父亲节点</p>
+<p>和B+树的区别</p>
+<p>1.B树的每个节点都存储了key和data，而B+树的data存储在叶子节点上。<br>B+树非叶子节点仅存储key不存储data，这样一个节点就可以存储更多的key。可以使得B+树相对B树来说更矮（IO次数就是树的高度），所以与磁盘交换的IO操作次数更少。</p>
+<p>2.B+树所有叶子节点构成一个有序链表，按主键排序来遍历全部记录，能更好支持范围查找。<br>由于数据顺序排列并且相连，所以便于区间查找和搜索。而B树则需要进行每一层的递归遍历，相邻的元素可能在内存中不相邻，所以缓存命中性没有B+树好。</p>
+<p>3.B+树所有的查询都要从根节点查找到叶子节点，查询性能更稳定；而B树，每个节点都可能查找到数据，需要在叶子节点和内部节点不停的往返移动，所以不稳定。</p>
+<h2 id="LSM-tree"><a href="#LSM-tree" class="headerlink" title="LSM tree"></a>LSM tree</h2><p>写入过程：<br>1.首先记录write ahead log (类似redo log)</p>
+<p>2.有序写入active memtable(结构为redis的跳表，这是唯一可变的结构)</p>
+<p>3.active memtable写满了之后转换为immutable memtable.</p>
+<p>4.immutable达到指定数量后，将其落盘到磁盘的L0层，这步操作也叫minor merge,通常对这一步操作直接落盘，所以L0层可能有重复数据</p>
+<p>5.L0层满了之后，会出发关键的major merge操作，也就是compaction,把L0和L<br>进行合并，称之为SSTable，就是一个小型的聚簇索引，这个结构整体不可变（跳表存索引）</p>
+<p>6.compaction向下合并的过程中碰到同key数据，那么就合并，如果遇到更高层的新的数据，那么就被覆盖</p>
+<p>7.读取的过程就是从上到下，一层一层扫描，可以使用布隆过滤器(对每个key做哈希，做成一个bit数组)加速扫描，用来筛选该层中是否包含我们要查找的数据，可能返回假阳性结果，多个哈希函数</p>
+<p>不同的合并策略：</p>
+<p>leveling merge:每次把该层和下一层进行合并</p>
+<p>tiering merge，每次把当层相邻合并，并写入下一层</p>
+<p>并发：<br>1.memtable 落盘操作</p>
+<p>2.compaction过程</p>
+<p>优化方案：<br>1.流水线技术，把读取，合并，写入三个操作以流水线形式执行</p>
+<p>2.复用组件，在合并的过程中识别出不变的部分并且保留</p>
+<p>3.在compaction结束后主动更新cache</p>
+<p>4.单独硬件执行Compaction<br><img src="https://i.ibb.co/hRKVWYh/IMG-F6-DF125-BFA82-1.jpg" alt="avator"></p>
+<h3 id="LSM-tree的索引"><a href="#LSM-tree的索引" class="headerlink" title="LSM tree的索引"></a>LSM tree的索引</h3><p>在LSM Tree的顶层，通常使用内存中的数据结构，如B+树或哈希表等来实现索引。这些数据结构可以快速响应读写操作，适合处理频繁访问的数据。</p>
+<p>在LSM Tree的底层，通常使用SSTable（Sorted String Table）或者类似的数据结构来存储索引。SSTable将数据按照key排序并存储在文件中，同时维护一个索引文件，可以支持快速的查找和范围查询操作。SSTable中的索引通常是基于Bloom Filter(每个SSTable可以对应一个布隆过滤器，该过滤器存储了SSTable中所有键的哈希值，以及一些用于计算哈希值的参数。在查询时，先将查询键的哈希值通过布隆过滤器计算出多个位置，如果这些位置都为1，则说明查询键可能存在于该SSTable中，否则肯定不存在于该SSTable中。</p>
+<p>)或者Skip List等数据结构实现的。</p>
+<h3 id="LSM-tree的compaction"><a href="#LSM-tree的compaction" class="headerlink" title="LSM tree的compaction"></a>LSM tree的compaction</h3><p>合并成一个新的SSTable，并将其中的重复记录合并，并按照键的有序性进行排序，最终将其写入一个新的文件中。通过Compaction操作，可以将多个小的SSTable合并成一个大的SSTable，从而提高查询效率，同时也可以释放磁盘空间，避免数据的冗余存储。</p>
+<h3 id="LSM-tree的数据恢复"><a href="#LSM-tree的数据恢复" class="headerlink" title="LSM tree的数据恢复"></a>LSM tree的数据恢复</h3><p>一般来说，LSM树中的数据恢复可以分为两个阶段：恢复元数据和恢复数据。</p>
+<p>恢复元数据：当LSM树中的某个SSTable文件损坏或丢失时，需要先恢复该文件的元数据信息，以便后续能够正确地读取和处理数据。元数据信息通常包括SSTable文件的基本信息、索引信息和数据块的位置信息等。</p>
+<p>恢复数据：恢复数据的过程需要读取多个SSTable文件，并将它们合并成一个新的SSTable文件。在合并的过程中，需要按照键的有序性进行排序，并去除重复的记录，最终生成一个新的SSTable文件。在生成新的SSTable文件之后，还需要将其合并到LSM树中，以确保LSM树中的数据是完整的。</p>
+<p>需要注意的是，在LSM树中，由于数据是分层存储的，因此在进行数据恢复时，需要从底层的SSTable文件开始读取数据，并逐层向上进行合并。</p>
+<h3 id="LSM-tree的合并策略"><a href="#LSM-tree的合并策略" class="headerlink" title="LSM tree的合并策略"></a>LSM tree的合并策略</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>策略</th>
+<th>特点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Level-0</td>
+<td>在Level-0合并算法中，数据文件仅存在于一个层次中，即Level-0层次。当Level-0层次中的数据文件数量达到一定阈值时，就需要进行合并操作，以生成一个更高层次的数据文件。Level-0合并算法通常使用类似于“滚动窗口”（Rolling-Window）的方法，选择最近写入的数据文件进行合并，生成一个新的数据文件。因此，Level-0合并算法可以较快地进行数据合并，并且可以很好地支持高并发写入操作。</td>
+</tr>
+<tr>
+<td>Level-n</td>
+<td>Level-n合并算法中数据文件可以存在于多个层次中，即可以存在于Level-0、Level-1、Level-2等多个层次。在Level-n合并算法中，需要将多个层次中的数据文件进行合并，并生成一个新的更高层次的数据文件。由于需要合并多个层次的数据文件，因此Level-n合并算法需要进行更多的磁盘读写操作，并且合并操作可能比较耗时。但是，相比之下，Level-n合并算法能够更好地支持数据查询操作，因为在Level-n合并算法中，较低层次的数据文件中可能存在大量重复的数据，通过合并操作可以将这些重复的数据进行去重，从而提高查询效率。</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="LSM-tree异步的写操作"><a href="#LSM-tree异步的写操作" class="headerlink" title="LSM tree异步的写操作"></a>LSM tree异步的写操作</h3><p>在LSM树中，写操作是通过将数据追加到内存中的数据结构中来实现的，这个过程通常是异步的。异步写操作的具体实现方式会因不同的LSM树实现而有所不同，一般有以下几种方式：</p>
+<p>1.使用后台线程：LSM树通常会使用专门的后台线程来将内存中的数据异步写入到磁盘上的SSTable文件中。后台线程会不断地将内存中的数据写入到磁盘上的SSTable文件中，直到所有数据都被写入为止。</p>
+<p>2.使用内存映射文件：LSM树可以将磁盘上的SSTable文件通过内存映射的方式加载到内存中，然后直接向内存映射文件写入数据。由于内存映射文件的写入操作会自动触发操作系统将数据写入到磁盘上，因此不需要显式地进行写入操作。</p>
+<p>3.使用缓冲区：LSM树可以使用一个缓冲区来缓存待写入的数据，当缓冲区中的数据达到一定大小或时间间隔时，才将缓冲区中的数据写入到磁盘上的SSTable文件中。这种方式可以减少磁盘写入操作的次数，提高写入性能。</p>
+<p>无论使用哪种方式，LSM树都可以通过异步写入操作来提高写入性能和并发能力。</p>
+<h3 id="LSM-tree的删除操作"><a href="#LSM-tree的删除操作" class="headerlink" title="LSM tree的删除操作"></a>LSM tree的删除操作</h3><p>在LSM Tree中，删除操作不会直接删除磁盘上的数据，而是通过增加一个特殊标记来标记键值对已经被删除。在LSM Tree中，一般使用一种被称为“tombstone”的特殊标记来标记删除的键值对。<br>假设现在有一个LSM Tree，其中包含如下键值对：</p>
+<pre><code class="lang-SQL">&#123;1: &quot;A&quot;&#125;, &#123;2: &quot;B&quot;&#125;, &#123;3: &quot;C&quot;&#125;, &#123;4: &quot;D&quot;&#125;, &#123;5: &quot;E&quot;&#125;
+</code></pre>
+<p>现在要删除键为2的键值对，那么LSM Tree会把如下的删除操作写入WAL：</p>
+<pre><code class="lang-SQL">DEL 2
+</code></pre>
+<p>这样就标记了键为2的键值对已经被删除。当WAL被写满后，LSM Tree会进行压缩操作，把键为2的键值对从内存中的层中删除，并将其合并到磁盘中的更高层。在合并过程中，LSM Tree会使用tombstone标记已经被删除的键值对。</p>
+<h3 id="LSM-tree的WAL"><a href="#LSM-tree的WAL" class="headerlink" title="LSM tree的WAL"></a>LSM tree的WAL</h3><p>LSM树的WAL（Write-Ahead-Log）主要用于数据持久化，即在数据写入磁盘之前先写入WAL中，以便在系统崩溃时可以恢复数据。</p>
+<p>下面是一个简单的例子，说明LSM树的WAL可能包含哪些信息：</p>
+<p>假设有一个包含3个层级的LSM树，其中每个层级都有两个SSTable（Sorted String Table），每个SSTable包含3个键值对（K-V）。</p>
+<p>在向LSM树中插入一个新的K-V之前，需要将该K-V写入WAL中。此时，WAL会记录以下信息：</p>
+<p>插入操作的类型（Insert）；<br>K-V的键值；<br>K-V的值；<br>操作的时间戳。<br>假设要插入键值对（K1,V1），那么在WAL中记录的信息可能如下所示：</p>
+<pre><code class="lang-SQL">Insert,K1,V1,timestamp1
+</code></pre>
+<p>做merge的时候也会写WAL</p>
+<pre><code class="lang-SQL">Merge,timestamp2,timestamp3,new_SSTable,K1-K3@SSTable1,K4-K6@SSTable2,timestamp1,timestamp2,timestamp3,timestamp1,timestamp2,timestamp3
+</code></pre>
+
+    </div>
+    
+    
+    
+    
+    
+    
+    
+</div>
+
+                <footer id="footer">
+    <div class="footer-wrap">
+        <div>
+            &copy;
+            2022 - 2023 Waiting for the dawn
+            <span class="footer-icon">
+                <i class="fa-solid fa-font-awesome fa-fw"></i>
+            </span>
+            &commat;Yanxin Xiang
+        </div>
+        <div>Based on the <a target="_blank" rel="noopener" href="https://hexo.io">Hexo Engine</a> &amp; <a target="_blank" rel="noopener" href="https://github.com/argvchs/hexo-theme-particlex">ParticleX Theme</a></div>
+        
+    </div>
+</footer>
+
+            </div>
+            </transition>
+            <div id="showimg">
+                <img id="showimg-content">
+            </div>
+        </div>
+        <script src="/js/functions.js"></script>
+<script src="/js/particlex.js"></script>
+
+
+
+
+
+
+
+    </body>
+</html>

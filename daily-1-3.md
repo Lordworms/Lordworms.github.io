@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>分类 | Waiting for the dawn</title>
+        <title>daily 1 | Waiting for the dawn</title>
         <meta name="author" content="Yanxin Xiang">
         <meta name="description" content="">
         <meta name="keywords" content="">
@@ -130,77 +130,93 @@
     </div>
 </nav>
 
-                <div id="archives">
-    
-    <div class="categories-tags">
-        
-        
-        <span>
-            <a href="/categories/Algorithm/" style="background: #00a596">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                Algorithm
-            </a>
+                <div class="article">
+    <div>
+        <h1>daily 1 </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/3/31
         </span>
         
         
-        
-        <span>
-            <a href="/categories/compiler/" style="background: #ff7d73">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                compiler
-            </a>
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/daily/" style="color: #ffa2c4">daily</a>
+            </span>
+            
         </span>
-        
-        
-        
-        <span>
-            <a href="/categories/algorithm/" style="background: #03a9f4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                algorithm
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/categories/database/" style="background: #03a9f4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                database
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/categories/%E6%96%B0%E7%9A%84%E5%BC%80%E5%A7%8B/" style="background: #00bcd4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                -新的开始
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/categories/interview/" style="background: #00a596">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                interview
-            </a>
-        </span>
-        
         
     </div>
+    
+    <div class="content" v-pre>
+        <p>今天开摆了，面的国内四个厂都进三面了应该</p>
+<p>许愿一下Oceanbase</p>
+<p>CF 416C</p>
+<p>对给的米还有桌子的容量排个序就好了，简单贪心</p>
+<pre><code class="lang-C++">struct group&#123;
+    int c,p,id;
+&#125;;
+struct table&#123;
+    int cap,id;
+&#125;;
+void solve()&#123;
+  int n;
+  cin&gt;&gt;n;
+  vector&lt;group&gt;arr(n);
+  for(int i=0;i&lt;n;++i)&#123;
+    cin&gt;&gt;arr[i].c&gt;&gt;arr[i].p;
+    arr[i].id=i;
+  &#125;
+  int k;
+  cin&gt;&gt;k;
+  vector&lt;table&gt;r(k);
+  for(int i=0;i&lt;k;++i)&#123;
+    cin&gt;&gt;r[i].cap;
+    r[i].id=i;
+  &#125;
+  sort(r.begin(),r.end(),[&amp;](table a,table b)&#123;
+    return a.cap&lt;b.cap;
+  &#125;);
+  sort(arr.begin(),arr.end(),[&amp;](group a ,group b)&#123;
+    return a.p&gt;b.p;
+  &#125;);
+  ll ans=0;
+  vector&lt;bool&gt;used(k);
+  vector&lt;pair&lt;int,int&gt;&gt;trace;
+  for(int i=0;i&lt;n;++i)&#123;
+    for(int j=0;j&lt;k;++j)&#123;
+        if(!used[j]&amp;&amp;r[j].cap&gt;=arr[i].c)&#123;
+            ans+=arr[i].p;
+            used[j]=1;
+            trace.push_back(&#123;arr[i].id+1,r[j].id+1&#125;);
+            break;
+        &#125;
+    &#125;
+  &#125;
+  cout&lt;&lt;trace.size()&lt;&lt;&#39; &#39;&lt;&lt;ans&lt;&lt;&#39;\n&#39;;
+  for(auto&amp; k:trace)&#123;
+    cout&lt;&lt;k.first&lt;&lt;&#39; &#39;&lt;&lt;k.second&lt;&lt;&#39;\n&#39;;
+  &#125;
+  return;
+&#125;
+</code></pre>
+
+    </div>
+    
+    
+    
+    
+    
+    
     
 </div>
 
@@ -227,6 +243,11 @@
         </div>
         <script src="/js/functions.js"></script>
 <script src="/js/particlex.js"></script>
+
+
+
+
+
 
 
     </body>

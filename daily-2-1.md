@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>分类 | Waiting for the dawn</title>
+        <title>daily 2 | Waiting for the dawn</title>
         <meta name="author" content="Yanxin Xiang">
         <meta name="description" content="">
         <meta name="keywords" content="">
@@ -130,77 +130,114 @@
     </div>
 </nav>
 
-                <div id="archives">
-    
-    <div class="categories-tags">
-        
-        
-        <span>
-            <a href="/categories/Algorithm/" style="background: #00a596">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                Algorithm
-            </a>
+                <div class="article">
+    <div>
+        <h1>daily 2 </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/3/29
         </span>
         
         
-        
-        <span>
-            <a href="/categories/compiler/" style="background: #ff7d73">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                compiler
-            </a>
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/daily/" style="color: #00bcd4">daily</a>
+            </span>
+            
         </span>
-        
-        
-        
-        <span>
-            <a href="/categories/algorithm/" style="background: #03a9f4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                algorithm
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/categories/database/" style="background: #03a9f4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                database
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/categories/%E6%96%B0%E7%9A%84%E5%BC%80%E5%A7%8B/" style="background: #00bcd4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                -新的开始
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/categories/interview/" style="background: #00a596">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                interview
-            </a>
-        </span>
-        
         
     </div>
+    
+    <div class="content" v-pre>
+        <p>CF 446A</p>
+<p>思维，首先得判断一哈什么时候可以使用这个修改的条件，又不会让你丢掉本来的递增</p>
+<p>我们用l[i]表示以i结尾的最长递增序列的长度</p>
+<p>r[i]表示以i开头的最长递增子序列的长度</p>
+<p>那么我们每次先判断当前最长(左/右)</p>
+<p>然后再判断l[i-1]和r[i+1]能不能连城一片即可</p>
+<pre><code class="lang-C++">void solve()&#123;
+  int n;
+  cin&gt;&gt;n;
+  vector&lt;int&gt;a(n+3),l(a),r(a);
+  for(int i=1;i&lt;=n;++i)&#123;
+    cin&gt;&gt;a[i];
+    if(i&gt;1)&#123;
+        if(a[i]&gt;a[i-1])&#123;
+            l[i]=l[i-1]+1;
+        &#125;else&#123;
+            l[i]=1;
+        &#125;
+    &#125;else&#123;
+        l[i]=1;
+    &#125;
+  &#125;
+  for(int i=n;i&gt;=1;--i)&#123;
+    if(i==n)&#123;
+        r[i]=1;
+    &#125;else&#123;
+        if(a[i]&lt;a[i+1])&#123;
+            r[i]=r[i+1]+1;
+        &#125;else&#123;
+            r[i]=1;
+        &#125;
+    &#125;
+  &#125;
+  int ans=0;
+  for(int i=1;i&lt;=n;++i)&#123;
+    ans=max(ans,max(l[i-1]+1,r[i+1]+1));
+    if(a[i-1]+1&lt;a[i+1])&#123;
+        ans=max(ans,l[i-1]+r[i+1]+1);
+    &#125;
+  &#125;
+  cout&lt;&lt;ans&lt;&lt;&#39;\n&#39;;
+  return;
+&#125;
+</code></pre>
+<p>CF 453 B</p>
+<p>分治，这个我觉得不太好想，但是看完题解感觉很直观，以后要多考虑这种分治的思想</p>
+<pre><code class="lang-C++">void solve()&#123;
+  int n;
+  cin&gt;&gt;n;
+  vector&lt;int&gt;a(n);
+  for(int i=0;i&lt;n;++i)cin&gt;&gt;a[i];
+  function&lt;int(int,int)&gt;paint=[&amp;](int l,int r)&#123;
+    int k=l;
+    if(r&lt;l)return 0;
+    for(int i=l;i&lt;=r;++i)&#123;
+        if(a[i]&lt;=a[k])&#123;
+            k=i;
+        &#125;
+    &#125;
+    int subtract=a[k];
+    for(int i=l;i&lt;=r;++i)&#123;
+        a[i]-=subtract;
+    &#125;
+    return min(r-l+1,paint(l,k-1)+paint(k+1,r)+subtract);
+  &#125;;
+  cout&lt;&lt;paint(0,n-1)&lt;&lt;&#39;\n&#39;;
+  return;
+&#125;
+</code></pre>
+<p>腾讯阿里等三面了</p>
+<p>蚂蚁字节在等二面</p>
+<p>要是能去ob就好惹，待会健身上来好好看看ob的结构吧，干八楼！</p>
+
+    </div>
+    
+    
+    
+    
+    
+    
     
 </div>
 
@@ -227,6 +264,11 @@
         </div>
         <script src="/js/functions.js"></script>
 <script src="/js/particlex.js"></script>
+
+
+
+
+
 
 
     </body>

@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>分类 | Waiting for the dawn</title>
+        <title>interview k8s &amp; docker | Waiting for the dawn</title>
         <meta name="author" content="Yanxin Xiang">
         <meta name="description" content="">
         <meta name="keywords" content="">
@@ -130,77 +130,93 @@
     </div>
 </nav>
 
-                <div id="archives">
-    
-    <div class="categories-tags">
-        
-        
-        <span>
-            <a href="/categories/Algorithm/" style="background: #00a596">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                Algorithm
-            </a>
+                <div class="article">
+    <div>
+        <h1>interview k8s &amp; docker </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/3/21
         </span>
         
         
-        
-        <span>
-            <a href="/categories/compiler/" style="background: #ff7d73">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                compiler
-            </a>
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/interview/" style="color: #ffa2c4">interview</a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/k8s/" style="color: #03a9f4">k8s</a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/docker/" style="color: #ff7d73">docker</a>
+            </span>
+            
         </span>
-        
-        
-        
-        <span>
-            <a href="/categories/algorithm/" style="background: #03a9f4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                algorithm
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/categories/database/" style="background: #03a9f4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                database
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/categories/%E6%96%B0%E7%9A%84%E5%BC%80%E5%A7%8B/" style="background: #00bcd4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                -新的开始
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/categories/interview/" style="background: #00a596">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                interview
-            </a>
-        </span>
-        
         
     </div>
+    
+    <div class="content" v-pre>
+        <p>1.Docker和虚拟机有什么不同</p>
+<p>Docker是轻量级的沙盒，在其中运行的只是应用，而虚拟机里面还有额外的操作系统</p>
+<h1 id="docker的底层原理"><a href="#docker的底层原理" class="headerlink" title="docker的底层原理"></a>docker的底层原理</h1><p>使用了linux底层的方法，来提供隔离的工作环境：也是container，每次你run container的时候，doceker创建一个针对该容器的container</p>
+<p>namepsace 提供了一层隔离，docker使用了以下namespace</p>
+<p>1.pid namespace: process isolation</p>
+<p>2.net namespace: Managing network interface</p>
+<p>3.ipc namespace :进程交互的隔离</p>
+<p>4.mnt namespace: 文件系统</p>
+<p>5.uts namspace 隔离了内核和版本标识</p>
+<p>从container_d的fork启动</p>
+<p>所以总的流程为：</p>
+<p>runc to start a container</p>
+<p>unshared system call</p>
+<p>tell system to fake something</p>
+<h1 id="K8S的架构概述"><a href="#K8S的架构概述" class="headerlink" title="K8S的架构概述"></a>K8S的架构概述</h1><p>master节点用来管理和调度worker节点的</p>
+<p>在一个K8S集群中，节点可以是物理机，也可以是虚拟机</p>
+<p>worker节点所提供的资源单位叫做pod(云平台的虚拟机)，里面是应用容器，是CPU和内存的资源隔离单位，一般一个pod只有一个容器（也可以多个，主从），共享网络栈。</p>
+<p>K8S需要当有应用发布请求的时候，把请求分配到workder节点上去，如果有节点挂了，需要能够重新启用pod</p>
+<p>还需要管理集群间的网络，保证集群可以互通互联</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>组件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>master</td>
+<td>1.etcd(集中的状态存储，包括节点，pods，是一个分布式的kv数据库，基于Raft)。<br>2.API server（用户通过kuberctl来操纵，通过这个server来进行操作）操纵其他的3个组件，可以认为是etcd的代理，唯一一个可以操纵etcd的组件,也是事件总线，当有情况时，可以通知其他pod<br>3.调度决策的组件，掌握当前集群的资源使用情况，当有新的请求打来时，来决定应该打到哪里。4.Controller manager,监听APIserver，协调pods，自愈实现机制</td>
+</tr>
+<tr>
+<td>workder</td>
+<td>1.kubelet:资源管理者，监听APIserver，将本节点的资源数据，汇报给master节点.2.container runtime:kuberlet不直接管理容器资源，而是交给container runtime。3.kube-proxy：管理服务中的网络的组件，因为pod的ip可能会变化</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><img src="https://i.ibb.co/10s0S3D/IMG-46-F4-CA3-D53-B9-1.jpg" alt="avator"></p>
+<p><img src="https://i.ibb.co/yXdnVSK/IMG-A7-C8-A072237-A-1.jpg" alt="avator"></p>
+
+    </div>
+    
+    
+    
+    
+    
+    
     
 </div>
 
@@ -227,6 +243,11 @@
         </div>
         <script src="/js/functions.js"></script>
 <script src="/js/particlex.js"></script>
+
+
+
+
+
 
 
     </body>

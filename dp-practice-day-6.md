@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>分类 | Waiting for the dawn</title>
+        <title>dp practice_day 6 | Waiting for the dawn</title>
         <meta name="author" content="Yanxin Xiang">
         <meta name="description" content="">
         <meta name="keywords" content="">
@@ -130,13 +130,20 @@
     </div>
 </nav>
 
-                <div id="archives">
-    
-    <div class="categories-tags">
+                <div class="article">
+    <div>
+        <h1>dp practice_day 6 </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/3/10
+        </span>
         
-        
-        <span>
-            <a href="/categories/Algorithm/" style="background: #00a596">
+        <span class="category">
+            <a href="/categories/Algorithm/">
                 <span class="icon">
                     <i class="fa-solid fa-bookmark fa-fw"></i>
                 </span>
@@ -145,62 +152,143 @@
         </span>
         
         
-        
-        <span>
-            <a href="/categories/compiler/" style="background: #ff7d73">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                compiler
-            </a>
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/dp/" style="color: #00bcd4">dp</a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/dp-practice-plan/" style="color: #03a9f4">dp_practice_plan</a>
+            </span>
+            
         </span>
-        
-        
-        
-        <span>
-            <a href="/categories/algorithm/" style="background: #03a9f4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                algorithm
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/categories/database/" style="background: #03a9f4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                database
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/categories/%E6%96%B0%E7%9A%84%E5%BC%80%E5%A7%8B/" style="background: #00bcd4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                -新的开始
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/categories/interview/" style="background: #00a596">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                interview
-            </a>
-        </span>
-        
         
     </div>
+    
+    <div class="content" v-pre>
+        <p>今天总感觉写的有点想吐，就只写2题然后去写LSM了(明天补上剩下的)</p>
+<p>CF 1067A</p>
+<p>首先还是确定状态状态，先看数据的范围1-200那么我们可以包含当前的值的所有情况来做我们的状态，然后考虑当前值和前面的值的关系，有= &gt; &lt;三种</p>
+<p>那么我们令dp[i][j][0/1/2]为当前遍历到第i个元素，当前元素的取值为j，当前元素比前一个元素 相等/小于/大于的解</p>
+<p>那么转移也很好实现</p>
+<p>$dp[i][j][0]=dp[i-1][j][0]+dp[i-1][j][1]+dp[i-1][j][2]$</p>
+<p>$dp[i][j][2]=\sum_{k=1}^{j-1}{dp[i-1][k][0]+dp[i-1][k][1]+dp[i-1][k][2]}$</p>
+<p>$dp[i][j][1]=\sum_{k=j+1}^{200}{dp[i-1][k][0]+dp[i-1][k][1]}$</p>
+<p>需要注意的是计算小于的时候需要去掉前一个元素比前前个元素大的情况<br>另外对于第一个元素来说</p>
+<pre><code class="lang-C++">ll dp[N][201][3];////0 eq, 1 less 2 greater
+void solve()&#123;
+  int n;cin&gt;&gt;n;
+  vector&lt;int&gt;a(n+1);
+  for(int i=1;i&lt;=n;++i)cin&gt;&gt;a[i];
+  if(a[1]==-1)&#123;
+    for(int i=1;i&lt;=200;++i)&#123;
+        dp[1][i][2]=1;
+    &#125;
+  &#125;else&#123;
+    dp[1][a[1]][2]=1;
+  &#125;
+
+  for(int i=2;i&lt;=n;++i)&#123; 
+    int sum=0;
+    for(int j=1;j&lt;=200;++j)&#123;
+        if(a[i]==-1||a[i]==j)&#123;
+            dp[i][j][0]=(dp[i-1][j][0]+dp[i-1][j][1]+dp[i-1][j][2])%MOD;
+            dp[i][j][2]=sum%MOD;
+        &#125;
+        sum=(sum+dp[i-1][j][0]+dp[i-1][j][1]+dp[i-1][j][2])%MOD;
+    &#125;
+    sum=0;
+    //calculate less than previous
+    for(int j=200;j&gt;=1;--j)&#123;
+        if(a[i]==-1||a[i]==j)&#123;
+            dp[i][j][1]=sum%MOD;
+        &#125;
+        sum=(sum+(dp[i-1][j][0]+dp[i-1][j][1]))%MOD;
+    &#125;
+  &#125;
+  ll ans=0;
+  for(int i=1;i&lt;=200;++i)&#123;
+    ans=(ans+(dp[n][i][0]+dp[n][i][1]))%MOD;
+  &#125;
+  cout&lt;&lt;ans&lt;&lt;&#39;\n&#39;;
+  return;
+&#125;
+</code></pre>
+<p>CF 8C</p>
+<p>首先看到数据范围，直接想到状压<br>那么转移也很好写了<br>需要注意的是每次只处理一次转移，然后break，不然会重复枚举，导致TLE</p>
+<pre><code class="lang-C++">void solve()&#123;
+  int x,y;
+  cin&gt;&gt;x&gt;&gt;y;
+  int n;cin&gt;&gt;n;
+  vector&lt;int&gt;a(n+1),b(a);
+  a[n]=x,b[n]=y;
+  for(int i=0;i&lt;n;++i)&#123;
+    cin&gt;&gt;a[i]&gt;&gt;b[i];
+  &#125;
+  auto calc=[&amp;](int i,int j)&#123;
+    return abs(a[i]-a[j])*abs(a[i]-a[j])+abs(b[i]-b[j])*abs(b[i]-b[j]);
+  &#125;;
+  vector dis(n+1,vector&lt;int&gt;(n+1));
+  for(int i=0;i&lt;=n;++i)&#123;
+    for(int j=0;j&lt;=n;++j)&#123;
+        dis[i][j]=calc(i,j);
+    &#125;
+  &#125;
+  vector&lt;int&gt;pre(1&lt;&lt;(n+1));
+  vector&lt;int&gt;dp(1&lt;&lt;(n+1),INF);
+  dp[0]=0;
+  for(int i=0;i&lt;(1&lt;&lt;n);++i)&#123;
+    if(dp[i]==INF)continue;
+    for(int j=0;j&lt;n;++j)&#123;
+        if(((1&lt;&lt;j)&amp;i)==0)&#123;
+            for(int k=j;k&lt;n;++k)&#123;
+                if(((1&lt;&lt;k)&amp;i)==0)&#123;
+                    int d=dis[j][k]+dis[j][n]+dis[k][n];
+                    int nxt=i|(1&lt;&lt;j)|(1&lt;&lt;k);
+                    if(dp[nxt]&gt;dp[i]+d)&#123;
+                        dp[nxt]=dp[i]+d;
+                        pre[nxt]=i;
+                    &#125;
+                &#125;
+            &#125;
+        break;//just transfer first time
+        &#125;
+    &#125;
+  &#125;
+  cout&lt;&lt;dp[(1&lt;&lt;n)-1]&lt;&lt;&#39;\n&#39;;
+  vector&lt;int&gt;ans;
+  for(int i=(1&lt;&lt;n)-1;i!=0;i=pre[i])&#123;
+    ans.push_back(0);
+    int tmp=pre[i]^i;
+    int cnt=0;
+    for(int j=0;j&lt;n;++j)&#123;
+        if((1&lt;&lt;j)&amp;tmp)&#123;
+            ans.push_back(j+1);
+        &#125;
+    &#125;
+  &#125;
+  ans.push_back(0);
+  for(int i=ans.size()-1;i&gt;=0;--i)&#123;
+    cout&lt;&lt;ans[i]&lt;&lt;&quot; \n&quot;[i==0];
+  &#125;
+  return;
+&#125;
+</code></pre>
+<p>晚上看看SQL的代码吧，明天总结一下OS，哎，今天又摆了</p>
+
+    </div>
+    
+    
+    
+    
+    
+    
     
 </div>
 
@@ -227,6 +315,11 @@
         </div>
         <script src="/js/functions.js"></script>
 <script src="/js/particlex.js"></script>
+
+
+
+
+
 
 
     </body>

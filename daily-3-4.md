@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>分类 | Waiting for the dawn</title>
+        <title>daily 3 -difference | Waiting for the dawn</title>
         <meta name="author" content="Yanxin Xiang">
         <meta name="description" content="">
         <meta name="keywords" content="">
@@ -130,35 +130,20 @@
     </div>
 </nav>
 
-                <div id="archives">
-    
-    <div class="categories-tags">
-        
-        
-        <span>
-            <a href="/categories/Algorithm/" style="background: #00a596">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                Algorithm
-            </a>
+                <div class="article">
+    <div>
+        <h1>daily 3 -difference </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/3/19
         </span>
         
-        
-        
-        <span>
-            <a href="/categories/compiler/" style="background: #ff7d73">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                compiler
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/categories/algorithm/" style="background: #03a9f4">
+        <span class="category">
+            <a href="/categories/algorithm/">
                 <span class="icon">
                     <i class="fa-solid fa-bookmark fa-fw"></i>
                 </span>
@@ -167,40 +152,227 @@
         </span>
         
         
-        
-        <span>
-            <a href="/categories/database/" style="background: #03a9f4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                database
-            </a>
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/daily/" style="color: #00a596">daily</a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/difference/" style="color: #03a9f4">difference</a>
+            </span>
+            
         </span>
-        
-        
-        
-        <span>
-            <a href="/categories/%E6%96%B0%E7%9A%84%E5%BC%80%E5%A7%8B/" style="background: #00bcd4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                -新的开始
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/categories/interview/" style="background: #00a596">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                interview
-            </a>
-        </span>
-        
         
     </div>
+    
+    <div class="content" v-pre>
+        <p>今天是差分专题，做了一道简单差分 一道二分+差分，一道树上差分</p>
+<p>1.CF 44C</p>
+<p>差分裸题，把差分构造出来判断就可以了</p>
+<pre><code class="lang-C++">void solve()&#123;
+  int n,m;
+  cin&gt;&gt;n&gt;&gt;m;
+  vector&lt;int&gt;dif(n+2);
+  for(int i=0;i&lt;m;++i)&#123;
+    int a,b;
+    cin&gt;&gt;a&gt;&gt;b;
+    dif[a]++;
+    dif[b+1]--;
+  &#125;
+  for(int i=1;i&lt;=n;++i)&#123;
+    dif[i]+=dif[i-1];
+  &#125;
+  for(int i=1;i&lt;=n;++i)&#123;
+    if(dif[i]!=1)&#123;
+        cout&lt;&lt;i&lt;&lt;&#39; &#39;&lt;&lt;dif[i]&lt;&lt;&#39;\n&#39;;
+        return;
+    &#125;
+  &#125;
+  cout&lt;&lt;&quot;OK\n&quot;;
+  return;
+&#125;
+</code></pre>
+<p>CF 191C</p>
+<p>差分+二分，我们可以在最小值为l=mina和r=mina+m之间进行二分，然后每次判断对应的最小值需要多少次操作，如果小于m就ok，对于区间加和需要用差分</p>
+<pre><code class="lang-C++">void solve()&#123;
+  int n,m,w;
+  cin&gt;&gt;n&gt;&gt;m&gt;&gt;w;
+  vector&lt;int&gt;a(n+1);
+  int mina=0x3f3f3f3f;
+  for(int i=1;i&lt;=n;++i)&#123;
+    cin&gt;&gt;a[i];
+    mina=min(mina,a[i]);
+  &#125;
+  auto check=[&amp;](int x)&#123;
+    vector&lt;int&gt;dif(n+2);
+    int res=0;
+    ll v=0;
+    for(int i=1;i&lt;=n;++i)&#123;
+        dif[i]=a[i]-a[i-1];
+    &#125;
+    for(int i=1;i&lt;=n;++i)&#123;
+        v+=dif[i];
+        if(v&lt;x)&#123;
+            dif[i]+=(x-v);
+            if(i+w&lt;=n)dif[i+w]-=(x-v);
+            res+=(x-v);
+            if(res&gt;m)break;
+            v=x;
+        &#125;
+    &#125;
+    return res&lt;=m;
+  &#125;;
+  int l=mina,r=mina+m;
+  while(l&lt;=r)&#123;
+    int mid=(l+r)&gt;&gt;1;
+    if(check(mid))&#123;
+        l=mid+1;
+    &#125;else&#123;
+        r=mid-1;
+    &#125;
+  &#125;
+  cout&lt;&lt;r&lt;&lt;&#39;\n&#39;;
+  return;
+&#125;
+</code></pre>
+<p>CF 460C</p>
+<p>树上差分模版题，树上差分的话，需要记得，假设是u,v两个点那么需要<br>add[u]++ </p>
+<p>add[v]++</p>
+<p>add[lca]-=2</p>
+<p>然后就是树上差分的裸题了</p>
+<pre><code class="lang-C++">struct LCA
+&#123;
+    int n,s;
+    const int MAXN=5e6+10;
+    vector&lt;int&gt;dep,lg;
+    vector&lt;int&gt;eular,pos;
+    vector&lt;vector&lt;int&gt;&gt;E,st;
+    vector&lt;vector&lt;int&gt;&gt;id;
+    vector&lt;bool&gt;vis;
+    int cnt,edge_cnt;
+
+    LCA(int num,int start):n(num),s(start)
+    &#123;
+        edge_cnt=0;
+        dep.resize(n&lt;&lt;1); 
+        lg.resize(MAXN);
+        eular.resize(n&lt;&lt;1);
+        pos.resize(n&lt;&lt;1);//position in eular sequence
+        E.resize(num+1);
+        id.resize(num+1);
+        vis.resize(n+1,false);
+        cnt=0;
+        init_lg();
+    &#125;
+    void init_lg()
+    &#123;
+        lg[0]=lg[1]=0;
+        for(int i=2;i&lt;MAXN;++i)
+        &#123;
+            lg[i]=lg[i/2]+1;
+        &#125;
+    &#125;
+    void add_edge(int u,int v,int i)
+    &#123;   
+        ++edge_cnt;
+        E[u].push_back(v);
+        E[v].push_back(u);
+        id[u].push_back(i);
+        id[v].push_back(i);
+        if(edge_cnt==n-1)
+        &#123;
+           dfs(s,0);
+           initST(2*n-1);
+        &#125;
+    &#125;
+    void dfs(int now,int d)
+    &#123;
+        eular[++cnt]=now;
+        pos[now]=cnt;
+        dep[cnt]=d;
+        vis[now]=true;
+        for(auto nxt:E[now])
+        &#123;
+            if(vis[nxt])continue;
+            dfs(nxt,d+1);
+            eular[++cnt]=now;
+            dep[cnt]=d;
+        &#125;
+    &#125;
+    void initST(int n)
+    &#123;
+        st.assign(n+1,vector&lt;int&gt;(31,0));
+        for(int i=1;i&lt;=n;++i)
+        &#123;
+            st[i][0]=i;
+        &#125;
+        for(int j=1;j&lt;=lg[n];++j)
+        &#123;
+            for(int i=0;i+(1&lt;&lt;(j-1))&lt;=n;++i)
+            &#123;
+                int a=st[i][j-1],b=st[i+(1&lt;&lt;(j-1))][j-1];
+                st[i][j]=dep[a]&lt;dep[b]?a:b;
+            &#125;
+        &#125;
+    &#125;
+    int commonFa(int x,int y)
+    &#123;
+        x=pos[x],y=pos[y];//具体是哪一个无所谓，反正不会有dep小于他们的
+        if(x&gt;y)swap(x,y);
+        int len=y-x+1;
+        int a=st[x][lg[len]],b=st[y-(1&lt;&lt;lg[len])+1][lg[len]];
+        int ans=dep[a]&lt;dep[b]?a:b;
+        return eular[ans];
+    &#125;
+&#125;;
+void solve()&#123;
+  int n;cin&gt;&gt;n;
+  LCA lca(n,1);
+  for(int i=1;i&lt;=n-1;++i)&#123;
+    int u,v;cin&gt;&gt;u&gt;&gt;v;
+    lca.add_edge(u,v,i);
+  &#125;
+  int k;cin&gt;&gt;k;
+  vector&lt;ll&gt;add(n+1),sum(n+1);
+  function&lt;void(int,int)&gt;dfs=[&amp;](int x,int f)&#123;
+    for(int i=0;i&lt;lca.E[x].size();++i)&#123;
+        int id=lca.id[x][i],v=lca.E[x][i];
+        if(v==f)continue;
+        dfs(v,x);
+        add[x]+=add[v];
+        sum[id]+=add[v];
+    &#125;
+  &#125;;
+  while(k--)&#123;
+    int u,v;
+    cin&gt;&gt;u&gt;&gt;v;
+    add[u]++;
+    add[v]++;
+    int f=lca.commonFa(u,v);
+    add[f]-=2;
+  &#125;
+  dfs(1,0);
+  for(int i=1;i&lt;=n-1;++i)&#123;
+    cout&lt;&lt;sum[i]&lt;&lt;&quot; \n&quot;[i==n-1];
+  &#125;
+  return;
+&#125;
+</code></pre>
+<p>今天复习算法+寄网，23号面试惹</p>
+
+    </div>
+    
+    
+    
+    
+    
+    
     
 </div>
 
@@ -227,6 +399,11 @@
         </div>
         <script src="/js/functions.js"></script>
 <script src="/js/particlex.js"></script>
+
+
+
+
+
 
 
     </body>

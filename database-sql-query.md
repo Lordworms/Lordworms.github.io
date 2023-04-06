@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>分类 | Waiting for the dawn</title>
+        <title>database sql query | Waiting for the dawn</title>
         <meta name="author" content="Yanxin Xiang">
         <meta name="description" content="">
         <meta name="keywords" content="">
@@ -130,77 +130,75 @@
     </div>
 </nav>
 
-                <div id="archives">
-    
-    <div class="categories-tags">
-        
-        
-        <span>
-            <a href="/categories/Algorithm/" style="background: #00a596">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                Algorithm
-            </a>
+                <div class="article">
+    <div>
+        <h1>database sql query </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/3/26
         </span>
         
         
-        
-        <span>
-            <a href="/categories/compiler/" style="background: #ff7d73">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                compiler
-            </a>
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/database/" style="color: #ffa2c4">database</a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/sql-query/" style="color: #00bcd4">sql query</a>
+            </span>
+            
         </span>
-        
-        
-        
-        <span>
-            <a href="/categories/algorithm/" style="background: #03a9f4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                algorithm
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/categories/database/" style="background: #03a9f4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                database
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/categories/%E6%96%B0%E7%9A%84%E5%BC%80%E5%A7%8B/" style="background: #00bcd4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                -新的开始
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/categories/interview/" style="background: #00a596">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                interview
-            </a>
-        </span>
-        
         
     </div>
+    
+    <div class="content" v-pre>
+        <h1 id="数据库查询处理模型"><a href="#数据库查询处理模型" class="headerlink" title="数据库查询处理模型"></a>数据库查询处理模型</h1><h2 id="火山模型"><a href="#火山模型" class="headerlink" title="火山模型"></a>火山模型</h2><p>特点：</p>
+<p>1.查询处理过程分为多个阶段，每个阶段由一个或多个操作符组成，每个操作符都接收输入数据并生成输出数据，</p>
+<p>2.数据通过管道连接不同的操作符，每个操作符都只需处理管道中的数据，避免了一次性将所有数据加载到内存中的问题</p>
+<p>优点:</p>
+<p>1.灵活性高：火山模型能够适应多种查询的执行计划，并且支持优化器在运行时的动态调整执行计划</p>
+<p>2.执行效率高：能够对大量数据进行分段处理，缓解单一查询占用大量内存的问题，更有利于利用系统资源，提高查询效率</p>
+<p>3.易于实现：实现比较简单，便于理解和维护</p>
+<p>缺点</p>
+<p>1.数据传输有开销，每个操作符都需要把处理结果传递给下一个操作符，这样会增大数据传输的开销，降低查询效率</p>
+<p>2.网络带宽瓶颈：在分布式环境下，由于数据需要通过网络进行传输，当数据量较大时，网络带宽可能成为瓶颈，影响查询效率。</p>
+<p>3.优化器成本较高：火山模型需要一个优化器来选择最优的查询执行计划，这个过程需要耗费较高的计算成本。</p>
+<h3 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h3><pre><code>            Query Plan
+                 |
+          ----------------
+          |  Aggregate  |
+          ----------------
+                 |
+          ----------------
+          |    Sort    |
+          ----------------
+                 |
+    --------------------------
+    |            Join         |
+    --------------------------
+    |         |          |
+-------  -------   -------------
+| S1 |    | S2 |    |    S3     |
+-------  -------   -------------
+</code></pre>
+    </div>
+    
+    
+    
+    
+    
+    
     
 </div>
 
@@ -227,6 +225,11 @@
         </div>
         <script src="/js/functions.js"></script>
 <script src="/js/particlex.js"></script>
+
+
+
+
+
 
 
     </body>

@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>分类 | Waiting for the dawn</title>
+        <title>daily 3 | Waiting for the dawn</title>
         <meta name="author" content="Yanxin Xiang">
         <meta name="description" content="">
         <meta name="keywords" content="">
@@ -130,77 +130,158 @@
     </div>
 </nav>
 
-                <div id="archives">
-    
-    <div class="categories-tags">
-        
-        
-        <span>
-            <a href="/categories/Algorithm/" style="background: #00a596">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                Algorithm
-            </a>
+                <div class="article">
+    <div>
+        <h1>daily 3 </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/3/26
         </span>
         
         
-        
-        <span>
-            <a href="/categories/compiler/" style="background: #ff7d73">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                compiler
-            </a>
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/daily/" style="color: #ffa2c4">daily</a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/Codeforces/" style="color: #ffa2c4">Codeforces</a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/dp/" style="color: #ffa2c4">dp</a>
+            </span>
+            
         </span>
-        
-        
-        
-        <span>
-            <a href="/categories/algorithm/" style="background: #03a9f4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                algorithm
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/categories/database/" style="background: #03a9f4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                database
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/categories/%E6%96%B0%E7%9A%84%E5%BC%80%E5%A7%8B/" style="background: #00bcd4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                -新的开始
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/categories/interview/" style="background: #00a596">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                interview
-            </a>
-        </span>
-        
         
     </div>
+    
+    <div class="content" v-pre>
+        <p>今天腾讯笔试做的有点差，还好不影响，刚刚做完题了去健个身然后背八股了</p>
+<p>CF 254 C</p>
+<p>思维题</p>
+<p>首先我们可以统计出每个字符在s和t中分别出现了多少次，然后我们遍历s，每次找到对应cnt1[x]&gt;cnt2[x]的位置，因为这个位置肯定需要变化，然后我们遍历26个字母，这里有一个技巧，如果你正好可以发现现在就可以替换的(j&lt;x且cnt1[j]&lt;cnt2[j])那么肯定要直接修改，但是如果你对应的cnt2[x]的位置=0，这表示在t中不需要当前元素，那么也要修改。其余的情况表明t中需要x这个元素，那么我们就之后再改</p>
+<pre><code class="lang-C++">void solve()&#123;
+  string s,t;
+  cin&gt;&gt;s&gt;&gt;t;
+  //we need to find those places that cnt1[s[i]]&gt;cnt2[s[i]],then transform them
+  vector&lt;int&gt;cnt1(26),cnt2(26);
+  for(int i=0;i&lt;s.size();++i)&#123;
+    cnt1[s[i]-&#39;A&#39;]++;
+    cnt2[t[i]-&#39;A&#39;]++;
+  &#125;
+  int ans=0;
+  for(int i=0;i&lt;s.size();++i)&#123;
+    int x=s[i]-&#39;A&#39;;
+    if(cnt1[x]&gt;cnt2[x])&#123;
+      for(int j=0;j&lt;26;++j)&#123;
+        if(cnt1[j]&lt;cnt2[j])&#123;
+          if(j&lt;x||!cnt2[x])&#123;
+            cnt2[j]--;
+            s[i]=j+&#39;A&#39;;
+            ++ans;
+          &#125;else&#123;
+            cnt2[x]--;
+          &#125;
+          break;
+        &#125;
+      &#125;
+      cnt1[x]--;//subtract it in s
+    &#125;
+  &#125;
+  cout&lt;&lt;ans&lt;&lt;&#39;\n&#39;&lt;&lt;s&lt;&lt;&#39;\n&#39;;
+  return;
+&#125;
+</code></pre>
+<p>CF 9D</p>
+<p>思维+dp</p>
+<p>另使用i个节点且树的高度小于j的答案数为dp[i][j]</p>
+<p>那么转移方程很好写</p>
+<p>dp[i][j]+=dp[left][j-1]*dp[i-left-1][j-1];<br>分别枚举i,left,j就好了</p>
+<pre><code class="lang-C++">void solve()&#123;
+  int n,h;
+  cin&gt;&gt;n&gt;&gt;h;
+  vector dp(n+1,vector&lt;ll&gt;(n+1));//dp[i][j] means using i nodes and the depth is less than j
+  for(int height=1;height&lt;=n;++height)&#123;
+    dp[0][height-1]=1;
+    for(int total_nodes=1;total_nodes&lt;=n;++total_nodes)&#123;
+        for(int left=0;left&lt;total_nodes;++left)&#123;//number of left nodes
+            dp[total_nodes][height]+=dp[left][height-1]*dp[total_nodes-left-1][height-1];
+        &#125;
+    &#125;
+  &#125;
+  cout&lt;&lt;dp[n][n]-dp[n][h-1]&lt;&lt;&#39;\n&#39;;
+  return;
+&#125;
+</code></pre>
+<p>CF 1117D</p>
+<p>首先可以容易写出转移方程</p>
+<p>dp[i]=dp[i-1]+dp[i-m]</p>
+<p>然后用矩阵快速幂优化就好啦</p>
+<pre><code class="lang-C++">ll n,m;
+struct Mat&#123;
+    ll mat[110][110];
+    Mat()&#123;&#125;;
+    Mat operator*(Mat const &amp;b)const
+    &#123;
+        Mat res;
+        memset(res.mat,0,sizeof(res.mat));
+        for(int k=0;k&lt;m;++k)
+           for(int i=0;i&lt;m;++i)
+               for(int j=0;j&lt;m;++j)
+                  res.mat[i][j]=(res.mat[i][j]+(this-&gt;mat[i][k]*b.mat[k][j]))%MOD;
+        return res;    
+    &#125;
+&#125;;
+Mat mat_pow(Mat A,ll k)&#123;
+    Mat res;
+    memset(res.mat,0,sizeof(res.mat));
+    for(int i=0;i&lt;m;++i)
+        res.mat[i][i]=1;
+    while(k&gt;0)
+    &#123;
+        if(k&amp;1)res=res*A;
+        A=A*A;
+        k=k&gt;&gt;1;
+    &#125;
+    return res;
+&#125;
+void solve()&#123;
+  cin&gt;&gt;n&gt;&gt;m;
+  if(n&lt;m)&#123;
+    cout&lt;&lt;1&lt;&lt;&#39;\n&#39;;
+    return;
+  &#125;
+  Mat base,A;
+  A.mat[0][0]=A.mat[0][m-1]=1;
+  for(int i=1;i&lt;m;++i)A.mat[i][i-1]=1;
+  for(int i=0;i&lt;m;++i)base.mat[i][0]=1;
+  A=mat_pow(A,n-m+1);
+  base=A*base;
+  cout&lt;&lt;base.mat[0][0]&lt;&lt;&#39;\n&#39;;
+  return;
+&#125;
+</code></pre>
+<p>感觉自己还是好👎，哎，真的感觉没有自己的容身之所了，下去锻炼一下，回来继续背八股吧</p>
+
+    </div>
+    
+    
+    
+    
+    
+    
     
 </div>
 
@@ -227,6 +308,11 @@
         </div>
         <script src="/js/functions.js"></script>
 <script src="/js/particlex.js"></script>
+
+
+
+
+
 
 
     </body>

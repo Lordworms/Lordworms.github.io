@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>分类 | Waiting for the dawn</title>
+        <title>interview - MQ | Waiting for the dawn</title>
         <meta name="author" content="Yanxin Xiang">
         <meta name="description" content="">
         <meta name="keywords" content="">
@@ -130,77 +130,94 @@
     </div>
 </nav>
 
-                <div id="archives">
-    
-    <div class="categories-tags">
-        
-        
-        <span>
-            <a href="/categories/Algorithm/" style="background: #00a596">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                Algorithm
-            </a>
+                <div class="article">
+    <div>
+        <h1>interview - MQ </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/3/22
         </span>
         
         
-        
-        <span>
-            <a href="/categories/compiler/" style="background: #ff7d73">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                compiler
-            </a>
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/interview/" style="color: #03a9f4">interview</a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/message-queue/" style="color: #ffa2c4">message queue</a>
+            </span>
+            
         </span>
-        
-        
-        
-        <span>
-            <a href="/categories/algorithm/" style="background: #03a9f4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                algorithm
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/categories/database/" style="background: #03a9f4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                database
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/categories/%E6%96%B0%E7%9A%84%E5%BC%80%E5%A7%8B/" style="background: #00bcd4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                -新的开始
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/categories/interview/" style="background: #00a596">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                interview
-            </a>
-        </span>
-        
         
     </div>
+    
+    <div class="content" v-pre>
+        <p><img src="https://i.ibb.co/zN5YHdL/IMG-07-C560-D84-EE8-1.jpg" alt="avator"></p>
+<h1 id="组件"><a href="#组件" class="headerlink" title="组件"></a>组件</h1><p>整体上来说，可以分为三个部分</p>
+<p>1.生产者</p>
+<p>2.消息队列</p>
+<p>3.消费者</p>
+<h1 id="推-拉模型"><a href="#推-拉模型" class="headerlink" title="推/拉模型"></a>推/拉模型</h1><p><img src="https://i.ibb.co/KyzcFR8/IMG-4-D97537-DF13-D-1.jpg" alt="avator"></p>
+<h1 id="消费者模型"><a href="#消费者模型" class="headerlink" title="消费者模型"></a>消费者模型</h1><p><img src="https://i.ibb.co/1988CgR/IMG-BF96-BB00-C451-1.jpg" alt="avator"></p>
+<h2 id="RocketMQ"><a href="#RocketMQ" class="headerlink" title="RocketMQ"></a>RocketMQ</h2><p><img src="https://i.ibb.co/L05smyh/IMG-75-E27-B14-A61-F-1.jpg" alt="avator"><br>整体架构</p>
+<p>1.生产者集群：生产消息发送到RocketMQ集群</p>
+<p>2.broker集群：负责消息存储、查询、服务高可用</p>
+<p>3.NameServer:Topic路由的注册中心（每个topic对应一个queue），支持broker的服务注册和发现，集群中各节点不互通信息</p>
+<p>4.消费者队列：从RocketMQ订阅消息，支持push pull两种方式获取消息</p>
+<h3 id="RocketMQ单实例环境"><a href="#RocketMQ单实例环境" class="headerlink" title="RocketMQ单实例环境"></a>RocketMQ单实例环境</h3><p>1.主体模型及功能</p>
+<p>a.支持按照tag或者sql进行消息过滤</p>
+<p>b.所有的消息存在commitlog,而非segment中，同一时刻只有一个commitlog是被写的</p>
+<p>c.索引层面会分离，存偏移量和tag</p>
+<p>d.有.index文件，存一些时间信息以及key的信息</p>
+<p>上述三个都是固定大小，都是顺序io<br>message存commit log偏移量以及长度，还有哈希值</p>
+<p>2.消息存储和检索</p>
+<p>a.按照message id来查询</p>
+<p>b.按照MessageKey来查询</p>
+<p>c.按照消息队列偏移量查询</p>
+<p>3.同步刷盘和异步刷盘</p>
+<p>同步：</p>
+<p>异步：</p>
+<p>4.消费模型</p>
+<h3 id="RocketMQ多实例环境"><a href="#RocketMQ多实例环境" class="headerlink" title="RocketMQ多实例环境"></a>RocketMQ多实例环境</h3><p>4.5 前，主从架构</p>
+<p>主节点挂掉了之后，切换比较长</p>
+<p>4.5 后 Raft架构</p>
+<p>数据复制，故障转移：</p>
+<p>负载均衡：<br><img src="https://i.ibb.co/pn68kGt/IMG-E09-C4-ACEEBB6-1.jpg" alt="avator"></p>
+<h2 id="RabbitMQ"><a href="#RabbitMQ" class="headerlink" title="RabbitMQ"></a>RabbitMQ</h2><p>一款实现了AMQP(advanced Message Queuing Protocol)的基础上，并进行额外扩展的消息队列，针对多种工作模式，消息持久化，确认消费等</p>
+<p>1.连接：</p>
+<p>2.管道：在连接里获取一个channel，然后再去交互（tcp连接）</p>
+<p>3.虚拟主机：通过虚拟主机来完成资源的隔离，由交换机和队列组成，交换机把不同的消息分配到不同的队列，交换机和队列通过绑定的方式实现，有一个绑定的key</p>
+<p>4.队列：</p>
+<p>现在用的越来越少了，消息存储在内存，支持消息持久化</p>
+<p>高可用和集群比较麻烦</p>
+<p><img src="https://i.ibb.co/7v31Sy5/IMG-484-C141-A2403-1.jpg" alt="avator"></p>
+<p>RabbitMQ的几种工作模式</p>
+<p>1.hello word</p>
+<p>2.工作队列：生产者生产，多个消费者</p>
+<p>3.发布订阅(fanout)模式：将消息交给交换机，然后发给所有的队列，让下游消费</p>
+<p>4.路由模式：生产者的key和对应的binding key匹配发送到对应queue</p>
+<p>5.主题模式：通过通配符来做路由的正则匹配，然后转发到对应queue</p>
+<p>6.模拟RPC模式，客户端发送Request然后绑定回调队列，服务端消费队列，然后把处理的结果填充到请求的回调队列中，客户端监听回调队列</p>
+<p><img src="https://i.ibb.co/tHMK8RB/IMG-4-E7327476905-1.jpg" alt="avator"></p>
+
+    </div>
+    
+    
+    
+    
+    
+    
     
 </div>
 
@@ -227,6 +244,11 @@
         </div>
         <script src="/js/functions.js"></script>
 <script src="/js/particlex.js"></script>
+
+
+
+
+
 
 
     </body>

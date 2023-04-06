@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>分类 | Waiting for the dawn</title>
+        <title>daily 2 | Waiting for the dawn</title>
         <meta name="author" content="Yanxin Xiang">
         <meta name="description" content="">
         <meta name="keywords" content="">
@@ -130,77 +130,95 @@
     </div>
 </nav>
 
-                <div id="archives">
-    
-    <div class="categories-tags">
-        
-        
-        <span>
-            <a href="/categories/Algorithm/" style="background: #00a596">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                Algorithm
-            </a>
+                <div class="article">
+    <div>
+        <h1>daily 2 </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/3/30
         </span>
         
         
-        
-        <span>
-            <a href="/categories/compiler/" style="background: #ff7d73">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                compiler
-            </a>
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/daily/" style="color: #00a596">daily</a>
+            </span>
+            
         </span>
-        
-        
-        
-        <span>
-            <a href="/categories/algorithm/" style="background: #03a9f4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                algorithm
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/categories/database/" style="background: #03a9f4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                database
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/categories/%E6%96%B0%E7%9A%84%E5%BC%80%E5%A7%8B/" style="background: #00bcd4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                -新的开始
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/categories/interview/" style="background: #00a596">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                interview
-            </a>
-        </span>
-        
         
     </div>
+    
+    <div class="content" v-pre>
+        <p>CF 417A</p>
+<p>文字理解题，如题意，要么用c个选n个，要么用x*d个选x个</p>
+<p>那么分别考虑即可</p>
+<pre><code class="lang-C++">void solve()&#123;
+  int c,d,n,m,k;
+  cin&gt;&gt;c&gt;&gt;d&gt;&gt;n&gt;&gt;m&gt;&gt;k;
+  int sum=n*m-k;
+  if(sum&lt;=0)&#123;
+    cout&lt;&lt;0&lt;&lt;&#39;\n&#39;;
+    return;
+  &#125;
+  int cnt=sum/n;
+  int rem=sum%n;
+  int ans=cnt*min(c,n*d)+min(rem*d,c);
+  cout&lt;&lt;ans&lt;&lt;&quot;\n&quot;;
+  return;
+&#125;
+</code></pre>
+<p>CF 459E</p>
+<p>也是简单题</p>
+<p>考虑每条边只会对比该边小的边产生影响，所以我们对边按照权值排序<br>之后就和最长上升子序列一样了</p>
+<pre><code class="lang-C++">struct edge&#123;
+    int from,to,w;
+&#125;;
+void solve()&#123;
+  int n,m;cin&gt;&gt;n&gt;&gt;m;
+  vector&lt;pair&lt;int,int&gt;&gt;state;
+  vector&lt;int&gt;dp(n+1);
+  vector&lt;edge&gt;E(m+1);
+  int ans=0;
+  auto calc=[&amp;]()&#123;
+    for(auto pi:state)&#123;
+        dp[pi.first]=max(dp[pi.first],pi.second);
+        ans=max(dp[pi.first],ans);
+    &#125;
+    state.clear();
+  &#125;;    
+  for(int i=1;i&lt;=m;++i)&#123;
+    cin&gt;&gt;E[i].from&gt;&gt;E[i].to&gt;&gt;E[i].w;
+  &#125;
+  sort(E.begin()+1,E.end(),[&amp;](edge a,edge b)&#123;
+    return a.w&lt;b.w;
+  &#125;);
+  for(int i=1;i&lt;=m;++i)&#123;
+    if(E[i].w!=E[i-1].w)calc();
+    state.push_back(&#123;E[i].to,dp[E[i].from]+1&#125;);
+  &#125;
+  calc();
+  cout&lt;&lt;ans&lt;&lt;&#39;\n&#39;;
+  return;
+&#125;
+</code></pre>
+<p>晚上字节二面和明天早上蚂蚁二面加油啦，确实蛮想去做oceanbase的，啊啊啊啊<br>干巴喽</p>
+
+    </div>
+    
+    
+    
+    
+    
+    
     
 </div>
 
@@ -227,6 +245,11 @@
         </div>
         <script src="/js/functions.js"></script>
 <script src="/js/particlex.js"></script>
+
+
+
+
+
 
 
     </body>

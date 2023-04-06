@@ -1,0 +1,486 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>database - sql | Waiting for the dawn</title>
+        <meta name="author" content="Yanxin Xiang">
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+        <link rel="icon" href="https://i.ibb.co/sszdSW8/IMG-2691.jpg">
+        <script src="https://cdn.staticfile.org/vue/3.2.45/vue.global.prod.min.js"></script>
+        <script src="https://cdn.staticfile.org/highlight.js/11.7.0/highlight.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/11.7.0/styles/github.min.css">
+        <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/6.2.1/css/all.min.css">
+        
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+        
+        
+        <script src="https://cdn.staticfile.org/KaTeX/0.16.4/katex.min.js"></script>
+        <script src="https://cdn.staticfile.org/KaTeX/0.16.4/contrib/auto-render.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.staticfile.org/KaTeX/0.16.4/katex.min.css">
+        
+        
+        <link rel="stylesheet" href="/css/fonts.min.css">
+        <link rel="stylesheet" href="/css/particlex.css">
+    <meta name="generator" content="Hexo 6.3.0"></head>
+    <body>
+        <div id="loading" style="height: 100vh; width: 100vw; left: 0; top: 0; position: fixed; display: flex; z-index: 2147483647; background: #fff; transition: opacity 0.3s ease-out; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; pointer-events: none">
+    <div style="width: 50vmin; height: 50vmin; margin: auto; padding: 50px; border-radius: 50%; display: flex; border: solid 10px #a3ddfb">
+        <div style="margin: auto; text-align: center">
+            <h2>LOADING</h2>
+            <p>加载过慢请开启缓存，浏览器默认开启</p>
+            <img src="/images/loading.gif" style="height: 50px; border-radius: 0">
+        </div>
+    </div>
+</div>
+
+        <div id="layout">
+            <transition name="into">
+            <div id="main" v-show="showpage" style="display: -not-none">
+                <nav id="menu">
+    <div class="desktop-menu">
+        <a class="title" href="/">
+            <span>WAITING FOR THE DAWN</span>
+        </a>
+        
+        <a href="/">
+            <i class="fa-solid fa-house fa-fw"></i>
+            <span>&ensp;Home</span>
+        </a>
+        
+        <a href="/about">
+            <i class="fa-solid fa-id-card fa-fw"></i>
+            <span>&ensp;About</span>
+        </a>
+        
+        <a href="/archives">
+            <i class="fa-solid fa-box-archive fa-fw"></i>
+            <span>&ensp;Archives</span>
+        </a>
+        
+        <a href="/categories">
+            <i class="fa-solid fa-bookmark fa-fw"></i>
+            <span>&ensp;Categories</span>
+        </a>
+        
+        <a href="/tags">
+            <i class="fa-solid fa-tags fa-fw"></i>
+            <span>&ensp;Tags</span>
+        </a>
+        
+    </div>
+    <div :class="&quot;phone-menu &quot; + menushow" id="phone-menu">
+        <div class="curtain" @click="menushow = !menushow" v-show="menushow"></div>
+        <div class="title" @click="menushow = !menushow">
+            <i class="fa-solid fa-bars fa-fw"></i>
+            <span>&emsp;WAITING FOR THE DAWN</span>
+        </div>
+        <transition name="slide">
+        <div class="items" v-show="menushow">
+            
+            <a href="/">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-house fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Home</div>
+                </div>
+            </a>
+            
+            <a href="/about">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-id-card fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">About</div>
+                </div>
+            </a>
+            
+            <a href="/archives">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-box-archive fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Archives</div>
+                </div>
+            </a>
+            
+            <a href="/categories">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-bookmark fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Categories</div>
+                </div>
+            </a>
+            
+            <a href="/tags">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-tags fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Tags</div>
+                </div>
+            </a>
+            
+        </div>
+        </transition>
+    </div>
+</nav>
+
+                <div class="article">
+    <div>
+        <h1>database - sql </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/3/29
+        </span>
+        
+        
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/database/" style="color: #03a9f4">database</a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/database-operation/" style="color: #ff7d73">database operation</a>
+            </span>
+            
+        </span>
+        
+    </div>
+    
+    <div class="content" v-pre>
+        <h1 id="总结自chatgpt"><a href="#总结自chatgpt" class="headerlink" title="总结自chatgpt"></a>总结自chatgpt</h1><h2 id="一些sql的谓词底层逻辑"><a href="#一些sql的谓词底层逻辑" class="headerlink" title="一些sql的谓词底层逻辑"></a>一些sql的谓词底层逻辑</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>谓词</th>
+<th>逻辑</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>join</td>
+<td>可能需要走全表，可能可以走索引</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="一条sql需要经历以下几个过程"><a href="#一条sql需要经历以下几个过程" class="headerlink" title="一条sql需要经历以下几个过程"></a>一条sql需要经历以下几个过程</h2><h2 id="DB的一些名词"><a href="#DB的一些名词" class="headerlink" title="DB的一些名词"></a>DB的一些名词</h2><p>1.DML(Data Manipulation Language):数据操作语言，主要用于操作数据库中的数据，例如增、删、改、查等操作。DML的作用是对数据库中的数据进行操作和维护。DML代表”神”，因为它是数据库中最基本也是最重要的操作之一，没有DML就没有数据库的实际意义。</p>
+<p>2.DDL（Data Definition Language）：数据定义语言，主要用于定义数据库中的结构，例如创建、删除、修改表、索引等操作。DDL的作用是对数据库中的结构进行管理和维护。DDL代表”恶魔”，因为它可以直接修改数据库的结构，如果使用不当会导致数据库的完整性和稳定性出现问题。</p>
+<p>3.Multi-statement：多语句操作，主要用于同时执行多个语句，例如创建存储过程、触发器、批量插入数据等。Multi-statement的作用是简化数据库操作，提高数据库的效率。Multi-statement代表”魔”，因为它可以在短时间内执行多个语句，但是如果语句之间存在依赖关系或错误，会导致数据不一致或者出现其他问题。</p>
+<h2 id="bison-flex"><a href="#bison-flex" class="headerlink" title="bison+flex"></a>bison+flex</h2><p>Bison 是一个生成器工具，用于生成解析器（parser）代码。解析器可以解析和分析输入的文本，并将其转换为更高级别的结构，例如语法树或抽象语法树。Bison 基于 LALR（Look-Ahead Left-to-Right）语法分析算法，可以处理上下文无关语法（Context-Free Grammar）。</p>
+<p>Flex 是另一个生成器工具，用于生成词法分析器（lexical analyzer）代码。词法分析器可以将输入的文本分割成一个个的词法单元（tokens），例如关键字、标识符、操作符等等。Flex 基于正则表达式匹配算法，可以处理大量的词法单元。</p>
+<p>Bison 和 Flex 通常一起使用，用于构建编译器、解释器、语言处理工具等等。使用这两个工具，我们可以将输入的文本转换为更易于处理的结构，以便进行后续的分析和处理。例如，我们可以使用 Bison 和 Flex 构建一个 SQL 查询语句解析器，将用户输入的 SQL 查询语句转换为语法树或抽象语法树，然后进行优化、执行等操作。</p>
+<p>需要注意的是，Bison 和 Flex 可以独立使用，也可以一起使用。如果只需要进行词法分析，可以使用 Flex 单独生成词法分析器。如果需要进行语法分析，可以使用 Bison 单独生成解析器。如果需要进行完整的文本解析，可以使用两者配合使用。</p>
+<p>使用也很简单</p>
+<pre><code class="lang-shell">    flex *.l
+    bison
+</code></pre>
+<h2 id="bison和pegtl的区别"><a href="#bison和pegtl的区别" class="headerlink" title="bison和pegtl的区别"></a>bison和pegtl的区别</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>特点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>bison</td>
+<td>1.生成可重入的代码：C++ Bison生成的代码可以在多线程环境下安全运行，因为它生成的代码是可重入的。<br>2.容易扩展：C++ Bison允许用户添加自己的语法规则和动作，从而使生成的语法分析器更加适合特定的应用程序。<br>3.生成高效的代码：C++ Bison生成的代码具有较高的执行效率，因为它使用了优化算法来提高代码的执行速度。<br>4.支持多种语言：C++ Bison支持多种语言，包括C++、C、Java等。<br></td>
+</tr>
+<tr>
+<td>pegtl</td>
+<td>1.高度模板化：PEGTL采用C++模板实现，因此生成的代码非常灵活，可以轻松地适应不同的应用程序需求。<br>2.支持语义动作：PEGTL支持在语法规则中嵌入语义动作，从而可以在解析过程中执行特定的操作。<br>3.易于调试：PEGTL生成的代码结构清晰、简单明了，因此可以很容易地进行调试和修改。<br>4.对错误处理的支持：PEGTL支持在解析过程中发现错误并进行相应的处理，从而可以提高程序的容错性。</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="bison生成的代码可重用的含义"><a href="#bison生成的代码可重用的含义" class="headerlink" title="bison生成的代码可重用的含义"></a>bison生成的代码可重用的含义</h2><p>Bison 生成的代码是可重用的，是指在一次语法分析的过程中，Bison 可以生成语法分析树，这棵语法分析树可以被重复利用。也就是说，一旦生成了语法分析树，就可以在该树的基础上进行多次语法分析，而不必每次都重新解析源代码。</p>
+<p>这种可重用性是由于Bison 的生成代码使用了状态机的思想。Bison 将语法规则转换成了状态机，生成的代码会跟踪状态机的当前状态，并根据当前状态来决定下一步的操作，最终构建出语法分析树。这种状态机的思想使得生成的代码具有可重用性，因为只要输入的源代码不变，状态机就不会变化，也就不需要重新解析一次源代码。</p>
+<p>因此，Bison 可以重复使用已经构建好的语法分析树来处理不同的输入，这种方式比每次都重新解析源代码更加高效，尤其是对于大型项目和长时间运行的程序来说，可以显著提高程序的性能和效率。</p>
+<h2 id="bison的特点的原因"><a href="#bison的特点的原因" class="headerlink" title="bison的特点的原因"></a>bison的特点的原因</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>特点</th>
+<th>原因</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>生成可重入的代码</td>
+<td>看上一个</td>
+</tr>
+<tr>
+<td>生成高效的代码</td>
+<td>1.LALR(1) 解析算法<br>2.优化算法：Bison 使用了多种优化算法来生成代码。例如，Bison 会在语法规则中消除左递归，避免回溯和歧义，以及进行语义动作的优化等。这些优化算法可以减少代码的执行时间和空间复杂度，提高代码的效率和性能。<br>3.可重用性：Bison 生成的代码是可重用的，可以重复使用已经构建好的语法分析树来处理不同的输入，避免了每次重新解析源代码的开销。这种可重用性也可以提高代码的效率和性能。<br>4.C 语言的底层机制：Bison 生成的代码是 C 语言的代码，可以充分利用 C 语言的底层机制，例如指针、结构体、内存管理等，来实现高效的代码。C 语言的底层机制也使得 Bison 生成的代码可以被移植到不同的操作系统和编译器上，增加了代码的灵活性和可移植性。</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="bison的具体优化"><a href="#bison的具体优化" class="headerlink" title="bison的具体优化"></a>bison的具体优化</h2><p>具体包含以下四种优化</p>
+<p>1.自动机优化</p>
+<p>2.Lookahead优化</p>
+<p>3.GLR解析</p>
+<p>具体做法:</p>
+<p>1.自动机优化：Bison在自动机构建过程中会尝试进行状态合并。例如，当两个状态具有相同的属性时，Bison会将这两个状态合并为一个状态，从而减少状态数。这样可以大幅提高自动机分析的效率。举例来说，对于如下的状态转换图：</p>
+<p>4和5会合并</p>
+<pre><code class="lang-perl">state 1:
+  on input &#39;a&#39; go to state 2
+  on input &#39;b&#39; go to state 3
+
+state 2:
+  on input &#39;c&#39; go to state 4
+
+state 3:
+  on input &#39;c&#39; go to state 5
+
+state 4:
+  on input &#39;d&#39; go to state 6
+
+state 5:
+  on input &#39;d&#39; go to state 6
+</code></pre>
+<p>2.Lookahead优化：Bison的Lookahead优化主要包括计算follow集合等技术。例如，在进行语法分析时，Bison需要通过Lookahead来确定最佳的动作。为了提高Lookahead的效率，Bison会计算每个非终结符的follow集合，即在每个非终结符后面可能出现的终结符集合。然后，Bison会使用这些follow集合来缩小Lookahead的范围，从而提高分析器的效率。举例来说，对于如下的文法：</p>
+<pre><code class="lang-bash">expr : term &#39;+&#39; term
+     | term &#39;-&#39; term
+     | term
+
+term : factor &#39;*&#39; factor
+     | factor &#39;/&#39; factor
+     | factor
+
+factor : &#39;(&#39; expr &#39;)&#39;
+       | NUM
+</code></pre>
+<p>3.GLR解析：Bison的GLR解析主要包括冲突处理等技术。例如，在解析含有二义性的语法时，Bison会使用GLR解析器。为了提高GLR解析的效率，Bison会尝试优化冲突处理。其中一种优化方式是延迟冲突处理，即将可能发生冲突的动作推迟到后面再处理，从而避免不必要的冲突检测。举例来说，对于如下的文法：</p>
+<pre><code class="lang-bash">expr : expr &#39;+&#39; expr
+     | expr &#39;-&#39; expr
+     | NUM
+</code></pre>
+<p>在解析1 + 2 - 3时，Bison会遇到一个移进-规约冲突(又可以移进-又可以规约2)。为了避免不必要的冲突检测，Bison会推迟决定如何处理这个冲突</p>
+<h2 id="SQL优化器"><a href="#SQL优化器" class="headerlink" title="SQL优化器"></a>SQL优化器</h2><p>现实常见的sql优化器包括</p>
+<p>Oracle 的 Cost-Based Optimizer (CBO)、Microsoft SQL Server 的 Query Optimizer、MySQL 的 Optimizer、PostgreSQL 的 Query Planner 等</p>
+<h3 id="常见的SQL优化方式"><a href="#常见的SQL优化方式" class="headerlink" title="常见的SQL优化方式"></a>常见的SQL优化方式</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>方式</th>
+<th>特点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>查询重写</td>
+<td>将复杂的查询语句转化为多个简单的查询语句</td>
+</tr>
+<tr>
+<td>谓词下推</td>
+<td>将查询语句中的条件谓词下推到表扫描或索引扫描操作之前，例如，将 WHERE 子句中的过滤条件下推到 JOIN 操作之前</td>
+</tr>
+<tr>
+<td>关联重组</td>
+<td>将复杂的关联查询转化为多个简单的查询语句,例如:将一个大的 JOIN 操作分解为多个小的 JOIN 操作</td>
+</tr>
+<tr>
+<td>分区裁剪</td>
+<td>利用表分区技术，只查询符合条件的分区，以减少查询数据量和提高查询效率，例如，将大表按照一定的规则划分为多个小的分区，只查询符合条件的分区，以减少查询数据量和提高查询效率。</td>
+</tr>
+<tr>
+<td>索引优化</td>
+<td>选择合适的索引来访问数据，以减少 IO 开销和提高查询效率。例如，使用覆盖索引来避免回表操作，使用多列索引来满足复合查询条件，以减少查询时间和提高查询效率。</td>
+</tr>
+<tr>
+<td>子查询优化</td>
+<td>将子查询转化为 JOIN 操作或者 EXISTS 操作,以减少查询的复杂度和提高查询效率。例如，将子查询转化为 EXISTS 操作，以避免对全表进行扫描和提高查询效率。</td>
+</tr>
+<tr>
+<td>统计信息优化</td>
+<td>使用统计信息来选择合适的执行计划，调整查询的执行顺序等</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h4 id="1-查询重写"><a href="#1-查询重写" class="headerlink" title="1.查询重写"></a>1.查询重写</h4><p>例如多关联表的时候，优化器会将其转化为更高效的查询方式<br>比如如果是between…and 会转化为对应的&lt;和&gt;<br>优化前</p>
+<pre><code class="lang-SQL">SELECT books.book_id, books.book_title, authors.author_name
+FROM books
+INNER JOIN books_authors ON books.book_id = books_authors.book_id
+INNER JOIN authors ON books_authors.author_id = authors.author_id
+WHERE books.book_title LIKE &#39;%Python%&#39;;
+</code></pre>
+<p>优化后</p>
+<pre><code class="lang-SQL">SELECT books.book_id, books.book_title, authors.author_name
+FROM books
+INNER JOIN books_authors ON books.book_id = books_authors.book_id
+INNER JOIN authors ON books_authors.author_id = authors.author_id
+WHERE books.book_id IN (
+    SELECT book_id FROM books
+    WHERE book_title LIKE &#39;%Python%&#39;
+);
+</code></pre>
+<p>这里把like优化成了in，完成了一个查询重写的过程</p>
+<h4 id="2-谓词下推"><a href="#2-谓词下推" class="headerlink" title="2.谓词下推"></a>2.谓词下推</h4><p>首先明确什么是sql的谓词</p>
+<p>SELECT、WHERE、JOIN、HAVING、GROUP BY 这些操作都是sql的谓词</p>
+<p>那么是怎么做下推操作的呢？</p>
+<p>看这个例子</p>
+<pre><code class="lang-SQL">SELECT SUM(quantity), SUM(quantity*unit_price)
+FROM orders
+JOIN order_details ON orders.order_id = order_details.order_id
+WHERE orders.customer_id = 123
+AND order_details.product_id = 456
+AND orders.order_date &gt;= &#39;2019-01-01&#39;
+</code></pre>
+<p>不进行谓词下推的话，会先join两张表，然后对join的所有数据进行过滤</p>
+<p>但是如果进行谓词下推的话。首先，将orders.customer_id = 123下推，过滤出顾客ID为123的订单；然后将order_details.product_id = 456下推，进一步过滤出购买商品ID为456的订单；最后将orders.order_date &gt;= ‘2019-01-01’下推，过滤出2019年1月1日之后的订单。这样，只有符合这三个条件的行才会被传递给查询引擎进行进一步的处理，减少了查询引擎需要处理的数据量，提高了查询性能。</p>
+<h4 id="3-关联重组"><a href="#3-关联重组" class="headerlink" title="3.关联重组"></a>3.关联重组</h4><p>关联重组一般用于left join和right join，比如你左表比较大，右表比较小，那么需要把左表换成右表</p>
+<h4 id="4-分区裁剪"><a href="#4-分区裁剪" class="headerlink" title="4.分区裁剪"></a>4.分区裁剪</h4><p>分区裁剪是一种SQL优化技术，它可以显著提高查询效率，特别是对于大型分区表查询。分区裁剪通过识别查询语句中的谓词条件并确定哪些分区不包含需要查询的数据，从而排除这些不需要扫描的分区，减少了查询所需的IO和CPU资源。</p>
+<p>例如下面的表和分区</p>
+<pre><code class="lang-SQL">CREATE TABLE sales (
+  id INT PRIMARY KEY,
+  date DATE,
+  amount DECIMAL(10, 2),
+  country VARCHAR(50)
+)
+PARTITION BY RANGE (YEAR(date))
+(
+  PARTITION sales_2018 VALUES LESS THAN (2019),
+  PARTITION sales_2019 VALUES LESS THAN (2020),
+  PARTITION sales_2020 VALUES LESS THAN (2021),
+  PARTITION sales_2021 VALUES LESS THAN (2022)
+);
+</code></pre>
+<p>对于我们这样一条查询语句来说</p>
+<pre><code class="lang-SQL">SELECT SUM(amount)
+FROM sales
+WHERE country = &#39;USA&#39; AND date BETWEEN &#39;2020-10-01&#39; AND &#39;2021-03-31&#39;;
+</code></pre>
+<p>在执行查询之前，分区裁剪会检查查询条件中的date和country两个字段是否与分区键相关。由于分区键是YEAR(date)，因此查询条件中的date字段与分区键相关。分区裁剪会使用查询条件中的日期范围来确定需要扫描的分区。在这个例子中，需要扫描的分区包括sales_2020和sales_2021。</p>
+<p>但是要记住，如果要使用分区裁剪，那么你的查询条件一定要和分区键有关</p>
+<h4 id="5-索引优化"><a href="#5-索引优化" class="headerlink" title="5.索引优化"></a>5.索引优化</h4><p>这个不用多说了</p>
+<h4 id="6-子查询优化"><a href="#6-子查询优化" class="headerlink" title="6.子查询优化"></a>6.子查询优化</h4><p>例子：<br>假设有两张表，一张是“员工表”，包含员工的ID、姓名、部门等信息，另一张是“工资表”，包含员工的ID、工资等信息。现在需要查询部门为“销售部”的员工的平均工资，并按照工资从高到低排序。</p>
+<p>首先，我们可以写出一个子查询的SQL语句：</p>
+<pre><code class="lang-SQL">SELECT AVG(salary) FROM salary_table WHERE employee_id IN (SELECT employee_id FROM employee_table WHERE department = &#39;Sales&#39;)
+</code></pre>
+<p>这个时候，子查询优化会把这个sql修改为join</p>
+<pre><code class="lang-SQL">SELECT AVG(salary) FROM salary_table t1 JOIN employee_table t2 ON t1.employee_id = t2.employee_id WHERE t2.department = &#39;Sales&#39;
+</code></pre>
+<p>这样，因为子查询的信息需要存储在内存，但是你join出来的信息占用内存比较少，所以修改为join之后更加优化了</p>
+<h4 id="7-统计信息优化"><a href="#7-统计信息优化" class="headerlink" title="7.统计信息优化"></a>7.统计信息优化</h4><p>假设有一个订单表(order)，其中包含了订单的id、顾客id(customer_id)、订单时间(order_time)等信息。现在需要查询顾客id为12345的顾客在2022年1月份的订单数量。可以使用以下SQL语句进行查询：</p>
+<pre><code class="lang-SQL">SELECT COUNT(*) FROM order WHERE customer_id = 12345 AND order_time &gt;= &#39;2022-01-01&#39; AND order_time &lt; &#39;2022-02-01&#39;;
+</code></pre>
+<p>为了优化这个查询，需要考虑对表order的统计信息进行优化。具体来说，需要收集和更新表order中的customer_id和order_time两个列的统计信息，包括数据分布、数据密度、唯一值的数量等信息。可以使用以下SQL语句进行统计信息收集和更新：</p>
+<h2 id="SQL执行引擎"><a href="#SQL执行引擎" class="headerlink" title="SQL执行引擎"></a>SQL执行引擎</h2><p>物理执行计划的生成</p>
+<p>考虑以下这个SQL查询语句：</p>
+<pre><code class="lang-SQL">SELECT a.*, b.*
+FROM table_a a
+JOIN table_b b ON a.id = b.id
+WHERE a.name = &#39;John&#39; AND b.age &gt; 20;
+</code></pre>
+<p>对于这个查询语句，可能生成的执行计划如下：</p>
+<pre><code class="lang-SQL">┌─Hash Join (inner join, id=1)───
+│  ├─Table Scan on table_a a (id=2)───
+│  └─Hash Join (inner join, id=3)───
+│     ├─Table Scan on table_b b (id=4)───
+│     └─Hash Probe on table_a a (id=5)───
+└─Filter: a.name = &#39;John&#39; and b.age &gt; 20
+</code></pre>
+<p>该执行计划由三个操作符组成：两个Hash Join操作符和一个Filter操作符。其中第一个Hash Join操作符使用表a的id和表b的id进行连接，生成一个新的中间结果；第二个Hash Join操作符则使用该中间结果和表a进行连接，生成最终结果；最后的Filter操作符根据查询条件过滤掉不符合要求的记录。</p>
+<h3 id="不同的JOIN算法"><a href="#不同的JOIN算法" class="headerlink" title="不同的JOIN算法"></a>不同的JOIN算法</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>JOIN算法</th>
+<th>特点</th>
+<th>原因</th>
+<th>缺点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>HASH JOIN</td>
+<td>HASH JOIN适用于连接操作的两个表中至少有一个表比较小的情况下</td>
+<td>这是因为HASH JOIN算法需要将较小的表进行哈希操作，生成哈希表，然后在哈希表中查找匹配的数据，因此较小的表可以更快地生成哈希表。而对于较大的表，则需要占用更多的内存空间来存储哈希表，可能会产生性能问题。</td>
+<td>内存需要的比较大</td>
+</tr>
+<tr>
+<td>NESTED LOOP JOIN</td>
+<td>NESTED LOOP JOIN适用于连接操作的两个表中至少有一个表比较小的情况下</td>
+<td>因为NESTED LOOP JOIN算法的时间复杂度为O(m*n)，如果两个表都非常大，这种JOIN算法的效率会非常低。但是，如果其中一个表比较小，那么NESTED LOOP JOIN就会比较快，因为它只需要对小表进行循环扫描，然后在大表中查找匹配的数据。</td>
+<td>不适用于表都比较大的情况</td>
+</tr>
+<tr>
+<td>MERGE JOIN</td>
+<td>MERGE JOIN适用于连接操作的两个表中连接列已经排好序的情况下</td>
+<td>这是因为MERGE JOIN算法是一种基于排序的JOIN算法，如果两个表中的连接列已经排好序，那么MERGE JOIN的效率非常高，时间复杂度为O(m+n)。</td>
+<td>但是，如果连接列没有排好序，那么需要对连接列进行排序，这可能会产生较大的开销，影响查询的性能。</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h4 id="HASH-JOIN的底层实现逻辑"><a href="#HASH-JOIN的底层实现逻辑" class="headerlink" title="HASH JOIN的底层实现逻辑"></a>HASH JOIN的底层实现逻辑</h4><p>1.对于连接操作的两个表，先选取其中一个表（通常是小表）的连接键列作为哈希表的键，对该表进行哈希操作，生成哈希表，将每行数据映射到哈希表中的一个桶。</p>
+<p>2.对于另一个表（通常是大表），对其连接键列进行哈希操作，并将哈希值映射到哈希表中的一个桶中。如果哈希表中该桶中有数据，则在该桶中查找匹配的数据，进行连接操作。</p>
+<p>3.如果哈希表中该桶中没有数据，则表示该桶中没有与该行数据匹配的数据，继续对下一行数据进行哈希操作，直到所有数据都处理完毕。</p>
+<p>4.如果需要连接的两个表中有多个连接键列，则需要先将这些列组合成一个联合键，然后再进行哈希操作。</p>
+<h4 id="FILTER-算法"><a href="#FILTER-算法" class="headerlink" title="FILTER 算法"></a>FILTER 算法</h4><p>FILTER算法的基本思路是，通过过滤掉那些不可能匹配的数据来减少需要进行HASH JOIN操作的数据量。具体来说，FILTER算法可以通过以下步骤来实现：</p>
+<p>1.将大表按照HASH JOIN的连接列进行分组，生成多个小表。</p>
+<p>2.对于小表中的每一行数据，在另一个表中查找是否有匹配的数据。</p>
+<p>3.如果另一个表中没有匹配的数据，就不将该行数据加入到结果集中，从而减少需要进行HASH JOIN操作的数据量。</p>
+<p>4.如果另一个表中有匹配的数据，就将该行数据加入到结果集中，并继续处理下一行数据。</p>
+
+    </div>
+    
+    
+    
+    
+    
+    
+    
+</div>
+
+                <footer id="footer">
+    <div class="footer-wrap">
+        <div>
+            &copy;
+            2022 - 2023 Waiting for the dawn
+            <span class="footer-icon">
+                <i class="fa-solid fa-font-awesome fa-fw"></i>
+            </span>
+            &commat;Yanxin Xiang
+        </div>
+        <div>Based on the <a target="_blank" rel="noopener" href="https://hexo.io">Hexo Engine</a> &amp; <a target="_blank" rel="noopener" href="https://github.com/argvchs/hexo-theme-particlex">ParticleX Theme</a></div>
+        
+    </div>
+</footer>
+
+            </div>
+            </transition>
+            <div id="showimg">
+                <img id="showimg-content">
+            </div>
+        </div>
+        <script src="/js/functions.js"></script>
+<script src="/js/particlex.js"></script>
+
+
+
+
+
+
+
+    </body>
+</html>

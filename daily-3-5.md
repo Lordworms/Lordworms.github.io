@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>分类 | Waiting for the dawn</title>
+        <title>daily 3 | Waiting for the dawn</title>
         <meta name="author" content="Yanxin Xiang">
         <meta name="description" content="">
         <meta name="keywords" content="">
@@ -130,35 +130,20 @@
     </div>
 </nav>
 
-                <div id="archives">
-    
-    <div class="categories-tags">
-        
-        
-        <span>
-            <a href="/categories/Algorithm/" style="background: #00a596">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                Algorithm
-            </a>
+                <div class="article">
+    <div>
+        <h1>daily 3 </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/3/20
         </span>
         
-        
-        
-        <span>
-            <a href="/categories/compiler/" style="background: #ff7d73">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                compiler
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/categories/algorithm/" style="background: #03a9f4">
+        <span class="category">
+            <a href="/categories/algorithm/">
                 <span class="icon">
                     <i class="fa-solid fa-bookmark fa-fw"></i>
                 </span>
@@ -167,40 +152,146 @@
         </span>
         
         
-        
-        <span>
-            <a href="/categories/database/" style="background: #03a9f4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                database
-            </a>
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/daily/" style="color: #ff7d73">daily</a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/stack/" style="color: #03a9f4">stack</a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/tree-array/" style="color: #03a9f4">tree array</a>
+            </span>
+            
         </span>
-        
-        
-        
-        <span>
-            <a href="/categories/%E6%96%B0%E7%9A%84%E5%BC%80%E5%A7%8B/" style="background: #00bcd4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                -新的开始
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/categories/interview/" style="background: #00a596">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                interview
-            </a>
-        </span>
-        
         
     </div>
+    
+    <div class="content" v-pre>
+        <p>CF 26B</p>
+<p>水题，基本上就是个括号序列的裸体，记得不要乱清空now_len</p>
+<pre><code class="lang-C++">void solve()&#123;
+  string s;
+  cin&gt;&gt;s;
+  vector&lt;char&gt;st;
+  int last_len=0;
+  int ans=0;
+  for(int i=0;i&lt;s.size();++i)&#123;
+    if(s[i]==&#39;(&#39;)&#123;
+        st.push_back(s[i]);
+    &#125;else&#123;
+        while(st.size()&amp;&amp;st.back()==&#39;)&#39;)st.pop_back();
+        if(st.size())&#123;
+            last_len+=2;
+            ans=max(ans,last_len);
+            st.pop_back();
+        &#125;
+    &#125;
+  &#125;
+  cout&lt;&lt;ans&lt;&lt;&#39;\n&#39;;
+  return;
+&#125;
+</code></pre>
+<p>CF 976C</p>
+<p>思维题，把对应的序列按照l升序，r降序进行排列，然后判断就好了</p>
+<pre><code class="lang-C++">struct node&#123;
+    int l,r,id;
+&#125;;
+void solve()&#123;
+  int n;
+  cin&gt;&gt;n;
+  vector&lt;node&gt;a(n);
+  for(int i=0;i&lt;n;++i)&#123;
+    cin&gt;&gt;a[i].l&gt;&gt;a[i].r;
+    a[i].id=i;
+  &#125;
+  sort(a.begin(),a.end(),[&amp;](node a,node b)&#123;
+    return a.l==b.l?a.r&gt;b.r:a.l&lt;b.l;
+  &#125;);
+  for(int i=0;i&lt;n-1;++i)&#123;
+    if(a[i].r&gt;=a[i+1].r)&#123;
+        cout&lt;&lt;a[i+1].id+1&lt;&lt;&#39; &#39;&lt;&lt;a[i].id+1&lt;&lt;&#39;\n&#39;;
+        return;
+    &#125;
+  &#125;
+  cout&lt;&lt;-1&lt;&lt;&#39; &#39;&lt;&lt;-1&lt;&lt;&#39;\n&#39;;
+  return;
+&#125;
+</code></pre>
+<p>CF 1354D</p>
+<p>树状数组板子题，加了个二分，每次用二分判断第k个元素</p>
+<pre><code class="lang-C++">#define lowbit(x) x&amp;-x
+void solve()&#123;
+  int n,k;cin&gt;&gt;n&gt;&gt;k;
+  vector&lt;int&gt;tree(n+1);
+  auto add=[&amp;](int x,int v)&#123;
+    while(x&lt;=n)&#123;
+        tree[x]+=v;
+        x+=lowbit(x);
+    &#125;
+  &#125;;
+  auto query=[&amp;](int x)&#123;
+    ll ans=0;
+    while(x)&#123;
+        ans+=tree[x];
+        x-=lowbit(x);
+    &#125;
+    return ans;
+  &#125;;
+  auto getk=[&amp;](int x)&#123;
+    int l=1,r=n;
+    while(l&lt;=r)&#123;
+        int m=(l+r)&gt;&gt;1;
+        int tmp=query(m);
+        if(tmp&lt;x)&#123;
+            l=m+1;
+        &#125;else&#123;
+            r=m-1;
+        &#125;
+    &#125;
+    return l;
+  &#125;;
+  for(int i=0;i&lt;n;++i)&#123;
+    int x;cin&gt;&gt;x;
+    add(x,1);
+  &#125;
+  for(int i=0;i&lt;k;++i)&#123;
+    int x;cin&gt;&gt;x;
+    if(x&gt;0)&#123;
+        add(x,1);
+    &#125;else&#123;
+        int qn=query(n);
+        int id=getk(-x);
+        add(id,-1);
+    &#125;
+  &#125;
+  if(query(n)==0)&#123;
+    cout&lt;&lt;0&lt;&lt;&#39;\n&#39;;
+  &#125;else&#123;
+    cout&lt;&lt;getk(1)&lt;&lt;&#39;\n&#39;;
+  &#125;
+  return;
+&#125;
+</code></pre>
+<p>小睡一会儿，待会起来把网络背了，晚上看B和B+树，然后健身吧</p>
+<p>我终于明白熬夜不是一种堕落，而是对现实的反抗了，难绷</p>
+
+    </div>
+    
+    
+    
+    
+    
+    
     
 </div>
 
@@ -227,6 +318,11 @@
         </div>
         <script src="/js/functions.js"></script>
 <script src="/js/particlex.js"></script>
+
+
+
+
+
 
 
     </body>

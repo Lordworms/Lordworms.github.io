@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>分类 | Waiting for the dawn</title>
+        <title>daily 2 | Waiting for the dawn</title>
         <meta name="author" content="Yanxin Xiang">
         <meta name="description" content="">
         <meta name="keywords" content="">
@@ -130,77 +130,101 @@
     </div>
 </nav>
 
-                <div id="archives">
-    
-    <div class="categories-tags">
-        
-        
-        <span>
-            <a href="/categories/Algorithm/" style="background: #00a596">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                Algorithm
-            </a>
+                <div class="article">
+    <div>
+        <h1>daily 2 </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/4/6
         </span>
         
         
-        
-        <span>
-            <a href="/categories/compiler/" style="background: #ff7d73">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                compiler
-            </a>
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/daily/" style="color: #00bcd4">daily</a>
+            </span>
+            
         </span>
-        
-        
-        
-        <span>
-            <a href="/categories/algorithm/" style="background: #03a9f4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                algorithm
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/categories/database/" style="background: #03a9f4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                database
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/categories/%E6%96%B0%E7%9A%84%E5%BC%80%E5%A7%8B/" style="background: #00bcd4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                -新的开始
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/categories/interview/" style="background: #00a596">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                interview
-            </a>
-        </span>
-        
         
     </div>
+    
+    <div class="content" v-pre>
+        <p>今天水了两题，明天终于要变正常了</p>
+<p>CF 349B</p>
+<p>构造题</p>
+<p>我们先把最大的位数给整出来，然后如果每次遍历剩下的位，如果能够达到对应的位数并且有多余的颜料那么接涂这个色</p>
+<pre><code class="lang-C++">void solve()&#123;
+  int v;cin&gt;&gt;v;
+  vector&lt;int&gt;a(10);
+  int minx=1e9;
+  for(int i=0;i&lt;9;++i)&#123;
+    cin&gt;&gt;a[i];
+    minx=min(a[i],minx);
+  &#125;
+  int cnt=v/minx;
+  if(!cnt)&#123;
+    cout&lt;&lt;-1&lt;&lt;&#39;\n&#39;;
+    return;
+  &#125;
+  while(cnt--)&#123;
+    int pick=-1;
+    for(int i=8;i&gt;=0;--i)&#123;
+        if((v-a[i])/minx==cnt&amp;&amp;v&gt;=a[i])&#123;
+            cout&lt;&lt;(i+1);
+            pick=i;
+            break;
+        &#125;
+    &#125;
+    v-=a[pick];
+  &#125;
+  return;
+&#125;
+</code></pre>
+<p>CF 351B</p>
+<p>概率dp</p>
+<p>${dp[i]}$表示消除i对逆序对所需的操作数</p>
+<p>${dp[i]=dp[i-2]<em>0.5+2+dp[i]</em>0.5}$</p>
+<pre><code class="lang-C++">void solve()&#123;
+  int n;
+  cin&gt;&gt;n;
+  vector&lt;int&gt;a(n);
+  for(int i=0;i&lt;n;++i)cin&gt;&gt;a[i];
+  int cnt=0;
+  for(int i=1;i&lt;n;++i)&#123;
+    for(int j=0;j&lt;i;++j)&#123;
+        if(a[j]&gt;a[i])&#123;
+            ++cnt;
+        &#125;
+    &#125;
+  &#125;
+  double ans=0;
+  if(cnt&amp;1)&#123;
+    ans=2*cnt-1;
+  &#125;else&#123;
+    ans=2*cnt;
+  &#125;
+  //dp[i]=0.5dp[i-2]+0.5*dp[i]+2;
+  printf(&quot;%.6f&quot;,ans);
+  return;
+&#125;
+</code></pre>
+
+    </div>
+    
+    
+    
+    
+    
+    
     
 </div>
 
@@ -227,6 +251,11 @@
         </div>
         <script src="/js/functions.js"></script>
 <script src="/js/particlex.js"></script>
+
+
+
+
+
 
 
     </body>

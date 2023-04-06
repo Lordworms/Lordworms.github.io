@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>分类 | Waiting for the dawn</title>
+        <title>daily 3 | Waiting for the dawn</title>
         <meta name="author" content="Yanxin Xiang">
         <meta name="description" content="">
         <meta name="keywords" content="">
@@ -130,77 +130,149 @@
     </div>
 </nav>
 
-                <div id="archives">
-    
-    <div class="categories-tags">
-        
-        
-        <span>
-            <a href="/categories/Algorithm/" style="background: #00a596">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                Algorithm
-            </a>
+                <div class="article">
+    <div>
+        <h1>daily 3 </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/4/1
         </span>
         
         
-        
-        <span>
-            <a href="/categories/compiler/" style="background: #ff7d73">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                compiler
-            </a>
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/daily/" style="color: #00a596">daily</a>
+            </span>
+            
         </span>
-        
-        
-        
-        <span>
-            <a href="/categories/algorithm/" style="background: #03a9f4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                algorithm
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/categories/database/" style="background: #03a9f4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                database
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/categories/%E6%96%B0%E7%9A%84%E5%BC%80%E5%A7%8B/" style="background: #00bcd4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                -新的开始
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/categories/interview/" style="background: #00a596">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                interview
-            </a>
-        </span>
-        
         
     </div>
+    
+    <div class="content" v-pre>
+        <p>CF 413C</p>
+<p>令 dp[i][0/1]表示当前总和为i，且含有/不含有 大于d的值</p>
+<p>那么对于枚举的边权j</p>
+<p>若j&gt;=d;</p>
+<p>${dp[i][1]+=dp[i-j][0]+dp[i-j][1]}$</p>
+<p>若j&lt;d</p>
+<p>${dp[i][0]+=dp[i-j][0]}$</p>
+<p>${dp[i][1]+=dp[i-j][1]}$</p>
+<pre><code class="lang-C++">ll dp[N][2];
+void solve()&#123;
+  int n,k,d;
+  cin&gt;&gt;n&gt;&gt;k&gt;&gt;d;
+  dp[0][0]=1;
+  for(int i=1;i&lt;=n;++i)&#123;
+    for(int j=1;j&lt;=k;++j)&#123;
+        if(i-j&lt;0)break;
+        if(j&gt;=d)&#123;
+            dp[i][1]=(dp[i][1]+(dp[i-j][0]+dp[i-j][1])%MOD)%MOD;
+        &#125;else&#123;
+            dp[i][0]=(dp[i][0]+(dp[i-j][0]))%MOD;
+            dp[i][1]=(dp[i][1]+dp[i-j][1])%MOD;
+        &#125;
+    &#125;
+  &#125;
+  cout&lt;&lt;dp[n][1]&lt;&lt;&#39;\n&#39;;
+  return;
+&#125;
+</code></pre>
+<p>CF 417D</p>
+<p>状态压缩</p>
+<p>首先装压很好想，之后就是这个买monitor的问题，我们可以按照monitor从少到多排序，然后每次更新ans的时候只和dp[(1&lt;&lt;m)-1]来比就ok了</p>
+<pre><code class="lang-C++">const int MOD=1e9+7;
+const ll INF=1100000020000000000;
+struct f&#123;
+    int x,k,sta;
+&#125;;
+void solve()&#123;
+  int n,m,b;
+  cin&gt;&gt;n&gt;&gt;m&gt;&gt;b;//number of friend number of problems and number of cost for a single monitor
+  vector&lt;f&gt;fri(n);
+  for(int i=0;i&lt;n;++i)&#123;
+    int xi,ki,mi;//money the friend needs,monitor needs and number of problem the friend could solve
+    cin&gt;&gt;xi&gt;&gt;ki&gt;&gt;mi;
+    int sta=0;
+    for(int j=0;j&lt;mi;++j)&#123;
+        int t;cin&gt;&gt;t;
+        --t;
+        sta|=(1&lt;&lt;t);
+    &#125;
+    fri[i]=&#123;xi,ki,sta&#125;;
+  &#125;
+  sort(fri.begin(),fri.end(),[&amp;](f a,f b)&#123;
+    return a.k&lt;b.k;
+  &#125;);
+  vector&lt;ll&gt;dp(1&lt;&lt;m,INF);
+  dp[0]=0;
+  ll ans=INF;
+  for(int i=0;i&lt;n;++i)&#123;
+    for(int j=0;j&lt;(1&lt;&lt;m);++j)&#123;
+        if(dp[j]&lt;INF)&#123;
+            dp[j|fri[i].sta]=min(dp[j|fri[i].sta],dp[j]+fri[i].x);
+        &#125;
+    &#125;
+    ans=min(ans,dp[(1&lt;&lt;m)-1]+1ll*fri[i].k*b);
+  &#125;
+  cout&lt;&lt;(ans&gt;=INF?-1:ans)&lt;&lt;&#39;\n&#39;;
+  return;
+&#125;
+</code></pre>
+<p>CF 11D<br>另一道装压<br>dp[sta][id]表示当前经过的点状态集合为sta，当前的点为id的情况<br>记得转移的时候要减去m，因为这m条边多算了（重边），然后二元以上的环会多算</p>
+<pre><code class="lang-C++">#define lowbit(x) (x&amp;-x)
+void solve()&#123;
+  int n,m;
+  cin&gt;&gt;n&gt;&gt;m;
+  vector&lt;vector&lt;ll&gt;&gt;dp(1ll&lt;&lt;n,vector&lt;ll&gt;(n));
+  vector&lt;vector&lt;int&gt;&gt;mp(n,vector&lt;int&gt;(n));
+  for(int i=0;i&lt;m;++i)&#123;
+    int u,v;
+    cin&gt;&gt;u&gt;&gt;v;
+    --u,--v;
+    mp[u][v]=mp[v][u]=1;
+  &#125;
+  ll ans=0;
+  for(int i=0;i&lt;n;++i)dp[1&lt;&lt;i][i]=1;
+  for(int sta=0;sta&lt;(1&lt;&lt;n);++sta)&#123;
+    for(int id=0;id&lt;n;++id)&#123;
+        if(!dp[sta][id])&#123;
+            continue;
+        &#125;
+        for(int k=0;k&lt;n;++k)&#123;
+            if(!mp[id][k])continue;
+            if(lowbit(sta)&gt;(1&lt;&lt;k))continue;
+            if(1&lt;&lt;k&amp;sta)&#123;
+                if(1&lt;&lt;k==lowbit(sta))&#123;
+                    ans+=dp[sta][id];
+                &#125;
+            &#125;else&#123;
+                dp[sta|(1&lt;&lt;k)][k]+=dp[sta][id];// if did not run on it then walk!
+            &#125;
+        &#125;
+    &#125;
+  &#125; 
+  cout&lt;&lt;((ans-m)&gt;&gt;1)&lt;&lt;&#39;\n&#39;;//minus the common road 
+  return;
+&#125;
+</code></pre>
+<p>感觉有点懒散了，不能酱紫了，待会跑一跑miniob,然后明天估计得看一下设计模式</p>
+
+    </div>
+    
+    
+    
+    
+    
+    
     
 </div>
 
@@ -227,6 +299,11 @@
         </div>
         <script src="/js/functions.js"></script>
 <script src="/js/particlex.js"></script>
+
+
+
+
+
 
 
     </body>

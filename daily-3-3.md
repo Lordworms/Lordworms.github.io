@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>分类 | Waiting for the dawn</title>
+        <title>daily 3 | Waiting for the dawn</title>
         <meta name="author" content="Yanxin Xiang">
         <meta name="description" content="">
         <meta name="keywords" content="">
@@ -130,77 +130,154 @@
     </div>
 </nav>
 
-                <div id="archives">
-    
-    <div class="categories-tags">
-        
-        
-        <span>
-            <a href="/categories/Algorithm/" style="background: #00a596">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                Algorithm
-            </a>
+                <div class="article">
+    <div>
+        <h1>daily 3 </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/3/18
         </span>
         
         
-        
-        <span>
-            <a href="/categories/compiler/" style="background: #ff7d73">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                compiler
-            </a>
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/daily/" style="color: #ffa2c4">daily</a>
+            </span>
+            
         </span>
-        
-        
-        
-        <span>
-            <a href="/categories/algorithm/" style="background: #03a9f4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                algorithm
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/categories/database/" style="background: #03a9f4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                database
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/categories/%E6%96%B0%E7%9A%84%E5%BC%80%E5%A7%8B/" style="background: #00bcd4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                -新的开始
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/categories/interview/" style="background: #00a596">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                interview
-            </a>
-        </span>
-        
         
     </div>
+    
+    <div class="content" v-pre>
+        <p>CF 1490F</p>
+<p>大水题，记录一下每个值出现的次数，然后再记录每个次数出现的次数，之后用map存下来遍历即可</p>
+<pre><code class="lang-C++">void solve()&#123;
+  int n;cin&gt;&gt;n;
+  map&lt;int,int,greater&lt;int&gt;&gt;mp1,mp2;
+  for(int i=0;i&lt;n;++i)&#123;
+    int x;cin&gt;&gt;x;
+    mp1[x]++;
+  &#125;
+  for(auto&amp; k:mp1)&#123;
+    mp2[k.second]++;
+  &#125;
+  int ans=0x3f3f3f3f;
+  for(auto &amp;k1:mp2)&#123;
+    int i=k1.first;
+    int tmp=0;
+    for(auto&amp; k2:mp2)&#123;
+        int j=k2.first;
+        if(i==j)continue;
+        tmp+=k1.first&gt;k2.first?k2.second*k2.first:(k2.first-k1.first)*k2.second;
+    &#125;
+    ans=min(ans,tmp);
+  &#125;
+  cout&lt;&lt;ans&lt;&lt;&#39;\n&#39;;
+  return;
+&#125;
+</code></pre>
+<p>CF 1491C</p>
+<p>差分题，首先我们可以知道，对于每一次操作来说，他都会影响之后(i+2,min(n,i+s[i]))区域内的值，那么我们对于区间的修改，就用差分就可以了</p>
+<p>需要注意的是一个点最多到1，那么如果修改的值大于了本来的值，那么i+1的点需要替它承受多出来的操作数</p>
+<pre><code class="lang-C++">void solve()&#123;
+  int n;cin&gt;&gt;n;
+  vector&lt;int&gt;s(n+1),cnt(n+2),b(n+2);
+  for(int i=1;i&lt;=n;++i)&#123;
+    cin&gt;&gt;s[i];
+    int l=i+2,r=min(n,i+s[i]);
+    if(l&lt;=r)&#123;
+        cnt[l]++;cnt[r+1]--;
+    &#125;
+  &#125;
+  for(int i=1;i&lt;=n;++i)&#123;
+    b[i]=b[i-1]+cnt[i];
+  &#125;
+  for(int i=1;i&lt;=n;++i)&#123;
+    if(b[i]&gt;=s[i])&#123;
+        b[i+1]+=(b[i]-s[i]+1);//since right now it only effect i+1
+    &#125;
+  &#125;
+  int ans=0;
+  for(int i=1;i&lt;=n;++i)&#123;
+    ans+=max(0ll,s[i]-b[i]-1);
+  &#125;
+  cout&lt;&lt;ans&lt;&lt;&#39;\n&#39;;
+  return;
+&#125;
+</code></pre>
+<p>CF 1487E</p>
+<p>multiset的题目</p>
+<p>对于每一种禁忌，存下来，每次我们遍历multiset，然后对每一种物品把其不能共存的值给erase掉，然后再加上begin的值就好了，注意最后判定一下有没有超范围</p>
+<pre><code class="lang-C++">void solve()&#123;
+  vector&lt;int&gt;n(5);
+  vector&lt;int&gt;m(5);
+  vector&lt;vector&lt;ll&gt;&gt;dish(5,vector&lt;ll&gt;());
+  vector E(5,vector&lt;vector&lt;int&gt;&gt;());
+  for(int i=1;i&lt;=4;++i)&#123;
+    cin&gt;&gt;n[i];
+  &#125;
+  for(int i=1;i&lt;=4;++i)&#123;
+    dish[i].resize(n[i]+1);
+    for(int j=1;j&lt;dish[i].size();++j)&#123;
+        cin&gt;&gt;dish[i][j];
+    &#125;
+  &#125;
+  for(int i=2;i&lt;=4;++i)&#123;
+    cin&gt;&gt;m[i];
+    E[i].resize(n[i]+1);
+    for(int j=0;j&lt;m[i];++j)&#123;
+        int x,y;cin&gt;&gt;x&gt;&gt;y;
+        E[i][y].push_back(x);
+    &#125;
+  &#125;
+  vector&lt;multiset&lt;ll&gt;&gt;st(6);
+  for(int i=1;i&lt;=n[1];++i)&#123;
+    st[2].insert(dish[1][i]);
+  &#125;
+  for(int i=2;i&lt;=4;++i)&#123;
+    for(int j=1;j&lt;=n[i];++j)&#123;
+        for(int v:E[i][j])&#123;
+            st[i].erase(st[i].find(dish[i-1][v]));
+        &#125;
+        if(!st[i].empty())&#123;
+            dish[i][j]+=*st[i].begin();
+        &#125;
+        else&#123;
+            dish[i][j]=1e13;
+        &#125;
+        st[i+1].insert(dish[i][j]);
+        for(int v:E[i][j])&#123;
+            st[i].insert(dish[i-1][v]);
+        &#125;
+    &#125;
+  &#125;
+  if(!st[5].empty()&amp;&amp;*st[5].begin()&lt;1e13)&#123;
+    cout&lt;&lt;*st[5].begin()&lt;&lt;&#39;\n&#39;;
+  &#125;
+  else&#123;
+    cout&lt;&lt;-1&lt;&lt;&#39;\n&#39;;
+  &#125;
+  return;
+&#125;
+</code></pre>
+<p>感觉这样刷下去不行，不太在状态，明天还是按专题刷了，先数据结构吧，干脆就从差分刷起，然后每个专题持续三天，酱紫比较好感觉</p>
+
+    </div>
+    
+    
+    
+    
+    
+    
     
 </div>
 
@@ -227,6 +304,11 @@
         </div>
         <script src="/js/functions.js"></script>
 <script src="/js/particlex.js"></script>
+
+
+
+
+
 
 
     </body>

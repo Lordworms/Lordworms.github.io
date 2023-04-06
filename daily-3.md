@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>分类 | Waiting for the dawn</title>
+        <title>daily 3 | Waiting for the dawn</title>
         <meta name="author" content="Yanxin Xiang">
         <meta name="description" content="">
         <meta name="keywords" content="">
@@ -130,77 +130,150 @@
     </div>
 </nav>
 
-                <div id="archives">
-    
-    <div class="categories-tags">
-        
-        
-        <span>
-            <a href="/categories/Algorithm/" style="background: #00a596">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                Algorithm
-            </a>
+                <div class="article">
+    <div>
+        <h1>daily 3 </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/3/17
         </span>
         
         
-        
-        <span>
-            <a href="/categories/compiler/" style="background: #ff7d73">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                compiler
-            </a>
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/daily/" style="color: #ffa2c4">daily</a>
+            </span>
+            
         </span>
-        
-        
-        
-        <span>
-            <a href="/categories/algorithm/" style="background: #03a9f4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                algorithm
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/categories/database/" style="background: #03a9f4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                database
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/categories/%E6%96%B0%E7%9A%84%E5%BC%80%E5%A7%8B/" style="background: #00bcd4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                -新的开始
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/categories/interview/" style="background: #00a596">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                interview
-            </a>
-        </span>
-        
         
     </div>
+    
+    <div class="content" v-pre>
+        <p>CF 722C</p>
+<p>区间并查集，对于某个点来说，如果他左侧/右侧的点已经被加入集合中去了，那么就把该点的值加入对应的集合，我们倒着进行添加即可</p>
+<pre><code class="lang-C++">vector&lt;int&gt;fa;
+vector&lt;ll&gt;sum;
+int find(int x)&#123;
+  return fa[x]==x?x:fa[x]=find(fa[x]);
+&#125;
+void merge(int x,int y)&#123;
+  int fx=find(x),fy=find(y);
+  if(fx==fy)return;
+  sum[fx]+=sum[fy];
+  fa[fy]=fx;
+&#125;
+void solve()&#123;
+  int n;cin&gt;&gt;n;
+  fa.resize(n+1);
+  sum.resize(n+1);
+  iota(fa.begin(),fa.end(),0);
+  vector&lt;int&gt;ord(n+1),vis(n+2);
+  for(int i=1;i&lt;=n;++i)cin&gt;&gt;sum[i];
+  for(int i=1;i&lt;=n;++i)cin&gt;&gt;ord[i];
+  vector&lt;ll&gt;ans(n+1);
+  ll res=0;
+  for(int i=n;i&gt;=1;--i)&#123;
+    ans[i]=res;
+    if(vis[ord[i]-1])&#123;
+      merge(ord[i]-1,ord[i]);
+    &#125;
+    if(vis[ord[i]+1])&#123;
+      merge(ord[i]+1,ord[i]);
+    &#125;
+    int f=find(ord[i]);
+    res=max(res,sum[find(ord[i])]);
+    vis[ord[i]]=1;
+  &#125;
+  for(int i=1;i&lt;=n;++i)&#123;
+    cout&lt;&lt;ans[i]&lt;&lt;&quot;\n&quot;;
+  &#125;
+  return;
+&#125;
+</code></pre>
+<p>CF 731F</p>
+<p>后缀和好题,我们知道，对于某个落在 [k<em>a[i],(k+1) \</em> a[i]的数，最终取值是k*a[i]，那么我们对后缀取后缀和，然后每一段进行计算，注意不要重复计算，标记vis数组即可</p>
+<pre><code class="lang-C++">void solve()&#123;
+  int n;
+  cin&gt;&gt;n;
+  vector&lt;int&gt;a(n+1);
+  vector&lt;ll&gt;sum(MAXN),vis(sum);
+  for(int i=1;i&lt;=n;++i)&#123;
+    cin&gt;&gt;a[i];
+    sum[a[i]]++;
+  &#125;
+  sort(a.begin()+1,a.end());
+  for(int i=a[n]-1;i&gt;=0;--i)&#123;
+    sum[i]+=sum[i+1];
+  &#125;
+  ll ans=0;
+  for(int i=1;i&lt;=n;++i)&#123;
+    if(vis[a[i]])continue;
+    ll res=0;
+    int cnt=1;
+    for(int j=a[i];j&lt;=a[n];j+=a[i])&#123;
+      res+=sum[j]*a[i];
+      vis[j]=1;
+    &#125;
+    ans=max(ans,res);
+    vis[a[i]]=1;
+  &#125;
+  cout&lt;&lt;ans&lt;&lt;&#39;\n&#39;;
+  return;
+&#125;
+</code></pre>
+<p>CF 721D</p>
+<p>不会做，看了题解发现是低能题<br>首先我们可以证明，对绝对值比较小的数进行操作比较好(这里就不证明了，很sb)<br>然后我们拿个set存数就好了</p>
+<pre><code class="lang-C++">using pii=pair&lt;ll,int&gt;;
+void solve()&#123;
+  int n,k,x;
+  cin&gt;&gt;n&gt;&gt;k&gt;&gt;x;
+  vector&lt;ll&gt;a(n+1);
+  bool sign=false;
+  set&lt;pii&gt;st;
+  for(int i=1;i&lt;=n;++i)&#123;
+    cin&gt;&gt;a[i];
+    if(a[i]&lt;0)&#123;
+        sign=!sign;
+    &#125;
+    st.insert(&#123;abs(a[i]),i&#125;);
+  &#125;
+  for(int i=1;i&lt;=k;++i)&#123;
+    auto id=st.begin()-&gt;second;
+    st.erase(st.begin());
+    if(a[id]&lt;0)sign=!sign;
+    if(sign)&#123;
+        a[id]+=x;
+    &#125;
+    else
+    &#123;
+        a[id]-=x;
+    &#125;
+    if(a[id]&lt;0)sign=!sign;
+    st.insert(&#123;abs(a[id]),id&#125;);
+  &#125;
+  for(int i=1;i&lt;=n;++i)&#123;
+    cout&lt;&lt;a[i]&lt;&lt;&quot; \n&quot;[i==n];
+  &#125;
+  return;
+&#125;
+</code></pre>
+
+    </div>
+    
+    
+    
+    
+    
+    
     
 </div>
 
@@ -227,6 +300,11 @@
         </div>
         <script src="/js/functions.js"></script>
 <script src="/js/particlex.js"></script>
+
+
+
+
+
 
 
     </body>

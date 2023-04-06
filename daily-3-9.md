@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>分类 | Waiting for the dawn</title>
+        <title>daily 3 | Waiting for the dawn</title>
         <meta name="author" content="Yanxin Xiang">
         <meta name="description" content="">
         <meta name="keywords" content="">
@@ -130,77 +130,164 @@
     </div>
 </nav>
 
-                <div id="archives">
-    
-    <div class="categories-tags">
-        
-        
-        <span>
-            <a href="/categories/Algorithm/" style="background: #00a596">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                Algorithm
-            </a>
+                <div class="article">
+    <div>
+        <h1>daily 3 </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/4/2
         </span>
         
         
-        
-        <span>
-            <a href="/categories/compiler/" style="background: #ff7d73">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                compiler
-            </a>
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/daily/" style="color: #ffa2c4">daily</a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/Codeforces/" style="color: #03a9f4">Codeforces</a>
+            </span>
+            
         </span>
-        
-        
-        
-        <span>
-            <a href="/categories/algorithm/" style="background: #03a9f4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                algorithm
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/categories/database/" style="background: #03a9f4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                database
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/categories/%E6%96%B0%E7%9A%84%E5%BC%80%E5%A7%8B/" style="background: #00bcd4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                -新的开始
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/categories/interview/" style="background: #00a596">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                interview
-            </a>
-        </span>
-        
         
     </div>
+    
+    <div class="content" v-pre>
+        <p>今天数位dp主场惹</p>
+<p>CF 1051D</p>
+<p>常见的范围dp，思想比较简单</p>
+<p>$dp[i][j][0/1]$表示当前是第i列，然后有j组，当前列两个方块颜色相同/不同</p>
+<p>那么转移方程很好写</p>
+<p>$dp[i][j][0]=(dp[i-1][j-1][0]+dp[i-1][j][0]+2*dp[i-1][j][1])$</p>
+<p>$dp[i][j][1]=(2*dp[i-1][j-1][0]+dp[i-1][j][1]+dp[i-1][j-2][1])$</p>
+<pre><code class="lang-C++">ll dp[N][2*N][2];//0 means equal 1 means not equal
+void solve()&#123;
+  int n,k;
+  cin&gt;&gt;n&gt;&gt;k;
+  int cur,nxt;
+  dp[1][1][0]=dp[1][2][1]=2;
+  for(int i=2;i&lt;=n;++i)&#123;
+    for(int j=1;j&lt;=k;++j)&#123;
+        if(j==1)&#123;
+            dp[i][j][0]=2;
+        &#125;else&#123;
+            dp[i][j][0]=(dp[i-1][j-1][0]+2*dp[i-1][j][1]+dp[i-1][j][0])%MOD;
+            dp[i][j][1]=(dp[i-1][j][1]+dp[i-1][j-2][1]+2*dp[i-1][j-1][0])%MOD;
+        &#125;
+    &#125;
+  &#125;
+  cout&lt;&lt;(dp[n][k][0]+dp[n][k][1])%MOD&lt;&lt;&#39;\n&#39;;
+  return;
+&#125;
+</code></pre>
+<p>CF 855E<br>dp[base][pos][sta]表示当前的的基数下，当前遍历到第pos位，之前的情况是sta</p>
+<p>那么转移很正常，就按数位dp的板子套一哈就好了</p>
+<pre><code class="lang-C++">ll dp[11][70][1024];
+void solve()&#123;
+  int q;
+  cin&gt;&gt;q;
+  int base;
+  memset(dp,-1,sizeof(dp));
+  vector&lt;int&gt;num(70);
+  function&lt;ll(int,int,int,int)&gt;dfs=[&amp;](int pos,int sta,int lead,int flag)&#123;
+    if(!pos)return (ll)!sta;
+    if(!lead&amp;&amp;!flag&amp;&amp;dp[base][pos][sta]!=-1)&#123;
+        return dp[base][pos][sta];
+    &#125;
+    ll res=0;
+    int lim=flag?num[pos]:base-1;
+    for(int i=0;i&lt;=lim;++i)&#123;
+        res+=dfs(pos-1,(lead&amp;&amp;!i)?0:(sta^(1&lt;&lt;i)),lead&amp;&amp;(!i),flag&amp;&amp;(i==(lim)));
+    &#125;
+    if(!lead&amp;&amp;!flag)&#123;
+        dp[base][pos][sta]=res;
+    &#125;
+    return res;
+  &#125;;
+  ll l,r;
+  function&lt;ll(ll)&gt;get=[&amp;](ll x)&#123;
+    int pos=0;
+    while(x)&#123;
+        num[++pos]=x%base;
+        x/=base;
+    &#125;
+    return dfs(pos,0,1,1);
+  &#125;;
+  while(q--)&#123;
+    cin&gt;&gt;base&gt;&gt;l&gt;&gt;r;
+    ll right=get(r),left=get(l-1);
+    cout&lt;&lt;get(r)-get(l-1)&lt;&lt;&#39;\n&#39;;
+  &#125;
+  return;
+&#125;
+</code></pre>
+<p>CF 55D<br>首先1-9的乘积为2520，然后对于一个数A，你等价于A%2520</p>
+<p>之后你还需要存一哈mod的值，注意到2520的因数只有48个，那么就搞这48个就吼了（只有这48个满足情况）</p>
+<pre><code class="lang-C++">ll dp[50][N+1][50];
+ll gcd(ll a,ll b)&#123;
+    return b?a:gcd(b,a%b);
+&#125;
+void solve()&#123;
+  int t;cin&gt;&gt;t;
+  memset(dp,-1,sizeof(dp));
+  vector&lt;int&gt;mp(N+1);
+  int cnt=0;
+  for(int i=1;i&lt;=N;++i)&#123;
+    if(2520%i==0)&#123;
+        mp[i]=++cnt;
+    &#125;
+  &#125;
+  vector&lt;int&gt;num(50);
+  function&lt;ll(int,int,int,int)&gt;dfs=[&amp;](int pos,int pre,int mod,int flag)&#123;
+    if(!pos)return (ll)(pre%mod==0);
+    if(!flag&amp;&amp;dp[pos][pre][mp[mod]]!=-1)&#123;
+        return dp[pos][pre][mp[mod]];
+    &#125;
+    ll res=0;
+    int lim=flag?num[pos]:9;
+    for(int i=0;i&lt;=lim;++i)&#123;
+        res+=dfs(pos-1,(pre*10+i)%N,i==0?mod:mod*i/gcd(mod,i),flag&amp;&amp;(i==lim));
+    &#125;
+    if(!flag)&#123;
+        dp[pos][pre][mp[mod]]=res;
+    &#125;
+    return res;
+  &#125;;
+  function&lt;ll(ll)&gt;get=[&amp;](ll x)&#123;
+    int pos=0;
+    while(x)&#123;
+        num[++pos]=x%10;
+        x/=10;
+    &#125;
+    return dfs(pos,0,1,1);
+  &#125;;    
+  while(t--)&#123;
+    ll l,r;
+    cin&gt;&gt;l&gt;&gt;r;
+    cout&lt;&lt;get(r)-get(l-1)&lt;&lt;&#39;\n&#39;;
+  &#125;
+  return;
+&#125;
+</code></pre>
+<p>明天三面阿里了，有点紧脏。啊啊啊啊，干巴爹</p>
+
+    </div>
+    
+    
+    
+    
+    
+    
     
 </div>
 
@@ -227,6 +314,11 @@
         </div>
         <script src="/js/functions.js"></script>
 <script src="/js/particlex.js"></script>
+
+
+
+
+
 
 
     </body>

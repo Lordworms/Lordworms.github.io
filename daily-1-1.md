@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>分类 | Waiting for the dawn</title>
+        <title>daily 1 | Waiting for the dawn</title>
         <meta name="author" content="Yanxin Xiang">
         <meta name="description" content="">
         <meta name="keywords" content="">
@@ -130,77 +130,101 @@
     </div>
 </nav>
 
-                <div id="archives">
-    
-    <div class="categories-tags">
-        
-        
-        <span>
-            <a href="/categories/Algorithm/" style="background: #00a596">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                Algorithm
-            </a>
+                <div class="article">
+    <div>
+        <h1>daily 1 </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/3/23
         </span>
         
         
-        
-        <span>
-            <a href="/categories/compiler/" style="background: #ff7d73">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                compiler
-            </a>
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/daily/" style="color: #00a596">daily</a>
+            </span>
+            
         </span>
-        
-        
-        
-        <span>
-            <a href="/categories/algorithm/" style="background: #03a9f4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                algorithm
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/categories/database/" style="background: #03a9f4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                database
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/categories/%E6%96%B0%E7%9A%84%E5%BC%80%E5%A7%8B/" style="background: #00bcd4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                -新的开始
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/categories/interview/" style="background: #00a596">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                interview
-            </a>
-        </span>
-        
         
     </div>
+    
+    <div class="content" v-pre>
+        <p>CF 540E</p>
+<p>树状数组+离散化+思维</p>
+<p>首先如果交换序列之间没有数，那么就很好求，现在我们考虑不属于交换序列内的数</p>
+<p>我们假定当前位置为i，p[i]为该位置一开始的位置 f[i]为离散化后i的值</p>
+<p>那么我们先加上交换序列的逆序对</p>
+<p>然后加上之间数的逆序对,再减去交换序列里的逆序对</p>
+<p>abs(f[i]-f[p[i]])+1-(abs(i-p[i])+1)</p>
+<p>然后就ok了</p>
+<pre><code class="lang-C++">#define lowbit(x) x&amp;-x
+void solve()&#123;
+  int n;cin&gt;&gt;n;
+  vector&lt;int&gt;l(n+1),r(n+1),pre_pos,pre_value;
+  map&lt;int,int&gt;mp;
+  for(int i=1;i&lt;=n;++i)&#123;
+    cin&gt;&gt;l[i]&gt;&gt;r[i];
+    mp[l[i]]=0;
+    mp[r[i]]=0;
+  &#125;
+  int cnt=0;
+  pre_pos.push_back(0);
+  pre_value.push_back(0);
+  for(auto&amp; k:mp)&#123;
+    k.second=++cnt;
+    pre_pos.push_back(cnt);
+    pre_value.push_back(k.first);
+  &#125;
+  vector&lt;int&gt;tree(cnt+1);
+  for(int i=1;i&lt;=n;++i)&#123;
+    l[i]=mp[l[i]];
+    r[i]=mp[r[i]];
+  &#125;
+  auto add=[&amp;](int x,int v)&#123;
+    while(x&lt;=cnt)&#123;
+        tree[x]+=v;
+        x+=lowbit(x);
+    &#125;
+  &#125;;
+  auto sum=[&amp;](int x)&#123;
+    ll ans=0;
+    while(x)&#123;
+        ans+=tree[x];
+        x-=lowbit(x);
+    &#125;
+    return ans;
+  &#125;;
+  for(int i=1;i&lt;=n;++i)&#123;
+    swap(pre_pos[l[i]],pre_pos[r[i]]);
+  &#125;
+  ll ans=0;
+  for(int i=1;i&lt;=cnt;++i)&#123;
+    add(pre_pos[i],1);
+    ans+=i-sum(pre_pos[i]);
+    ans+=(abs(pre_value[i]-pre_value[pre_pos[i]])-abs(i-pre_pos[i]));
+  &#125;
+  cout&lt;&lt;ans&lt;&lt;&#39;\n&#39;;
+  return;
+&#125;
+</code></pre>
+<p>下午做点某讯的面试题吧，今天上午面了tx一面，感觉还挺好的</p>
+
+    </div>
+    
+    
+    
+    
+    
+    
     
 </div>
 
@@ -227,6 +251,11 @@
         </div>
         <script src="/js/functions.js"></script>
 <script src="/js/particlex.js"></script>
+
+
+
+
+
 
 
     </body>

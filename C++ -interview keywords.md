@@ -1,0 +1,655 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>C++ interview- key words part | Waiting for the dawn</title>
+        <meta name="author" content="Yanxin Xiang">
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+        <link rel="icon" href="https://i.ibb.co/sszdSW8/IMG-2691.jpg">
+        <script src="https://cdn.staticfile.org/vue/3.2.45/vue.global.prod.min.js"></script>
+        <script src="https://cdn.staticfile.org/highlight.js/11.7.0/highlight.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/11.7.0/styles/github.min.css">
+        <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/6.2.1/css/all.min.css">
+        
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+        
+        
+        <script src="https://cdn.staticfile.org/KaTeX/0.16.4/katex.min.js"></script>
+        <script src="https://cdn.staticfile.org/KaTeX/0.16.4/contrib/auto-render.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.staticfile.org/KaTeX/0.16.4/katex.min.css">
+        
+        
+        <link rel="stylesheet" href="/css/fonts.min.css">
+        <link rel="stylesheet" href="/css/particlex.css">
+    <meta name="generator" content="Hexo 6.3.0"></head>
+    <body>
+        <div id="loading" style="height: 100vh; width: 100vw; left: 0; top: 0; position: fixed; display: flex; z-index: 2147483647; background: #fff; transition: opacity 0.3s ease-out; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; pointer-events: none">
+    <div style="width: 50vmin; height: 50vmin; margin: auto; padding: 50px; border-radius: 50%; display: flex; border: solid 10px #a3ddfb">
+        <div style="margin: auto; text-align: center">
+            <h2>LOADING</h2>
+            <p>加载过慢请开启缓存，浏览器默认开启</p>
+            <img src="/images/loading.gif" style="height: 50px; border-radius: 0">
+        </div>
+    </div>
+</div>
+
+        <div id="layout">
+            <transition name="into">
+            <div id="main" v-show="showpage" style="display: -not-none">
+                <nav id="menu">
+    <div class="desktop-menu">
+        <a class="title" href="/">
+            <span>WAITING FOR THE DAWN</span>
+        </a>
+        
+        <a href="/">
+            <i class="fa-solid fa-house fa-fw"></i>
+            <span>&ensp;Home</span>
+        </a>
+        
+        <a href="/about">
+            <i class="fa-solid fa-id-card fa-fw"></i>
+            <span>&ensp;About</span>
+        </a>
+        
+        <a href="/archives">
+            <i class="fa-solid fa-box-archive fa-fw"></i>
+            <span>&ensp;Archives</span>
+        </a>
+        
+        <a href="/categories">
+            <i class="fa-solid fa-bookmark fa-fw"></i>
+            <span>&ensp;Categories</span>
+        </a>
+        
+        <a href="/tags">
+            <i class="fa-solid fa-tags fa-fw"></i>
+            <span>&ensp;Tags</span>
+        </a>
+        
+    </div>
+    <div :class="&quot;phone-menu &quot; + menushow" id="phone-menu">
+        <div class="curtain" @click="menushow = !menushow" v-show="menushow"></div>
+        <div class="title" @click="menushow = !menushow">
+            <i class="fa-solid fa-bars fa-fw"></i>
+            <span>&emsp;WAITING FOR THE DAWN</span>
+        </div>
+        <transition name="slide">
+        <div class="items" v-show="menushow">
+            
+            <a href="/">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-house fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Home</div>
+                </div>
+            </a>
+            
+            <a href="/about">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-id-card fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">About</div>
+                </div>
+            </a>
+            
+            <a href="/archives">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-box-archive fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Archives</div>
+                </div>
+            </a>
+            
+            <a href="/categories">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-bookmark fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Categories</div>
+                </div>
+            </a>
+            
+            <a href="/tags">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-tags fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Tags</div>
+                </div>
+            </a>
+            
+        </div>
+        </transition>
+    </div>
+</nav>
+
+                <div class="article">
+    <div>
+        <h1>C++ interview- key words part </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/3/16
+        </span>
+        
+        
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/interview/" style="color: #ff7d73">interview</a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/C/" style="color: #ffa2c4">C++</a>
+            </span>
+            
+        </span>
+        
+    </div>
+    
+    <div class="content" v-pre>
+        <p>reference from (<a target="_blank" rel="noopener" href="https://github.com/imarvinle/interview-1#cc">https://github.com/imarvinle/interview-1#cc</a>)</p>
+<h1 id="关键字以及影响"><a href="#关键字以及影响" class="headerlink" title="关键字以及影响"></a>关键字以及影响</h1><h2 id="const"><a href="#const" class="headerlink" title="const"></a>const</h2><h3 id="1-const-修饰变量-指针-常量引用-成员函数"><a href="#1-const-修饰变量-指针-常量引用-成员函数" class="headerlink" title="1.const 修饰变量/指针/常量引用/成员函数"></a>1.const 修饰变量/指针/常量引用/成员函数</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>修饰变量</td>
+<td>该变量不可被修改</td>
+</tr>
+<tr>
+<td>修饰指针+指针常量</td>
+<td>常量</td>
+</tr>
+<tr>
+<td>修饰指针+常量指针</td>
+<td>同1</td>
+</tr>
+<tr>
+<td>修饰引用</td>
+<td>避免copy和对值的修改(预编译前查看）</td>
+</tr>
+<tr>
+<td>修饰成员函数</td>
+<td>不允许修改成员变量（预编译前查看）</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="2-static"><a href="#2-static" class="headerlink" title="2.static"></a>2.static</h3><p>先来复习一下进程的分区<br><img src="https://img-blog.csdn.net/20180209135339250?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxNDQ3MDM2MQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>作用</th>
+<th>对应操作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>修饰普通变量</td>
+<td>该变量放置在静态区</td>
+<td>在main函数前分配空间并用对应值初始化</td>
+</tr>
+<tr>
+<td>修饰普通函数</td>
+<td>该函数仅在对应文件内可用</td>
+<td>防止多人开发时函数重名</td>
+</tr>
+<tr>
+<td>修饰成员变量</td>
+<td>所有成员共享一个对应变量</td>
+<td>必须在类外初始化</td>
+</tr>
+<tr>
+<td>修饰成员函数</td>
+<td>不需要对象就可以访问该函数</td>
+<td>在static函数内无法访问非静态成员</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="3-this指针"><a href="#3-this指针" class="headerlink" title="3.this指针"></a>3.this指针</h3><p>1.this不是一个常规变量，不能取得this的地址,存在栈上</p>
+<h3 id="4-inline"><a href="#4-inline" class="headerlink" title="4.inline"></a>4.inline</h3><pre><code>clang -emit-llvm -S inline_test.cpp -o inline_test.ll
+</code></pre><p>1.相当于LLVM中间层里的inline操作，直接把对应函数的函数体粘贴到调用的地方<br>2.和宏相比,多了类型检查<br>3.不能包含循环/递归/switch(亲测C20已经可以switch,递归，循环了)<br>4.在类声明中定义的函数，除了虚函数的其他函数都会自动隐式地当成内联函数。</p>
+<p>编译器对 inline 函数的处理步骤<br>1.将 inline 函数体复制到 inline 函数调用点处；<br>2.为所用 inline 函数中的局部变量分配内存空间；<br>3.将 inline 函数的的输入参数和返回值映射到调用方法的局部变量空间中；<br>4.如果 inline 函数有多个返回点，将其转变为 inline 函数代码块末尾的分支（使用 GOTO）。</p>
+<p>优缺点<br>优点</p>
+<p>1.内联函数同宏函数一样将在被调用处进行代码展开，省去了参数压栈、栈帧开辟与回收，结果返回等，从而提高程序运行速度。</p>
+<p>2.内联函数相比宏函数来说，在代码展开时，会做安全检查或自动类型转换（同普通函数），而宏定义则不会。</p>
+<p>3.在类中声明同时定义的成员函数，自动转化为内联函数，因此内联函数可以访问类的成员变量，宏定义则不能。</p>
+<p>4.内联函数在运行时可调试，而宏定义不可以。<br>缺点</p>
+<p>1.代码膨胀。内联是以代码膨胀（复制）为代价，消除函数调用带来的开销。如果执行函数体内代码的时间，相比于函数调用的开销较大，那么效率的收获会很少。另一方面，每一处内联函数的调用都要复制代码，将使程序的总代码量增大，消耗更多的内存空间。</p>
+<p>2.inline 函数无法随着函数库升级而升级。inline函数的改变需要重新编译，不像 non-inline 可以直接链接。</p>
+<p>3.<font color="red">是否内联，程序员不可控。内联函数只是对编译器的建议，是否对函数内联，决定权在于编译器。</font></p>
+<p>$Q:虚函数可以是inline吗$<br>A:<br>1.虚函数可以是内联函数，内联是可以修饰虚函数的，但是当虚函数表现多态性的时候不能内联。<br>2.内联是在编译器建议编译器内联，而虚函数的多态性在运行期，编译器无法知道运行期调用哪个代码，因此虚函数表现为多态性时（运行期）不可以内联。<br>3.inline virtual 唯一可以内联的时候是：编译器知道所调用的对象是哪个类（如 Base::who()），这只有在编译器具有实际对象而不是对象的指针或引用时才会发生。</p>
+<h3 id="5-sizeof"><a href="#5-sizeof" class="headerlink" title="5. sizeof"></a>5. sizeof</h3><p>返回字节数<br>char:1</p>
+<p>int:4</p>
+<p>汉字:3</p>
+<h3 id="6-volatile"><a href="#6-volatile" class="headerlink" title="6. volatile"></a>6. volatile</h3><p>表示不允许编译器对该变量进行寄存器优化，每次必须从内存取出值<br>const 可以是 volatile （如只读的状态寄存器）</p>
+<p>指针可以是 volatile</p>
+<h3 id="7-extern-“C”"><a href="#7-extern-“C”" class="headerlink" title="7. extern “C”"></a>7. extern “C”</h3><p>extern “C” 的作用是让 C++ 编译器将 extern “C” 声明的代码当作 C 语言代码处理，可以避免 C++ 因符号修饰导致代码不能和C语言库中的符号进行链接的问题。</p>
+<pre><code class="lang-C++">#ifdef __cplusplus
+extern &quot;C&quot; &#123;
+#endif
+
+void *memset(void *, int, size_t);
+
+#ifdef __cplusplus
+&#125;
+#endif
+</code></pre>
+<h3 id="8-struct-和-class"><a href="#8-struct-和-class" class="headerlink" title="8. struct 和 class"></a>8. struct 和 class</h3><p>总的来说，struct 更适合看成是一个数据结构的实现体，class 更适合看成是一个对象的实现体。</p>
+<p>最本质的一个区别就是默认的访问控制<br>1.默认的继承访问权限。struct 是 public 的，class 是 private 的。<br>2.struct 作为数据结构的实现体，它默认的数据访问控制是 public 的，而 class 作为对象的实现体，它默认的成员变量访问控制是 private 的。</p>
+<h3 id="9-union"><a href="#9-union" class="headerlink" title="9.union"></a>9.union</h3><p>1.匿名 union 在定义所在作用域可直接访问 union 成员<br>2.匿名 union 不能包含 protected 成员或 private 成员<br>3.全局匿名联合必须是静态（static）的</p>
+<pre><code class="lang-C++">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+template&lt;typename T&gt;
+union bits&#123;
+    T value;
+    bitset&lt;sizeof(T)*8&gt;bit;
+    bits(T v):value(v)&#123;&#125;
+&#125;;
+int main()&#123;
+  ios::sync_with_stdio(false);
+  cin.tie(nullptr);
+  bits&lt;int&gt;test(4);
+  cout&lt;&lt;test.bit&lt;&lt;&#39;\n&#39;;
+  bits&lt;double&gt;double_test(3.5);
+  cout&lt;&lt;double_test.bit&lt;&lt;&#39;\n&#39;;//IEEE shit
+  return 0;
+&#125;
+</code></pre>
+<h3 id="10-explicit"><a href="#10-explicit" class="headerlink" title="10. explicit"></a>10. explicit</h3><p>用来取消构造函数的调用</p>
+<pre><code class="lang-C++">#include &lt;iostream&gt;
+using namespace std;
+class EXP_TEST&#123;
+    public:
+    EXP_TEST(int x)&#123;
+        cout&lt;&lt;&quot;used&quot;&lt;&lt;endl;
+    &#125;
+&#125;;
+static void test(EXP_TEST a)&#123;
+&#125;
+int main( )&#123;
+    test(1);
+    return 0;
+&#125;
+</code></pre>
+<h3 id="11-friend"><a href="#11-friend" class="headerlink" title="11. friend"></a>11. friend</h3><p>能够在别的类中对私有成员进行访问<br>友元关系不具有传递性</p>
+<pre><code class="lang-C++">class friend_B&#123;
+    friend_A a;
+    public:
+        void modify()&#123;
+            a.wallet++;//could access
+        &#125;
+&#125;;
+class friend_A&#123;
+    friend class friend_B;
+    private:
+        int wallet;
+&#125;;
+</code></pre>
+<h3 id="12-using和"><a href="#12-using和" class="headerlink" title="12. using和::"></a>12. using和::</h3><p>1.全局作用域符（::name）：用于类型名称（类、类成员、成员函数、变量等）前，表示作用域为全局命名空间<br>2.类作用域符（class::name）：用于表示指定类型的作用域范围是具体某个类的<br>3.命名空间作用域符（namespace::name）:用于表示指定类型的作用域范围是具体某个命名空间的</p>
+<h3 id="13-decltype"><a href="#13-decltype" class="headerlink" title="13. decltype"></a>13. decltype</h3><pre><code class="lang-C++">int a;
+  decltype(a) b;
+  b=1;
+  cout&lt;&lt;b&lt;&lt;&#39;\n&#39;;
+  auto cmp=[&amp;](int a,int b)&#123;
+    return a&gt;b;
+  &#125;;
+  priority_queue&lt;int,vector&lt;int&gt;,decltype(cmp)&gt;q(cmp);//let others to deduce the answer
+  q.push(1);
+  q.push(2);
+  while(!q.empty())&#123;
+    cout&lt;&lt;q.top()&lt;&lt;&#39; &#39;;
+    q.pop();
+  &#125;
+</code></pre>
+<h3 id="14-引用"><a href="#14-引用" class="headerlink" title="14. 引用"></a>14. 引用</h3><p>1.左值引用可以绑定到左值，不可以绑定到右值<br>2.左值常引用可以绑定到右值,此时右值在栈上<br>3.右值引用&amp;&amp;,可以指向右值，不可以指向左值，用处是可以修改右值</p>
+<p>右值引用有以下两个好处<br>右值引用就是必须绑定到右值（一个临时对象、将要销毁的对象）的引用，一般表示对象的值。</p>
+<p>1.右值引用可实现转移语义（Move Sementics）和精确传递（Perfect Forwarding），它的主要目的有两个方面：</p>
+<p>2.消除两个对象交互时不必要的对象拷贝，节省运算存储资源，提高效率。<br>能够更简洁明确地定义泛型函数。</p>
+<h3 id="15-initializer-list"><a href="#15-initializer-list" class="headerlink" title="15.initializer_list"></a>15.initializer_list</h3><pre><code class="lang-C++">template&lt;typename T&gt;
+struct S&#123;
+    vector&lt;T&gt;v;
+    S(std::initializer_list&lt;T&gt; l):v(l)&#123;
+        cout&lt;&lt;&quot;initialized &quot;&lt;&lt;l.size()&lt;&lt;&quot; elements\n&quot;;
+    &#125;
+    void append(initializer_list&lt;T&gt; app)&#123;
+        v.insert(app.begin(),app.end(),v.end());
+    &#125;
+    pair&lt;const T*,size_t&gt;size()&#123;
+        return &#123;&amp;v[0],v.size()&#125;;
+    &#125;
+&#125;;
+template&lt;typename T&gt;
+void test(T)&#123;&#125;
+int main()&#123;
+  auto li=&#123;1,3,2&#125;;//if use auto, it becomes an initializer_list
+  S&lt;int&gt; vec=&#123;1,3,2&#125;;//could not use if S is explicit
+  S&lt;int&gt;s=li;
+  cout&lt;&lt;s.size().second&lt;&lt;&#39;\n&#39;;
+  test&lt;initializer_list&lt;int&gt;&gt;(li);
+  return 0;
+&#125;
+</code></pre>
+<h3 id="16-面向对象OOP"><a href="#16-面向对象OOP" class="headerlink" title="16.面向对象OOP"></a>16.面向对象OOP</h3><p>继承，封装，多台</p>
+<h4 id="1-继承"><a href="#1-继承" class="headerlink" title="1.继承"></a>1.继承</h4><p>父-&gt;子<br><img src="https://i.ibb.co/6RWhySy/WX20230317-112339-2x.png" alt="avator"></p>
+<h4 id="2-多态"><a href="#2-多态" class="headerlink" title="2.多态"></a>2.多态</h4><p>1.多态，即多种状态，在面向对象语言中，接口的多种不同的实现方式即为多态。<br>2.C++ 多态有两种：静态多态（早绑定）、动态多态（晚绑定）。静态多态是通过函数重载实现的；动态多态是通过虚函数实现的。<br>3.多态是以封装和继承为基础的。</p>
+<h5 id="虚函数"><a href="#虚函数" class="headerlink" title="虚函数"></a>虚函数</h5><p>1.普通函数（非类成员函数）不能是虚函数<br>2.静态函数（static）不能是虚函数<br>3.构造函数不能是虚函数（因为在调用构造函数时，虚表指针并没有在对象的内存空间中，必须要构造函数调用完成后才会形成虚表指针）<br>4.内联函数不能是表现多态性时的虚函数，解释见：虚函数（virtual）可以是内联函数（inline）吗？</p>
+<h5 id="虚函数和纯虚函数"><a href="#虚函数和纯虚函数" class="headerlink" title="虚函数和纯虚函数"></a>虚函数和纯虚函数</h5><p>1.类里如果声明了虚函数，这个函数是实现的，哪怕是空实现，它的作用就是为了能让这个函数在它的子类里面可以被覆盖，这样的话，这样编译器就可以使用后期绑定来达到多态了。纯虚函数只是一个接口，是个函数的声明而已，它要留到子类里去实现。<br>2.虚函数在子类里面也可以不重载的；但纯虚函数必须在子类去实现。<br>3.虚函数的类用于 “实作继承”，继承接口的同时也继承了父类的实现。当然大家也可以完成自己的实现。纯虚函数关注的是接口的统一性，实现由子类完成。<br>4.带纯虚函数的类叫抽象类，这种类不能直接生成对象，而只有被继承，并重写其虚函数后，才能使用。抽象类和大家口头常说的虚基类还是有区别的，在 C# 中用 abstract 定义抽象类，而在 C++ 中有抽象类的概念，但是没有这个关键字。抽象类被继承后，子类可以继续是抽象类，也可以是普通类，而虚基类，是含有纯虚函数的类，它如果被继承，那么子类就必须实现虚基类里面的所有纯虚函数，其子类不能是抽象类。</p>
+<p>虚函数指针：在含有虚函数类的对象中，指向虚函数表，在运行时确定。<br>虚函数表：在程序只读数据段（.rodata section，见：目标文件存储结构），存放虚函数指针，如果派生类实现了基类的某个虚函数，则在虚表中覆盖原本基类的那个虚函数指针，在编译时根据类的声明创建。</p>
+<h5 id="虚继承"><a href="#虚继承" class="headerlink" title="虚继承"></a>虚继承</h5><p>针对菱形继承<br><img src="https://i.ibb.co/1qQ8K5q/WX20230317-114033-2x.png" alt="avator"><br>如果一个变量在A中有，那么当D想要去修改的话。该变量可能来自于B也可能来自于C，这个时候就有歧义了</p>
+<pre><code class="lang-C++">class A&#123;
+protected:
+    int m_a;
+&#125;;
+
+//直接基类B
+class B: virtual public A&#123;  //虚继承
+protected:
+    int m_b;
+&#125;;
+
+//直接基类C
+class C: virtual public A&#123;  //虚继承
+protected:
+    int m_c;
+&#125;;
+
+//派生类D
+class D: public B, public C&#123;
+public:
+    void seta(int a)&#123; m_a = a; &#125;  //正确
+    void setb(int b)&#123; m_b = b; &#125;  //正确
+    void setc(int c)&#123; m_c = c; &#125;  //正确
+    void setd(int d)&#123; m_d = d; &#125;  //正确
+private:
+    int m_d;
+&#125;;
+
+int main()&#123;
+    D d;
+    return 0;
+&#125;
+</code></pre>
+<p>虚继承的目的是让某个类做出声明，承诺愿意共享它的基类。其中，这个被共享的基类就称为虚基类（Virtual Base Class），本例中的 A 就是一个虚基类。在这种机制下，不论虚基类在继承体系中出现了多少次，在派生类中都只包含一份虚基类的成员。</p>
+<h5 id="抽象类、接口类、聚合类"><a href="#抽象类、接口类、聚合类" class="headerlink" title="抽象类、接口类、聚合类"></a>抽象类、接口类、聚合类</h5><p>1.抽象类：含有纯虚函数的类</p>
+<p>2.接口类：仅含有纯虚函数的抽象类</p>
+<p>3.聚合类：用户可以直接访问其成员，并且具有特殊的初始化语法形式。满足如下特点：</p>
+<p>a.所有成员都是 public</p>
+<p>b.没有有定于任何构造函数</p>
+<p>c.没有类内初始化</p>
+<p>d.没有基类，也没有 virtual 函数</p>
+<h4 id="17-malloc-free"><a href="#17-malloc-free" class="headerlink" title="17.malloc free"></a>17.malloc free</h4><p>首先对于内存分配来说，有静态分配和动态分配，静态分配的内存在栈上，动态分配的内存在堆上<br>malloc用于动态分配</p>
+<p>在底层，malloc主要调用了mmap和brk</p>
+<p>mmap主要采用了其匿名映射，在虚存中开辟一块区域</p>
+<p>brk用于修改映射大小</p>
+<p>对于malloc来说，帮你完成了内存管理，总有一个指针指向当前可用的区域</p>
+<p>malloc用chunk做管理，在每个可用指针前，总有一个当前chunk的大小的值存着</p>
+<p>这个内存区域的最后一位代表该chunk是否使用，为1就是使用了</p>
+<p>对于free来说，free会使用内存块本来的空间来把自身加入到双向链表当中去</p>
+<h4 id="18-malloc、calloc、realloc、alloca"><a href="#18-malloc、calloc、realloc、alloca" class="headerlink" title="18. malloc、calloc、realloc、alloca"></a>18. malloc、calloc、realloc、alloca</h4><p>1.malloc：申请指定字节数的内存。申请到的内存中的初始值不确定。<br>2.calloc：为指定长度的对象，分配能容纳其指定个数的内存。申请到的内存的每一位（bit）都初始化为 0。<br>3.realloc：更改以前分配的内存长度（增加或减少）。当增加长度时，可能需将以前分配区的内容移到另一个足够大的区域，而新增区域内的初始值则不确定。<br>4.alloca：在栈上申请内存。程序在出栈的时候，会自动释放内存。但是需要注意的是，alloca 不具可移植性, 而且在没有传统堆栈的机器上很难实现。alloca 不宜使用在必须广泛移植的程序中。C99 中支持变长数组 (VLA)，可以用来替代 alloca。</p>
+<h4 id="19-new-delete"><a href="#19-new-delete" class="headerlink" title="19. new delete"></a>19. new delete</h4><p>1.new / new[]：完成两件事，先底层调用 malloc 分了配内存，然后调用构造函数（创建对象）。<br>2.delete/delete[]：也完成两件事，先调用析构函数（清理资源），然后底层调用 free 释放空间。<br>3.new 在申请内存时会自动计算所需字节数，而 malloc 则需我们自己输入申请内存空间的字节数。</p>
+<h4 id="20-是否能delete-this"><a href="#20-是否能delete-this" class="headerlink" title="20. 是否能delete this"></a>20. 是否能delete this</h4><p>1.可以，但是需要保证对象是分配在堆上的<br>2.最后一个用的</p>
+<h4 id="21-如何定义一个只能在堆-栈上生成对象的类？"><a href="#21-如何定义一个只能在堆-栈上生成对象的类？" class="headerlink" title="21.如何定义一个只能在堆/栈上生成对象的类？"></a>21.如何定义一个只能在堆/栈上生成对象的类？</h4><p>1.只能在堆上<br>方法：将析构函数设置为私有</p>
+<p>原因：C++ 是静态绑定语言，编译器管理栈上对象的生命周期，编译器在为类对象分配栈空间时，会先检查类的析构函数的访问性。若析构函数不可访问，则不能在栈上创建对象。</p>
+<p>2.只能在栈上<br>方法：将 new 和 delete 重载为私有</p>
+<p>原因：在堆上生成对象，使用 new 关键词操作，其过程分为两阶段：第一阶段，使用 new 在堆上寻找可用内存，分配给对象；第二阶段，调用构造函数生成对象。将 new 操作设置为私有，那么第一阶段就无法完成，就不能够在堆上生成对象。</p>
+<h4 id="22-delete"><a href="#22-delete" class="headerlink" title="22. =delete"></a>22. =delete</h4><p>声明为=delete之后就不允许对应的隐式转换了</p>
+<pre><code class="lang-C++">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+void print(double a)=delete;
+void print(int a)&#123;
+    cout&lt;&lt;a&lt;&lt;&#39;\n&#39;;
+&#125;
+int main()&#123;
+  print(1);
+  return 0;
+&#125;
+</code></pre>
+<h4 id="23-继承"><a href="#23-继承" class="headerlink" title="23. 继承"></a>23. 继承</h4><div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>public</th>
+<th>protected</th>
+<th>private</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>公有继承</td>
+<td>public</td>
+<td>protected</td>
+<td>不可见</td>
+</tr>
+<tr>
+<td>私有继承</td>
+<td>private</td>
+<td>private</td>
+<td>不可见</td>
+</tr>
+<tr>
+<td>保护继承</td>
+<td>protected</td>
+<td>protected</td>
+<td>不可见</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h4 id="24-虚函数表"><a href="#24-虚函数表" class="headerlink" title="24.虚函数表"></a>24.虚函数表</h4><p>1.虚表是一个指针数组，其元素是虚函数的指针，每个元素对应一个虚函数的函数指针。需要指出的是，普通的函数即非虚函数，其调用并不需要经过虚表，所以虚表的元素并不包括普通函数的函数指针。<br>2.虚表内的条目，即虚函数指针的赋值发生在编译器的编译阶段，也就是说在代码的编译阶段，虚表就可以构造出来了。</p>
+<p>虚函数表放在类对象的最前面</p>
+<h4 id="25-delete和delete"><a href="#25-delete和delete" class="headerlink" title="25.delete和delete []"></a>25.delete和delete []</h4><p>auto arr[]</p>
+<p>delete arr:调用 arr[0]的析构函数</p>
+<p>delete arr[] 分别调用arr每一个元素的析构函数</p>
+<h4 id="26-i-和-i谁快"><a href="#26-i-和-i谁快" class="headerlink" title="26.i++和++i谁快"></a>26.i++和++i谁快</h4><p>++i快</p>
+<p>++i相当于</p>
+<pre><code class="lang-C++"> i  =  i  +   1 ;
+ return  i;
+</code></pre>
+<p>i++相当于</p>
+<pre><code class="lang-C++"> int  j  =  i;
+ i  =  i + 1 ;
+ return  j;
+</code></pre>
+<h4 id="27-override"><a href="#27-override" class="headerlink" title="27.override"></a>27.override</h4><p>override 关键字可以放在子类中重写父类的虚函数声明的末尾，用于显式地声明该函数是对父类虚函数的重写，从而告诉编译器进行检查。如果子类中的函数与父类中的函数不完全一致，编译器会在编译时报错，从而避免了潜在的错误。如果子类中的函数与父类中的函数完全一致，那么 override 关键字不会对程序的运行产生任何影响。</p>
+<h4 id="28-构造函数里能调用虚函数吗"><a href="#28-构造函数里能调用虚函数吗" class="headerlink" title="28.构造函数里能调用虚函数吗"></a>28.构造函数里能调用虚函数吗</h4><p>可以。</p>
+<p>在对象构造过程中，先调用基类构造函数，然后再调用派生类构造函数。当基类的构造函数调用虚函数时，由于此时派生类尚未构造完毕，因此实际调用的是基类的虚函数。这可能导致一些未定义的行为或者出现问题。</p>
+<p>因此，建议在构造函数中避免调用虚函数，或者将虚函数设置为纯虚函数，这样在编译时就会报错，避免出现运行时错误。如果确实需要在构造函数中调用虚函数，可以使用普通函数替代，或者将虚函数调用延迟到对象构造完毕后再进行。</p>
+<h4 id="29-哪些变量存在栈上，哪些存在堆上"><a href="#29-哪些变量存在栈上，哪些存在堆上" class="headerlink" title="29.哪些变量存在栈上，哪些存在堆上"></a>29.哪些变量存在栈上，哪些存在堆上</h4><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>位置</th>
+<th>常见变量</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>栈</td>
+<td>1.函数内的自动变量(int a=10;)2.函数参数。3.局部对象</td>
+</tr>
+<tr>
+<td>堆</td>
+<td>new 或者malloc出来的对象</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h4 id="30-多线程访问静态变量需要加锁"><a href="#30-多线程访问静态变量需要加锁" class="headerlink" title="30.多线程访问静态变量需要加锁"></a>30.多线程访问静态变量需要加锁</h4><h4 id="31"><a href="#31" class="headerlink" title="31."></a>31.</h4><pre><code class="lang-C++">char * c=&quot;abcd&quot;
+</code></pre>
+<p>c不能更改，在常量区</p>
+<h4 id="32-链接方式"><a href="#32-链接方式" class="headerlink" title="32.链接方式"></a>32.链接方式</h4><p> 1.静态链接：在程序运行前，先将各个目标模块以及他们所需的库函数连接成一个完成的可执行文件，之后不再拆开；</p>
+<p> 2.装入时动态链接：将各目标模块装入内存时，边装入边链接。</p>
+<p> 3.运行时动态链接：在程序执行中需要该目标模块时，才对它进行链接。优点是便于修改和更新，便于实现对目标的共享。-&gt;dll</p>
+<p> 装入：可执行文件只有被装载到内存以后才能被CPU执行，由装入程序Loader将装入模块装入内存运行. 有三种装入方式：</p>
+<p> 1.绝对装入：在编译时，如果知道程序将放到内存中的哪个位置，编译程序将产生绝对地址的目标代码。即编译、链接后得到的装入模块的指令直接就使用了绝对地址；装入程序按照装入模块中的地址，将程序和数据装入内存；绝对装入只适用于单道程序环境。</p>
+<p> 2.静态重定位(可重定位装入)：编译、链接后的装入模块的地址都是从0开始的，指令中使用的地址、数据存放的地址都是相对于起始地址而言的逻辑地址，装入程序根据内存的当前情况，将装入模块装入到内存的适当位置，并在装入时对地址进行重定位，将逻辑地址变换为物理地址。地址变换是在装入时一次性完成的。</p>
+<p>特点：静态重定位的特点是在一个作业装入内存时，必须分配其要求的全部内存空间，如果没有足够的内存，则装入失败。作业一旦进入内存后，运行期间不能再移动，也不能再申请新的内存空间。</p>
+<p> 3.动态重定位(动态运行时装入)：编译、链接后的装入模块的地址都是从0开始的，装入程序把装入模块装入内存后，在程序真正执行时候进行地址转换。因此装入内后后所有地址依然是逻辑地址。这种方式需要一个重定位寄存器(存放装入模块存放的起始位置)的支持。采用动态重定位时允许程序在内存中发生移动。</p>
+<p>特点：并且可将程序分配到不连续的内存空间中；还可以只用装入部分程序代码即可运行，在程序运行时进行动态内存分配即可；便于程序段的共享，可以向用户提供一个比存储空间大得多的地址空间；</p>
+<h4 id="33-移动构造函数"><a href="#33-移动构造函数" class="headerlink" title="33.移动构造函数"></a>33.移动构造函数</h4><p>在 C++ 中，如果需要将一个对象传递给另一个函数或者从一个函数返回一个对象，通常需要进行复制构造函数或拷贝赋值运算符操作，这会涉及到对象的拷贝和内存分配，当对象较大或者拷贝次数频繁时，这样的操作会导致程序性能下降。</p>
+<p>例子如下</p>
+<pre><code class="lang-C++">#include &lt;iostream&gt;
+#include &lt;cstring&gt;
+
+class MyString &#123;
+public:
+    // Default constructor
+    MyString() : m_Buffer(nullptr), m_Size(0) &#123;&#125;
+
+    // Constructor with string literal
+    MyString(const char* str) &#123;
+        m_Size = std::strlen(str);
+        m_Buffer = new char[m_Size + 1];
+        std::strcpy(m_Buffer, str);
+    &#125;
+
+    // Move constructor
+    MyString(MyString&amp;&amp; other) noexcept &#123;
+        m_Buffer = other.m_Buffer;
+        m_Size = other.m_Size;
+        other.m_Buffer = nullptr;
+        other.m_Size = 0;
+    &#125;
+
+    // Destructor
+    ~MyString() &#123;
+        if (m_Buffer != nullptr) &#123;
+            delete[] m_Buffer;
+        &#125;
+    &#125;
+
+    // Copy constructor
+    MyString(const MyString&amp; other) &#123;
+        m_Size = other.m_Size;
+        m_Buffer = new char[m_Size + 1];
+        std::strcpy(m_Buffer, other.m_Buffer);
+    &#125;
+
+    // Copy assignment operator
+    MyString&amp; operator=(const MyString&amp; other) &#123;
+        if (this != &amp;other) &#123;
+            delete[] m_Buffer;
+            m_Size = other.m_Size;
+            m_Buffer = new char[m_Size + 1];
+            std::strcpy(m_Buffer, other.m_Buffer);
+        &#125;
+        return *this;
+    &#125;
+
+    // Move assignment operator
+    MyString&amp; operator=(MyString&amp;&amp; other) noexcept &#123;
+        if (this != &amp;other) &#123;
+            delete[] m_Buffer;
+            m_Buffer = other.m_Buffer;
+            m_Size = other.m_Size;
+            other.m_Buffer = nullptr;
+            other.m_Size = 0;
+        &#125;
+        return *this;
+    &#125;
+
+    // Getter for buffer size
+    size_t size() const &#123;
+        return m_Size;
+    &#125;
+
+    // Getter for buffer pointer
+    const char* c_str() const &#123;
+        return m_Buffer;
+    &#125;
+
+private:
+    char* m_Buffer;
+    size_t m_Size;
+&#125;;
+
+int main() &#123;
+    // Create a MyString object using a string literal
+    MyString str1(&quot;Hello, world!&quot;);
+
+    // Create another MyString object by moving str1
+    MyString str2(std::move(str1));
+
+    // Print the contents of str2
+    std::cout &lt;&lt; &quot;str2: &quot; &lt;&lt; str2.c_str() &lt;&lt; std::endl;
+
+    return 0;
+&#125;
+</code></pre>
+<h4 id="34-constexpr-和const"><a href="#34-constexpr-和const" class="headerlink" title="34.constexpr 和const"></a>34.constexpr 和const</h4><p>const 表示一个变量或者对象是不可修改的，即它的值在初始化之后不能被改变。它可以用于变量、函数参数、函数返回值和成员函数等。使用 const 可以确保代码的正确性和安全性，防止不必要的修改。</p>
+<p>constexpr 表示一个表达式在编译时就可以被计算出来，并且结果可以作为常量使用。它可以用于变量、函数和类的成员函数等。使用 constexpr 可以提高代码的性能和安全性，避免在运行时进行重复的计算。</p>
+<h4 id="35-noexcept"><a href="#35-noexcept" class="headerlink" title="35. noexcept"></a>35. noexcept</h4><p>noexcept 是 C++11 引入的一个关键字，表示一个函数或者表达式是否会抛出异常。当在函数或者表达式后面添加 noexcept 关键字时，意味着它不会抛出异常。如果一个函数或者表达式可能会抛出异常，我们不应该使用 noexcept 关键字。</p>
+<p>noexcept 关键字可以用于函数的声明和定义中。函数声明后面添加 noexcept 关键字表示该函数不会抛出异常，而函数定义后面添加 noexcept 关键字表示该函数在运行时不会抛出异常。</p>
+<p>noexcept 关键字的使用有助于提高代码的性能和安全性。由于不需要进行异常处理，函数的调用和执行速度可以更快。此外，noexcept 关键字还可以帮助编译器进行一些优化，例如移动语义和函数返回值优化等。</p>
+<h4 id="36-内存中子类和父类的布局"><a href="#36-内存中子类和父类的布局" class="headerlink" title="36.内存中子类和父类的布局"></a>36.内存中子类和父类的布局</h4><p>1.每个类都有虚指针和虚表；</p>
+<p>2.如果不是虚继承，那么子类将父类的虚指针继承下来，并指向自身的虚表（发生在对象构造时）。有多少个虚函数，虚表里面的项就会有多少。多重继承时，可能存在多个的基类虚表与虚指针；</p>
+<p>3.如果是虚继承，那么子类会有两份虚指针，一份指向自己的虚表，另一份指向虚基表，多重继承时虚基表与虚基表指针有且只有一份。</p>
+
+    </div>
+    
+    
+    
+    
+    
+    
+    
+</div>
+
+                <footer id="footer">
+    <div class="footer-wrap">
+        <div>
+            &copy;
+            2022 - 2023 Waiting for the dawn
+            <span class="footer-icon">
+                <i class="fa-solid fa-font-awesome fa-fw"></i>
+            </span>
+            &commat;Yanxin Xiang
+        </div>
+        <div>Based on the <a target="_blank" rel="noopener" href="https://hexo.io">Hexo Engine</a> &amp; <a target="_blank" rel="noopener" href="https://github.com/argvchs/hexo-theme-particlex">ParticleX Theme</a></div>
+        
+    </div>
+</footer>
+
+            </div>
+            </transition>
+            <div id="showimg">
+                <img id="showimg-content">
+            </div>
+        </div>
+        <script src="/js/functions.js"></script>
+<script src="/js/particlex.js"></script>
+
+
+
+
+
+
+
+    </body>
+</html>

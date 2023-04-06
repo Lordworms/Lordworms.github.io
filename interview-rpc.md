@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>分类 | Waiting for the dawn</title>
+        <title>interview rpc | Waiting for the dawn</title>
         <meta name="author" content="Yanxin Xiang">
         <meta name="description" content="">
         <meta name="keywords" content="">
@@ -130,77 +130,63 @@
     </div>
 </nav>
 
-                <div id="archives">
-    
-    <div class="categories-tags">
-        
-        
-        <span>
-            <a href="/categories/Algorithm/" style="background: #00a596">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                Algorithm
-            </a>
+                <div class="article">
+    <div>
+        <h1>interview rpc </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/3/22
         </span>
         
         
-        
-        <span>
-            <a href="/categories/compiler/" style="background: #ff7d73">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                compiler
-            </a>
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/interview/" style="color: #03a9f4">interview</a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/rpc/" style="color: #00a596">rpc</a>
+            </span>
+            
         </span>
-        
-        
-        
-        <span>
-            <a href="/categories/algorithm/" style="background: #03a9f4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                algorithm
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/categories/database/" style="background: #03a9f4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                database
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/categories/%E6%96%B0%E7%9A%84%E5%BC%80%E5%A7%8B/" style="background: #00bcd4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                -新的开始
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/categories/interview/" style="background: #00a596">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                interview
-            </a>
-        </span>
-        
         
     </div>
+    
+    <div class="content" v-pre>
+        <h1 id="remote-procedure-call"><a href="#remote-procedure-call" class="headerlink" title="remote procedure call"></a>remote procedure call</h1><p>通过网络从远程计算机上请求服务</p>
+<p>为什么要RPC：</p>
+<h2 id="rpc和Http的区别："><a href="#rpc和Http的区别：" class="headerlink" title="rpc和Http的区别："></a>rpc和Http的区别：</h2><p>rpc是一种技术思想，而不是规范和协议，广义上讲，http也是一种rpc</p>
+<h2 id="rpc框架"><a href="#rpc框架" class="headerlink" title="rpc框架"></a>rpc框架</h2><p>1.基于http</p>
+<p>a.grpc</p>
+<p>b.sprintCloud</p>
+<p>2.基于socket</p>
+<p>a.DUBBo</p>
+<p>b.Thrift</p>
+<h2 id="protobuf的优缺点"><a href="#protobuf的优缺点" class="headerlink" title="protobuf的优缺点"></a>protobuf的优缺点</h2><p>1.性能好/效率高</p>
+<p>时间开销： XML格式化（序列化）的开销还好；但是XML解析（反序列化）的开销就不敢恭维了。 但是protobuf在这个方面就进行了优化。可以使序列化和反序列化的时间开销都减短。</p>
+<p>2.有代码生成机制，可以自动生成</p>
+<p>3.向前兼容和向后兼容</p>
+<p>当客户端和服务器同事使用一块协议的时候， 当客户端在协议中增加一个字节，并不会影响客户端的使用</p>
+<p>4.支持多种编程语言</p>
+<p>在Google官方发布的源代码中包含了c++、java、Python三种语言</p>
+<h2 id="grpc的过程"><a href="#grpc的过程" class="headerlink" title="grpc的过程"></a>grpc的过程</h2>
+    </div>
+    
+    
+    
+    
+    
+    
     
 </div>
 
@@ -227,6 +213,11 @@
         </div>
         <script src="/js/functions.js"></script>
 <script src="/js/particlex.js"></script>
+
+
+
+
+
 
 
     </body>

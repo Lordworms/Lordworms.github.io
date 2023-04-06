@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>分类 | Waiting for the dawn</title>
+        <title>dp practice day 9 | Waiting for the dawn</title>
         <meta name="author" content="Yanxin Xiang">
         <meta name="description" content="">
         <meta name="keywords" content="">
@@ -130,13 +130,20 @@
     </div>
 </nav>
 
-                <div id="archives">
-    
-    <div class="categories-tags">
+                <div class="article">
+    <div>
+        <h1>dp practice day 9 </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/3/14
+        </span>
         
-        
-        <span>
-            <a href="/categories/Algorithm/" style="background: #00a596">
+        <span class="category">
+            <a href="/categories/Algorithm/">
                 <span class="icon">
                     <i class="fa-solid fa-bookmark fa-fw"></i>
                 </span>
@@ -145,62 +152,123 @@
         </span>
         
         
-        
-        <span>
-            <a href="/categories/compiler/" style="background: #ff7d73">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                compiler
-            </a>
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/dp/" style="color: #03a9f4">dp</a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/dp-practice-plan/" style="color: #ffa2c4">dp_practice_plan</a>
+            </span>
+            
         </span>
-        
-        
-        
-        <span>
-            <a href="/categories/algorithm/" style="background: #03a9f4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                algorithm
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/categories/database/" style="background: #03a9f4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                database
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/categories/%E6%96%B0%E7%9A%84%E5%BC%80%E5%A7%8B/" style="background: #00bcd4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                -新的开始
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/categories/interview/" style="background: #00a596">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                interview
-            </a>
-        </span>
-        
         
     </div>
+    
+    <div class="content" v-pre>
+        <p>CF 466C</p>
+<p>判断一个数组能有几种划分方式让每个块都相等<br>首先判断前缀和是否是3的倍数<br>之后枚举分界点即可</p>
+<pre><code class="lang-C++">void solve()&#123;
+  int n;cin&gt;&gt;n;
+  vector&lt;ll&gt;sum(n+1);
+  for(int i=1;i&lt;=n;++i)&#123;
+    cin&gt;&gt;sum[i];
+    sum[i]+=sum[i-1];
+  &#125;
+  if(sum[n]%3)&#123;
+    cout&lt;&lt;0&lt;&lt;&#39;\n&#39;;
+    return;
+  &#125;
+  ll ans=0,p1=0,opp=sum[n]/3;
+  for(int i=1;i&lt;n;++i)&#123;
+    if(opp*2==sum[i])&#123;
+        ans+=p1;
+    &#125;
+    if(opp==sum[i])&#123;
+        ++p1;
+    &#125;
+  &#125;
+  cout&lt;&lt;ans&lt;&lt;&#39;\n&#39;;
+  return;
+&#125;
+</code></pre>
+<p>CF 650B</p>
+<p>求多个数组的最长公共子序列<br>只需要保存每个数组的对应位置的数的位置信息即可，然后枚举第一个数组的子序列，转移就好了</p>
+<pre><code class="lang-C++">void solve()&#123;
+  int n,k;cin&gt;&gt;n&gt;&gt;k;
+  vector&lt;vector&lt;int&gt;&gt;pos(k+1,vector&lt;int&gt;(n+1)),a(pos);
+  for(int i=1;i&lt;=k;++i)&#123;
+    for(int j=1;j&lt;=n;++j)&#123;
+      cin&gt;&gt;a[i][j];
+      pos[i][a[i][j]]=j;
+    &#125;
+  &#125;
+  vector&lt;int&gt;dp(n+1,1);
+  int ans=0;
+  for(int i=1;i&lt;=n;++i)&#123;
+    for(int j=1;j&lt;i;++j)&#123;
+      bool flag=true;
+      for(int kk=2;kk&lt;=k;++kk)&#123;
+        if(pos[kk][a[1][i]]&lt;=pos[kk][a[1][j]])&#123;
+          flag=false;
+          break;
+        &#125;
+      &#125;
+      if(flag)&#123;
+        dp[i]=max(dp[i],dp[j]+1);
+      &#125;
+    &#125;
+    ans=max(ans,dp[i]);
+  &#125;
+  cout&lt;&lt;ans&lt;&lt;&#39;\n&#39;;
+  return;
+&#125;
+</code></pre>
+<p>CF 633D</p>
+<p>树上DP，令dp[i][0/1]表示以i为根的数i所在的联通块是否有黑色点的方案数<br>那么转移如下，用乘法原理很好理解</p>
+<p>$dp[x][0]=dp[v][0]*dp[x][0]+dp[v][1]*dp[x][0]$</p>
+<p>$dp[x][1]=dp[x][1]*(dp[v][0]+dp[v][1])+dp[x][0]*dp[v][0]$</p>
+<pre><code class="lang-C++">void solve()&#123;
+  int n;cin&gt;&gt;n;
+  vector&lt;vector&lt;int&gt;&gt;E(n);
+  for(int i=1;i&lt;n;++i)&#123;
+    int x;cin&gt;&gt;x;
+    E[i].push_back(x);
+    E[x].push_back(i);
+  &#125;
+  vector&lt;int&gt;c(n);
+  for(int i=0;i&lt;n;++i)cin&gt;&gt;c[i];
+  vector dp(n,vector&lt;ll&gt;(2));
+  function&lt;void(int,int)&gt;dfs=[&amp;](int x,int f)&#123;
+    dp[x][c[x]]=1;
+    for(int v:E[x])&#123;
+        if(v==f)continue;
+        dfs(v,x);
+        int dp0=dp[x][0],dp1=dp[x][1];
+        dp[x][1]=(dp1*(dp[v][1]+dp[v][0])%MOD+dp0*dp[v][1]%MOD)%MOD;
+        dp[x][0]=(dp[v][1]+dp[v][0])*dp[x][0]%MOD;
+    &#125;
+  &#125;;
+  dfs(0,-1);
+  cout&lt;&lt;dp[0][1]&lt;&lt;&#39;\n&#39;;
+  return;
+&#125;
+</code></pre>
+<p>考完试了，明天开始背八股了,题也得继续写</p>
+
+    </div>
+    
+    
+    
+    
+    
+    
     
 </div>
 
@@ -227,6 +295,11 @@
         </div>
         <script src="/js/functions.js"></script>
 <script src="/js/particlex.js"></script>
+
+
+
+
+
 
 
     </body>
