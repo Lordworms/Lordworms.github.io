@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>分类 | Waiting for the dawn</title>
+        <title>daily 3 | Waiting for the dawn</title>
         <meta name="author" content="Yanxin Xiang">
         <meta name="description" content="">
         <meta name="keywords" content="">
@@ -130,77 +130,174 @@
     </div>
 </nav>
 
-                <div id="archives">
-    
-    <div class="categories-tags">
-        
-        
-        <span>
-            <a href="/categories/Algorithm/" style="background: #03a9f4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                Algorithm
-            </a>
+                <div class="article">
+    <div>
+        <h1>daily 3 </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/4/8
         </span>
         
         
-        
-        <span>
-            <a href="/categories/compiler/" style="background: #00a596">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                compiler
-            </a>
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/daily/" style="color: #ff7d73">daily</a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/Codeforces/" style="color: #00bcd4">Codeforces</a>
+            </span>
+            
         </span>
-        
-        
-        
-        <span>
-            <a href="/categories/algorithm/" style="background: #03a9f4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                algorithm
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/categories/database/" style="background: #ff7d73">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                database
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/categories/%E6%96%B0%E7%9A%84%E5%BC%80%E5%A7%8B/" style="background: #03a9f4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                -新的开始
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/categories/interview/" style="background: #00bcd4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                interview
-            </a>
-        </span>
-        
         
     </div>
+    
+    <div class="content" v-pre>
+        <p>一道水题，两道状压</p>
+<p>CF 597B</p>
+<p>简单贪心，按照结束时间排序即可</p>
+<pre><code class="lang-C++">struct node&#123;
+    int l,r;
+&#125;;
+void solve()&#123;
+  int n;cin&gt;&gt;n;
+  vector&lt;node&gt;a(n);
+  for(int i=0;i&lt;n;++i)&#123;
+    cin&gt;&gt;a[i].l&gt;&gt;a[i].r;
+  &#125;
+  sort(a.begin(),a.end(),[&amp;](node a,node b)&#123;
+    if(a.r==b.r)return a.l&lt;b.l;
+    return a.r&lt;b.r;
+  &#125;);
+  int ans=0,last=-1;
+  for(auto&amp; k:a)&#123;
+    if(k.l&gt;last)&#123;
+        ++ans;
+        last=k.r;
+    &#125;
+  &#125;
+  cout&lt;&lt;ans&lt;&lt;&#39;\n&#39;;
+  return;
+&#125;
+</code></pre>
+<p>CF 580D</p>
+<p>简单状态压缩</p>
+<p>${dp[status][i]}$ 表示当前吃了的是status,当前遇到的是i</p>
+<p>转移也很简单</p>
+<pre><code class="lang-C++">void solve()&#123;
+  int n,m,k;
+  cin&gt;&gt;n&gt;&gt;m&gt;&gt;k;
+  vector&lt;int&gt;a(n);
+  vector&lt;vector&lt;int&gt;&gt;mp(n+1,vector&lt;int&gt;(n+1));
+  vector dp((1&lt;&lt;n),vector&lt;ll&gt;(n));
+  for(int i=0;i&lt;n;++i)&#123;
+    cin&gt;&gt;a[i];
+    dp[1&lt;&lt;i][i]=a[i];
+  &#125;
+  for(int i=0;i&lt;k;++i)&#123;
+    int u,v,c;
+    cin&gt;&gt;u&gt;&gt;v&gt;&gt;c;
+    --u,--v;
+    mp[u][v]=c;
+  &#125;
+  for(int status=0;status&lt;(1&lt;&lt;n);++status)&#123;
+    for(int i=0;i&lt;n;++i)&#123;
+        if(status&amp;(1&lt;&lt;i))&#123;
+            for(int j=0;j&lt;n;++j)&#123;
+                if(i!=j&amp;&amp;(status&amp;(1&lt;&lt;j)))&#123;
+                    dp[status][i]=max(dp[status][i],dp[status^(1&lt;&lt;i)][j]+a[i]+mp[j][i]);
+                &#125;
+            &#125;
+        &#125;
+    &#125;
+  &#125;
+  ll ans=0;
+  for(int status=0;status&lt;(1&lt;&lt;n);++status)&#123;
+    if(__builtin_popcount(status)!=m)continue;
+    for(int i=0;i&lt;n;++i)&#123;
+        if(status&amp;(1&lt;&lt;i))&#123;
+            ans=max(ans,dp[status][i]);
+        &#125;
+    &#125;
+  &#125;
+  cout&lt;&lt;ans&lt;&lt;&#39;\n&#39;;
+  return;
+&#125;
+</code></pre>
+<p>CF 53E</p>
+<p>和上面的题思路差不多<br>${dp[status][leaf]}$ 表示当前的点集以及当前的叶子集合</p>
+<pre><code class="lang-C++">void solve()&#123;
+  int n,m,k;
+  cin&gt;&gt;n&gt;&gt;m&gt;&gt;k;
+  int lim=1&lt;&lt;n;
+  vector&lt;vector&lt;int&gt;&gt;E(n);
+  for(int i=0;i&lt;m;++i)&#123;
+    int u,v;
+    cin&gt;&gt;u&gt;&gt;v;
+    --u,--v;
+    E[u].push_back(v);
+    E[v].push_back(u);
+  &#125;
+  vector dp(lim,vector&lt;int&gt;(lim));
+  vector&lt;int&gt;cnt(lim+1);
+  for(int i=0;i&lt;lim;++i)&#123;
+    cnt[i]=__builtin_popcount(i);
+  &#125;
+  for(int i=1;i&lt;lim;i&lt;&lt;=1)&#123;
+    dp[i][i]=1;
+  &#125;
+  for(int total=0;total&lt;lim;++total)&#123;
+    for(int leaf=total;leaf;--leaf&amp;=total)&#123;
+        if(dp[total][leaf])&#123;
+            for(int now_node=0;now_node&lt;n;++now_node)&#123;
+                if(total&amp;(1&lt;&lt;now_node))&#123;
+                    for(int new_node:E[now_node])&#123;
+                        if(!(total&amp;(1&lt;&lt;new_node)))&#123;
+                            int status;
+                            if(cnt[total]==1)&#123;
+                                status=total|(1&lt;&lt;new_node);
+                            &#125;else&#123;
+                                status=leaf&amp;~(1&lt;&lt;now_node)|(1&lt;&lt;new_node);
+                            &#125;
+                            if(!(status&gt;&gt;new_node+1))&#123;//why？
+                                dp[total|(1&lt;&lt;new_node)][status]+=dp[total][leaf];
+                            &#125;
+                        &#125;
+                    &#125;
+                &#125;
+            &#125;
+        &#125;
+    &#125;
+  &#125;
+  ll ans=0;
+  for(int i=0;i&lt;lim;++i)&#123;
+    if(cnt[i]==k)&#123;
+        ans+=dp[lim-1][i];
+    &#125;
+  &#125;
+  cout&lt;&lt;ans&lt;&lt;&#39;\n&#39;;
+  return;
+&#125;
+</code></pre>
+<p>作息不能乱！作息不能乱！作息不能乱！作息不能乱！作息不能乱！作息不能乱！作息不能乱！</p>
+
+    </div>
+    
+    
+    
+    
+    
+    
     
 </div>
 
@@ -227,6 +324,11 @@
         </div>
         <script src="/js/functions.js"></script>
 <script src="/js/particlex.js"></script>
+
+
+
+
+
 
 
     </body>
