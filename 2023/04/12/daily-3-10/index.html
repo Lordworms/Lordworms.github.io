@@ -139,16 +139,7 @@
             <span class="icon">
                 <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
-            2023/3/25
-        </span>
-        
-        <span class="category">
-            <a href="/categories/algorithm/">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                algorithm
-            </a>
+            2023/4/12
         </span>
         
         
@@ -159,12 +150,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/daily/" style="color: #00a596">daily</a>
-            </span>
-            
-            <span class="tag">
-                
-                <a href="/tags/tree-array/" style="color: #00bcd4">tree array</a>
+                <a href="/tags/daily/" style="color: #00bcd4">daily</a>
             </span>
             
         </span>
@@ -172,193 +158,196 @@
     </div>
     
     <div class="content" v-pre>
-        <p>CF 1742 A</p>
-<p>凑字数的</p>
-<pre><code class="lang-C++">void solve()&#123;
-  int a,b,c;
-  cin&gt;&gt;a&gt;&gt;b&gt;&gt;c;
-  bool f=(a+b==c)||(b+c==a)||(a+c==b);
-  cout&lt;&lt;(f?&quot;YES&quot;:&quot;NO&quot;)&lt;&lt;&#39;\n&#39;;
+        <p>CF 620E</p>
+<p>首先我们选择用dfs序来代表一棵树，那么子树就是dfs序里的一部分，我们用线段树就可以完成子树修改的操作</p>
+<p>之后呢，由于颜色只有60种，状态压缩来表示一哈就好了，之后就很简单了</p>
+<p>注意不要犯错（比如tree[c]=a[pos[l]]）</p>
+<pre><code class="lang-C++">#define lowbit(x) (x&amp;-x)
+vector&lt;int&gt;pos,a;
+vector&lt;int&gt;c,in,out;
+struct ST&#123;
+    vector&lt;ll&gt;tree;
+    vector&lt;ll&gt;tag;
+    ST(int n)&#123;
+        tree.resize(n&lt;&lt;2);
+        tag.resize(n&lt;&lt;2);
+    &#125;
+    inline void push_down(int c)&#123;
+        if(tag[c]!=0)&#123;
+            tag[c&lt;&lt;1]=tag[c&lt;&lt;1|1]=tag[c];
+            tree[c&lt;&lt;1]=tree[c&lt;&lt;1|1]=tag[c];
+            tag[c]=0;
+        &#125;   
+    &#125;
+    inline void push_up(ll c)&#123;
+        tree[c]=tree[c&lt;&lt;1]|tree[c&lt;&lt;1|1];
+    &#125;
+    void build(int l,int r,int c)&#123;
+        if(l==r)&#123;
+            tree[c]=1ll&lt;&lt;(a[pos[l]]);//纯低能错误
+            return;
+        &#125;
+        int mid=(l+r)&gt;&gt;1;
+        build(l,mid,c&lt;&lt;1);
+        build(mid+1,r,c&lt;&lt;1|1);
+        push_up(c);
+    &#125;
+    void update(int l,int r,int c,int nl,int nr,ll v)&#123;
+        if(nl&lt;=l&amp;&amp;nr&gt;=r)&#123;
+            tree[c]=(1ll&lt;&lt;v);
+            tag[c]=(1ll&lt;&lt;v);
+            return;
+        &#125;
+        push_down(c);
+        int mid=(l+r)&gt;&gt;1;
+        if(nl&lt;=mid)update(l,mid,c&lt;&lt;1,nl,nr,v);
+        if(nr&gt;mid)update(mid+1,r,c&lt;&lt;1|1,nl,nr,v);
+        push_up(c);
+    &#125;
+    ll query(int l,int r,int ql,int qr,int c)&#123;
+        if(ql&lt;=l&amp;&amp;qr&gt;=r)&#123;
+            return tree[c];
+        &#125;
+        push_down(c);
+        ll res=0;
+        int mid=(l+r)&gt;&gt;1;
+        if(ql&lt;=mid)&#123;
+            res|=query(l,mid,ql,qr,c&lt;&lt;1);
+        &#125;
+        if(qr&gt;mid)&#123;
+            res|=query(mid+1,r,ql,qr,c&lt;&lt;1|1);
+        &#125;
+        return res;
+    &#125;
+&#125;;
+void solve()&#123;
+  int n,q;
+  cin&gt;&gt;n&gt;&gt;q;
+  int cnt=0;
+  a.resize(n+1);
+  in.resize(n&lt;&lt;2);
+  out.resize(n&lt;&lt;2);
+  pos.resize(n+1);
+  vector&lt;vector&lt;int&gt;&gt;E(n+1);
+  for(int i=1;i&lt;=n;++i)&#123;
+    cin&gt;&gt;a[i];
+  &#125;
+  for(int i=0;i&lt;n-1;++i)&#123;
+    int u,v;
+    cin&gt;&gt;u&gt;&gt;v;
+    E[v].push_back(u);
+    E[u].push_back(v);
+  &#125;
+  function&lt;void(int,int)&gt;dfs=[&amp;](int x,int f)&#123;
+    in[x]=++cnt;
+    pos[cnt]=x;
+    for(int v:E[x])&#123;
+        if(v==f)continue;
+        dfs(v,x);
+    &#125;
+    out[x]=cnt;
+  &#125;;
+  dfs(1,0);
+  ST seg(cnt);
+  seg.build(1,cnt,1);
+  while(q--)&#123;
+    int type;
+    cin&gt;&gt;type;
+    if(type==1)&#123;//change
+        int v,c;
+        cin&gt;&gt;v&gt;&gt;c;
+        seg.update(1,n,1,in[v],out[v],c);
+    &#125;else&#123;//get
+        int k;
+        cin&gt;&gt;k;
+        ll res=seg.query(1,n,in[k],out[k],1);
+        int ans=0;
+        while(res)&#123;
+            res-=lowbit(res);
+            ans++;
+        &#125;
+        cout&lt;&lt;ans&lt;&lt;&#39;\n&#39;;
+    &#125;
+  &#125;
   return;
 &#125;
 </code></pre>
-<p>CF  1076E</p>
-<p>学到了一个用树状数组做差分的方式</p>
-<p>add(a,v),add(b+1,-v)</p>
-<pre><code class="lang-C++">using pii=pair&lt;int,int&gt;;
-#define lowbit(x) x&amp;-x
+<p>CF 1679F<br>同样的状态压缩，我们依旧选用lowbit来对当前的status进行操作<br>dp[status]表示当前选择了的数的状态<br>剩下的就是常规了</p>
+<pre><code class="lang-C++">#define lowbit(x) (x&amp;-x)
 void solve()&#123;
   int n;
   cin&gt;&gt;n;
-  vector&lt;vector&lt;int&gt;&gt;E(n+1);
-  for(int i=0;i&lt;n-1;++i)&#123;
-    int a,b;
-    cin&gt;&gt;a&gt;&gt;b;
-    E[a].push_back(b);
-    E[b].push_back(a);
+  vector&lt;int&gt;a(n);
+  vector&lt;ll&gt;sum(1&lt;&lt;n);
+  for(int i=0;i&lt;n;++i)&#123;
+    cin&gt;&gt;a[i];
+    sum[1&lt;&lt;i]=a[i];
   &#125;
-  int max_dep=0;
-  vector&lt;int&gt;dep(n+1);
-  function&lt;void(int,int)&gt;dfs=[&amp;](int x,int f)&#123;
-    dep[x]=dep[f]+1;
-    max_dep=max(dep[x],max_dep);
-    for(int v:E[x])&#123;
-        if(v!=f)&#123;
-            dfs(v,x);
-        &#125;
-    &#125;
-  &#125;;
-  dfs(1,1);
-  vector&lt;ll&gt;tree(max_dep+2);
-  auto add=[&amp;](int x,int v)&#123;
-    while(x&lt;=max_dep)&#123;
-        tree[x]+=v;
-        x+=lowbit(x);
-    &#125;
-  &#125;;
-  auto sum=[&amp;](int x)&#123;
-    ll ans=0;
-    while(x)&#123;
-        ans+=tree[x];
-        x-=lowbit(x);
-    &#125;
-    return ans;
-  &#125;;
-  vector&lt;ll&gt;ans(n+1);
-  vector&lt;vector&lt;pii&gt;&gt;query(n+1);
-  function&lt;void(int,int)&gt;calc=[&amp;](int x,int f)&#123;
-    for(auto&amp; k:query[x])&#123;
-        add(dep[x],k.second);
-        add(k.first+1,-k.second);
-    &#125;
-    ans[x]=sum(dep[x]);
-    for(int v:E[x])if(v!=f)calc(v,x);
-    for(auto&amp; k:query[x])&#123;
-        add(dep[x],-k.second);
-        add(k.first+1,k.second);
-    &#125;
-  &#125;;
-  int m;cin&gt;&gt;m;
-  for(int i=1;i&lt;=m;++i)&#123;
-    int v,d,x;
-    cin&gt;&gt;v&gt;&gt;d&gt;&gt;x;
-    query[v].emplace_back(min(dep[v]+d,max_dep),x);
+  int k;cin&gt;&gt;k;
+  vector&lt;int&gt;no(2);
+  for(int i=0;i&lt;k;++i)cin&gt;&gt;no[i];
+  vector&lt;ll&gt;dp(1&lt;&lt;n);
+  for(int i=0;i&lt;n;++i)&#123;
+    dp[1&lt;&lt;i]=(a[i]!=no[0]&amp;&amp;a[i]!=no[1]?1:0);
   &#125;
-  calc(1,1);
-  for(int i=1;i&lt;=n;++i)&#123;
-    cout&lt;&lt;ans[i]&lt;&lt;&quot; \n&quot;[i==n];
+  for(int i=1;i&lt;(1&lt;&lt;n);++i)&#123;
+    sum[i]=sum[i^lowbit(i)]+sum[lowbit(i)];
+    if(sum[i]==no[0]||sum[i]==no[1])continue;
+    for(int j=i;j;j-=lowbit(j))&#123;
+        dp[i]+=dp[i^lowbit(j)];
+        dp[i]%=MOD;
+    &#125;
   &#125;
+  cout&lt;&lt;dp[(1&lt;&lt;n)-1]&lt;&lt;&#39;\n&#39;;
   return;
 &#125;
 </code></pre>
-<p>CF 1648C</p>
-<p>简单组合数，记得最后判定一下是不是本来前缀就相等</p>
-<pre><code class="lang-C++">#include &lt;bits/stdc++.h&gt;
-using namespace std;
-using ll=long long;
-const int MOD=998244353;
-const int MAXN=200010;
-#define lowbit(x) x&amp;-x
-ll quick_pow(ll x,ll exp,int p)
-&#123;
-      ll ans=1;
-      while(exp)
-      &#123;
-        if(exp&amp;1)ans=ans*x%p;
-        exp&gt;&gt;=1;
-        x=x*x%p;
-      &#125;
-      return ans;
-&#125;
-ll inv[MAXN],fac[MAXN];
-void init(int n,int p)
-&#123;
-  memset(inv,0,sizeof(inv));
-  memset(fac,0,sizeof(fac));
-  inv[0]=fac[0]=1;
-  for(int i=1;i&lt;=n;++i)
-  &#123;
-    fac[i]=fac[i-1]*i%p;
-  &#125;
-  inv[n]=quick_pow(fac[n],p-2,p)%p;
-  for(int i=n;i&gt;=1;--i)inv[i-1]=inv[i]*i%p;
-&#125;
-ll C(ll n,ll m,ll p)
-&#123;
-  if(m&gt;n||m&lt;0)return 0;
-  return fac[n]*inv[n-m]%p*inv[m]%p;
-&#125;
-void solve()&#123;
+<p>CF 429B<br>区间dp</p>
+<p>我们首先处理从四个角出发可能拥有的最大值</p>
+<p>之后我们枚举交点，然后判断最大值</p>
+<p>注意交点处，从左上角出发的点可以从上面进入交点，也可以从左边进入交点</p>
+<pre><code class="lang-C++">void solve()&#123;
   int n,m;
   cin&gt;&gt;n&gt;&gt;m;
-  vector&lt;int&gt;tree(MAXN+1);
-  auto add=[&amp;](int x,int v)&#123;
-    while(x&lt;=MAXN)&#123;
-      tree[x]+=v;
-      x+=lowbit(x);
-    &#125;
-  &#125;;
-  auto sum=[&amp;](int x)&#123;
-    ll ans=0;
-    while(x)&#123;
-      ans+=tree[x];
-      x-=lowbit(x);
-    &#125;
-    return ans;
-  &#125;;
-  vector&lt;int&gt;s(n+1),t(m+1);
-  vector&lt;int&gt;cnt(MAXN);
+  vector a(n+1,vector&lt;int&gt;(m+1));
   for(int i=1;i&lt;=n;++i)&#123;
-    cin&gt;&gt;s[i];
-    cnt[s[i]]++;
-    add(s[i],1);
-  &#125;
-  for(int i=1;i&lt;=m;++i)&#123;
-    cin&gt;&gt;t[i];
-  &#125;
-  ll total=1;
-  for(int i=0;i&lt;MAXN;++i)&#123;
-    if(cnt[i])&#123;
-      total=total*fac[cnt[i]]%MOD;
+    for(int j=1;j&lt;=m;++j)&#123;
+        cin&gt;&gt;a[i][j];
     &#125;
   &#125;
-  ll total_inv=quick_pow(total,MOD-2,MOD);
-  int lim=min(n,m);
-  int eq=1;
-  if(n&gt;=m)&#123;eq=0;&#125;
-  ll ans=0;
-  for(int i=1;i&lt;=lim;++i)&#123;
-    int p=sum(t[i]-1);
-    ans=(ans+fac[n-i]*p%MOD*total_inv%MOD)%MOD;
-    if(!cnt[t[i]])&#123;
-      eq=0;
-      break;
+  vector dp1(n+2,vector&lt;int&gt;(m+2)),dp2(dp1),dp3(dp1),dp4(dp1);
+  for(int i=1;i&lt;=n;++i)&#123;//左上角
+    for(int j=1;j&lt;=m;++j)&#123;
+        dp1[i][j]=max(dp1[i-1][j],dp1[i][j-1])+a[i][j];
     &#125;
-    total_inv=total_inv*cnt[t[i]]%MOD;
-    cnt[t[i]]--;
-    add(t[i],-1);
   &#125;
-  ans+=eq;
-  ans%=MOD;
+  for(int i=n;i&gt;=1;--i)&#123;//右下角
+    for(int j=m;j&gt;=1;--j)&#123;
+        dp2[i][j]=max(dp2[i+1][j],dp2[i][j+1])+a[i][j];
+    &#125;
+  &#125;
+  for(int i=1;i&lt;=n;++i)&#123;//右上角
+    for(int j=m;j&gt;=1;--j)&#123;
+        dp3[i][j]=max(dp3[i-1][j],dp3[i][j+1])+a[i][j];
+    &#125;
+  &#125;
+  for(int i=n;i&gt;=1;--i)&#123;//左下角
+    for(int j=1;j&lt;=m;++j)&#123;
+        dp4[i][j]=max(dp4[i+1][j],dp4[i][j-1])+a[i][j];
+    &#125;
+  &#125;
+  int ans=0;
+  for(int i=2;i&lt;n;++i)&#123;
+    for(int j=2;j&lt;m;++j)&#123;
+        ans=max(ans,dp1[i-1][j]+dp2[i+1][j]+dp3[i][j+1]+dp4[i][j-1]);
+        ans=max(ans,dp1[i][j-1]+dp2[i][j+1]+dp3[i-1][j]+dp4[i+1][j]);
+    &#125;
+  &#125;
   cout&lt;&lt;ans&lt;&lt;&#39;\n&#39;;
   return;
 &#125;
-int main()&#123;
-  ios::sync_with_stdio(false);
-  cin.tie(nullptr);
-  #ifdef LOCAL
-  freopen(&quot;/Users/xiangyanxin/code/Algorithom/in.txt&quot;,&quot;r&quot;,stdin);
-  freopen(&quot;/Users/xiangyanxin/code/Algorithom/out.txt&quot;,&quot;w&quot;,stdout);
-  #endif
-  int T=1;
-  init(MAXN-1,MOD);
-  while(T--)&#123;
-    solve();
-  &#125;
-  return 0;
-&#125;
 </code></pre>
-<p>今天有点水，啊啊啊啊</p>
+<p>今天收到字节的录用函了，等等鹅厂吧</p>
 
     </div>
     
