@@ -3,12 +3,12 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>记一次失败的面试 | Waiting for the dawn</title>
+        <title>daily 3 | Waiting for the dawn</title>
         <meta name="author" content="Yanxin Xiang">
         <meta name="description" content="">
         <meta name="keywords" content="">
         <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
-        <link rel="icon" href="https://i.ibb.co/sszdSW8/IMG-2691.jpg">
+        <link rel="icon" href="https://i.ibb.co/RN7PTvk/avator.jpg">
         <script src="https://cdn.staticfile.org/vue/3.2.45/vue.global.prod.min.js"></script>
         <script src="https://cdn.staticfile.org/highlight.js/11.7.0/highlight.min.js"></script>
         <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/11.7.0/styles/github.min.css">
@@ -132,14 +132,14 @@
 
                 <div class="article">
     <div>
-        <h1>记一次失败的面试 </h1>
+        <h1>daily 3 </h1>
     </div>
     <div class="info">
         <span class="date">
             <span class="icon">
                 <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
-            2023/4/3
+            2023/4/15
         </span>
         
         
@@ -150,7 +150,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/database/" style="color: #ffa2c4">database</a>
+                <a href="/tags/daily/" style="color: #00bcd4">daily</a>
             </span>
             
         </span>
@@ -158,7 +158,105 @@
     </div>
     
     <div class="content" v-pre>
-        <p>过了，希望能oc</p>
+        <p>背包专场了属于是</p>
+<p>CF 741B</p>
+<p>并查集+分组背包<br>具体不多说了，比较简单</p>
+<pre><code class="lang-C++">void solve()&#123;
+  int n,m,w;
+  cin&gt;&gt;n&gt;&gt;m&gt;&gt;w;
+  vector&lt;int&gt;dp(w+1),fa(n+1),b(n+1),we(n+1);
+  function&lt;int(int x)&gt;f=[&amp;](int x)&#123;
+        return fa[x]==x?x:fa[x]=f(fa[x]);
+  &#125;;
+  iota(fa.begin(),fa.end(),0);
+  for(int i=1;i&lt;=n;++i)&#123;
+    cin&gt;&gt;we[i];
+  &#125;
+  for(int i=1;i&lt;=n;++i)&#123;
+    cin&gt;&gt;b[i];
+  &#125;
+  for(int i=1;i&lt;=m;++i)&#123;
+    int u,v;
+    cin&gt;&gt;u&gt;&gt;v;
+    fa[f(u)]=f(v);
+  &#125;
+  vector&lt;vector&lt;int&gt;&gt;fr(n+1);
+  for(int i=1;i&lt;=n;++i)&#123;
+    fr[f(i)].push_back(i);
+  &#125;
+  for(int i=1;i&lt;=n;++i)&#123;
+    for(int siz=w;siz&gt;=0;--siz)&#123;
+        int W=0,B=0;
+        for(int v:fr[i])&#123;
+            W+=we[v];
+            B+=b[v];
+            if(siz&gt;=we[v])dp[siz]=max(dp[siz-we[v]]+b[v],dp[siz]);
+        &#125;
+        if(siz&gt;=W)&#123;
+            dp[siz]=max(dp[siz-W]+B,dp[siz]);
+        &#125;
+    &#125;
+  &#125;
+  cout&lt;&lt;dp[w]&lt;&lt;&#39;\n&#39;;
+  return;
+&#125;
+</code></pre>
+<p>CF 19B<br>我们可以把这个问题转化为01背包，把每个物品看作容量为t[i]+1,代价为c[i]的新物品</p>
+<pre><code class="lang-C++">void solve()&#123;
+  int n;
+  cin&gt;&gt;n;
+  vector&lt;ll&gt;t(n+1),c(n+1);
+  ll w=0;
+  for(int i=1;i&lt;=n;++i)&#123;
+    cin&gt;&gt;t[i]&gt;&gt;c[i];
+    ++t[i];
+    w=max(t[i],w);
+  &#125;
+  w+=n;
+  vector&lt;ll&gt;dp(w+1,1e16);
+  dp[0]=0;
+  for(int i=1;i&lt;=n;++i)&#123;
+    for(int v=w;v&gt;=t[i];--v)&#123;
+        dp[v]=min(dp[v],dp[v-t[i]]+c[i]);
+    &#125;
+  &#125;
+  ll ans=1e16;
+  for(int i=n;i&lt;=w;++i)&#123;
+    ans=min(ans,dp[i]);
+  &#125;
+  cout&lt;&lt;ans&lt;&lt;&#39;\n&#39;;
+  return;
+&#125;
+</code></pre>
+<p>CF 577B</p>
+<p>没啥好说的了，抽屉原理+dp(甚至感觉都不像背包)</p>
+<pre><code class="lang-C++">void solve()&#123;
+  int n,m;
+  cin&gt;&gt;n&gt;&gt;m;
+  if(n&gt;m)&#123;
+    cout&lt;&lt;&quot;YES\n&quot;;
+    return;
+  &#125;
+  vector&lt;int&gt;a(n+1);
+  for(int i=1;i&lt;=n;++i)&#123;
+    cin&gt;&gt;a[i];
+    a[i]%=m;
+  &#125;
+  vector dp(m+1,vector&lt;int&gt;(m+1));
+  bool f=false;
+  for(int i=1;i&lt;=n;++i)&#123;
+    dp[i][a[i]]=1;
+    for(int j=1;j&lt;=m;++j)&#123;
+        dp[i][j]|=dp[i-1][j];
+        dp[i][(j+a[i])%m]|=dp[i-1][j];
+    &#125;
+    f|=dp[i][0];
+    if(f)break;
+  &#125;
+  cout&lt;&lt;(f?&quot;YES&quot;:&quot;NO&quot;)&lt;&lt;&#39;\n&#39;;
+  return;
+&#125;
+</code></pre>
 
     </div>
     
