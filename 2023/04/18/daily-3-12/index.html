@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>dp practice_day 5 | Waiting for the dawn</title>
+        <title>daily 3 | Waiting for the dawn</title>
         <meta name="author" content="Yanxin Xiang">
         <meta name="description" content="">
         <meta name="keywords" content="">
@@ -132,23 +132,14 @@
 
                 <div class="article">
     <div>
-        <h1>dp practice_day 5 </h1>
+        <h1>daily 3 </h1>
     </div>
     <div class="info">
         <span class="date">
             <span class="icon">
                 <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
-            2023/3/9
-        </span>
-        
-        <span class="category">
-            <a href="/categories/Algorithm/">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                Algorithm
-            </a>
+            2023/4/18
         </span>
         
         
@@ -159,12 +150,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/dp/" style="color: #00bcd4">dp</a>
-            </span>
-            
-            <span class="tag">
-                
-                <a href="/tags/dp-practice-plan/" style="color: #00bcd4">dp_practice_plan</a>
+                <a href="/tags/daily/" style="color: #03a9f4">daily</a>
             </span>
             
         </span>
@@ -172,167 +158,121 @@
     </div>
     
     <div class="content" v-pre>
-        <p>CF 347 C</p>
-<p>一道记忆化搜索题，没太多好说的，注意记忆化搜索的方式以及vis数组的更改</p>
+        <p>今天阿里下书面offer了，全心等鹅中</p>
+<p>做了3道背包，明天复习一下背包和状压</p>
+<p>CF 837D</p>
+<p>给你一堆数，求乘积中0的数量最多的数，set的大小为k</p>
+<p>几个数相乘之后的数的0的个数取决于2和5的因数的数量<br>先处理出来，然后<br>$dp[i][j][k]$表示前i个数中选择了j个数，且5的数量为k,2的数量为dp[i][j][k],转移就很清楚了</p>
 <pre><code class="lang-C++">void solve()&#123;
-  int n,m;cin&gt;&gt;n&gt;&gt;m;
-  auto check=[&amp;](int x,int y)&#123;
-    return x&gt;=1&amp;&amp;x&lt;=n&amp;&amp;y&gt;=1&amp;y&lt;=m;
-  &#125;;
-  vector&lt;vector&lt;char&gt;&gt;mp(n+1,vector&lt;char&gt;(m+1));
-  vector&lt;vector&lt;bool&gt;&gt;vis(n+1,vector&lt;bool&gt;(m+1,false));
-  vector&lt;vector&lt;int&gt;&gt;dis(n+1,vector&lt;int&gt;(m+1));
-  auto check_char=[&amp;](int x,int y,int tx,int ty)&#123;
-    return mp[x][y]==&#39;D&#39;&amp;&amp;mp[tx][ty]==&#39;I&#39;||mp[x][y]==&#39;I&#39;&amp;&amp;mp[tx][ty]==&#39;M&#39;||mp[x][y]==&#39;M&#39;&amp;&amp;mp[tx][ty]==&#39;A&#39;||mp[x][y]==&#39;A&#39;&amp;&amp;mp[tx][ty]==&#39;D&#39;;
-  &#125;;
+  int n,k;
+  cin&gt;&gt;n&gt;&gt;k;
+  vector&lt;ll&gt;num(n+1),fac5(n+1),fac2(n+1);
   for(int i=1;i&lt;=n;++i)&#123;
-    for(int j=1;j&lt;=m;++j)&#123;
-        cin&gt;&gt;mp[i][j];
+    cin&gt;&gt;num[i];
+    ll&amp; x=num[i];
+    while(x%5==0)&#123;
+        fac5[i]++;
+        x/=5;
+    &#125;
+    while(x%2==0)&#123;
+        fac2[i]++;
+        x/=2;
     &#125;
   &#125;
-  int ans=0;
-  function&lt;void(int,int)&gt;dfs=[&amp;](int x,int y)&#123;
-    if(dis[x][y])return;
-    vis[x][y]=1;
-    dis[x][y]=1;
-    for(int i=0;i&lt;4;++i)&#123;
-        int tx=x+dir[i][0];
-        int ty=y+dir[i][1];
-        if(!check(tx,ty)||!check_char(x,y,tx,ty))continue;
-        if(vis[tx][ty])&#123;
-            cout&lt;&lt;&quot;Poor Inna!\n&quot;;
-            exit(0);
-        &#125;
-        dfs(tx,ty);
-        dis[x][y]=max(dis[x][y],dis[tx][ty]+1);
-    &#125;
-    vis[x][y]=0;
-  &#125;;
+  vector dp(n+1,vector&lt;ll&gt;(N,-INF));
+  dp[0][0]=0;
   for(int i=1;i&lt;=n;++i)&#123;
-    for(int j=1;j&lt;=m;++j)&#123;
-        if(mp[i][j]==&#39;D&#39;&amp;&amp;!vis[i][j])&#123;//did not appear in other situation
-            dfs(i,j);
-            ans=max(dis[i][j],ans);
+    for(int j=k;j&gt;=1;--j)&#123;
+        for(int l=N-1;l&gt;=fac5[i];--l)&#123;
+            if(num[i])&#123;
+                dp[j][l]=max(dp[j-1][l-fac5[i]]+fac2[i],dp[j][l]);
+            &#125;
         &#125;
     &#125;
   &#125;
-  ans/=4;
-  if(ans==0)&#123;
-    cout&lt;&lt;&quot;Poor Dima!\n&quot;;
-  &#125;else&#123;
-    cout&lt;&lt;ans&lt;&lt;&#39;\n&#39;;
-  &#125;
-  return;
-&#125;
-</code></pre>
-<p>CF 402D</p>
-<p>刚开始看到的时候有点不好下手</p>
-<p>首先我们判断，肯定是要从后往前进行操作，因为从前往后的话会导致你之后的操作无效(前面都变成gcd=1了)<br>题目中的f的值就是这个数含有的good prime数量 -bad prime数量<br>对应去求即可</p>
-<pre><code class="lang-C++">int a[N],g[N];
-int gcd(int a,int b)&#123;
-  return b==0 ? a : gcd(b,a%b);
-&#125;
-set&lt;int&gt;bad;
-pii get_pair(int x)&#123;
-    int posi=0,neg=0;
-    for(int i=2,t=sqrt(x);i&lt;=t;++i)&#123;
-        int cnt=0;
-        while(x%i==0)&#123;
-            x/=i;
-            ++cnt;
-        &#125;
-        if(!cnt)continue;
-        if(bad.count(i))&#123;
-            neg+=cnt;
-        &#125;else&#123;
-            posi+=cnt;
-        &#125;
-    &#125;
-    if(x!=1)&#123;
-        if(bad.count(x))&#123;
-            neg++;
-        &#125;else&#123;
-            posi++;
-        &#125;
-    &#125;
-    return pii(posi,neg);
-&#125;;
-bool check(int x)&#123;
-    pii pr=get_pair(x);
-    return pr.first&lt;pr.second;
-&#125;
-void solve()&#123;
-  int n,m;cin&gt;&gt;n&gt;&gt;m;
-  for(int i=1;i&lt;=n;++i)&#123;
-    cin&gt;&gt;a[i];
-    if(i==1)&#123;
-        g[i]=a[i];
-    &#125;else&#123;
-        g[i]=gcd(a[i],g[i-1]);
-    &#125;
-  &#125;
-  for(int i=1;i&lt;=m;++i)&#123;
-    int x;cin&gt;&gt;x;
-    bad.insert(x);
-  &#125;
-
-  int ans=0,d=1;
-  for(int i=n;i&gt;=1;--i)&#123;
-    if(check(g[i]/d))&#123;
-        d=g[i];
-    &#125;
-    a[i]/=d;
-  &#125;
-  for(int i=1;i&lt;=n;++i)&#123;
-    pii pr=get_pair(a[i]);
-    ans+=pr.first-pr.second;
+  ll ans=0;
+  for(ll i=0;i&lt;N;++i)&#123;
+    ans=max(ans,min(i,dp[k][i]));
   &#125;
   cout&lt;&lt;ans&lt;&lt;&#39;\n&#39;;
   return;
 &#125;
 </code></pre>
-<p>CF 703J</p>
-<p>一开始也是完全没头绪，ans1很好求，就是把杯子按照体积排序，然后选杯子就可以了</p>
-<p>ans2的话，看题解发现是用01背包</p>
-<p>令dp[i][j][k]为前i个杯子，选了j个，总体积为k的不移动的水的最大值，那么有以下转移<br>dp[j][k]=max(dp[j][k],dp[j-1][k-now_vol]+now_rem)<br>注意要逆序枚举,因为是01背包</p>
-<pre><code class="lang-C++">struct bt&#123;
-    int rem,vol;
-&#125;;
-void solve()&#123;
-  int n;cin&gt;&gt;n;
-  vector&lt;bt&gt;a(n+1);
-  ll total=0;
+<p>CF 755F</p>
+<p>首先我们可以发现（指看了题解发现）原关系可以形成很多不同大小的环，那么对于奇数长度的环，我们可以减少${(len/2)+1}$个元素来让之中每个人都没法获得礼物，对于偶数长度的环,这个值则是${len/2}$,那么，我们可以直接01背包开始选喽，但是这样会超时，正确的做法是把每个长度相同的环做成状态压缩之后再选即可</p>
+<pre><code class="lang-C++">void solve()&#123;
+  int n,k;
+  cin&gt;&gt;n&gt;&gt;k;
+  vector&lt;int&gt;vis(n+1),a(vis),num(vis),lens(vis),v(vis);//num: number of rings that has length i,lens: length of i ring
+  int cnt=0;//count of total rings;(distinct size)
+  for(int i=1;i&lt;=n;++i)cin&gt;&gt;a[i];
   for(int i=1;i&lt;=n;++i)&#123;
-    cin&gt;&gt;a[i].rem;
-    total+=a[i].rem;
+    int now=i,len=0;
+    while(!vis[now])&#123;
+        vis[now]=1;
+        ++len;
+        now=a[now];
+    &#125;
+    if(num[len])num[len]++;
+    else num[len]=1,lens[++cnt]=len;
   &#125;
-  for(int i=1;i&lt;=n;++i)&#123;
-    cin&gt;&gt;a[i].vol;
+  ll ans=0;
+  for(int i=1;i&lt;=cnt;++i)&#123;
+    ans+=lens[i]/2*num[lens[i]];
   &#125;
-  sort(a.begin()+1,a.end(),[&amp;](bt a,bt b)&#123;
-    return a.vol&gt;b.vol;
-  &#125;);
-  int ans1=0;
-  ll sum=0;
-  while(total&gt;sum)sum+=a[++ans1].vol;
-  vector dp(n+1,vector&lt;ll&gt;(sum+1,-1000000));
-  dp[0][0]=0;
-  for(int i=1;i&lt;=n;++i)&#123;
-    for(int j=ans1;j&gt;=1;--j)&#123;
-        for(ll k=sum;k&gt;=a[i].vol;--k)&#123;
-            dp[j][k]=max(dp[j][k],dp[j-1][k-a[i].vol]+a[i].rem);
-        &#125;
+  if(ans&gt;=k)&#123;
+    ans=k*2;
+  &#125;else&#123;
+    ans+=k;
+  &#125;
+  ans=min(ans,(ll)n);
+  int tot=0;
+  for(int i=1;i&lt;=cnt;++i)&#123;
+    for(int j=1;j&lt;=num[lens[i]];j&lt;&lt;=1)&#123;
+        v[++tot]=j*lens[i];
+        num[lens[i]]-=j;
+    &#125;
+    if(num[lens[i]])&#123;
+        v[++tot]=num[lens[i]]*lens[i];
     &#125;
   &#125;
-  ll ans2=0;
-  for(int i=total;i&lt;=sum;++i)&#123;
-    ans2=max(ans2,dp[ans1][i]);
+  bitset&lt;N&gt;dp;
+  dp.set(0);
+  for(int i=1;i&lt;=tot;++i)&#123;
+    dp|=(dp&lt;&lt;v[i]);
   &#125;
-  cout&lt;&lt;ans1&lt;&lt;&#39; &#39;&lt;&lt;total-ans2&lt;&lt;&#39;\n&#39;;
+  if(dp.test(k))&#123;
+    cout&lt;&lt;k&lt;&lt;&#39; &#39;&lt;&lt;ans&lt;&lt;&#39;\n&#39;;
+  &#125;else&#123;
+    cout&lt;&lt;k+1&lt;&lt;&#39; &#39;&lt;&lt;ans&lt;&lt;&#39;\n&#39;;
+  &#125;
   return;
 &#125;
 </code></pre>
-<p>明天复习OS，写一下在NU上的CS的笔记吧，惹啊！</p>
+<p>CF 510D</p>
+<p>一开始也没想出来，看题解了之后发现只要选择的数gcd=1就可以了。。。感觉自己好傻逼，那么用map优化一下空间复杂度就好了</p>
+<pre><code class="lang-C++">int gcd(int a,int b)&#123;return b?gcd(b,a%b):a;&#125;
+void solve()&#123;
+  int n;cin&gt;&gt;n;
+  vector&lt;int&gt;l(n),c(n);
+  for(int i=0;i&lt;n;++i)cin&gt;&gt;l[i];
+  for(int i=0;i&lt;n;++i)cin&gt;&gt;c[i];
+  map&lt;int,int&gt;dp;
+  dp[0]=0;
+  for(int i=0;i&lt;n;++i)&#123;
+    for(auto&amp; k:dp)&#123;
+        int tmp=gcd(l[i],k.first);
+        if(dp[tmp]!=0)&#123;
+            dp[tmp]=min(dp[tmp],k.second+c[i]);
+        &#125;else&#123;
+            dp[tmp]=k.second+c[i];
+        &#125;
+    &#125;
+  &#125;
+  cout&lt;&lt;(dp.count(1)?dp[1]:-1)&lt;&lt;&#39;\n&#39;;
+  return;
+&#125;
+</code></pre>
 
     </div>
     
