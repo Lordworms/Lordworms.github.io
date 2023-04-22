@@ -1,0 +1,290 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>CS 339 shits | Waiting for the dawn</title>
+        <meta name="author" content="Yanxin Xiang">
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+        <link rel="icon" href="https://i.ibb.co/RN7PTvk/avator.jpg">
+        <script src="https://cdn.staticfile.org/vue/3.2.45/vue.global.prod.min.js"></script>
+        <script src="https://cdn.staticfile.org/highlight.js/11.7.0/highlight.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/11.7.0/styles/github.min.css">
+        <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/6.2.1/css/all.min.css">
+        
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+        
+        
+        <script src="https://cdn.staticfile.org/KaTeX/0.16.4/katex.min.js"></script>
+        <script src="https://cdn.staticfile.org/KaTeX/0.16.4/contrib/auto-render.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.staticfile.org/KaTeX/0.16.4/katex.min.css">
+        
+        
+        <link rel="stylesheet" href="/css/fonts.min.css">
+        <link rel="stylesheet" href="/css/particlex.css">
+    <meta name="generator" content="Hexo 6.3.0"></head>
+    <body>
+        <div id="loading" style="height: 100vh; width: 100vw; left: 0; top: 0; position: fixed; display: flex; z-index: 2147483647; background: #fff; transition: opacity 0.3s ease-out; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; pointer-events: none">
+    <div style="width: 50vmin; height: 50vmin; margin: auto; padding: 50px; border-radius: 50%; display: flex; border: solid 10px #a3ddfb">
+        <div style="margin: auto; text-align: center">
+            <h2>LOADING</h2>
+            <p>加载过慢请开启缓存，浏览器默认开启</p>
+            <img src="/images/loading.gif" style="height: 50px; border-radius: 0">
+        </div>
+    </div>
+</div>
+
+        <div id="layout">
+            <transition name="into">
+            <div id="main" v-show="showpage" style="display: -not-none">
+                <nav id="menu">
+    <div class="desktop-menu">
+        <a class="title" href="/">
+            <span>WAITING FOR THE DAWN</span>
+        </a>
+        
+        <a href="/">
+            <i class="fa-solid fa-house fa-fw"></i>
+            <span>&ensp;Home</span>
+        </a>
+        
+        <a href="/about">
+            <i class="fa-solid fa-id-card fa-fw"></i>
+            <span>&ensp;About</span>
+        </a>
+        
+        <a href="/archives">
+            <i class="fa-solid fa-box-archive fa-fw"></i>
+            <span>&ensp;Archives</span>
+        </a>
+        
+        <a href="/categories">
+            <i class="fa-solid fa-bookmark fa-fw"></i>
+            <span>&ensp;Categories</span>
+        </a>
+        
+        <a href="/tags">
+            <i class="fa-solid fa-tags fa-fw"></i>
+            <span>&ensp;Tags</span>
+        </a>
+        
+    </div>
+    <div :class="&quot;phone-menu &quot; + menushow" id="phone-menu">
+        <div class="curtain" @click="menushow = !menushow" v-show="menushow"></div>
+        <div class="title" @click="menushow = !menushow">
+            <i class="fa-solid fa-bars fa-fw"></i>
+            <span>&emsp;WAITING FOR THE DAWN</span>
+        </div>
+        <transition name="slide">
+        <div class="items" v-show="menushow">
+            
+            <a href="/">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-house fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Home</div>
+                </div>
+            </a>
+            
+            <a href="/about">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-id-card fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">About</div>
+                </div>
+            </a>
+            
+            <a href="/archives">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-box-archive fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Archives</div>
+                </div>
+            </a>
+            
+            <a href="/categories">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-bookmark fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Categories</div>
+                </div>
+            </a>
+            
+            <a href="/tags">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-tags fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Tags</div>
+                </div>
+            </a>
+            
+        </div>
+        </transition>
+    </div>
+</nav>
+
+                <div class="article">
+    <div>
+        <h1>CS 339 shits </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/4/21
+        </span>
+        
+        
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/class/" style="color: #03a9f4">class</a>
+            </span>
+            
+        </span>
+        
+    </div>
+    
+    <div class="content" v-pre>
+        <h3 id="1-HAVING用于筛选分组后的，WHERE用于筛选分组前的"><a href="#1-HAVING用于筛选分组后的，WHERE用于筛选分组前的" class="headerlink" title="1.HAVING用于筛选分组后的，WHERE用于筛选分组前的"></a>1.HAVING用于筛选分组后的，WHERE用于筛选分组前的</h3><h3 id="2-为什么要用buffer-pool而不是用OS"><a href="#2-为什么要用buffer-pool而不是用OS" class="headerlink" title="2.为什么要用buffer pool而不是用OS"></a>2.为什么要用buffer pool而不是用OS</h3><h4 id="a-Transaction-Safety"><a href="#a-Transaction-Safety" class="headerlink" title="a.Transaction Safety"></a>a.Transaction Safety</h4><p>OS could flush dirty pages at any time</p>
+<h4 id="b-I-O-Stalls"><a href="#b-I-O-Stalls" class="headerlink" title="b.I/O Stalls"></a>b.I/O Stalls</h4><p>DBMS doesn’t know which pages are in memory<br>So the OS would stall a thread on page fault</p>
+<h4 id="c-Error-Handling"><a href="#c-Error-Handling" class="headerlink" title="c.Error Handling"></a>c.Error Handling</h4><p>Difficult to validate pages. Any access can cause a SIGBUS that the DBMS must handle</p>
+<h4 id="d-Performance-Issues"><a href="#d-Performance-Issues" class="headerlink" title="d.Performance Issues"></a>d.Performance Issues</h4><p>OS data structure contention. TLB shootdowns</p>
+<h4 id="In-a-nutshell"><a href="#In-a-nutshell" class="headerlink" title="In a nutshell"></a>In a nutshell</h4><p>→ Flushing dirty pages to disk in the correct order.<br>→ Specialized prefetching.<br>→ Buffer replacement policy.<br>→ Thread/process scheduling.</p>
+<h3 id="HEAP-FILE"><a href="#HEAP-FILE" class="headerlink" title="HEAP FILE"></a>HEAP FILE</h3><p>A heap file is an unordered collection of pages<br>with tuples that are stored in random order.<br>Need meta-data to keep track of what pages exist in multiple files and which ones have free space.</p>
+<p>In order to do that, it has a page directory to track locations of data pages and records meta-data about avaliable space</p>
+<h3 id="Three-Types"><a href="#Three-Types" class="headerlink" title="Three Types"></a>Three Types</h3><p>On-Line Transaction Processing (OLTP)(Row Store)<br>→ Fast operations that only read/update a small amount of data each time.</p>
+<p>On-Line Analytical Processing (OLAP)(Column Store)<br>→ Complex queries that read a lot of data to compute aggregates.</p>
+<p>Hybrid Transaction + Analytical Processing<br>→ OLTP + OLAP together on the same database.</p>
+<h3 id="NSM-and-DSM"><a href="#NSM-and-DSM" class="headerlink" title="NSM and DSM"></a>NSM and DSM</h3><p>refer to row-storage and colum-storage</p>
+<h3 id="NSM-quality"><a href="#NSM-quality" class="headerlink" title="NSM quality"></a>NSM quality</h3><p>Advantages<br>→ Fast inserts, updates, and deletes.<br>→ Good for queries that need the entire tuple.<br>Disadvantages<br>→ Not good for scanning large portions of the table and/or a subset of the attributes.</p>
+<h3 id="DSM-quality"><a href="#DSM-quality" class="headerlink" title="DSM quality"></a>DSM quality</h3><p>Advantages<br>→ Reduces the amount of wasted I/O because the DBMS only reads the data that it needs.<br>→ Better query processing and data compression (more on this later).<br>Disadvantages<br>→ Slow for point queries, inserts, updates, and deletes because of tuple splitting/stitching.</p>
+<h3 id="TUPLE-IDENTIFICATION"><a href="#TUPLE-IDENTIFICATION" class="headerlink" title="TUPLE IDENTIFICATION"></a>TUPLE IDENTIFICATION</h3><h4 id="1-fixed-length-offset"><a href="#1-fixed-length-offset" class="headerlink" title="1.fixed-length offset"></a>1.fixed-length offset</h4><p>Each value is the same length for an attribute.</p>
+<h4 id="2-Embedded-Tuple-Ids"><a href="#2-Embedded-Tuple-Ids" class="headerlink" title="2.Embedded Tuple Ids"></a>2.Embedded Tuple Ids</h4><p>Each value is stored with its tuple id in a column.</p>
+<h3 id="COMPRESS-METHOD"><a href="#COMPRESS-METHOD" class="headerlink" title="COMPRESS METHOD"></a>COMPRESS METHOD</h3><h4 id="GOAL"><a href="#GOAL" class="headerlink" title="GOAL"></a>GOAL</h4><p>1.Must produce fixed-length values.<br>2.Postpone decompression for as long as possible during query execution.<br>3.Must be a lossless scheme.</p>
+<h4 id="FOUR-GRANULARITY"><a href="#FOUR-GRANULARITY" class="headerlink" title="FOUR GRANULARITY"></a>FOUR GRANULARITY</h4><p>1.Block-level</p>
+<p>Compress a block of tuples for the same table.</p>
+<p>2.Tuple-level</p>
+<p>Compress the contents of the entire tuple (NSM-only).</p>
+<p>3.Attribute-level</p>
+<p>Compress a single attribute within one tuple (overflow).</p>
+<p>4.Column-level</p>
+<p>Compress multiple values for one or more attributes stored for multiple tuples (DSM-only).</p>
+<h4 id="COLUMNAR-COMPRESSION"><a href="#COLUMNAR-COMPRESSION" class="headerlink" title="COLUMNAR COMPRESSION"></a>COLUMNAR COMPRESSION</h4><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>type</th>
+<th>characteristics</th>
+<th>drawbacks</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Run-length Encoding</td>
+<td>1.compress the start and length of a certain value(also the certain value itself)</td>
+<td></td>
+</tr>
+<tr>
+<td>Bit-Packing Encoding</td>
+<td>When values for an attribute are always less than the value’s declared largest size, store them as smaller data type.(long long to short)</td>
+<td></td>
+</tr>
+<tr>
+<td>Bitmap Encoding</td>
+<td>for a value of just two kinds, if it is positive, then store 1 otherwise store 0</td>
+<td>only possible when value cardinality is low.</td>
+</tr>
+<tr>
+<td>Delta Encoding</td>
+<td>Recording the difference between values that</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>follow each other in the same column.<br><br>→ Store base value inline.<br><br>→ Combine with RLE to get even better compression.||<br>|Incremental Encoding|Type of delta encoding that avoids duplicating common prefixes/suffixes between consecutive tuples. This works best with sorted data.||<br>|Dictionary Encoding|Build a data structure that maps variable- length values to a smaller integer identifier.<br>Replace those values with their corresponding<br>identifier in the dictionary data structure. <br>→ Need to support fast encoding and decoding. <br>→ Need to also support range queries.||</p>
+<h3 id="How-the-DBMS-manages-its-memory-and-moves-data-back-and-forth-from-disk"><a href="#How-the-DBMS-manages-its-memory-and-moves-data-back-and-forth-from-disk" class="headerlink" title="How the DBMS manages its memory and moves data back-and-forth from disk."></a>How the DBMS manages its memory and moves data back-and-forth from disk.</h3><h4 id="two-concerns"><a href="#two-concerns" class="headerlink" title="two concerns"></a>two concerns</h4><p>Spatial Control and Temporal Control</p>
+<h4 id="structure-in-Memory"><a href="#structure-in-Memory" class="headerlink" title="structure in Memory"></a>structure in Memory</h4><p>The page table keeps track of pages that are currently in memory.<br>Also maintains additional meta-<br>data per page:<br>→ Dirty Flag<br>→ Pin/Reference Counter<br><img src="https://i.ibb.co/sgVFYt5/WX20230421-143344-2x.png" alt="avator"></p>
+<h4 id="PAGE-TABLE-VS-PAGE-DIRECTORY"><a href="#PAGE-TABLE-VS-PAGE-DIRECTORY" class="headerlink" title="PAGE TABLE VS. PAGE DIRECTORY"></a>PAGE TABLE VS. PAGE DIRECTORY</h4><p>The page directory is the mapping from<br>page ids to page locations in database files. <br>→ All changes must be recorded on disk to allow the<br>DBMS to find them on restart.<br><br>The page table is the mapping from page ids<br>to a copy of the page in buffer pool frames. → This is an in-memory data structure that does not<br><br>need to be stored on disk.</p>
+<h4 id="ALLOCATION-POLICIES"><a href="#ALLOCATION-POLICIES" class="headerlink" title="ALLOCATION POLICIES"></a>ALLOCATION POLICIES</h4><p>Global Policies:<br><br>→ Make decisions for all active queries.<br><br>Local Policies:<br><br>→ Allocate frames to specific queries without considering the behavior of concurrent queries.<br><br>→ Still need to support sharing pages.<br></p>
+<h3 id="MULTIPLE-BUFFER-POOL"><a href="#MULTIPLE-BUFFER-POOL" class="headerlink" title="MULTIPLE BUFFER POOL"></a>MULTIPLE BUFFER POOL</h3><p><img src="https://i.ibb.co/DtXvnfd/WX20230421-144207-2x.png" alt="avator"></p>
+<h3 id="PRE-FETCHING"><a href="#PRE-FETCHING" class="headerlink" title="PRE-FETCHING"></a>PRE-FETCHING</h3><p>Sequential Scan + Index Scan</p>
+<h3 id="SCAN-SHARING"><a href="#SCAN-SHARING" class="headerlink" title="SCAN-SHARING"></a>SCAN-SHARING</h3><p>Queries can reuse data retrieved from<br>storage or operator computations.</p>
+<p>If a query wants to scan a table and another query is already doing this, then the DBMS will attach the second query’s cursor to the existing cursor.</p>
+<h3 id="BUFFER-POOL-BYPASS"><a href="#BUFFER-POOL-BYPASS" class="headerlink" title="BUFFER POOL BYPASS"></a>BUFFER POOL BYPASS</h3><p>The sequential scan operator will not store<br>fetched pages in the buffer pool to avoid<br>overhead.</p>
+<h3 id="OS-PAGE-CACHE"><a href="#OS-PAGE-CACHE" class="headerlink" title="OS PAGE CACHE"></a>OS PAGE CACHE</h3><p>Most disk operations go through the OS API. Unless the DBMS tells it not to, the OS maintains its own filesystem cache (aka page cache, buffer cache).</p>
+<h3 id="BUFFER-REPLACEMENT-POLICIES"><a href="#BUFFER-REPLACEMENT-POLICIES" class="headerlink" title="BUFFER REPLACEMENT POLICIES"></a>BUFFER REPLACEMENT POLICIES</h3><p>When the DBMS needs to free up a frame to make room for a new page, it must decide which page to evict from the buffer pool.</p>
+<h4 id="1-LEAST-RECENTLY-USED"><a href="#1-LEAST-RECENTLY-USED" class="headerlink" title="1.LEAST-RECENTLY USED"></a>1.LEAST-RECENTLY USED</h4><h4 id="2-CLOCK"><a href="#2-CLOCK" class="headerlink" title="2.CLOCK"></a>2.CLOCK</h4><h4 id="3-MOST-RECENTLY-USED"><a href="#3-MOST-RECENTLY-USED" class="headerlink" title="3.MOST-RECENTLY USED"></a>3.MOST-RECENTLY USED</h4><h4 id="4-LRU-K"><a href="#4-LRU-K" class="headerlink" title="4.LRU-K"></a>4.LRU-K</h4><p>Track the history of last K references to each page as timestamps and compute the interval between subsequent accesses.</p>
+<h4 id="5-LOCALIZATION"><a href="#5-LOCALIZATION" class="headerlink" title="5.LOCALIZATION"></a>5.LOCALIZATION</h4><p>The DBMS chooses which pages to evict on<br>a per query basis. This minimizes the<br>pollution of the buffer pool from each query. → Keep track of the pages that a query has accessed.</p>
+<h3 id="HASH-TABLES"><a href="#HASH-TABLES" class="headerlink" title="HASH TABLES"></a>HASH TABLES</h3><h4 id="HASH-FUNCTIONS"><a href="#HASH-FUNCTIONS" class="headerlink" title="HASH FUNCTIONS"></a>HASH FUNCTIONS</h4><p>We want something that is fast and has a low collision rate.<br><br>SOTA:facebook XXHash</p>
+<h4 id="STATIC-HASH-TABLES"><a href="#STATIC-HASH-TABLES" class="headerlink" title="STATIC HASH TABLES"></a>STATIC HASH TABLES</h4><p>Allocate a giant array that has one slot for every element you need to store.</p>
+<p>To find an entry, mod the key by the number of elements to find the offset in the array.</p>
+<h5 id="1-Linear-Probe-Hashing"><a href="#1-Linear-Probe-Hashing" class="headerlink" title="1.Linear Probe Hashing"></a>1.Linear Probe Hashing</h5><p>Single giant table of slots.<br><br>Resolve collisions by linearly searching for<br>the next free slot in the table.</p>
+<p>problems happens when delete</p>
+<p>approaches:<br>|ways|how|<br>|-|-|<br>|Re-hash|Re-hash and update the slots for all keys.<br>→ Nobody actually does this.|<br>|Tomb Stone|→ Set a marker indicating that the entry in the slot is logically deleted.<br><br>→ You can reuse the slot for inserting new keys.<br><br>→ May require periodic garbage collection.|</p>
+<h6 id="NON-UNIQUE-KEYS"><a href="#NON-UNIQUE-KEYS" class="headerlink" title="NON-UNIQUE KEYS"></a>NON-UNIQUE KEYS</h6><p><img src="https://i.ibb.co/dcLfk41/WX20230421-150954-2x.png" alt="avator"></p>
+<h4 id="2-ROBINHOOD-HASHING"><a href="#2-ROBINHOOD-HASHING" class="headerlink" title="2. ROBINHOOD HASHING"></a>2. ROBINHOOD HASHING</h4><p>→ Each key tracks the number of positions they are<br>from its optimal position in the table.<br>→ On insert, a key takes the slot of another key if the<br>first key is farther away from its optimal position than the second key.</p>
+<h4 id="3-CUCKOO-HASHING"><a href="#3-CUCKOO-HASHING" class="headerlink" title="3.CUCKOO HASHING"></a>3.CUCKOO HASHING</h4><p>Use multiple hash tables with different hash<br>function seeds.<br><br>→ On insert, check every table and pick anyone that has<br>a free slot.<br><br>→ If no table has a free slot, evict the element from one of<br>them and then re-hash it find a new location.<br></p>
+<h4 id="Dynamic-hash-tables"><a href="#Dynamic-hash-tables" class="headerlink" title="Dynamic hash tables"></a>Dynamic hash tables</h4><p>Dynamic hash tables resize themselves on<br>demand.</p>
+<h5 id="CHAINED-HASHING"><a href="#CHAINED-HASHING" class="headerlink" title="CHAINED HASHING"></a>CHAINED HASHING</h5><p>Maintain a linked list of buckets for each slot in the hash table.<br>Resolve collisions by placing all elements with the same hash key into the same bucket.<br><br>→ To determine whether an element is present, hash<br>to its bucket and scan for it.<br><br>→ Insertions and deletions are generalizations of<br>lookups.<br></p>
+<p>adding at the end of the linked list</p>
+<h5 id="EXTENDIBLE-HASH-TABLE"><a href="#EXTENDIBLE-HASH-TABLE" class="headerlink" title="EXTENDIBLE HASH TABLE"></a>EXTENDIBLE HASH TABLE</h5><p>look at some bits (local and global)</p>
+<p>split when overflow</p>
+<h5 id="LINEAR-HASHING"><a href="#LINEAR-HASHING" class="headerlink" title="LINEAR HASHING"></a>LINEAR HASHING</h5><p>The hash table maintains a pointer that<br>tracks the next bucket to split.<br><br>→ When any bucket overflows, split the bucket at the<br>pointer location.<br><br>Use multiple hashes to find the right bucket for a given key.<br>Can use different overflow criterion:<br><br>→ Space Utilization<br><br>→ Average Length of Overflow Chains</p>
+<p>ABOVE: use new hash function</p>
+<p>BELOW: use old hash function</p>
+
+    </div>
+    
+    
+    
+    
+    
+    
+    
+</div>
+
+                <footer id="footer">
+    <div class="footer-wrap">
+        <div>
+            &copy;
+            2022 - 2023 Waiting for the dawn
+            <span class="footer-icon">
+                <i class="fa-solid fa-font-awesome fa-fw"></i>
+            </span>
+            &commat;Yanxin Xiang
+        </div>
+        <div>Based on the <a target="_blank" rel="noopener" href="https://hexo.io">Hexo Engine</a> &amp; <a target="_blank" rel="noopener" href="https://github.com/argvchs/hexo-theme-particlex">ParticleX Theme</a></div>
+        
+    </div>
+</footer>
+
+            </div>
+            </transition>
+            <div id="showimg">
+                <img id="showimg-content">
+            </div>
+        </div>
+        <script src="/js/functions.js"></script>
+<script src="/js/particlex.js"></script>
+
+
+
+
+
+
+
+    </body>
+</html>
