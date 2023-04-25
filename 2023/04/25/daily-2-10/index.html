@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>daily 3 | Waiting for the dawn</title>
+        <title>daily 2 | Waiting for the dawn</title>
         <meta name="author" content="Yanxin Xiang">
         <meta name="description" content="">
         <meta name="keywords" content="">
@@ -132,14 +132,14 @@
 
                 <div class="article">
     <div>
-        <h1>daily 3 </h1>
+        <h1>daily 2 </h1>
     </div>
     <div class="info">
         <span class="date">
             <span class="icon">
                 <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
-            2023/3/27
+            2023/4/25
         </span>
         
         
@@ -150,17 +150,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/daily/" style="color: #ff7d73">daily</a>
-            </span>
-            
-            <span class="tag">
-                
-                <a href="/tags/Codeforces/" style="color: #ff7d73">Codeforces</a>
-            </span>
-            
-            <span class="tag">
-                
-                <a href="/tags/constructive-problem/" style="color: #00a596">constructive problem</a>
+                <a href="/tags/daily/" style="color: #ffa2c4">daily</a>
             </span>
             
         </span>
@@ -168,86 +158,117 @@
     </div>
     
     <div class="content" v-pre>
-        <p>CF 643B</p>
-<p>这样构造就可以了</p>
-<pre><code>a      b
-|中间连接|
-c      d
-</code></pre><pre><code class="lang-C++">void solve()&#123;
-  int n,k,a,b,c,d;
-  cin&gt;&gt;n&gt;&gt;k&gt;&gt;a&gt;&gt;b&gt;&gt;c&gt;&gt;d;
-  if(k&lt;n+1||n==4)&#123;
-    cout&lt;&lt;-1&lt;&lt;&#39;\n&#39;;
-  &#125;
-  else&#123;
-    vector&lt;int&gt;vis(n+1);
-    vis[a]=vis[b]=vis[c]=vis[d]=1;
-    cout&lt;&lt;a&lt;&lt;&#39; &#39;&lt;&lt;c&lt;&lt;&#39; &#39;;
-    for(int i=1;i&lt;=n;++i)&#123;
-        if(!vis[i])cout&lt;&lt;i&lt;&lt;&#39; &#39;;
-    &#125;
-    cout&lt;&lt;d&lt;&lt;&#39; &#39;&lt;&lt;b&lt;&lt;&#39;\n&#39;;
-    cout&lt;&lt;c&lt;&lt;&#39; &#39;&lt;&lt;a&lt;&lt;&#39; &#39;;
-    for(int i=1;i&lt;=n;++i)&#123;
-        if(!vis[i])cout&lt;&lt;i&lt;&lt;&#39; &#39;;
-    &#125;
-    cout&lt;&lt;b&lt;&lt;&#39; &#39;&lt;&lt;d&lt;&lt;&#39;\n&#39;;
-  &#125;
-  return;
-&#125;
-</code></pre>
-<p>CF 644B</p>
-<p>常规</p>
-<pre><code class="lang-C++">void solve()&#123;
-  int n,b;
-  cin&gt;&gt;n&gt;&gt;b;
-  deque&lt;ll&gt;q;
-  vector&lt;ll&gt;t(n),d(n);
-  for(int i=0;i&lt;n;++i)&#123;
-    cin&gt;&gt;t[i]&gt;&gt;d[i];
-  &#125;
-  for(int i=0;i&lt;n;++i)&#123;
-    while(q.size()&amp;&amp;q.front()&lt;=t[i])&#123;
-        q.pop_front();
-    &#125;
-    if(q.empty())&#123;
-        q.push_back(t[i]+d[i]);
-        cout&lt;&lt;q.front()&lt;&lt;&#39; &#39;;
-    &#125;else&#123;
-        if(q.size()&gt;b)&#123;
-            cout&lt;&lt;-1&lt;&lt;&quot; &quot;;
-        &#125;else&#123;
-            cout&lt;&lt;q.back()+d[i]&lt;&lt;&#39; &#39;;
-            q.push_back(q.back()+d[i]);
-        &#125;
-    &#125;
-  &#125;
-  return;
-&#125;
-</code></pre>
-<p>CF 662D</p>
-<p>长度为k的后缀可以表示$\sum_{1}^k(10^i)$个不同的值，那么我们加一下，然后每次加上base即可</p>
+        <p>两道树形DP</p>
+<p>CF 212E</p>
+<p>我们很容易就能想到，我们搞一个无色点，然后其余两部分都一样的颜色，这样可以最大化我们的汉堡店数量，那么具体怎么枚举呢？，也很简单，就是枚举对应的根的序号，然后计算对应的子树大小，最后用01背包的思想枚举左右两个部分即可</p>
 <pre><code class="lang-C++">void solve()&#123;
   int n;
   cin&gt;&gt;n;
-  for(int i=0;i&lt;n;++i)&#123;
-    string s;
-    cin&gt;&gt;s;
-    s=s.substr(4);
-    int num=stoi(s);
-    int base=10,tmp=0;
-    for(int i=1;i&lt;s.size();++i)&#123;
-        tmp+=base;
-        base*=10;
+  vector&lt;vector&lt;int&gt;&gt;E(n+1);
+  for(int i=0;i&lt;n-1;++i)&#123;
+    int u,v;
+    cin&gt;&gt;u&gt;&gt;v;
+    E[u].push_back(v);
+    E[v].push_back(u);
+  &#125;
+  vector&lt;int&gt;dp(n+1),siz(n+1);
+  function&lt;void(int,int)&gt;dfs=[&amp;](int x,int f)&#123;
+    siz[x]=1;
+    for(int v:E[x])&#123;
+        if(v==f)continue;
+        dfs(v,x);
+        siz[x]+=siz[v];
     &#125;
-    while(1989+tmp&gt;num)
-        num+=base;
-    cout&lt;&lt;num&lt;&lt;&#39;\n&#39;;
+  &#125;;
+  vector&lt;int&gt;ans(n+1);
+  for(int i=1;i&lt;=n;++i)&#123;
+    fill(dp.begin(),dp.end(),0);
+    fill(siz.begin(),siz.end(),0);
+    dfs(i,-1);
+    dp[0]=1;
+    for(int v:E[i])&#123;
+        int size=siz[v];
+        for(int vol=n;vol&gt;=size;--vol)&#123;
+            if(dp[vol-size])&#123;
+                dp[vol]=ans[vol]=1;
+            &#125;
+        &#125;
+    &#125;
+  &#125;
+  int cnt=0;
+  for(int i=1;i&lt;=n-2;++i)&#123;
+    if(ans[i])++cnt;
+  &#125;
+  cout&lt;&lt;cnt&lt;&lt;&#39;\n&#39;;
+  for(int i=1;i&lt;=n-2;++i)&#123;
+    if(ans[i])&#123;
+        cout&lt;&lt;i&lt;&lt;&#39; &#39;&lt;&lt;(n-1-i)&lt;&lt;&#39;\n&#39;;
+    &#125;
   &#125;
   return;
 &#125;
 </code></pre>
-<p>今晚开始要连面四场，有点难熬</p>
+<p>CF 763A</p>
+<p>另一道树形dp，我们先处理出每棵子树是不是只含有相同颜色，这是第一遍dfs，第二遍dfs，我们进行点的枚举，具体逻辑看代码，很好理解</p>
+<pre><code class="lang-C++">void solve()&#123;
+  int n;
+  cin&gt;&gt;n;
+  vector&lt;vector&lt;int&gt;&gt;E(n+1);
+  vector&lt;int&gt;c(n+1);
+  for(int i=0;i&lt;n-1;++i)&#123;
+    int u,v;
+    cin&gt;&gt;u&gt;&gt;v;
+    E[u].push_back(v);
+    E[v].push_back(u);
+  &#125;
+  for(int i=1;i&lt;=n;++i)cin&gt;&gt;c[i];
+  vector&lt;int&gt;dp(n+1);
+  function&lt;void(int,int)&gt;dfs1=[&amp;](int x,int f)&#123;
+    dp[x]=1;
+    for(int v:E[x])&#123;
+        if(v==f)continue;
+        dfs1(v,x);
+        if(c[x]!=c[v]||dp[v]!=1)&#123;
+            dp[x]=0;
+        &#125;
+    &#125;
+  &#125;;
+  dfs1(1,0);
+  function&lt;int(int,int,int)&gt;dfs2=[&amp;](int x,int f,int last)&#123;
+    int cnt1=0,cnt2=0,nxt=-1;
+    for(int v:E[x])&#123;
+        if(v==f)continue;
+        if(dp[v])&#123;
+            ++cnt1;
+            if(c[v]==c[x])&#123;
+                ++cnt2;//how many subtrees are the same color as root
+            &#125;
+        &#125;else&#123;
+            nxt=v;
+        &#125;
+    &#125;
+    int siz=E[x].size();
+    if(x!=1)--siz;
+    if(cnt1==siz)&#123;
+        return x;
+    &#125;
+    if(cnt2==siz-1&amp;&amp;c[x]==last)&#123;
+        int res=dfs2(nxt,x,c[x]);
+        if(res!=-1)&#123;
+            return res;
+        &#125;
+    &#125;
+    return -1;
+  &#125;;
+  int ans=dfs2(1,0,c[1]);
+  if(ans!=-1)&#123;
+    cout&lt;&lt;&quot;YES&quot;&lt;&lt;&#39;\n&#39;&lt;&lt;ans;
+  &#125;else&#123;
+    cout&lt;&lt;&quot;NO\n&quot;;
+  &#125;
+  return;
+&#125;
+</code></pre>
 
     </div>
     
