@@ -150,7 +150,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/class/" style="color: #ffa2c4">class</a>
+                <a href="/tags/class/" style="color: #03a9f4">class</a>
             </span>
             
         </span>
@@ -245,6 +245,30 @@
 <h5 id="LINEAR-HASHING"><a href="#LINEAR-HASHING" class="headerlink" title="LINEAR HASHING"></a>LINEAR HASHING</h5><p>The hash table maintains a pointer that<br>tracks the next bucket to split.<br><br>→ When any bucket overflows, split the bucket at the<br>pointer location.<br><br>Use multiple hashes to find the right bucket for a given key.<br>Can use different overflow criterion:<br><br>→ Space Utilization<br><br>→ Average Length of Overflow Chains</p>
 <p>ABOVE: use new hash function</p>
 <p>BELOW: use old hash function</p>
+<h3 id="B-TREE"><a href="#B-TREE" class="headerlink" title="B TREE"></a>B TREE</h3><p>for a M-way B tree, the number of keys is in [M/2 -1, M-1] so the number of children is between [M/2,M]</p>
+<h4 id="Time-complexity"><a href="#Time-complexity" class="headerlink" title="Time complexity"></a>Time complexity</h4><p>query: log(n)</p>
+<p>delete: log(n)</p>
+<p>insert: log(n)</p>
+<h4 id="two-approaches-of-leaf-data"><a href="#two-approaches-of-leaf-data" class="headerlink" title="two approaches of leaf data"></a>two approaches of leaf data</h4><p>1.store RecordID</p>
+<p>2.store Tuple Data</p>
+<h4 id="Insert"><a href="#Insert" class="headerlink" title="Insert"></a>Insert</h4><p>1.find the corresponding leaf</p>
+<p>2.if the leaf is not full, add into it</p>
+<p>3.otherwise, split the node, and add one extra midlle value node to its father</p>
+<p>4.repeat this operation until root node</p>
+<h4 id="Deletion"><a href="#Deletion" class="headerlink" title="Deletion"></a>Deletion</h4><p>Start at root, find leaf L where entry belongs. Remove the entry.<br>If L is at least half-full, done!<br>If L has only M/2-1 entries,<br>→ Try to re-distribute, borrowing from sibling (adjacent<br>node with same parent as L).<br>→ If re-distribution fails, merge L and sibling.<br>If merge occurred, must delete entry (pointing to L or sibling) from parent of L.</p>
+<h4 id="DUPLICATE-KEY-METHODS"><a href="#DUPLICATE-KEY-METHODS" class="headerlink" title="DUPLICATE KEY METHODS"></a>DUPLICATE KEY METHODS</h4><p>Approach #1: Append Record ID<br><br>→ Add the tuple’s unique Record ID as part of the key to ensure that all keys are unique.<br><br>→ The DBMS can still use partial keys to find tuples.<br><br>Approach #2: Overflow Leaf Nodes<br><br>→ Allow leaf nodes to spill into overflow nodes that contain the duplicate keys.<br><br>→ This is more complex to maintain and modify.<br></p>
+<h4 id="B-TREE-DESIGN-CHOICE"><a href="#B-TREE-DESIGN-CHOICE" class="headerlink" title="B+ TREE DESIGN CHOICE"></a>B+ TREE DESIGN CHOICE</h4><h5 id="NODE-SIZE"><a href="#NODE-SIZE" class="headerlink" title="NODE SIZE"></a>NODE SIZE</h5><p>The slower the storage device, the larger the<br>optimal node size for a B+Tree.<br> → HDD: ~1MB<br>→ SSD: ~10KB<br><br>→ In-Memory: ~512B<br><br>Optimal sizes can vary depending on the<br>workload<br>→ Leaf Node Scans vs. Root-to-Leaf Traversals<br></p>
+<h5 id="MERGE-THRESHOLD"><a href="#MERGE-THRESHOLD" class="headerlink" title="MERGE THRESHOLD"></a>MERGE THRESHOLD</h5><p>Some DBMSs do not always merge nodes when they are half full.<br>Delaying a merge operation may reduce the amount of reorganization.<br>It may also be better to just let smaller nodes exist and then periodically rebuild entire tree.</p>
+<h5 id="VARIABLE-LENGTH-KEYS"><a href="#VARIABLE-LENGTH-KEYS" class="headerlink" title="VARIABLE-LENGTH KEYS"></a>VARIABLE-LENGTH KEYS</h5><p><img src="https://i.ibb.co/ygFSxSf/WX20230425-205542-2x.png" alt="avator"></p>
+<h5 id="INTRA-NODE-SEARCH"><a href="#INTRA-NODE-SEARCH" class="headerlink" title="INTRA-NODE SEARCH"></a>INTRA-NODE SEARCH</h5><p>Linear<br>Binary<br>Interpolate</p>
+<h4 id="LOCKS-AND-LATCHES"><a href="#LOCKS-AND-LATCHES" class="headerlink" title="LOCKS AND LATCHES"></a>LOCKS AND LATCHES</h4><p><img src="https://i.ibb.co/MRGDHYr/WX20230425-203453-2x.png" alt="avator"></p>
+<h4 id="LATECH-MODES"><a href="#LATECH-MODES" class="headerlink" title="LATECH MODES"></a>LATECH MODES</h4><p><img src="https://i.ibb.co/sCHmJh2/WX20230425-210126-2x.png" alt="avator"></p>
+<h4 id="LATCH-IMPLEMENTATION"><a href="#LATCH-IMPLEMENTATION" class="headerlink" title="LATCH IMPLEMENTATION"></a>LATCH IMPLEMENTATION</h4><h5 id="1-OS-MUTEX"><a href="#1-OS-MUTEX" class="headerlink" title="1. OS MUTEX"></a>1. OS MUTEX</h5><p>Simple to use and Non-scalable</p>
+<h5 id="2-READER-WRITER-LATCHES"><a href="#2-READER-WRITER-LATCHES" class="headerlink" title="2. READER WRITER LATCHES"></a>2. READER WRITER LATCHES</h5><p>→ Allows for concurrent readers. Must manage read/ write queues to avoid starvation.<br><br>→ Can be implemented on top of spinlocks.<br> → Example: std::shared_mutex</p>
+<h4 id="HASH-TABLE-LATCHING"><a href="#HASH-TABLE-LATCHING" class="headerlink" title="HASH TABLE LATCHING"></a>HASH TABLE LATCHING</h4><p><img src="https://i.ibb.co/615nfGp/WX20230425-212634-2x.png" alt="avator"></p>
+<h4 id="LATCH-CRABBING-COUPLING"><a href="#LATCH-CRABBING-COUPLING" class="headerlink" title="LATCH CRABBING/COUPLING"></a>LATCH CRABBING/COUPLING</h4><p><img src="https://i.ibb.co/1757x9h/WX20230425-220150-2x.png" alt="avator"></p>
+<h3 id="BOTTLENECK"><a href="#BOTTLENECK" class="headerlink" title="BOTTLENECK"></a>BOTTLENECK</h3><p>Taking a write latch on the root every time becomes a bottleneck with higher concurrency.</p>
+<h3 id="BETTER-LATCHING-ALGORITHM"><a href="#BETTER-LATCHING-ALGORITHM" class="headerlink" title="BETTER LATCHING ALGORITHM"></a>BETTER LATCHING ALGORITHM</h3><p><img src="https://i.ibb.co/hs9JRzQ/WX20230425-220922-2x.png" alt="avator"></p>
 
     </div>
     

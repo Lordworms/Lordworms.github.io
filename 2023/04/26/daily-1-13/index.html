@@ -139,7 +139,7 @@
             <span class="icon">
                 <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
-            2023/4/17
+            2023/4/26
         </span>
         
         
@@ -150,7 +150,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/daily/" style="color: #ff7d73">daily</a>
+                <a href="/tags/daily/" style="color: #03a9f4">daily</a>
             </span>
             
         </span>
@@ -158,30 +158,37 @@
     </div>
     
     <div class="content" v-pre>
-        <p>又当了一天畜生，属于是休息舒服了，今天了解了一下，原来是根据意向分配客户端和内核的，难绷，那这么说阿里的浏览器也是能去的吧</p>
+        <p>CF 274B</p>
+<p>还是树形DP<br>我们可以dfs统计出每个点要的最大add和del的次数，最后的答案就是add[1]+del[1]</p>
 <pre><code class="lang-C++">void solve()&#123;
   int n;
   cin&gt;&gt;n;
-  vector&lt;int&gt;w(n+1),t(n+1);
-  int sum=0,sumw=0;
-  for(int i=1;i&lt;=n;++i)&#123;
-    cin&gt;&gt;t[i]&gt;&gt;w[i];
-    sum+=t[i];//total thickness
-    sumw+=w[i];
+  vector&lt;int&gt;add(n+1),del(n+1),a(n+1);
+  vector&lt;vector&lt;int&gt;&gt;E(n+1);
+  for(int i=0;i&lt;n-1;++i)&#123;
+    int u,v;
+    cin&gt;&gt;u&gt;&gt;v;
+    E[u].push_back(v);
+    E[v].push_back(u);
   &#125;
-  vector&lt;int&gt;dp(sum+1,-1e9);
-  dp[0]=0;
-  for(int i=1;i&lt;=n;++i)&#123;
-    for(int v=sum;v&gt;=t[i];--v)&#123;
-        dp[v]=max(dp[v],dp[v-t[i]]+w[i]);//花费i厚度能获得dp[i]的宽度
+  for(int i=1;i&lt;=n;++i)cin&gt;&gt;a[i];
+  function&lt;void(int,int)&gt;dfs=[&amp;](int x,int f)&#123;
+    for(int v:E[x])&#123;
+        if(v==f)continue;
+        dfs(v,x);
+        add[x]=max(add[x],add[v]);
+        del[x]=max(del[x],del[v]);
     &#125;
-  &#125;
-  for(int i=1;i&lt;=sum;++i)&#123;
-    if(dp[i]+i&gt;=sumw)&#123;//能够掩盖住
-        cout&lt;&lt;i&lt;&lt;&#39;\n&#39;;
-        break;
+    a[x]+=add[x];
+    a[x]-=del[x];
+    if(a[x]&gt;0)&#123;
+        del[x]+=a[x];
+    &#125;else&#123;
+        add[x]-=a[x];
     &#125;
-  &#125;
+  &#125;;
+  dfs(1,-1);
+  cout&lt;&lt;add[1]+del[1]&lt;&lt;&#39;\n&#39;;
   return;
 &#125;
 </code></pre>
