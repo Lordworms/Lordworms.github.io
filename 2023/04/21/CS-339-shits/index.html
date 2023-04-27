@@ -150,7 +150,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/class/" style="color: #03a9f4">class</a>
+                <a href="/tags/class/" style="color: #00bcd4">class</a>
             </span>
             
         </span>
@@ -246,6 +246,13 @@
 <p>ABOVE: use new hash function</p>
 <p>BELOW: use old hash function</p>
 <h3 id="B-TREE"><a href="#B-TREE" class="headerlink" title="B TREE"></a>B TREE</h3><p>for a M-way B tree, the number of keys is in [M/2 -1, M-1] so the number of children is between [M/2,M]</p>
+<h4 id="PROPERTIES"><a href="#PROPERTIES" class="headerlink" title="PROPERTIES"></a>PROPERTIES</h4><p>1.Key order property</p>
+<p>2.Half-full property </p>
+<p>Every node other than the root is at least half-full<br>M/2-1 ≤ #keys ≤ M-1</p>
+<p>3.Balance property</p>
+<p>It is perfectly balanced (i.e., every leaf node is at<br>the same depth in the tree)</p>
+<p>4.Separator keys</p>
+<p>t keys and t+1 pointers</p>
 <h4 id="Time-complexity"><a href="#Time-complexity" class="headerlink" title="Time complexity"></a>Time complexity</h4><p>query: log(n)</p>
 <p>delete: log(n)</p>
 <p>insert: log(n)</p>
