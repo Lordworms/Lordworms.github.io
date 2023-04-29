@@ -159,17 +159,17 @@
             
             <span class="tag">
                 
-                <a href="/tags/database/" style="color: #00bcd4">database</a>
+                <a href="/tags/database/" style="color: #00a596">database</a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/RAM/" style="color: #03a9f4">RAM</a>
+                <a href="/tags/RAM/" style="color: #ffa2c4">RAM</a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/data-structure/" style="color: #ffa2c4">data structure</a>
+                <a href="/tags/data-structure/" style="color: #00a596">data structure</a>
             </span>
             
         </span>
@@ -337,6 +337,10 @@
     
     
     
+    <div id="comment">
+        <div id="waline-container"></div>
+    </div>
+    
     
     
 </div>
@@ -367,6 +371,26 @@
 
 
 
+
+<script src="https://cdn.staticfile.org/waline/2.14.7/waline.min.js"></script>
+<link rel="stylesheet" href="https://cdn.staticfile.org/waline/2.14.7/waline.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/waline/2.14.7/waline-meta.min.css">
+<script>
+    Waline.init({
+        el: "#waline-container",
+        serverURL: "https://blog-comment-one-pi.vercel.app",
+        commentCount: true,
+        pageview: false,
+        emoji: ["https://unpkg.com/@waline/emojis@1.2.0/weibo","https://unpkg.com/@waline/emojis@1.2.0/alus","https://unpkg.com/@waline/emojis@1.2.0/bilibili","https://unpkg.com/@waline/emojis@1.2.0/qq","https://unpkg.com/@waline/emojis@1.2.0/tieba","https://unpkg.com/@waline/emojis@1.2.0/tw-emoji"],
+        meta: ["nick","mail","link"],
+        requiredMeta: ["nick"],
+        lang: "zh-CN",
+        wordLimit: 0,
+        pageSize: "10",
+        login: "enable",
+        locale: {},
+    });
+</script>
 
 
 
