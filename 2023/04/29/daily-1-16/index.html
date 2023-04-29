@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>daily 2 | Waiting for the dawn</title>
+        <title>daily 1 | Waiting for the dawn</title>
         <meta name="author" content="Yanxin Xiang">
         <meta name="description" content="">
         <meta name="keywords" content="">
@@ -132,14 +132,14 @@
 
                 <div class="article">
     <div>
-        <h1>daily 2 </h1>
+        <h1>daily 1 </h1>
     </div>
     <div class="info">
         <span class="date">
             <span class="icon">
                 <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
-            2023/4/22
+            2023/4/29
         </span>
         
         
@@ -150,7 +150,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/daily/" style="color: #03a9f4">daily</a>
+                <a href="/tags/daily/" style="color: #ffa2c4">daily</a>
             </span>
             
         </span>
@@ -158,124 +158,20 @@
     </div>
     
     <div class="content" v-pre>
-        <p>CF 1774E</p>
-<p>我们可以知道，除了这些必须走的点之外，其余还要走的点包括了a和b经过的点距离正好为d的点，我们可以在每次深搜的时候++now，然后回溯的时候—now,这样可以保证正好为d</p>
+        <p>我发现我已经没法控制自己想摆烂的心了，救命，谁来救救我，难绷</p>
+<p>CF 573B</p>
 <pre><code class="lang-C++">void solve()&#123;
-  int n,d;
-  cin&gt;&gt;n&gt;&gt;d;
-  vector&lt;vector&lt;int&gt;&gt;E(n+1);
-  for(int i=0;i&lt;n-1;++i)&#123;
-    int u,v;
-    cin&gt;&gt;u&gt;&gt;v;
-    E[u].push_back(v);
-    E[v].push_back(u);
-  &#125;
-  int m1,m2;
-  cin&gt;&gt;m1;
-  vector&lt;int&gt;vis1(n+1),vis2(n+1),must1(n+1),must2(n+1);
-  for(int i=0;i&lt;m1;++i)&#123;
-    int x;cin&gt;&gt;x;
-    vis1[x]=1;
-  &#125;
-  cin&gt;&gt;m2;
-  for(int i=0;i&lt;m2;++i)&#123;
-    int x;cin&gt;&gt;x;
-    vis2[x]=1;
-  &#125;
-  int num1=0,num2=0;
-  vector&lt;int&gt;ids(n+1);
-  int cnt=0;
-  function&lt;void(int,int)&gt;dfs=[&amp;](int x,int f)&#123;
-    ids[++cnt]=x;//use for optimization,make sure that now-d is always the points that has distance d
-    for(int v:E[x])&#123;
-        if(v==f)continue;
-        dfs(v,x);
-        if(must1[v])must1[x]=1;
-        if(must2[v])must2[x]=1;
-    &#125;
-    int last_d_dep;
-    if(cnt-d&lt;=0)last_d_dep=1;
-    else last_d_dep=ids[cnt-d];
-    --cnt;//make sure it is the nearest d dep point
-    if(vis1[x])vis2[last_d_dep]=1,must1[x]=1;
-    if(vis2[x])vis1[last_d_dep]=1,must2[x]=1;
-    if(must1[x])++num1;
-    if(must2[x])++num2;
-  &#125;;  
-  dfs(1,0);  
-  cout&lt;&lt;2*(num1+num2-2)&lt;&lt;&#39;\n&#39;;
-  return;
-&#125;
-</code></pre>
-<p>CF 1540B<br>现在还没有完全理解，看这个(<a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/solution/CF1540B">https://www.luogu.com.cn/problem/solution/CF1540B</a>)</p>
-<pre><code class="lang-C++">#define int ll
-const int INV=500000004;
-ll quick_pow(ll x,ll exp,int p)
-&#123;
-      ll ans=1;
-      while(exp)
-      &#123;
-        if(exp&amp;1)ans=ans*x%p;
-        exp&gt;&gt;=1;
-        x=x*x%p;
-      &#125;
-      return ans;
-&#125;
-void solve()&#123;
   int n;
   cin&gt;&gt;n;
-  vector&lt;vector&lt;int&gt;&gt;E(n+1),fa(n+1,vector&lt;int&gt;(32));
-  vector&lt;int&gt;dep(n+1);
-  for(int i=1;i&lt;=n-1;++i)&#123;
-    int u,v;
-    cin&gt;&gt;u&gt;&gt;v;
-    E[u].push_back(v);
-    E[v].push_back(u);
-  &#125;
-  function&lt;void(int,int)&gt;dfs=[&amp;](int x,int f)&#123;
-    fa[x][0]=f;
-    dep[x]=dep[f]+1;
-    for(int i=1;i&lt;20;++i)fa[x][i]=fa[fa[x][i-1]][i-1];
-    for(int v:E[x])&#123;
-        if(v==f)continue;
-        dfs(v,x);
-    &#125;
-  &#125;;
-  function&lt;int(int,int)&gt;LCA=[&amp;](int x,int y)&#123;
-    if(dep[x]&lt;dep[y])swap(x,y);//x is deeper
-    for(int i=19;i&gt;=0;--i)&#123;
-        if(dep[x]-(1&lt;&lt;i)&gt;=dep[y])&#123;
-            x=fa[x][i];
-        &#125;
-    &#125;
-    if(x==y)return x;
-    for(int i=19;i&gt;=0;--i)&#123;
-        if(fa[x][i]!=fa[y][i])&#123;
-            x=fa[x][i],y=fa[y][i];
-        &#125;
-    &#125;
-    return fa[x][0];
-  &#125;;
-  vector dp(n+1,vector&lt;int&gt;(n+1));
-  for(int i=1;i&lt;=n;++i)&#123;
-    dp[0][i]=1;
-  &#125;
-  for(int i=1;i&lt;=n;++i)&#123;
-    for(int j=1;j&lt;=n;++j)&#123;
-        dp[i][j]=(dp[i-1][j]+dp[i][j-1])*INV%MOD;
-    &#125;
-  &#125;
+  vector&lt;int&gt;h(n+2),l(n+2),r(n+2),dp(n+2);
+  for(int i=1;i&lt;=n;++i)cin&gt;&gt;h[i];
+  for(int i=1;i&lt;=n;++i)l[i]=min(l[i-1]+1,h[i]);
+  for(int i=n;i&gt;=1;--i)r[i]=min(r[i+1]+1,l[i]);
   int ans=0;
   for(int i=1;i&lt;=n;++i)&#123;
-    dfs(i,0);
-    for(int j=1;j&lt;=n;++j)&#123;
-        for(int k=1;k&lt;j;++k)&#123;
-            int lca=LCA(j,k);
-            ans=(ans+dp[dep[j]-dep[lca]][dep[k]-dep[lca]])%MOD;
-        &#125;
-    &#125;
+    ans=max(ans,min(l[i],r[i]));
   &#125;
-  cout&lt;&lt;ans*quick_pow(n,MOD-2,MOD)%MOD&lt;&lt;&#39;\n&#39;;
+  cout&lt;&lt;ans&lt;&lt;&#39;\n&#39;;
   return;
 &#125;
 </code></pre>
