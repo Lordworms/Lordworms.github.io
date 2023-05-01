@@ -158,7 +158,9 @@
     </div>
     
     <div class="content" v-pre>
-        <h3 id="1-HAVING用于筛选分组后的，WHERE用于筛选分组前的"><a href="#1-HAVING用于筛选分组后的，WHERE用于筛选分组前的" class="headerlink" title="1.HAVING用于筛选分组后的，WHERE用于筛选分组前的"></a>1.HAVING用于筛选分组后的，WHERE用于筛选分组前的</h3><h3 id="2-为什么要用buffer-pool而不是用OS"><a href="#2-为什么要用buffer-pool而不是用OS" class="headerlink" title="2.为什么要用buffer pool而不是用OS"></a>2.为什么要用buffer pool而不是用OS</h3><h4 id="a-Transaction-Safety"><a href="#a-Transaction-Safety" class="headerlink" title="a.Transaction Safety"></a>a.Transaction Safety</h4><p>OS could flush dirty pages at any time</p>
+        <h3 id="sql-types"><a href="#sql-types" class="headerlink" title="sql types"></a>sql types</h3><p><img src="https://i.ibb.co/k5c3Vbv/WX20230501-163722-2x.png" alt="avator"></p>
+<h3 id="0"><a href="#0" class="headerlink" title="0."></a>0.</h3><p>当使用 GROUP BY 子句时，SELECT 中的列必须要么是聚合函数，要么出现在 GROUP BY 子句中。</p>
+<h3 id="1-HAVING用于筛选分组后的，WHERE用于筛选分组前的"><a href="#1-HAVING用于筛选分组后的，WHERE用于筛选分组前的" class="headerlink" title="1.HAVING用于筛选分组后的，WHERE用于筛选分组前的"></a>1.HAVING用于筛选分组后的，WHERE用于筛选分组前的</h3><h3 id="2-为什么要用buffer-pool而不是用OS"><a href="#2-为什么要用buffer-pool而不是用OS" class="headerlink" title="2.为什么要用buffer pool而不是用OS"></a>2.为什么要用buffer pool而不是用OS</h3><h4 id="a-Transaction-Safety"><a href="#a-Transaction-Safety" class="headerlink" title="a.Transaction Safety"></a>a.Transaction Safety</h4><p>OS could flush dirty pages at any time</p>
 <h4 id="b-I-O-Stalls"><a href="#b-I-O-Stalls" class="headerlink" title="b.I/O Stalls"></a>b.I/O Stalls</h4><p>DBMS doesn’t know which pages are in memory<br>So the OS would stall a thread on page fault</p>
 <h4 id="c-Error-Handling"><a href="#c-Error-Handling" class="headerlink" title="c.Error Handling"></a>c.Error Handling</h4><p>Difficult to validate pages. Any access can cause a SIGBUS that the DBMS must handle</p>
 <h4 id="d-Performance-Issues"><a href="#d-Performance-Issues" class="headerlink" title="d.Performance Issues"></a>d.Performance Issues</h4><p>OS data structure contention. TLB shootdowns</p>
@@ -276,7 +278,14 @@
 <h4 id="LATCH-CRABBING-COUPLING"><a href="#LATCH-CRABBING-COUPLING" class="headerlink" title="LATCH CRABBING/COUPLING"></a>LATCH CRABBING/COUPLING</h4><p><img src="https://i.ibb.co/1757x9h/WX20230425-220150-2x.png" alt="avator"></p>
 <h3 id="BOTTLENECK"><a href="#BOTTLENECK" class="headerlink" title="BOTTLENECK"></a>BOTTLENECK</h3><p>Taking a write latch on the root every time becomes a bottleneck with higher concurrency.</p>
 <h3 id="BETTER-LATCHING-ALGORITHM"><a href="#BETTER-LATCHING-ALGORITHM" class="headerlink" title="BETTER LATCHING ALGORITHM"></a>BETTER LATCHING ALGORITHM</h3><p><img src="https://i.ibb.co/hs9JRzQ/WX20230425-220922-2x.png" alt="avator"></p>
-
+<h3 id="TOP-K-HEAP-SORT"><a href="#TOP-K-HEAP-SORT" class="headerlink" title="TOP-K HEAP SORT"></a>TOP-K HEAP SORT</h3><p>when duplicated keys comes in, double its size and insert</p>
+<h3 id="EXTERNAL-MERGE-SORT"><a href="#EXTERNAL-MERGE-SORT" class="headerlink" title="EXTERNAL MERGE SORT"></a>EXTERNAL MERGE SORT</h3><p><img src="https://i.ibb.co/Xp9kPqV/WX20230501-181512-2x.png" alt="avator"></p>
+<h4 id="two-way"><a href="#two-way" class="headerlink" title="two way"></a>two way</h4><p><img src="https://i.ibb.co/FgzDQ1d/WX20230501-181948-2x.png" alt="avator"></p>
+<h4 id="general"><a href="#general" class="headerlink" title="general"></a>general</h4><p><img src="https://i.ibb.co/M5D6rhj/WX20230501-182330-2x.png" alt="avator"></p>
+<p>k-way means how many shits merge per phase</p>
+<p>B-1 since we have a extra buffer pool to write our answer</p>
+<h3 id="EXTERNAL-HASHING-AGGREGATION"><a href="#EXTERNAL-HASHING-AGGREGATION" class="headerlink" title="EXTERNAL HASHING AGGREGATION"></a>EXTERNAL HASHING AGGREGATION</h3><p><img src="https://i.ibb.co/rQpHB9t/WX20230501-183135-2x.png" alt="avator"></p>
+<h3 id="JOIN-ALGORITHM"><a href="#JOIN-ALGORITHM" class="headerlink" title="JOIN ALGORITHM"></a>JOIN ALGORITHM</h3><h3 id><a href="#" class="headerlink" title="#"></a>#</h3>
     </div>
     
     
