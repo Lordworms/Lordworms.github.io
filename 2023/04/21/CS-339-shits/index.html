@@ -150,7 +150,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/class/" style="color: #ffa2c4">class</a>
+                <a href="/tags/class/" style="color: #00bcd4">class</a>
             </span>
             
         </span>
@@ -242,9 +242,10 @@
 <h4 id="Dynamic-hash-tables"><a href="#Dynamic-hash-tables" class="headerlink" title="Dynamic hash tables"></a>Dynamic hash tables</h4><p>Dynamic hash tables resize themselves on<br>demand.</p>
 <h5 id="CHAINED-HASHING"><a href="#CHAINED-HASHING" class="headerlink" title="CHAINED HASHING"></a>CHAINED HASHING</h5><p>Maintain a linked list of buckets for each slot in the hash table.<br>Resolve collisions by placing all elements with the same hash key into the same bucket.<br><br>→ To determine whether an element is present, hash<br>to its bucket and scan for it.<br><br>→ Insertions and deletions are generalizations of<br>lookups.<br></p>
 <p>adding at the end of the linked list</p>
-<h5 id="EXTENDIBLE-HASH-TABLE"><a href="#EXTENDIBLE-HASH-TABLE" class="headerlink" title="EXTENDIBLE HASH TABLE"></a>EXTENDIBLE HASH TABLE</h5><p>look at some bits (local and global)</p>
+<h5 id="EXTENDIBLE-HASH-TABLE"><a href="#EXTENDIBLE-HASH-TABLE" class="headerlink" title="EXTENDIBLE HASH TABLE"></a>EXTENDIBLE HASH TABLE</h5><p><font color="red">if has extra space did not split!
+</font><br>look at some bits (local and global)</p>
 <p>split when overflow</p>
-<h5 id="LINEAR-HASHING"><a href="#LINEAR-HASHING" class="headerlink" title="LINEAR HASHING"></a>LINEAR HASHING</h5><p>The hash table maintains a pointer that<br>tracks the next bucket to split.<br><br>→ When any bucket overflows, split the bucket at the<br>pointer location.<br><br>Use multiple hashes to find the right bucket for a given key.<br>Can use different overflow criterion:<br><br>→ Space Utilization<br><br>→ Average Length of Overflow Chains</p>
+<h5 id="LINEAR-HASHING"><a href="#LINEAR-HASHING" class="headerlink" title="LINEAR HASHING"></a>LINEAR HASHING</h5><p>if a buket has splited, use the new hashing function<br>every round doing 2^i<br>at every time only 2 hash function is alive<br>The hash table maintains a pointer that<br>tracks the next bucket to split.<br><br>→ When any bucket overflows, split the bucket at the<br>pointer location.<br><br>Use multiple hashes to find the right bucket for a given key.<br>Can use different overflow criterion:<br><br>→ Space Utilization<br><br>→ Average Length of Overflow Chains</p>
 <p>ABOVE: use new hash function</p>
 <p>BELOW: use old hash function</p>
 <h3 id="B-TREE"><a href="#B-TREE" class="headerlink" title="B TREE"></a>B TREE</h3><p>for a M-way B tree, the number of keys is in [M/2 -1, M-1] so the number of children is between [M/2,M]</p>
