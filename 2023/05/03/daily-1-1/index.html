@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>interview scalable I/O event | Waiting for the dawn</title>
+        <title>daily 1 | Waiting for the dawn</title>
         <meta name="author" content="Yanxin Xiang">
         <meta name="description" content="">
         <meta name="keywords" content="">
@@ -132,14 +132,14 @@
 
                 <div class="article">
     <div>
-        <h1>interview scalable I/O event </h1>
+        <h1>daily 1 </h1>
     </div>
     <div class="info">
         <span class="date">
             <span class="icon">
                 <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
-            2023/3/21
+            2023/5/3
         </span>
         
         
@@ -150,12 +150,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/interview/" style="color: #00bcd4">interview</a>
-            </span>
-            
-            <span class="tag">
-                
-                <a href="/tags/io/" style="color: #ff7d73">io</a>
+                <a href="/tags/daily/" style="color: #00bcd4">daily</a>
             </span>
             
         </span>
@@ -163,46 +158,55 @@
     </div>
     
     <div class="content" v-pre>
-        <h1 id="io多路复用"><a href="#io多路复用" class="headerlink" title="io多路复用"></a>io多路复用</h1><p>设计高性能的网络服务器,一般多线程，但是cpu的上下文切换效率很低</p>
-<p>那么如何用单线程来弄呢？</p>
-<h2 id="Select"><a href="#Select" class="headerlink" title="Select"></a>Select</h2><p>准备文件描述符，以及最大的文件描述符</p>
-<p>写一个while(true)</p>
-<pre><code class="lang-C">select(max+1,&amp;rset,NULL,NULL,NULL)
-</code></pre>
-<p>&amp;rset是一个bitmap，表征哪一个是被监听的，默认1024为</p>
-<p>流程</p>
-<p>1.对应rset，select,把rset交给内核，全量拷贝到内核</p>
-<p>2.是一个阻塞函数，没有到来的时候会一直阻塞在select</p>
-<p>3.有数据来了，将FD置位，然后select返回</p>
-<p>4.遍历FD，判断哪些被置位，然后进行处理</p>
-<p>特点：1.交给内核决定是否有数据（提高的效率）</p>
-<p>2.可能是多个有数据，所以需要遍历fd集合</p>
-<p>缺点：</p>
-<p>1.bitmap默认大小1024</p>
-<p>2.fdset会将其置位，然后每次都需要重新赋值，fdset不可重用</p>
-<p>3.拷贝过程开销比较大（从用户态到内核态）</p>
-<p>4.Select返回的时候，我们还需要遍历一遍</p>
-<h2 id="poll"><a href="#poll" class="headerlink" title="poll"></a>poll</h2><pre><code class="lang-C">struct pollfd&#123;
-    int fd;
-    short events;
-    short revents;//对events的回馈
+        <p>CF 553 A</p>
+<pre><code class="lang-C++">ll quick_pow(ll x,ll exp,int p)
+&#123;
+      ll ans=1;
+      while(exp)
+      &#123;
+        if(exp&amp;1)ans=ans*x%p;
+        exp&gt;&gt;=1;
+        x=x*x%p;
+      &#125;
+      return ans;
 &#125;
-poll(pollfds,5,50000)
+ll inv[MAXN],fac[MAXN];
+void init(int n,int p)
+&#123;
+  memset(inv,0,sizeof(inv));
+  memset(fac,0,sizeof(fac));
+  inv[0]=fac[0]=1;
+  for(int i=1;i&lt;=n;++i)
+  &#123;
+    fac[i]=fac[i-1]*i%p;
+  &#125;
+  inv[n]=quick_pow(fac[n],p-2,p)%p;
+  for(int i=n;i&gt;=1;--i)inv[i-1]=inv[i]*i%p;
+&#125;
+ll C(ll n,ll m,ll p)
+&#123;
+  if(m&gt;n||m&lt;0)return 0;
+  return fac[n]*inv[n-m]%p*inv[m]%p;
+&#125;
+void solve()&#123;
+  int k;
+  cin&gt;&gt;k;
+  ll sum=0;
+  vector&lt;int&gt;a(k+1);
+  for(int i=1;i&lt;=k;++i)&#123;
+    cin&gt;&gt;a[i];
+    sum+=a[i];
+  &#125;
+  ll ans=1;
+  for(int i=k;i&gt;=1;--i)&#123;
+    ans*=C(sum-1,a[i]-1,MOD);
+    ans%=MOD;
+    sum-=a[i];
+  &#125;
+  cout&lt;&lt;ans&lt;&lt;&#39;\n&#39;;
+  return;
+&#125;
 </code></pre>
-<p>流程</p>
-<p>1.工作原理和select类似</p>
-<p>2.没有采用bitmap，采用了pollfd</p>
-<p>3.同样为阻塞函数</p>
-<p>4.内核置位是置的revents这个字段，然后返回</p>
-<p>5.然后进行判断，判断revents是否有值，有的话我们把它置位为0</p>
-<p>改善：</p>
-<p>可以解决select的1和2 缺点</p>
-<h2 id="epoll"><a href="#epoll" class="headerlink" title="epoll"></a>epoll</h2><p>流程：</p>
-<p>1.调用epoll_create创建一个epfd,创建完了是一个白板</p>
-<p>2.调用epoll_ctl，在epfd上添加文件描述符+events的结构体（events和fd两个字段）</p>
-<p>3.执行nfds=epoll_wait,epfd在用户态内核态共享的，所以不需要数据拷贝，解决了缺点3</p>
-<p>4.wait也是阻塞函数，但如果有数据的话，先置位(重排，有数据的放在最前面)，然后再返回，这个是有返回值的，返回有多少个有触发事件</p>
-<p>5.现在只需要遍历前nfds个元素就ok了</p>
 
     </div>
     
