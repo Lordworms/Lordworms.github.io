@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>Categories: -新的开始 | Waiting for the dawn</title>
+        <title>daily 1 | Waiting for the dawn</title>
         <meta name="author" content="Yanxin Xiang">
         <meta name="description" content="">
         <meta name="keywords" content="">
@@ -130,114 +130,101 @@
     </div>
 </nav>
 
-                <div id="archives">
-    
-    <div class="categories-tags">
-        
-        
-        <span>
-            <a href="/categories/Algorithm/" style="background: #00bcd4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                Algorithm
-            </a>
+                <div class="article">
+    <div>
+        <h1>daily 1 </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/5/6
         </span>
         
         
-        
-        <span>
-            <a href="/categories/compiler/" style="background: #00a596">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                compiler
-            </a>
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/daily/" style="color: #00a596">daily</a>
+            </span>
+            
         </span>
-        
-        
-        
-        <span>
-            <a href="/categories/algorithm/" style="background: #03a9f4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                algorithm
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/categories/database/" style="background: #03a9f4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                database
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/categories/%E6%96%B0%E7%9A%84%E5%BC%80%E5%A7%8B/" style="background: linear-gradient(120deg, #9abbf7 0%, #ffbbf4 100%)">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                -新的开始
-            </a>
-        </span>
-        
-        
-        
-        
-        
-        <span>
-            <a href="/categories/interview/" style="background: #00a596">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                interview
-            </a>
-        </span>
-        
         
     </div>
     
-    <div class="timeline">
-        <div class="timeline-tail"></div>
-        <div class="timeline-content">
-            <div class="item-time">2023/3/2</div>
-            <a href="/2023/03/02/hello/">
-                <h3>hello</h3>
-            </a>
-            <div class="info">
-                
-                <span class="category">
-                    <a href="/categories/%E6%96%B0%E7%9A%84%E5%BC%80%E5%A7%8B/">
-                        <span class="icon">
-                            <i class="fa-solid fa-bookmark fa-fw"></i>
-                        </span>
-                        -新的开始
-                    </a>
-                </span>
-                
-                
-                <span class="tags">
-                    <span class="icon">
-                        <i class="fa-solid fa-tags fa-fw"></i>
-                    </span>
-                    
-                    <span class="tag">
-                        
-                        <a href="/tags/introduction/" style="color: #00bcd4">-introduction</a>
-                    </span>
-                    
-                </span>
-                
-            </div>
-        </div>
+    <div class="content" v-pre>
+        <p>CF 568B</p>
+<p>Bell number的应用</p>
+<pre><code class="lang-C++">ll quick_pow(ll x,ll exp,int p)
+&#123;
+      ll ans=1;
+      while(exp)
+      &#123;
+        if(exp&amp;1)ans=ans*x%p;
+        exp&gt;&gt;=1;
+        x=x*x%p;
+      &#125;
+      return ans;
+&#125;
+ll inv[MAXN],fac[MAXN];
+void init(int n,int p)
+&#123;
+  memset(inv,0,sizeof(inv));
+  memset(fac,0,sizeof(fac));
+  inv[0]=fac[0]=1;
+  for(int i=1;i&lt;=n;++i)
+  &#123;
+    fac[i]=fac[i-1]*i%p;
+  &#125;
+  inv[n]=quick_pow(fac[n],p-2,p)%p;
+  for(int i=n;i&gt;=1;--i)inv[i-1]=inv[i]*i%p;
+&#125;
+ll C(ll n,ll m,ll p)
+&#123;
+  if(m&gt;n||m&lt;0)return 0;
+  return fac[n]*inv[n-m]%p*inv[m]%p;
+&#125;
+void solve()&#123;
+  int n;
+  cin&gt;&gt;n;
+  ll ans=0;
+  vector dp(n+1,vector&lt;ll&gt;(n+1));
+  vector&lt;ll&gt;bell(n+1);
+  dp[0][0]=1;
+  bell[0]=1;
+  for(int i=1;i&lt;=n;++i)&#123;
+    for(int j=1;j&lt;=i;++j)&#123;
+        dp[i][j]=((dp[i-1][j-1]+dp[i-1][j]*j)%MOD);
+        dp[i][j]%=MOD;
+        bell[i]+=dp[i][j];
+        bell[i]%=MOD;
+    &#125;
+  &#125;
+  for(int i=0;i&lt;n;++i)&#123;
+    ans+=(C(n,i,MOD)*bell[i])%MOD;
+    ans%=MOD;
+  &#125;
+  cout&lt;&lt;ans&lt;&lt;&#39;\n&#39;;
+  return;
+&#125;
+</code></pre>
+
     </div>
+    
+    
+    
+    
+    
+    <div id="comment">
+        <div id="waline-container"></div>
+    </div>
+    
+    
     
 </div>
 
@@ -264,6 +251,31 @@
         </div>
         <script src="/js/functions.js"></script>
 <script src="/js/particlex.js"></script>
+
+
+
+
+<script src="https://cdn.staticfile.org/waline/2.14.7/waline.min.js"></script>
+<link rel="stylesheet" href="https://cdn.staticfile.org/waline/2.14.7/waline.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/waline/2.14.7/waline-meta.min.css">
+<script>
+    Waline.init({
+        el: "#waline-container",
+        serverURL: "https://blog-comment-one-pi.vercel.app",
+        commentCount: true,
+        pageview: false,
+        emoji: ["https://unpkg.com/@waline/emojis@1.2.0/weibo","https://unpkg.com/@waline/emojis@1.2.0/alus","https://unpkg.com/@waline/emojis@1.2.0/bilibili","https://unpkg.com/@waline/emojis@1.2.0/qq","https://unpkg.com/@waline/emojis@1.2.0/tieba","https://unpkg.com/@waline/emojis@1.2.0/tw-emoji"],
+        meta: ["nick","mail","link"],
+        requiredMeta: ["nick"],
+        lang: "zh-CN",
+        wordLimit: 0,
+        pageSize: "10",
+        login: "enable",
+        locale: {},
+    });
+</script>
+
+
 
 
     </body>
