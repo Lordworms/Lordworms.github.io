@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>dp practice_day 2 | Waiting for the dawn</title>
+        <title>daily 2 | Waiting for the dawn</title>
         <meta name="author" content="Yanxin Xiang">
         <meta name="description" content="">
         <meta name="keywords" content="">
@@ -132,23 +132,14 @@
 
                 <div class="article">
     <div>
-        <h1>dp practice_day 2 </h1>
+        <h1>daily 2 </h1>
     </div>
     <div class="info">
         <span class="date">
             <span class="icon">
                 <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
-            2023/3/6
-        </span>
-        
-        <span class="category">
-            <a href="/categories/Algorithm/">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                Algorithm
-            </a>
+            2023/5/9
         </span>
         
         
@@ -159,12 +150,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/dp/" style="color: #00bcd4">dp</a>
-            </span>
-            
-            <span class="tag">
-                
-                <a href="/tags/dp-practice-plan/" style="color: #ffa2c4">dp_practice_plan</a>
+                <a href="/tags/daily/" style="color: #03a9f4">daily</a>
             </span>
             
         </span>
@@ -172,167 +158,53 @@
     </div>
     
     <div class="content" v-pre>
-        <p>今天具体做了一道区间dp，一道分组背包，一道树形dp</p>
-<ol>
-<li>CF 362C</li>
-</ol>
-<p>首先读懂题意，这就是冒泡排序的一轮而已,那么很显然，逆序对的数量就是需要交换的数量，然后，对于一次交换i和j,对总的逆序对的影响为</p>
-<p>总的=原本总的+[i,j]内比a[i]大的数+[i,j]内比a[j]小的数-[i,j]内比a[i]小的数-[i,j]内比a[j]大的数</p>
-<p>注意我们加减的时候直接取[i][j]就可以了，如果[i+1][j-1]什么的会越界</p>
-<pre><code class="lang-c++">void solve()
-&#123;
-  int n;cin&gt;&gt;n;
-  vector&lt;int&gt;a(n+1);
-  int maxi=0;
-  for(int i=1;i&lt;=n;++i)
-  &#123;
-    cin&gt;&gt;a[i];
-    maxi=max(a[i],maxi);
-  &#125;
-  vector gt(n+1,vector&lt;int&gt;(n+1)),lt(gt);
-  for(int i=1;i&lt;=n;++i)
-  &#123;
-    for(int j=1;j&lt;=n;++j)
-    &#123;
-        if(a[i]&gt;a[j])
-        &#123;
-            gt[i][j]++;
-        &#125;
-        gt[i][j]+=gt[i][j-1];
-        if(a[i]&lt;a[j])
-        &#123;
-            lt[i][j]++;
-        &#125;
-        lt[i][j]+=lt[i][j-1];
+        <p>CF 285D</p>
+<p>打表，我们发现n=16，所以我们可以先固定a=[1,…n]，然后我们计算对应的B的数量，之后乘以n!</p>
+<pre><code class="lang-C++">void solve()&#123;
+    vector&lt;ll&gt;a(17);
+    a[1]=1;
+    a[3]=3;
+    a[5]=15;
+    a[7]=133;
+    a[9]=2025;
+    a[11]=37851;
+    a[13]=1030367;
+    a[15]=36362925;
+    vector&lt;ll&gt;fac(17);
+    fac[0]=1;
+    for(int i=1;i&lt;fac.size();++i)&#123;
+        fac[i]=(fac[i-1]*i%MOD);
+    &#125;
+    int n;
+    cin&gt;&gt;n;
+    cout&lt;&lt;(a[n]*fac[n])%MOD&lt;&lt;&#39;\n&#39;;
+    return;
+&#125;
+</code></pre>
+<p>CF 279E</p>
+<p>对于 ${000100}$来说，需要一次操作</p>
+<p>对于 ${001110}$来说，需要两次操作</p>
+<p>那么我们就按这个逻辑计算，每次把’1’前推即可</p>
+<pre><code class="lang-C++">void solve()&#123;
+  string s;
+  cin&gt;&gt;s;
+  s=&#39;0&#39;+s;
+  int ans=0;
+  for(int i=s.size()-1;i;--i)&#123;
+    if(s[i]==&#39;1&#39;)&#123;
+      if(s[i-1]==&#39;1&#39;)s[i]=&#39;0&#39;,s[i-1]=&#39;*&#39;;
+      else ++ans;
+    &#125;
+    else if(s[i]==&#39;*&#39;)&#123;
+      if(s[i-1]==&#39;1&#39;)s[i]=&#39;0&#39;,s[i-1]=&#39;*&#39;;
+      else ++ans,s[i]=&#39;0&#39;,s[i-1]=&#39;1&#39;;
     &#125;
   &#125;
-  int ori=0,cnt=0,ans;
-  for(int i=1;i&lt;=n;++i)
-  &#123;
-    ori+=gt[i][n]-gt[i][i];
-  &#125;
-  ans=ori;
-  for(int i=1;i&lt;=n;++i)
-  &#123;
-    for(int j=i+1;j&lt;=n;++j)
-    &#123;
-        int tmp=ori;
-        tmp+=gt[j][j]-gt[j][i];
-        tmp-=gt[i][j]-gt[i][i];
-        tmp+=lt[i][j]-lt[i][i];
-        tmp-=lt[j][j]-lt[j][i];
-        if(tmp&lt;ans)
-        &#123;
-            ans=tmp;
-            cnt=0;
-        &#125;
-        if(tmp==ans)&#123;
-            ++cnt;
-        &#125;
-    &#125;
-  &#125;
-  cout&lt;&lt;ans&lt;&lt;&#39; &#39;&lt;&lt;cnt&lt;&lt;&#39;\n&#39;;
+  if(s[0]==&#39;1&#39;)++ans;
+  cout&lt;&lt;ans&lt;&lt;&#39;\n&#39;;
   return;
 &#125;
 </code></pre>
-<ol>
-<li>CF 148E</li>
-</ol>
-<p>第一眼看上去确实很像分组背包，那么考虑对应的求法，我们只需要预处理出每行对应数量的最大价值，然后套分组背包的板子即可，注意分组背包要<font color="red" size="10">先枚举容量再枚举物品</font></p>
-<pre><code class="lang-C++">void solve()
-&#123;
-  int n,m;cin&gt;&gt;n&gt;&gt;m;
-  vector&lt;vector&lt;int&gt;&gt;ori(n+1);
-  vector&lt;vector&lt;ll&gt;&gt;sum(n+1);
-  for(int i=1;i&lt;=n;++i)
-  &#123;
-    int k;cin&gt;&gt;k;
-    ori[i].resize(k+1);
-    sum[i].resize(k+2);
-    for(int j=1;j&lt;=k;++j)
-    &#123;
-        cin&gt;&gt;ori[i][j];
-        sum[i][j]+=sum[i][j-1]+ori[i][j];
-    &#125;
-  &#125;
-    vector pre_get(n+1,vector&lt;int&gt;(101));
-    //pre calculate
-    for(int i=1;i&lt;=n;++i)
-    &#123;
-      int len=ori[i].size();
-      for(int j=1;j&lt;len;++j)
-      &#123;
-        ll tmp=0;
-        for(int l=0;l&lt;=j;++l)
-        &#123;
-          int r=len-(j-l);
-          tmp=max(tmp,sum[i][l]+sum[i][len-1]-sum[i][r-1]);
-        &#125;
-        pre_get[i][j]=tmp;
-      &#125;
-    &#125;
-    vector&lt;ll&gt;dp(m+1);
-    for(int i=1;i&lt;=n;++i)//pay attention to iteration order
-    &#123;
-      for(int v=m;v&gt;=0;--v)
-      &#123;
-         for(int j=0;j&lt;ori[i].size();++j)
-         &#123;
-            if(v&gt;=j)
-            &#123;
-              dp[v]=max(dp[v],dp[v-j]+pre_get[i][j]);
-            &#125;
-         &#125;
-      &#125;
-    &#125;
-    cout&lt;&lt;dp[m]&lt;&lt;&#39;\n&#39;;
-  return;
-&#125;
-</code></pre>
-<ol>
-<li>CF 533B</li>
-</ol>
-<p>树型dp板子题，首先我们让dp[i][1/0]表示以i为根的子树，其节点数量为奇/偶的最大价值，那么考虑转移，很显然当前节点的奇数个节点的解可以由子节点的奇数/偶数转移。</p>
-<p>需要注意的一点是，由于此题限制了节点数量为偶数，那么在进入搜索的时候需要把dp[i][1]设置为-INF</p>
-<p>最终答案为dp[1][1] (包括了1)</p>
-<pre><code class="lang-C++">void solve()
-&#123;
-  int n;cin&gt;&gt;n;
-  vector&lt;ll&gt;a(n+1);
-  vector&lt;vector&lt;int&gt;&gt;E(n+1);
-  for(int i=1;i&lt;=n;++i)
-  &#123;
-    int fa;cin&gt;&gt;fa&gt;&gt;a[i];
-    if(fa!=-1)
-    &#123;
-      E[fa].push_back(i);
-    &#125;
-  &#125;
-  vector dp(n+1,vector&lt;ll&gt;(2));
-  function&lt;void(int)&gt;dfs=[&amp;](int now)
-  &#123; 
-      dp[now][1]=-INF;
-      if(E[now].size()==0)
-      &#123;
-        dp[now][1]=a[now];
-        dp[now][0]=0;
-        return;
-      &#125;
-      for(int v:E[now])
-      &#123;
-        dfs(v);
-        ll v0=dp[now][0],v1=dp[now][1];
-        dp[now][1]=max(dp[v][1]+v0,dp[v][0]+v1);
-        dp[now][0]=max(dp[v][1]+v1,dp[v][0]+v0);
-      &#125;
-      dp[now][1]=max(dp[now][1],dp[now][0]+a[now]);
-  &#125;;
-  dfs(1);
-  cout&lt;&lt;dp[1][1]&lt;&lt;&#39;\n&#39;;
-  return;
-&#125;
-</code></pre>
-<p>下午把lsm的sst写了，然后开始投国内简历吧，找实习真的太难顶惹</p>
 
     </div>
     
