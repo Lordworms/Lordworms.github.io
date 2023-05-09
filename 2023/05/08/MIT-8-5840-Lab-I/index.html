@@ -1,0 +1,431 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>MIT 8.5840 Lab I | Waiting for the dawn</title>
+        <meta name="author" content="Yanxin Xiang">
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+        <link rel="icon" href="https://i.ibb.co/RN7PTvk/avator.jpg">
+        <script src="https://cdn.staticfile.org/vue/3.2.45/vue.global.prod.min.js"></script>
+        <script src="https://cdn.staticfile.org/highlight.js/11.7.0/highlight.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/11.7.0/styles/github.min.css">
+        <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/6.2.1/css/all.min.css">
+        
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+        
+        
+        <script src="https://cdn.staticfile.org/KaTeX/0.16.4/katex.min.js"></script>
+        <script src="https://cdn.staticfile.org/KaTeX/0.16.4/contrib/auto-render.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.staticfile.org/KaTeX/0.16.4/katex.min.css">
+        
+        
+        <link rel="stylesheet" href="/css/fonts.min.css">
+        <link rel="stylesheet" href="/css/particlex.css">
+    <meta name="generator" content="Hexo 6.3.0"></head>
+    <body>
+        <div id="loading" style="height: 100vh; width: 100vw; left: 0; top: 0; position: fixed; display: flex; z-index: 2147483647; background: #fff; transition: opacity 0.3s ease-out; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; pointer-events: none">
+    <div style="width: 50vmin; height: 50vmin; margin: auto; padding: 50px; border-radius: 50%; display: flex; border: solid 10px #a3ddfb">
+        <div style="margin: auto; text-align: center">
+            <h2>LOADING</h2>
+            <p>加载过慢请开启缓存，浏览器默认开启</p>
+            <img src="/images/loading.gif" style="height: 50px; border-radius: 0">
+        </div>
+    </div>
+</div>
+
+        <div id="layout">
+            <transition name="into">
+            <div id="main" v-show="showpage" style="display: -not-none">
+                <nav id="menu">
+    <div class="desktop-menu">
+        <a class="title" href="/">
+            <span>WAITING FOR THE DAWN</span>
+        </a>
+        
+        <a href="/">
+            <i class="fa-solid fa-house fa-fw"></i>
+            <span>&ensp;Home</span>
+        </a>
+        
+        <a href="/about">
+            <i class="fa-solid fa-id-card fa-fw"></i>
+            <span>&ensp;About</span>
+        </a>
+        
+        <a href="/archives">
+            <i class="fa-solid fa-box-archive fa-fw"></i>
+            <span>&ensp;Archives</span>
+        </a>
+        
+        <a href="/categories">
+            <i class="fa-solid fa-bookmark fa-fw"></i>
+            <span>&ensp;Categories</span>
+        </a>
+        
+        <a href="/tags">
+            <i class="fa-solid fa-tags fa-fw"></i>
+            <span>&ensp;Tags</span>
+        </a>
+        
+    </div>
+    <div :class="&quot;phone-menu &quot; + menushow" id="phone-menu">
+        <div class="curtain" @click="menushow = !menushow" v-show="menushow"></div>
+        <div class="title" @click="menushow = !menushow">
+            <i class="fa-solid fa-bars fa-fw"></i>
+            <span>&emsp;WAITING FOR THE DAWN</span>
+        </div>
+        <transition name="slide">
+        <div class="items" v-show="menushow">
+            
+            <a href="/">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-house fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Home</div>
+                </div>
+            </a>
+            
+            <a href="/about">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-id-card fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">About</div>
+                </div>
+            </a>
+            
+            <a href="/archives">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-box-archive fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Archives</div>
+                </div>
+            </a>
+            
+            <a href="/categories">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-bookmark fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Categories</div>
+                </div>
+            </a>
+            
+            <a href="/tags">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-tags fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Tags</div>
+                </div>
+            </a>
+            
+        </div>
+        </transition>
+    </div>
+</nav>
+
+                <div class="article">
+    <div>
+        <h1>MIT 8.5840 Lab I </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/5/8
+        </span>
+        
+        
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/course/" style="color: #00a596">course</a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/distributed-system/" style="color: #ffa2c4">distributed system</a>
+            </span>
+            
+        </span>
+        
+    </div>
+    
+    <div class="content" v-pre>
+        <p>Finish the lab today</p>
+<p>In this lab, we are supposed to implement a Map-Reduce version WordCount </p>
+<p>The structure is shown below</p>
+<p><img src="https://i.ibb.co/QbPNTLg/WX20230508-233832-2x.png" alt="avator"></p>
+<p>the common data structure of Request and Reply are shown below</p>
+<pre><code class="lang-Go">type JobArgType int
+
+const (
+    JobArgUndef JobArgType = iota
+    JobArgMap
+    JobArgReduce
+    JobArgExit
+    JobArgTimeOut
+    JobArgSleep
+)
+
+type JobReq struct &#123;
+    Type     JobArgType
+    JobId    int //corresponding job id, None when first send
+    FileName []string
+&#125;
+type JobResp struct &#123;
+    Type     JobArgType //job type
+    JobId    int        //corresponding job id
+    NReduce  int
+    FileName []string
+&#125;
+</code></pre>
+<p>how we arrange the coordinator</p>
+<p>there is another optimization that I did not do, in this implementation, I just iterate over all jobs and pick up the first one, this is ${O(n)}$ in fact we could use a single int to indicate the smallest number that has not been used</p>
+<pre><code class="lang-C++">func (c *Coordinator) HandleJob(req *JobReq, resp *JobResp) error &#123;
+    c.lock.Lock()
+    defer c.lock.Unlock()
+    jobId := req.JobId
+    switch req.Type &#123;
+    case JobArgMap: //map job finished and schedule a new reduce job
+        &#123;
+            if c.mapTasks[jobId].status == TaskNotDone &#123;
+                c.mapTasks[jobId].status = TaskDone
+                for reduceId, file := range req.FileName &#123;
+                    if len(file) &gt; 0 &#123;
+                        c.reduceTasks[reduceId].fileName = append(c.reduceTasks[reduceId].fileName, file)
+                    &#125;
+                &#125;
+                c.mapRemain--
+                //fmt.Println(&quot;mapRemain &quot;, c.mapRemain)
+            &#125;
+        &#125;
+    case JobArgReduce: //reduce job finished and
+        &#123;
+            if c.reduceTasks[jobId].status == TaskNotDone &#123;
+                c.reduceTasks[jobId].status = TaskDone
+                c.reduceRemain--
+                //fmt.Println(&quot;reduceRemain &quot;, c.reduceRemain)
+            &#125;
+        &#125;
+    &#125;
+    nowTime := time.Now()
+    invalidTime := nowTime.Add(-10 * time.Second)
+    if c.mapRemain &gt; 0 &#123; //schedule a new map task
+        //now directly iterate the map array, could be optimized by a optimal number instead
+        for id := range c.mapTasks &#123;
+            task := &amp;c.mapTasks[id]
+            if task.status != TaskDone &amp;&amp; task.startTime.Before(invalidTime) &#123;
+                //fmt.Println(&quot;scheduled a new map task!&quot;)
+                resp.Type = JobArgMap
+                resp.FileName = []string&#123;task.fileName&#125;
+                resp.JobId = task.taskId
+                resp.NReduce = len(c.reduceTasks)
+                // resp.JobId = 122
+                // resp.NReduce = 122
+                task.startTime = nowTime
+                //fmt.Println(&quot;filename NReduce jobId&quot;, task.fileName, resp.NReduce, resp.JobId)
+                return nil
+            &#125;
+        &#125;
+        resp.Type = JobArgSleep //if did not find a suitable task to schedule, let the worker sleep
+    &#125; else if c.reduceRemain &gt; 0 &#123; //schedule a new reduce task
+        for id := range c.reduceTasks &#123;
+            task := c.reduceTasks[id]
+            if task.status != TaskDone &amp;&amp; task.startTime.Before(invalidTime) &#123;
+                //fmt.Println(&quot;schedule a new reduce task!&quot;)
+                resp.FileName = task.fileName
+                resp.JobId = id
+                resp.Type = JobArgReduce
+                task.startTime = nowTime
+                return nil
+            &#125;
+        &#125;
+        resp.Type = JobArgSleep
+    &#125; else &#123;
+        resp.Type = JobArgExit
+    &#125;
+    return nil
+&#125;
+</code></pre>
+<p>here is how we arrange the workers and choose the corresponding actions</p>
+<pre><code class="lang-Go">func Worker(mapf func(string, string) []KeyValue,
+    reducef func(string, []string) string) &#123;
+    var req JobReq = JobReq&#123;Type: JobArgUndef&#125;
+    for &#123;
+        resp := GetResp(&amp;req)
+        NReduce := resp.NReduce
+        switch resp.Type &#123;
+        case JobArgMap: //do map job
+            &#123;
+                fileName := resp.FileName[0] //job name
+                file, err := os.Open(fileName)
+                if err != nil &#123;
+                    log.Fatal(&quot;cannot open file %v&quot;, fileName)
+                    os.Exit(0)
+                &#125;
+                defer file.Close()
+                content, err := ioutil.ReadAll(file)
+                if err != nil &#123;
+                    log.Fatal(&quot;cannot read file %v&quot;, fileName)
+                    os.Exit(0)
+                &#125;
+                tmpRes := mapf(fileName, string(content))
+                reduceFileMap := make(map[int][]KeyValue)
+                for _, kv := range tmpRes &#123;
+                    reduceId := ihash(kv.Key) % NReduce
+                    reduceFileMap[reduceId] = append(reduceFileMap[reduceId], kv)
+                &#125;
+                files := make([]string, NReduce)
+                // adding kvs to the new file
+                for reduceId, kvs := range reduceFileMap &#123;
+                    tmpFileName := fmt.Sprintf(&quot;mr-%d-%d&quot;, resp.JobId, reduceId)
+                    tmpFile, _ := os.Create(tmpFileName)
+                    defer tmpFile.Close()
+                    enc := json.NewEncoder(tmpFile)
+                    for _, kv := range kvs &#123;
+                        err := enc.Encode(&amp;kv)
+                        if err != nil &#123;
+                            break
+                        &#125;
+                    &#125;
+                    files[reduceId] = tmpFileName
+                &#125;
+                req.JobId = resp.JobId
+                req.Type = JobArgMap
+                req.FileName = files //return the intermidiate file names
+            &#125;
+        case JobArgReduce: //do reduce job
+            &#123;
+                interContent := []KeyValue&#123;&#125;
+                for _, fileName := range resp.FileName &#123;
+                    file, err := os.Open(fileName)
+                    if err != nil &#123;
+                        log.Fatal(&quot;In reduce phase open file failed&quot;, fileName)
+                    &#125;
+                    defer file.Close()
+                    dec := json.NewDecoder(file)
+                    for &#123;
+                        var kv KeyValue
+                        if err := dec.Decode(&amp;kv); err != nil &#123;
+                            break
+                        &#125;
+                        interContent = append(interContent, kv)
+                    &#125;
+                &#125;
+                //sort the key
+                sort.Sort(ByKey(interContent))
+                tmpFileName := fmt.Sprintf(&quot;mr-out-%d&quot;, resp.JobId)
+                tmpFile, _ := os.Create(tmpFileName)
+                defer tmpFile.Close()
+
+                for i := 0; i &lt; len(interContent); &#123;
+                    j := i + 1
+                    for j &lt; len(interContent) &amp;&amp; interContent[j].Key == interContent[i].Key &#123;
+                        j++
+                    &#125;
+                    values := []string&#123;&#125;
+                    for k := i; k &lt; j; k++ &#123;
+                        values = append(values, interContent[k].Value)
+                    &#125;
+                    //open a file and write the bytes in
+                    cnt := reducef(interContent[i].Key, values)
+                    fmt.Fprintf(tmpFile, &quot;%v %v\n&quot;, interContent[i].Key, cnt)
+                    i = j
+                &#125;
+                req.FileName = []string&#123;tmpFileName&#125;
+                req.Type = JobArgReduce
+                req.JobId = resp.JobId
+            &#125;
+        case JobArgSleep:
+            &#123;
+                time.Sleep(1000 * time.Millisecond)
+                req.Type = JobArgUndef
+            &#125;
+        case JobArgExit:
+            &#123;
+                return
+            &#125;
+        &#125;
+    &#125;
+&#125;
+</code></pre>
+<p>it is a comparably easy task and let’s crack the lab2</p>
+
+    </div>
+    
+    
+    
+    
+    
+    <div id="comment">
+        <div id="waline-container"></div>
+    </div>
+    
+    
+    
+</div>
+
+                <footer id="footer">
+    <div class="footer-wrap">
+        <div>
+            &copy;
+            2022 - 2023 Waiting for the dawn
+            <span class="footer-icon">
+                <i class="fa-solid fa-font-awesome fa-fw"></i>
+            </span>
+            &commat;Yanxin Xiang
+        </div>
+        <div>Based on the <a target="_blank" rel="noopener" href="https://hexo.io">Hexo Engine</a> &amp; <a target="_blank" rel="noopener" href="https://github.com/argvchs/hexo-theme-particlex">ParticleX Theme</a></div>
+        
+    </div>
+</footer>
+
+            </div>
+            </transition>
+            <div id="showimg">
+                <img id="showimg-content">
+            </div>
+        </div>
+        <script src="/js/functions.js"></script>
+<script src="/js/particlex.js"></script>
+
+
+
+
+<script src="https://cdn.staticfile.org/waline/2.14.7/waline.min.js"></script>
+<link rel="stylesheet" href="https://cdn.staticfile.org/waline/2.14.7/waline.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/waline/2.14.7/waline-meta.min.css">
+<script>
+    Waline.init({
+        el: "#waline-container",
+        serverURL: "https://blog-comment-one-pi.vercel.app",
+        commentCount: true,
+        pageview: false,
+        emoji: ["https://unpkg.com/@waline/emojis@1.2.0/weibo","https://unpkg.com/@waline/emojis@1.2.0/alus","https://unpkg.com/@waline/emojis@1.2.0/bilibili","https://unpkg.com/@waline/emojis@1.2.0/qq","https://unpkg.com/@waline/emojis@1.2.0/tieba","https://unpkg.com/@waline/emojis@1.2.0/tw-emoji"],
+        meta: ["nick","mail","link"],
+        requiredMeta: ["nick"],
+        lang: "zh-CN",
+        wordLimit: 0,
+        pageSize: "10",
+        login: "enable",
+        locale: {},
+    });
+</script>
+
+
+
+
+    </body>
+</html>
