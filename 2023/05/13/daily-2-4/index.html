@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>Categories: -新的开始 | Waiting for the dawn</title>
+        <title>daily 2 | Waiting for the dawn</title>
         <meta name="author" content="Yanxin Xiang">
         <meta name="description" content="">
         <meta name="keywords" content="">
@@ -130,114 +130,99 @@
     </div>
 </nav>
 
-                <div id="archives">
-    
-    <div class="categories-tags">
-        
-        
-        <span>
-            <a href="/categories/Algorithm/" style="background: #03a9f4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                Algorithm
-            </a>
+                <div class="article">
+    <div>
+        <h1>daily 2 </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/5/13
         </span>
         
         
-        
-        <span>
-            <a href="/categories/compiler/" style="background: #00a596">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                compiler
-            </a>
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/daily/" style="color: #ff7d73">daily</a>
+            </span>
+            
         </span>
-        
-        
-        
-        <span>
-            <a href="/categories/algorithm/" style="background: #00bcd4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                algorithm
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/categories/database/" style="background: #ffa2c4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                database
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/categories/%E6%96%B0%E7%9A%84%E5%BC%80%E5%A7%8B/" style="background: linear-gradient(120deg, #9abbf7 0%, #ffbbf4 100%)">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                -新的开始
-            </a>
-        </span>
-        
-        
-        
-        
-        
-        <span>
-            <a href="/categories/interview/" style="background: #00bcd4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                interview
-            </a>
-        </span>
-        
         
     </div>
     
-    <div class="timeline">
-        <div class="timeline-tail"></div>
-        <div class="timeline-content">
-            <div class="item-time">2023/3/2</div>
-            <a href="/2023/03/02/hello/">
-                <h3>hello</h3>
-            </a>
-            <div class="info">
-                
-                <span class="category">
-                    <a href="/categories/%E6%96%B0%E7%9A%84%E5%BC%80%E5%A7%8B/">
-                        <span class="icon">
-                            <i class="fa-solid fa-bookmark fa-fw"></i>
-                        </span>
-                        -新的开始
-                    </a>
-                </span>
-                
-                
-                <span class="tags">
-                    <span class="icon">
-                        <i class="fa-solid fa-tags fa-fw"></i>
-                    </span>
-                    
-                    <span class="tag">
-                        
-                        <a href="/tags/introduction/" style="color: #ffa2c4">-introduction</a>
-                    </span>
-                    
-                </span>
-                
-            </div>
-        </div>
+    <div class="content" v-pre>
+        <p>两道智力题</p>
+<p>CF 527D</p>
+<p>移项之后转化为线段覆盖问题</p>
+<pre><code class="lang-C++">struct node&#123;
+    int l,r;
+&#125;;
+void solve()&#123;
+  int n;
+  cin&gt;&gt;n;
+  vector&lt;node&gt;a(n);
+  for(int i=0;i&lt;n;++i)&#123;
+    int x,w;
+    cin&gt;&gt;x&gt;&gt;w;
+    a[i].l=x-w;
+    a[i].r=x+w;
+  &#125;
+  sort(a.begin(),a.end(),[&amp;](node a,node b)&#123;
+    if(a.r==b.r)&#123;
+        return a.l&lt;b.l;
+    &#125;
+    return a.r&lt;b.r;
+  &#125;);
+  int ans=1,r=a[0].r;
+  for(int i=1;i&lt;n;++i)&#123;
+    if(a[i].l&gt;=r)&#123;
+        ++ans;
+        r=a[i].r;
+    &#125;
+  &#125;
+  cout&lt;&lt;ans&lt;&lt;&#39;\n&#39;;
+  return;
+&#125;
+</code></pre>
+<p>CF 519D</p>
+<p>类似lc经典题，用map存一哈就可以了</p>
+<pre><code class="lang-C++">map&lt;ll,ll&gt;mp[26];
+void solve()&#123;
+  vector&lt;int&gt;p(26);
+  for(int i=0;i&lt;26;++i)&#123;
+    cin&gt;&gt;p[i];
+  &#125;
+  string s;
+  cin&gt;&gt;s;
+  ll cnt=0,ans=0;
+  for(int i=0;i&lt;s.size();++i)&#123;
+    ans+=mp[s[i]-&#39;a&#39;][cnt];
+    cnt+=p[s[i]-&#39;a&#39;];
+    mp[s[i]-&#39;a&#39;][cnt]++;
+  &#125;
+  cout&lt;&lt;ans&lt;&lt;&#39;\n&#39;;
+  return;
+&#125;
+</code></pre>
+
     </div>
+    
+    
+    
+    
+    
+    <div id="comment">
+        <div id="waline-container"></div>
+    </div>
+    
+    
     
 </div>
 
@@ -264,6 +249,31 @@
         </div>
         <script src="/js/functions.js"></script>
 <script src="/js/particlex.js"></script>
+
+
+
+
+<script src="https://cdn.staticfile.org/waline/2.14.7/waline.min.js"></script>
+<link rel="stylesheet" href="https://cdn.staticfile.org/waline/2.14.7/waline.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/waline/2.14.7/waline-meta.min.css">
+<script>
+    Waline.init({
+        el: "#waline-container",
+        serverURL: "https://blog-comment-one-pi.vercel.app",
+        commentCount: true,
+        pageview: false,
+        emoji: ["https://unpkg.com/@waline/emojis@1.2.0/weibo","https://unpkg.com/@waline/emojis@1.2.0/alus","https://unpkg.com/@waline/emojis@1.2.0/bilibili","https://unpkg.com/@waline/emojis@1.2.0/qq","https://unpkg.com/@waline/emojis@1.2.0/tieba","https://unpkg.com/@waline/emojis@1.2.0/tw-emoji"],
+        meta: ["nick","mail","link"],
+        requiredMeta: ["nick"],
+        lang: "zh-CN",
+        wordLimit: 0,
+        pageSize: "10",
+        login: "enable",
+        locale: {},
+    });
+</script>
+
+
 
 
     </body>
