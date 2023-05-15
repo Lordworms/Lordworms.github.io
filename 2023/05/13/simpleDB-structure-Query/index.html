@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>daily 2 | Waiting for the dawn</title>
+        <title>simpleDB structure Query | Waiting for the dawn</title>
         <meta name="author" content="Yanxin Xiang">
         <meta name="description" content="">
         <meta name="keywords" content="">
@@ -132,90 +132,21 @@
 
                 <div class="article">
     <div>
-        <h1>daily 2 </h1>
+        <h1>simpleDB structure Query </h1>
     </div>
     <div class="info">
         <span class="date">
             <span class="icon">
                 <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
-            2023/5/12
+            2023/5/13
         </span>
         
-        
-        <span class="tags">
-            <span class="icon">
-                <i class="fa-solid fa-tags fa-fw"></i>
-            </span>
-            
-            <span class="tag">
-                
-                <a href="/tags/daily/" style="color: #00a596">daily</a>
-            </span>
-            
-        </span>
         
     </div>
     
     <div class="content" v-pre>
-        <p>CF 540D<br>简单概率dp，我们可以写出转移方程</p>
-<p>${dp[i][j][k]+=dp[i][j+1][k]<em>(j+1)</em>i/((j+1)<em>k+(j+1)</em>i+i*k)}$<br>注意只有剪子&gt;0的时候才能剪布</p>
-<pre><code class="lang-C++">void solve()&#123;
-  int r,s,p;
-  cin&gt;&gt;r&gt;&gt;s&gt;&gt;p;
-  dp[r][s][p]=1.0;
-  for(int i=r;i&gt;=0;--i)&#123;
-    for(int j=s;j&gt;=0;--j)&#123;
-        for(int k=p;k&gt;=0;--k)&#123;
-            if(i)&#123;// kill sissor
-                dp[i][j][k]+=dp[i][j+1][k]*(j+1)*i/((j+1)*k+(j+1)*i+i*k);
-            &#125;
-            if(j)&#123;//kill paper
-                dp[i][j][k]+=dp[i][j][k+1]*(k+1)*j/((k+1)*i+(k+1)*j+j*i);
-            &#125;
-            if(k)&#123;//kill rock
-                dp[i][j][k]+=dp[i+1][j][k]*(i+1)*k/((i+1)*j+(i+1)*k+j*k);
-            &#125;
-        &#125;
-    &#125;
-  &#125;
-  double ans1=0,ans2=0,ans3=0;
-  for(int i=1;i&lt;=r;++i)ans1+=dp[i][0][0];
-  for(int i=1;i&lt;=s;++i)ans2+=dp[0][i][0];
-  for(int i=1;i&lt;=p;++i)ans3+=dp[0][0][i];
-  cout.precision(11);
-  cout&lt;&lt;ans1&lt;&lt;&#39; &#39;&lt;&lt;ans2&lt;&lt;&#39; &#39;&lt;&lt;ans3&lt;&lt;&#39;\n&#39;;
-  return;
-&#125;
-</code></pre>
-<p>CF 535E<br>因为只能typo一次，所以最多两个位置不一样，那就慢慢找就ok了</p>
-<pre><code class="lang-C++">void solve()&#123;
-  int n;cin&gt;&gt;n;
-  string s,t;
-  cin&gt;&gt;s&gt;&gt;t;
-  s=&#39;)&#39;+s;
-  t=&#39;(&#39;+t;
-  int l=n+1,r=-1;
-  for(int i=1;i&lt;=n;++i)&#123;
-    if(s[i]!=t[i])&#123;
-        l=min(l,i);
-        r=max(r,i);
-    &#125;
-  &#125;
-  int ans1=1,ans2=1;
-  for(int i=l+1;i&lt;=r;++i)&#123;
-    if(s[i]!=t[i-1])&#123;
-        ans2=0;
-    &#125;
-    if(t[i]!=s[i-1])&#123;
-        ans1=0;
-    &#125;
-  &#125;
-  cout&lt;&lt;ans1+ans2&lt;&lt;&#39;\n&#39;;
-  return;
-&#125;
-</code></pre>
-
+        
     </div>
     
     
