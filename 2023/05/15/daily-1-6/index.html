@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>daily 2 | Waiting for the dawn</title>
+        <title>daily 1 | Waiting for the dawn</title>
         <meta name="author" content="Yanxin Xiang">
         <meta name="description" content="">
         <meta name="keywords" content="">
@@ -132,14 +132,14 @@
 
                 <div class="article">
     <div>
-        <h1>daily 2 </h1>
+        <h1>daily 1 </h1>
     </div>
     <div class="info">
         <span class="date">
             <span class="icon">
                 <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
-            2023/5/11
+            2023/5/15
         </span>
         
         
@@ -150,7 +150,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/daily/" style="color: #ffa2c4">daily</a>
+                <a href="/tags/daily/" style="color: #00bcd4">daily</a>
             </span>
             
         </span>
@@ -158,71 +158,33 @@
     </div>
     
     <div class="content" v-pre>
-        <p>CF 552C</p>
-<p>给你两个数 m,w,你有w^1 …. w^infinite 个砝码，能否让天平平衡</p>
-<p>就是问给你一个m，能不能把其表示为一个w进制数</p>
-<p>因为有-1，所以右边只能为0,1,w-1</p>
+        <p>CF 505C</p>
+<p>开始想到直接dp，但是会爆内存，所以我们用对应跳的偏移量来存我们的第二维就好啦，注意偏移量可以是负数，所以要往右边移250</p>
 <pre><code class="lang-C++">void solve()&#123;
-  int m,w;
-  cin&gt;&gt;w&gt;&gt;m;
-  while(m)&#123;
-    if(m%w==0)&#123;
-
-    &#125;else if(m%w==1)&#123;
-
-    &#125;else if(m%w==(w-1))&#123;
-        ++m;
+  int n,d;
+  cin&gt;&gt;n&gt;&gt;d;
+  vector&lt;int&gt;a(N);
+  for(int i=0;i&lt;n;++i)&#123;
+    int x;
+    cin&gt;&gt;x;
+    a[x]++;
+  &#125;
+  vector dp(N,vector&lt;ll&gt;(2*LIM+2,-1e8));
+  dp[d][LIM]=a[d];
+  ll ans=-1;
+  for(int i=1;i&lt;N;++i)&#123;
+    for(int j=0;j&lt;=2*LIM;++j)&#123;
+        int last_pos=i-(j+d)+250;
+        if(last_pos&lt;0||last_pos&gt;=i)continue;
+        for(int k=-1;k&lt;=1;++k)&#123;
+            if(j+k&gt;0)&#123;
+                dp[i][j]=max(dp[last_pos][j+k]+a[i],dp[i][j]);
+            &#125;
+        &#125;
+        ans=max(ans,dp[i][j]);
     &#125;
-    else&#123;
-        cout&lt;&lt;&quot;NO\n&quot;;
-        return;
-    &#125;
-    m/=w;
   &#125;
-  cout&lt;&lt;&quot;YES\n&quot;;
-  return;
-&#125;
-</code></pre>
-<p>CF 547B</p>
-<p>双单调栈，我们可以求出每个数作为最小值可以扩张到哪里，然后更新ans，注意ans[i]是ans[i+1]的子集合，也就是能取到ans[i+1]一定能取到ans[i]</p>
-<pre><code class="lang-C++">void solve()&#123;
-  int n;
-  cin&gt;&gt;n;
-  vector&lt;int&gt;a(n+1);
-  for(int i=1;i&lt;=n;++i)&#123;
-    cin&gt;&gt;a[i];
-  &#125;
-  vector&lt;int&gt;l(n+1),r(n+1);
-  vector&lt;int&gt;st;
-  for(int i=1;i&lt;=n;++i)&#123;
-    while(st.size()&amp;&amp;a[st.back()]&gt;=a[i])st.pop_back();
-    if(!st.size())&#123;
-        l[i]=1;
-    &#125;else&#123;
-        l[i]=st.back()+1;
-    &#125;
-    st.push_back(i);
-  &#125;
-  st.clear();
-  for(int i=n;i&gt;=1;--i)&#123;
-    while(st.size()&amp;&amp;a[st.back()]&gt;=a[i])st.pop_back();
-    if(!st.size())&#123;
-        r[i]=n;
-    &#125;else&#123;
-        r[i]=st.back()-1;
-    &#125;
-    st.push_back(i);
-  &#125;
-  vector&lt;int&gt;ans(n+1);
-  for(int i=1;i&lt;=n;++i)&#123;
-    ans[r[i]-l[i]+1]=max(ans[r[i]-l[i]+1],a[i]);
-  &#125;
-  for(int i=n-1;i&gt;=1;--i)&#123;
-    ans[i]=max(ans[i+1],ans[i]);
-  &#125;
-  for(int i=1;i&lt;=n;++i)&#123;
-    cout&lt;&lt;ans[i]&lt;&lt;&quot; \n&quot;[i==n];
-  &#125;
+  cout&lt;&lt;ans&lt;&lt;&#39;\n&#39;;
   return;
 &#125;
 </code></pre>
