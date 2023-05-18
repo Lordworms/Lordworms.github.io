@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>Categories: compiler | Waiting for the dawn</title>
+        <title>daily 2 | Waiting for the dawn</title>
         <meta name="author" content="Yanxin Xiang">
         <meta name="description" content="">
         <meta name="keywords" content="">
@@ -130,119 +130,193 @@
     </div>
 </nav>
 
-                <div id="archives">
-    
-    <div class="categories-tags">
-        
-        
-        <span>
-            <a href="/categories/Algorithm/" style="background: #ff7d73">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                Algorithm
-            </a>
+                <div class="article">
+    <div>
+        <h1>daily 2 </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/5/18
         </span>
         
         
-        
-        <span>
-            <a href="/categories/compiler/" style="background: linear-gradient(120deg, #9abbf7 0%, #ffbbf4 100%)">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                compiler
-            </a>
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/daily/" style="color: #03a9f4">daily</a>
+            </span>
+            
         </span>
-        
-        
-        
-        
-        
-        <span>
-            <a href="/categories/algorithm/" style="background: #03a9f4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                algorithm
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/categories/database/" style="background: #ff7d73">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                database
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/categories/%E6%96%B0%E7%9A%84%E5%BC%80%E5%A7%8B/" style="background: #03a9f4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                -新的开始
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/categories/interview/" style="background: #03a9f4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                interview
-            </a>
-        </span>
-        
         
     </div>
     
-    <div class="timeline">
-        <div class="timeline-tail"></div>
-        <div class="timeline-content">
-            <div class="item-time">2023/3/16</div>
-            <a href="/2023/03/16/clang-and-llvm/">
-                <h3>clang and llvm</h3>
-            </a>
-            <div class="info">
-                
-                <span class="category">
-                    <a href="/categories/compiler/">
-                        <span class="icon">
-                            <i class="fa-solid fa-bookmark fa-fw"></i>
-                        </span>
-                        compiler
-                    </a>
-                </span>
-                
-                
-                <span class="tags">
-                    <span class="icon">
-                        <i class="fa-solid fa-tags fa-fw"></i>
-                    </span>
-                    
-                    <span class="tag">
-                        
-                        <a href="/tags/llvm/" style="color: #00bcd4">llvm</a>
-                    </span>
-                    
-                    <span class="tag">
-                        
-                        <a href="/tags/clang/" style="color: #00a596">clang</a>
-                    </span>
-                    
-                </span>
-                
-            </div>
-        </div>
+    <div class="content" v-pre>
+        <p>CF 1484C</p>
+<p>裸的网络流，对每一天和对应有空的朋友连线，容量为m/2，然后对原点和每一天连线，容量为1，最后朋友和汇点连线，容量为1，跑一次最大流即可</p>
+<pre><code class="lang-C++">struct Dinic
+&#123;
+  struct Edge
+  &#123;
+    int from,to,cap,flow;
+    Edge(int f,int t,int c,int w):from(f),to(t),cap(c),flow(w)&#123;&#125;
+  &#125;;
+  int n,m,s,t;//size of point and line and the start point and end point
+  vector&lt;int&gt;d,cur;
+  vector&lt;bool&gt;vis;
+  vector&lt;Edge&gt;E;
+  vector&lt;vector&lt;int&gt;&gt;G;
+  const int INF=0x3f3f3f3f;
+  Dinic(int n,int m):n(n),m(m)
+  &#123;
+    d.resize(n+1);
+    vis.resize(n+1,false);
+    G.resize(n+1);
+    cur.resize(n+1);
+  &#125;
+  void add_edge(int from,int to,int cap)
+  &#123;
+    E.push_back(&#123;from,to,cap,0&#125;);
+    G[from].push_back(E.size()-1);
+    E.push_back(&#123;to,from,0,0&#125;);
+    G[to].push_back(E.size()-1); 
+  &#125;
+  bool bfs()//get the depth of every point
+  &#123;
+    fill(vis.begin(),vis.end(),false);
+    queue&lt;int&gt;q;
+    q.push(s);
+    d[s]=0;
+    vis[s]=1;
+    while(!q.empty())
+    &#123;
+      int x=q.front();
+      q.pop();
+      for(int i=0;i&lt;G[x].size();++i)
+      &#123;
+        auto&amp; e=E[G[x][i]];
+        if(!vis[e.to]&amp;&amp;e.cap&gt;e.flow)
+        &#123;
+          vis[e.to]=1;
+          d[e.to]=d[x]+1;
+          q.push(e.to);
+        &#125;
+      &#125;
+    &#125;
+    return vis[t];
+  &#125;
+  ll dfs(int x,int a)
+  &#123;
+    if(x==t||a==0)return a;
+    ll res=0,f;
+    for(int&amp; i=cur[x];i&lt;G[x].size();++i)
+    &#123;
+      auto&amp; e=E[G[x][i]];
+      if(d[x]+1==d[e.to]&amp;&amp;(f=dfs(e.to,min(a,e.cap-e.flow)))&gt;0)
+      &#123;
+        e.flow+=f;
+        E[G[x][i]^1].flow-=f;
+        res+=f;
+        a-=f;
+        if(a&lt;=0)break;
+      &#125;
+    &#125;
+    return res;
+  &#125;
+  ll maxflow(int s,int t)
+  &#123;
+    this-&gt;s=s;
+    this-&gt;t=t;
+    ll ans=0;
+    while(bfs())
+    &#123;
+      fill(cur.begin(),cur.end(),0);
+      ans+=dfs(s,INF);//INF is the now flow
+    &#125;
+    return ans;
+  &#125;
+&#125;;
+void solve()&#123;
+  int n,m;
+  cin&gt;&gt;n&gt;&gt;m;
+  Dinic dnic(n+2+1+m,0);
+  int s=n+m+1,t=n+m+2;
+  for(int i=1;i&lt;=m;++i)&#123;
+    int k;
+    cin&gt;&gt;k;
+    for(int j=1;j&lt;=k;++j)&#123;
+        int now;
+        cin&gt;&gt;now;
+        dnic.add_edge(i,m+now,1);
+    &#125; 
+    dnic.add_edge(s,i,1);   
+  &#125;
+  for(int i=1;i&lt;=n;++i)&#123;
+    dnic.add_edge(m+i,t,(m+1)/2);
+  &#125;
+  if(dnic.maxflow(s,t)==m)&#123;
+    cout&lt;&lt;&quot;YES\n&quot;;
+    vector&lt;int&gt;ans(m+1);
+    for(int i=0;i&lt;dnic.E.size();i+=2)&#123;
+        auto e=dnic.E[i];
+        if(e.from&lt;=m&amp;&amp;e.flow)&#123;
+            ans[e.from]=e.to-m;
+        &#125;
+    &#125;
+    for(int i=1;i&lt;=m;++i)&#123;
+        cout&lt;&lt;ans[i]&lt;&lt;&quot; \n&quot;[i==m];
+    &#125;
+  &#125;else&#123;
+    cout&lt;&lt;&quot;NO\n&quot;;
+  &#125;
+  return;
+&#125;
+</code></pre>
+<p>CF 1525D</p>
+<p>${dp[i][j]=dp[i-1][j-1]+cost,dp[i][j-1]}$</p>
+<pre><code class="lang-C++">void solve()&#123;
+  int n;
+  cin&gt;&gt;n;
+  vector&lt;int&gt;pos=&#123;0&#125;,neg=&#123;0&#125;;
+  vector dp(n+1,vector&lt;ll&gt;(n+1,INF));//dp[i][j] means i positive and j negative
+  for(int i=1;i&lt;=n;++i)&#123;
+    dp[0][i]=0;
+    int x;
+    cin&gt;&gt;x;
+    if(x&gt;0)&#123;
+      pos.push_back(i);
+    &#125;else&#123;
+      neg.push_back(i);
+    &#125;
+  &#125;
+  dp[0][0]=0;
+  for(int i=1;i&lt;pos.size();++i)&#123;
+    for(int j=1;j&lt;neg.size();++j)&#123;
+      dp[i][j]=min(dp[i-1][j-1]+abs(pos[i]-neg[j]),dp[i][j-1]);
+    &#125;
+  &#125;
+  cout&lt;&lt;dp[pos.size()-1][neg.size()-1]&lt;&lt;&quot;\n&quot;;
+  return;
+&#125;
+</code></pre>
+
     </div>
+    
+    
+    
+    
+    
+    <div id="comment">
+        <div id="waline-container"></div>
+    </div>
+    
+    
     
 </div>
 
@@ -269,6 +343,31 @@
         </div>
         <script src="/js/functions.js"></script>
 <script src="/js/particlex.js"></script>
+
+
+
+
+<script src="https://cdn.staticfile.org/waline/2.14.7/waline.min.js"></script>
+<link rel="stylesheet" href="https://cdn.staticfile.org/waline/2.14.7/waline.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/waline/2.14.7/waline-meta.min.css">
+<script>
+    Waline.init({
+        el: "#waline-container",
+        serverURL: "https://blog-comment-one-pi.vercel.app",
+        commentCount: true,
+        pageview: false,
+        emoji: ["https://unpkg.com/@waline/emojis@1.2.0/weibo","https://unpkg.com/@waline/emojis@1.2.0/alus","https://unpkg.com/@waline/emojis@1.2.0/bilibili","https://unpkg.com/@waline/emojis@1.2.0/qq","https://unpkg.com/@waline/emojis@1.2.0/tieba","https://unpkg.com/@waline/emojis@1.2.0/tw-emoji"],
+        meta: ["nick","mail","link"],
+        requiredMeta: ["nick"],
+        lang: "zh-CN",
+        wordLimit: 0,
+        pageSize: "10",
+        login: "enable",
+        locale: {},
+    });
+</script>
+
+
 
 
     </body>
