@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>daily 2 | Waiting for the dawn</title>
+        <title>daily 3 | Waiting for the dawn</title>
         <meta name="author" content="Yanxin Xiang">
         <meta name="description" content="">
         <meta name="keywords" content="">
@@ -132,14 +132,14 @@
 
                 <div class="article">
     <div>
-        <h1>daily 2 </h1>
+        <h1>daily 3 </h1>
     </div>
     <div class="info">
         <span class="date">
             <span class="icon">
                 <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
-            2023/5/12
+            2023/5/20
         </span>
         
         
@@ -158,60 +158,280 @@
     </div>
     
     <div class="content" v-pre>
-        <p>CF 540D<br>简单概率dp，我们可以写出转移方程</p>
-<p>${dp[i][j][k]+=dp[i][j+1][k]<em>(j+1)</em>i/((j+1)<em>k+(j+1)</em>i+i*k)}$<br>注意只有剪子&gt;0的时候才能剪布</p>
-<pre><code class="lang-C++">void solve()&#123;
-  int r,s,p;
-  cin&gt;&gt;r&gt;&gt;s&gt;&gt;p;
-  dp[r][s][p]=1.0;
-  for(int i=r;i&gt;=0;--i)&#123;
-    for(int j=s;j&gt;=0;--j)&#123;
-        for(int k=p;k&gt;=0;--k)&#123;
-            if(i)&#123;// kill sissor
-                dp[i][j][k]+=dp[i][j+1][k]*(j+1)*i/((j+1)*k+(j+1)*i+i*k);
-            &#125;
-            if(j)&#123;//kill paper
-                dp[i][j][k]+=dp[i][j][k+1]*(k+1)*j/((k+1)*i+(k+1)*j+j*i);
-            &#125;
-            if(k)&#123;//kill rock
-                dp[i][j][k]+=dp[i+1][j][k]*(i+1)*k/((i+1)*j+(i+1)*k+j*k);
-            &#125;
+        <p>两道网络流，一道dp</p>
+<p>CF 1423B</p>
+<p>比较裸的网络流，我们二分这个最短工期，每次用最大流跑一次二分图匹配就好了</p>
+<pre><code class="lang-C++">struct Dinic
+&#123;
+  struct Edge
+  &#123;
+    int from,to,cap,flow;
+    Edge(int f,int t,int c,int w):from(f),to(t),cap(c),flow(w)&#123;&#125;
+  &#125;;
+  int n,m,s,t;//size of point and line and the start point and end point
+  vector&lt;int&gt;d,cur;
+  vector&lt;bool&gt;vis;
+  vector&lt;Edge&gt;E;
+  vector&lt;vector&lt;int&gt;&gt;G;
+  const int INF=0x3f3f3f3f;
+  Dinic(int n,int m):n(n),m(m)
+  &#123;
+    d.resize(n+1);
+    vis.resize(n+1,false);
+    G.resize(n+1);
+    cur.resize(n+1);
+  &#125;
+  void add_edge(int from,int to,int cap)
+  &#123;
+    E.push_back(&#123;from,to,cap,0&#125;);
+    G[from].push_back(E.size()-1);
+    E.push_back(&#123;to,from,0,0&#125;);
+    G[to].push_back(E.size()-1); 
+  &#125;
+  bool bfs()//get the depth of every point
+  &#123;
+    fill(vis.begin(),vis.end(),false);
+    queue&lt;int&gt;q;
+    q.push(s);
+    d[s]=0;
+    vis[s]=1;
+    while(!q.empty())
+    &#123;
+      int x=q.front();
+      q.pop();
+      for(int i=0;i&lt;G[x].size();++i)
+      &#123;
+        auto&amp; e=E[G[x][i]];
+        if(!vis[e.to]&amp;&amp;e.cap&gt;e.flow)
+        &#123;
+          vis[e.to]=1;
+          d[e.to]=d[x]+1;
+          q.push(e.to);
+        &#125;
+      &#125;
+    &#125;
+    return vis[t];
+  &#125;
+  ll dfs(int x,int a)
+  &#123;
+    if(x==t||a==0)return a;
+    ll res=0,f;
+    for(int&amp; i=cur[x];i&lt;G[x].size();++i)
+    &#123;
+      auto&amp; e=E[G[x][i]];
+      if(d[x]+1==d[e.to]&amp;&amp;(f=dfs(e.to,min(a,e.cap-e.flow)))&gt;0)
+      &#123;
+        e.flow+=f;
+        E[G[x][i]^1].flow-=f;
+        res+=f;
+        a-=f;
+        if(a&lt;=0)break;
+      &#125;
+    &#125;
+    return res;
+  &#125;
+  ll maxflow(int s,int t)
+  &#123;
+    this-&gt;s=s;
+    this-&gt;t=t;
+    ll ans=0;
+    while(bfs())
+    &#123;
+      fill(cur.begin(),cur.end(),0);
+      ans+=dfs(s,INF);//INF is the now flow
+    &#125;
+    return ans;
+  &#125;
+&#125;;
+struct Road&#123;
+    int u,v,d;
+&#125;;
+void solve()&#123;
+  int n,m;
+  cin&gt;&gt;n&gt;&gt;m;//total 2*n+2;
+  vector&lt;Road&gt;E(m+1);
+  int l=INT_MAX,r=INT_MIN;
+  for(int i=1;i&lt;=m;++i)&#123;
+    cin&gt;&gt;E[i].u&gt;&gt;E[i].v&gt;&gt;E[i].d;
+    l=min(l,E[i].d);
+    r=max(r,E[i].d);
+  &#125;
+  int source=2*n+1,sink=2*n+2;
+  function&lt;bool(int)&gt;check=[&amp;](int cur_time)&#123;
+    Dinic dinic(2*n+3,0);
+    for(int i=1;i&lt;=n;++i)&#123;
+        dinic.add_edge(source,i,1);
+        dinic.add_edge(n+i,sink,1);
+    &#125;
+    for(int i=1;i&lt;=m;++i)&#123;
+        if(E[i].d&lt;=cur_time)&#123;
+            dinic.add_edge(E[i].u,E[i].v+n,1);
         &#125;
     &#125;
+    ll maxflow=dinic.maxflow(source,sink);
+    return maxflow==n;
+  &#125;;
+  ll ans=-1;
+  while(l&lt;=r)&#123;
+    int m=(l+r)&gt;&gt;1;
+    if(check(m))&#123;
+        ans=m;
+        r=m-1;
+    &#125;else&#123;
+        l=m+1;
+    &#125;
   &#125;
-  double ans1=0,ans2=0,ans3=0;
-  for(int i=1;i&lt;=r;++i)ans1+=dp[i][0][0];
-  for(int i=1;i&lt;=s;++i)ans2+=dp[0][i][0];
-  for(int i=1;i&lt;=p;++i)ans3+=dp[0][0][i];
-  cout.precision(11);
-  cout&lt;&lt;ans1&lt;&lt;&#39; &#39;&lt;&lt;ans2&lt;&lt;&#39; &#39;&lt;&lt;ans3&lt;&lt;&#39;\n&#39;;
+  cout&lt;&lt;ans&lt;&lt;&#39;\n&#39;;
   return;
 &#125;
 </code></pre>
-<p>CF 535E<br>因为只能typo一次，所以最多两个位置不一样，那就慢慢找就ok了</p>
-<pre><code class="lang-C++">void solve()&#123;
-  int n;cin&gt;&gt;n;
-  string s,t;
-  cin&gt;&gt;s&gt;&gt;t;
+<p>CF 884F</p>
+<p>最小费用流裸题，我们对每个S，向cnt[i]连一条容量为cnt[i]的边，然后因为是对称的位置，所以另起n/2个点，相互连线，最后n/2个点向汇点连线，之后跑最小费用流就好了</p>
+<pre><code class="lang-C++">struct MCMF&#123;
+  struct edge&#123;
+    int u,v;
+    ll cap,cost;
+  &#125;;
+  const ll INF=1e18;
+  int s,t;//source and des
+  ll mincostflow;//the MCMF answer
+  ll maxflow;//the maxflow
+  vector&lt;edge&gt;Edge;//all edges
+  vector&lt;vector&lt;int&gt;&gt;E;//the graph
+  vector&lt;ll&gt;dis;//distance between source and i
+  vector&lt;int&gt;vis;//whether this point in the loose queue or not
+  MCMF(int n,int source,int sink)&#123;
+    E.resize(n+1);
+    dis.resize(n+1);
+    vis.resize(n+1);
+    s=source;
+    t=sink;
+    mincostflow=0;
+    maxflow=0;
+  &#125;
+  void add_edge(int u,int v,int cap,int cost)&#123;
+    E[u].push_back(Edge.size());
+    Edge.push_back(&#123;u,v,cap,cost&#125;);
+    E[v].push_back(Edge.size());
+    Edge.push_back(&#123;v,u,0,-cost&#125;);
+  &#125;
+  bool spfa()&#123;
+    fill(dis.begin(),dis.end(),INF);
+    queue&lt;int&gt;q;
+    q.push(s);
+    vis[s]=1;
+    dis[s]=0;
+    while(!q.empty())&#123;
+      auto tmp=q.front();
+      q.pop();
+      vis[tmp]=0;
+      for(int id:E[tmp])&#123;
+        auto e=Edge[id];
+        int to=e.v;
+        if(e.cap&gt;0&amp;&amp;dis[to]&gt;dis[tmp]+e.cost)&#123;
+          dis[to]=dis[tmp]+e.cost;
+          if(!vis[to])&#123;
+            q.push(to);
+            vis[to]=1;
+          &#125;
+        &#125;
+      &#125;
+    &#125;
+    return dis[t]!=INF;
+  &#125; 
+  ll dfs(int u,ll flow)&#123;
+    if(u==t)
+      return flow;
+    vis[u]=1;
+    ll ans=0;
+    for(int i=E[u].size()-1;i&gt;=0;--i)&#123;
+      int id=E[u][i];
+      auto e=Edge[id];
+      int v=e.v;
+      if(e.cap&amp;&amp;!vis[v]&amp;&amp;dis[v]==dis[u]+e.cost)&#123;
+        ll cur_flow=dfs(v,min(flow-ans,e.cap));//the flow of the remaining graph
+        if(cur_flow)&#123;
+          if(ans+cur_flow&gt;flow)
+            break;
+          mincostflow+=cur_flow*e.cost;
+          ans+=cur_flow;
+          Edge[id^1].cap+=cur_flow;
+          Edge[id].cap-=cur_flow;
+        &#125;
+      &#125;
+    &#125;
+    vis[u]=0;
+    return ans;
+  &#125;
+  ll get_mcmf()&#123;
+    maxflow=0;
+    while(spfa())&#123;
+      int cur_flow;
+      while((cur_flow=dfs(s,INF)))maxflow+=cur_flow;
+    &#125;
+    return mincostflow;
+  &#125;
+&#125;;
+void solve()&#123;
+  int n;
+  cin&gt;&gt;n;
+  string s;
+  cin&gt;&gt;s;
   s=&#39;)&#39;+s;
-  t=&#39;(&#39;+t;
-  int l=n+1,r=-1;
+  vector&lt;int&gt;b(n+1);
+  vector&lt;int&gt;cnt(26);
+  ll sum=0;
   for(int i=1;i&lt;=n;++i)&#123;
-    if(s[i]!=t[i])&#123;
-        l=min(l,i);
-        r=max(r,i);
+    cin&gt;&gt;b[i];
+    sum+=b[i];
+    cnt[s[i]-&#39;a&#39;]++;
+  &#125;
+  int source=n/2+26+1,sink=source+1;
+  MCMF mf(n/2+26+3,source,sink);
+  for(int i=0;i&lt;26;++i)&#123;
+    mf.add_edge(source,i+1,cnt[i],0);
+    for(int j=1;j&lt;=n/2;++j)&#123;
+       int val=0;
+       if(s[j]-&#39;a&#39;==i)&#123;
+        val=max(val,b[j]);
+       &#125;
+       if(s[n-j+1]-&#39;a&#39;==i)&#123;
+        val=max(val,b[n-j+1]);
+       &#125;
+       mf.add_edge(i+1,26+j,1,-val);
     &#125;
   &#125;
-  int ans1=1,ans2=1;
-  for(int i=l+1;i&lt;=r;++i)&#123;
-    if(s[i]!=t[i-1])&#123;
-        ans2=0;
+  for(int i=1;i&lt;=n/2;++i)&#123;
+    mf.add_edge(26+i,sink,2,0);
+  &#125;
+  mf.get_mcmf();
+  cout&lt;&lt;-mf.mincostflow&lt;&lt;&#39;\n&#39;;
+  return;
+&#125;
+</code></pre>
+<p>CF 497E<br>${dp[i][j]}$表示当前在i，用了j步，用前缀和和滚动数组优化一下就可以了</p>
+<pre><code class="lang-C++">void solve()&#123;
+  int n,a,b,k;
+  cin&gt;&gt;n&gt;&gt;a&gt;&gt;b&gt;&gt;k;
+  vector&lt;int&gt;dp(n+1),sum(n+1);
+  if(a&gt;b)&#123;// you could only move in one side of b(up or down)
+    n-=b;
+    a-=b;
+  &#125;else&#123;
+    n=b-1;
+    a=b-a;
+  &#125;
+  dp[a]=1;
+  for(int i=a;i&lt;=n;++i)sum[i]=1;
+  for(int i=1;i&lt;=k;++i)&#123;
+    for(int j=1;j&lt;=n;++j)&#123;
+        dp[j]=((sum[n]-sum[j&gt;&gt;1])-dp[j]+2*MOD)%MOD;
     &#125;
-    if(t[i]!=s[i-1])&#123;
-        ans1=0;
+    for(int j=1;j&lt;=n;++j)&#123;
+        sum[j]=(sum[j-1]+dp[j])%MOD;
     &#125;
   &#125;
-  cout&lt;&lt;ans1+ans2&lt;&lt;&#39;\n&#39;;
+  cout&lt;&lt;sum[n]&lt;&lt;&#39;\n&#39;;
   return;
 &#125;
 </code></pre>
