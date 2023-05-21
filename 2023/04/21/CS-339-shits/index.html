@@ -150,7 +150,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/class/" style="color: #ffa2c4">class</a>
+                <a href="/tags/class/" style="color: #00bcd4">class</a>
             </span>
             
         </span>
@@ -286,7 +286,69 @@
 <p>k-way means how many shits merge per phase</p>
 <p>B-1 since we have a extra buffer pool to write our answer</p>
 <h3 id="EXTERNAL-HASHING-AGGREGATION"><a href="#EXTERNAL-HASHING-AGGREGATION" class="headerlink" title="EXTERNAL HASHING AGGREGATION"></a>EXTERNAL HASHING AGGREGATION</h3><p><img src="https://i.ibb.co/rQpHB9t/WX20230501-183135-2x.png" alt="avator"></p>
-<h3 id="JOIN-ALGORITHM"><a href="#JOIN-ALGORITHM" class="headerlink" title="JOIN ALGORITHM"></a>JOIN ALGORITHM</h3><h3 id><a href="#" class="headerlink" title="#"></a>#</h3>
+<h3 id="JOIN-ALGORITHM"><a href="#JOIN-ALGORITHM" class="headerlink" title="JOIN ALGORITHM"></a>JOIN ALGORITHM</h3><p>there types<br>(read slides more)</p>
+<h3 id="Query-Execution"><a href="#Query-Execution" class="headerlink" title="Query Execution"></a>Query Execution</h3><p>Three approaches</p>
+<h4 id="Iterator-Model"><a href="#Iterator-Model" class="headerlink" title="Iterator Model"></a>Iterator Model</h4><p><img src="https://i.ibb.co/qWr402p/WX20230520-113342-2x.png" alt></p>
+<h4 id="Materialization-Model"><a href="#Materialization-Model" class="headerlink" title="Materialization Model"></a>Materialization Model</h4><p>Better for OLTP workloads because queries<br>only access a small number of tuples at a<br>time.</p>
+<p>Not good for OLAP queries with large intermediate results.<br><img src="https://i.ibb.co/4ZyYxJW/WX20230520-114759-2x.png" alt></p>
+<h4 id="Vectorization-Model"><a href="#Vectorization-Model" class="headerlink" title="Vectorization Model"></a>Vectorization Model</h4><p>Ideal for OLAP queries because it greatly reduces the number of invocations per operator.<br>Allows for operators to more easily use vectorized (SIMD) instructions to process batches of tuples.<br><img src="https://i.ibb.co/BnQSv2h/WX20230520-114949-2x.png" alt></p>
+<h4 id="PLAN-Processing-Direction"><a href="#PLAN-Processing-Direction" class="headerlink" title="PLAN Processing Direction"></a>PLAN Processing Direction</h4><p><img src="https://i.ibb.co/FVcBSVt/WX20230520-115414-2x.png" alt></p>
+<h3 id="ACCESS-METHOD"><a href="#ACCESS-METHOD" class="headerlink" title="ACCESS METHOD"></a>ACCESS METHOD</h3><p>the way DBMS accesses the data that stored in a table</p>
+<p>contains three ways</p>
+<p>Pre-computed aggregates for the attribute values in a page. DBMS checks the zone map first to decide whether to access the page.</p>
+<h4 id="Sequential-Scan"><a href="#Sequential-Scan" class="headerlink" title="Sequential Scan"></a>Sequential Scan</h4><p><img src="https://i.ibb.co/FHGx7pZ/WX20230520-115601-2x.png" alt></p>
+<h5 id="ZONE-MAPS"><a href="#ZONE-MAPS" class="headerlink" title="ZONE MAPS"></a>ZONE MAPS</h5><p>pre calculate the attributes in a page</p>
+<h4 id="INDEX-Scan"><a href="#INDEX-Scan" class="headerlink" title="INDEX Scan"></a>INDEX Scan</h4><p><img src="https://i.ibb.co/SXxxzHt/WX20230520-123301-2x.png" alt></p>
+<h4 id="Multi-Index-Scan"><a href="#Multi-Index-Scan" class="headerlink" title="Multi-Index Scan"></a>Multi-Index Scan</h4><p><img src="https://i.ibb.co/Ptm9CtP/WX20230520-123221-2x.png" alt></p>
+<h3 id="PARALLEL-VS-DISTRIBUTED"><a href="#PARALLEL-VS-DISTRIBUTED" class="headerlink" title="PARALLEL VS DISTRIBUTED"></a>PARALLEL VS DISTRIBUTED</h3><p>Parallel DBMSs</p>
+<p><img src="https://i.ibb.co/MBZwTT7/WX20230520-124814-2x.png" alt></p>
+<h3 id="PARALLEL"><a href="#PARALLEL" class="headerlink" title="PARALLEL"></a>PARALLEL</h3><h4 id="Inter-Query-Intra-Query-PARALLELISM"><a href="#Inter-Query-Intra-Query-PARALLELISM" class="headerlink" title="Inter-Query Intra-Query PARALLELISM"></a>Inter-Query Intra-Query PARALLELISM</h4><p>Execute multiple disparate queries simultaneously.<br>→ Increases throughput &amp; reduces latency.</p>
+<h4 id="Intra-Query-PARALLELISM"><a href="#Intra-Query-PARALLELISM" class="headerlink" title="Intra-Query PARALLELISM"></a>Intra-Query PARALLELISM</h4><p>Execute the operations of a<br>single query in parallel.<br>→ Decreases latency for long-running queries,<br>especially for OLAP queries. </p>
+<h5 id="Intra-Operator-Horizontal"><a href="#Intra-Operator-Horizontal" class="headerlink" title="Intra-Operator(Horizontal)"></a>Intra-Operator(Horizontal)</h5><p>Decompose operators into independent fragments that perform the same function on different subsets<br>of data.</p>
+<h6 id="EXCHANGE-OPERATOR"><a href="#EXCHANGE-OPERATOR" class="headerlink" title="EXCHANGE OPERATOR"></a>EXCHANGE OPERATOR</h6><p>Gather:Combine the results from multiple workers into a single output stream.</p>
+<p>Distribute: Split a single input stream into multiple output streams.</p>
+<p>Repartition: Shuffle multiple input streams across multiple output streams.</p>
+<h5 id="Inter-Operator-Vertical"><a href="#Inter-Operator-Vertical" class="headerlink" title="Inter-Operator(Vertical)"></a>Inter-Operator(Vertical)</h5><p>Every Operator do its own thing(Join,Scan) relentlessly</p>
+<h5 id="Bushy-way"><a href="#Bushy-way" class="headerlink" title="Bushy way"></a>Bushy way</h5><p>combination of the previous two</p>
+<h5 id="I-O-PARALLISM"><a href="#I-O-PARALLISM" class="headerlink" title="I/O PARALLISM"></a>I/O PARALLISM</h5><p>RAID 0</p>
+<h5 id="QUERY-OPTIMIZATION"><a href="#QUERY-OPTIMIZATION" class="headerlink" title="QUERY OPTIMIZATION"></a>QUERY OPTIMIZATION</h5><h5 id="LOGICAL-PLAN-OPTIMIZER"><a href="#LOGICAL-PLAN-OPTIMIZER" class="headerlink" title="LOGICAL PLAN OPTIMIZER"></a>LOGICAL PLAN OPTIMIZER</h5><p>Transform a logical plan into an equivalent logical plan using pattern matching rules.<br>The goal is to increase the likelihood of enumerating the optimal plan in the search.<br>Cannot compare plans because there is no cost model but can “direct” a transformation to a preferred side.</p>
+<h6 id="Split-Conjective-Predicates"><a href="#Split-Conjective-Predicates" class="headerlink" title="Split Conjective Predicates"></a>Split Conjective Predicates</h6><p>Instead of doing a Huge Predicates, do some splited Predicates instead.</p>
+<h6 id="Predicate-Pushdown"><a href="#Predicate-Pushdown" class="headerlink" title="Predicate Pushdown"></a>Predicate Pushdown</h6><p>filter as much data as possible</p>
+<h6 id="Replace-Cartisan-Product-with-Join"><a href="#Replace-Cartisan-Product-with-Join" class="headerlink" title="Replace Cartisan Product with Join"></a>Replace Cartisan Product with Join</h6><p>using Join more</p>
+<h6 id="Projection-Pushdown"><a href="#Projection-Pushdown" class="headerlink" title="Projection Pushdown"></a>Projection Pushdown</h6><p>do as what it says</p>
+<h5 id="DECOMPOSING-QUERY"><a href="#DECOMPOSING-QUERY" class="headerlink" title="DECOMPOSING QUERY"></a>DECOMPOSING QUERY</h5><p>like nested subquery, we just decomposing them and just run them once. Some system would run the sub query first(mysql did that),then go to optimizer</p>
+<h5 id="EXPRESSION-REWRITE"><a href="#EXPRESSION-REWRITE" class="headerlink" title="EXPRESSION REWRITE"></a>EXPRESSION REWRITE</h5><p>traversing the query plan and find out if there’s a way to optimize that </p>
+<h4 id="COST-ESTIMATION"><a href="#COST-ESTIMATION" class="headerlink" title="COST ESTIMATION"></a>COST ESTIMATION</h4><p>too expensive to run every possible plan to determine this information<br><img src="https://i.ibb.co/qdhGTr0/WX20230520-145333-2x.png" alt></p>
+<h4 id="STATISTICS"><a href="#STATISTICS" class="headerlink" title="STATISTICS"></a>STATISTICS</h4><p>The DBMS stores internal statistics about tables,attributes, and indexes in its internal catalog</p>
+<h5 id="SELECTION-CARINALITY"><a href="#SELECTION-CARINALITY" class="headerlink" title="SELECTION CARINALITY"></a>SELECTION CARINALITY</h5><p>Equality Predicate: A=constant </p>
+<p><img src="https://i.ibb.co/ns1HgFL/WX20230520-150330-2x.png" alt></p>
+<p>ways to store them</p>
+<p><img src="https://i.ibb.co/JK4kRrR/WX2023 0520-150857-2x.png" alt></p>
+<h5 id="HISTOGRAM"><a href="#HISTOGRAM" class="headerlink" title="HISTOGRAM"></a>HISTOGRAM</h5><p>problem: store every single key, so if values are getting more and more, </p>
+<p>ways: to use some buket to store them</p>
+<p>equal width and equal depth (variaing width or not)</p>
+<h5 id="SKETCHES"><a href="#SKETCHES" class="headerlink" title="SKETCHES"></a>SKETCHES</h5><p>Bloom filter</p>
+<h5 id="SAMPLING"><a href="#SAMPLING" class="headerlink" title="SAMPLING"></a>SAMPLING</h5><p>collect samples from table to estimate selectivities</p>
+<h4 id="SINGLE-RELATION-QUERY-PLANNING"><a href="#SINGLE-RELATION-QUERY-PLANNING" class="headerlink" title="SINGLE RELATION QUERY PLANNING"></a>SINGLE RELATION QUERY PLANNING</h4><p>choose the optimal indexs</p>
+<h4 id="MULTI-RELATION-QUERY-PLANNING"><a href="#MULTI-RELATION-QUERY-PLANNING" class="headerlink" title="MULTI-RELATION QUERY PLANNING"></a>MULTI-RELATION QUERY PLANNING</h4><p><img src="https://i.ibb.co/Snf6dNw/WX20230520-152203-2x.png" alt></p>
+<h4 id="SYSTEM-R-OPTIMIZER"><a href="#SYSTEM-R-OPTIMIZER" class="headerlink" title="SYSTEM R OPTIMIZER"></a>SYSTEM R OPTIMIZER</h4><p>Break query up into blocks and generate the logical operator for each block</p>
+<h4 id="CONCURRENCY-CONTROL"><a href="#CONCURRENCY-CONTROL" class="headerlink" title="CONCURRENCY CONTROL"></a>CONCURRENCY CONTROL</h4><h5 id="MOTIVATION"><a href="#MOTIVATION" class="headerlink" title="MOTIVATION"></a>MOTIVATION</h5><p><img src="https://i.ibb.co/TwtPXtB/WX20230520-154600-2x.png" alt></p>
+<h5 id="DEFINITIONS"><a href="#DEFINITIONS" class="headerlink" title="DEFINITIONS"></a>DEFINITIONS</h5><p>A txn may carry out many operations on the data retrieved from the database </p>
+<h4 id="ACID"><a href="#ACID" class="headerlink" title="ACID"></a>ACID</h4><p><img src="https://i.ibb.co/93Kw9B7/WX20230520-160256-2x.png" alt></p>
+<h5 id="ATOMICITY"><a href="#ATOMICITY" class="headerlink" title="ATOMICITY"></a>ATOMICITY</h5><p>1: logging</p>
+<p>2: Shadow Paging</p>
+<h5 id="CONSISTENCY"><a href="#CONSISTENCY" class="headerlink" title="CONSISTENCY"></a>CONSISTENCY</h5><p>1: database consistency</p>
+<p>2: transaction consistency</p>
+<h5 id="ISOLATION"><a href="#ISOLATION" class="headerlink" title="ISOLATION"></a>ISOLATION</h5><p>Won’t see any other transaction when executing the current one </p>
+<h6 id="Serial-Schedule"><a href="#Serial-Schedule" class="headerlink" title="Serial Schedule"></a>Serial Schedule</h6><p>A schedule that does not interleave the actions of different transactions</p>
+<h6 id="Equal-Schedule"><a href="#Equal-Schedule" class="headerlink" title="Equal Schedule"></a>Equal Schedule</h6><p>Same effect</p>
+<h4 id="CONFLICTING-OPERATIONS"><a href="#CONFLICTING-OPERATIONS" class="headerlink" title="CONFLICTING OPERATIONS"></a>CONFLICTING OPERATIONS</h4><p>Read-Write COnflicts</p>
+<p>Write-Read Conflicts</p>
+<p>Write Write Conflicts</p>
+<h4 id="Conflict-Serializability-and-View-Serializability"><a href="#Conflict-Serializability-and-View-Serializability" class="headerlink" title="Conflict Serializability and View Serializability"></a>Conflict Serializability and View Serializability</h4><h4 id="Conclict-Serializability"><a href="#Conclict-Serializability" class="headerlink" title="Conclict Serializability"></a>Conclict Serializability</h4><p><img src="https://i.ibb.co/PGT39X1/WX20230520-165734-2x.png" alt></p>
+<h4 id="DEPENDENCY-GRAPH"><a href="#DEPENDENCY-GRAPH" class="headerlink" title="DEPENDENCY GRAPH"></a>DEPENDENCY GRAPH</h4><p><img src="https://i.ibb.co/VwRD0yz/WX20230520-170304-2x.png" alt></p>
+<h4 id="View-Serializability"><a href="#View-Serializability" class="headerlink" title="View Serializability"></a>View Serializability</h4><p>if the condition you want to know could been done with some conflicts, then it is View serializable<br><img src="https://i.ibb.co/t2J63YQ/WX20230520-171727-2x.png" alt></p>
+
     </div>
     
     
