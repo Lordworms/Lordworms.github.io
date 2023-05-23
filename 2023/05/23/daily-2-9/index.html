@@ -139,7 +139,7 @@
             <span class="icon">
                 <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
-            2023/4/22
+            2023/5/23
         </span>
         
         
@@ -158,124 +158,193 @@
     </div>
     
     <div class="content" v-pre>
-        <p>CF 1774E</p>
-<p>我们可以知道，除了这些必须走的点之外，其余还要走的点包括了a和b经过的点距离正好为d的点，我们可以在每次深搜的时候++now，然后回溯的时候—now,这样可以保证正好为d</p>
-<pre><code class="lang-C++">void solve()&#123;
-  int n,d;
-  cin&gt;&gt;n&gt;&gt;d;
-  vector&lt;vector&lt;int&gt;&gt;E(n+1);
-  for(int i=0;i&lt;n-1;++i)&#123;
+        <p>CF 277E</p>
+<p>费用流题目，我们把每个点拆分成in和out,原点向in连一条容量为2，费用为0的边，代表每个点最多有两个儿子</p>
+<p>再向in和out分别连线，容量为1，cost为dis，代表对应的费用</p>
+<p>最后从out向汇点连线，容量为1，费用为0，代表每个节点最多一个儿子(1不连线)</p>
+<pre><code class="lang-C++">struct MCMF&#123;
+  struct edge&#123;
     int u,v;
-    cin&gt;&gt;u&gt;&gt;v;
-    E[u].push_back(v);
-    E[v].push_back(u);
+    int cap;
+    double cost;
+  &#125;;
+  const double INF=1e12;
+  int s,t;//source and des
+  double mincostflow;//the MCMF answer
+  ll maxflow;//the maxflow
+  vector&lt;edge&gt;Edge;//all edges
+  vector&lt;vector&lt;int&gt;&gt;E;//the graph
+  vector&lt;double&gt;dis;//distance between source and i
+  vector&lt;int&gt;vis;//whether this point in the loose queue or not
+  MCMF(int n,int source,int sink)&#123;
+    E.resize(n+1);
+    dis.resize(n+1);
+    vis.resize(n+1);
+    s=source;
+    t=sink;
+    mincostflow=0;
+    maxflow=0;
   &#125;
-  int m1,m2;
-  cin&gt;&gt;m1;
-  vector&lt;int&gt;vis1(n+1),vis2(n+1),must1(n+1),must2(n+1);
-  for(int i=0;i&lt;m1;++i)&#123;
-    int x;cin&gt;&gt;x;
-    vis1[x]=1;
+  void add_edge(int u,int v,int cap,double cost)&#123;
+    E[u].push_back(Edge.size());
+    Edge.push_back(&#123;u,v,cap,cost&#125;);
+    E[v].push_back(Edge.size());
+    Edge.push_back(&#123;v,u,0,-cost&#125;);
   &#125;
-  cin&gt;&gt;m2;
-  for(int i=0;i&lt;m2;++i)&#123;
-    int x;cin&gt;&gt;x;
-    vis2[x]=1;
-  &#125;
-  int num1=0,num2=0;
-  vector&lt;int&gt;ids(n+1);
-  int cnt=0;
-  function&lt;void(int,int)&gt;dfs=[&amp;](int x,int f)&#123;
-    ids[++cnt]=x;//use for optimization,make sure that now-d is always the points that has distance d
-    for(int v:E[x])&#123;
-        if(v==f)continue;
-        dfs(v,x);
-        if(must1[v])must1[x]=1;
-        if(must2[v])must2[x]=1;
-    &#125;
-    int last_d_dep;
-    if(cnt-d&lt;=0)last_d_dep=1;
-    else last_d_dep=ids[cnt-d];
-    --cnt;//make sure it is the nearest d dep point
-    if(vis1[x])vis2[last_d_dep]=1,must1[x]=1;
-    if(vis2[x])vis1[last_d_dep]=1,must2[x]=1;
-    if(must1[x])++num1;
-    if(must2[x])++num2;
-  &#125;;  
-  dfs(1,0);  
-  cout&lt;&lt;2*(num1+num2-2)&lt;&lt;&#39;\n&#39;;
-  return;
-&#125;
-</code></pre>
-<p>CF 1540B<br>现在还没有完全理解，看这个(<a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/solution/CF1540B">https://www.luogu.com.cn/problem/solution/CF1540B</a>)</p>
-<pre><code class="lang-C++">#define int ll
-const int INV=500000004;
-ll quick_pow(ll x,ll exp,int p)
-&#123;
-      ll ans=1;
-      while(exp)
-      &#123;
-        if(exp&amp;1)ans=ans*x%p;
-        exp&gt;&gt;=1;
-        x=x*x%p;
+  bool spfa()&#123;
+    fill(dis.begin(),dis.end(),INF);
+    queue&lt;int&gt;q;
+    q.push(s);
+    vis[s]=1;
+    dis[s]=0;
+    while(!q.empty())&#123;
+      auto tmp=q.front();
+      q.pop();
+      vis[tmp]=0;
+      for(int id:E[tmp])&#123;
+        auto e=Edge[id];
+        int to=e.v;
+        if(e.cap&gt;0&amp;&amp;dis[to]&gt;dis[tmp]+e.cost)&#123;
+          dis[to]=dis[tmp]+e.cost;
+          if(!vis[to])&#123;
+            q.push(to);
+            vis[to]=1;
+          &#125;
+        &#125;
       &#125;
-      return ans;
-&#125;
+    &#125;
+    return dis[t]!=INF;
+  &#125; 
+  double dfs(int u,double flow)&#123;
+    if(u==t)
+      return flow;
+    vis[u]=1;
+    double ans=0;
+    for(int i=E[u].size()-1;i&gt;=0;--i)&#123;
+      int id=E[u][i];
+      auto e=Edge[id];
+      int v=e.v;
+      if(e.cap&amp;&amp;!vis[v]&amp;&amp;dis[v]==dis[u]+e.cost)&#123;
+        double cur_flow=dfs(v,min(flow-ans,(double)e.cap));//the flow of the remaining graph
+        if(cur_flow)&#123;
+          if(ans+cur_flow&gt;flow)
+            break;
+          mincostflow+=cur_flow*e.cost;
+          ans+=cur_flow;
+          Edge[id^1].cap+=cur_flow;
+          Edge[id].cap-=cur_flow;
+        &#125;
+      &#125;
+    &#125;
+    vis[u]=0;
+    return ans;
+  &#125;
+  ll get_mcmf()&#123;
+    maxflow=0;
+    while(spfa())&#123;
+      double cur_flow;
+      while((cur_flow=dfs(s,INF)))maxflow+=cur_flow;
+    &#125;
+    return mincostflow;
+  &#125;
+&#125;;
+struct node&#123;
+    double x,y;
+&#125;;
 void solve()&#123;
   int n;
   cin&gt;&gt;n;
-  vector&lt;vector&lt;int&gt;&gt;E(n+1),fa(n+1,vector&lt;int&gt;(32));
-  vector&lt;int&gt;dep(n+1);
-  for(int i=1;i&lt;=n-1;++i)&#123;
-    int u,v;
-    cin&gt;&gt;u&gt;&gt;v;
-    E[u].push_back(v);
-    E[v].push_back(u);
+  vector&lt;node&gt;a(n+1);
+  for(int i=1;i&lt;=n;++i)&#123;
+    cin&gt;&gt;a[i].x&gt;&gt;a[i].y;
   &#125;
-  function&lt;void(int,int)&gt;dfs=[&amp;](int x,int f)&#123;
-    fa[x][0]=f;
-    dep[x]=dep[f]+1;
-    for(int i=1;i&lt;20;++i)fa[x][i]=fa[fa[x][i-1]][i-1];
+  sort(a.begin()+1,a.end(),[&amp;](node aa,node bb)&#123;
+    return aa.y&gt;bb.y;
+  &#125;);
+  if(a[1].y==a[2].y)&#123;
+    cout&lt;&lt;-1&lt;&lt;&#39;\n&#39;;
+    return;
+  &#125;
+  int S=0,T=2*n+1;
+  MCMF mf(2*n+1,S,T);
+  function&lt;double(int,int)&gt;dis=[&amp;](int i,int j)&#123;
+    double x_dis=a[i].x-a[j].x;
+    double y_dis=a[i].y-a[j].y;
+    return sqrt(x_dis*x_dis+y_dis*y_dis);
+  &#125;;
+  for(int i=1;i&lt;=n;++i)&#123;
+    mf.add_edge(S,i,2,0);//limit that for every node, it could only have two offspring
+    if(i&gt;=2)mf.add_edge(i+n,T,1,0);
+  &#125;
+  for(int i=1;i&lt;=n;++i)&#123;
+    for(int j=i+1;j&lt;=n;++j)&#123;
+        if(a[i].y&lt;=a[j].y)continue;
+        double d=dis(i,j);
+        mf.add_edge(i,j+n,1,d);//cap is 1 indicates that it could only have one parent
+    &#125;
+  &#125;
+  mf.get_mcmf();
+  if(mf.maxflow!=n-1)&#123;
+    cout&lt;&lt;-1&lt;&lt;&#39;\n&#39;;
+    return;
+  &#125;
+  cout.precision(10);
+  cout&lt;&lt;mf.mincostflow&lt;&lt;&#39;\n&#39;;
+  return;
+&#125;
+</code></pre>
+<p>CF 1139E</p>
+<p>把club和能力值抽象为点，然后分别连线，由于我们直接的O(VE)来说复杂度不过，所以我们倒着来，每次从当前的mex来往前搜</p>
+<pre><code class="lang-C++">void solve()&#123;
+  int n,m;
+  cin&gt;&gt;n&gt;&gt;m;
+  vector&lt;int&gt;p(n+1),c(n+1);
+  vector&lt;vector&lt;int&gt;&gt;E(5000+1);
+  for(int i=1;i&lt;=n;++i)cin&gt;&gt;p[i];
+  for(int i=1;i&lt;=n;++i)cin&gt;&gt;c[i];
+  int d;cin&gt;&gt;d;
+  vector&lt;int&gt;ans(d+1);
+  int res=0;
+  vector&lt;int&gt;invalid(n+1);
+  vector&lt;int&gt;leave(d+1);
+  for(int i=1;i&lt;=d;++i)&#123;
+    cin&gt;&gt;leave[i];
+    invalid[leave[i]]=1;
+  &#125;
+  for(int i=1;i&lt;=n;++i)&#123;
+    if(!invalid[i])&#123;
+        E[p[i]].push_back(c[i]);
+    &#125;
+  &#125;
+  int cur_ans=0;
+  vector&lt;int&gt;vis(n+1),match(m+1,-1);
+  function&lt;bool(int)&gt;dfs=[&amp;](int x)&#123;
     for(int v:E[x])&#123;
-        if(v==f)continue;
-        dfs(v,x);
+        if(vis[v]==cur_ans)&#123;
+            continue;
+        &#125;
+        vis[v]=cur_ans;
+        if(match[v]==-1||dfs(match[v]))&#123;
+            match[v]=x;
+            return true;
+        &#125;
     &#125;
+    return false;
   &#125;;
-  function&lt;int(int,int)&gt;LCA=[&amp;](int x,int y)&#123;
-    if(dep[x]&lt;dep[y])swap(x,y);//x is deeper
-    for(int i=19;i&gt;=0;--i)&#123;
-        if(dep[x]-(1&lt;&lt;i)&gt;=dep[y])&#123;
-            x=fa[x][i];
+  for(int i=d;i&gt;=1;--i)&#123;
+    for(int j=res;;++j)&#123;
+        ++cur_ans;
+        if(!dfs(j))&#123;
+            res=j;
+            break;
         &#125;
     &#125;
-    if(x==y)return x;
-    for(int i=19;i&gt;=0;--i)&#123;
-        if(fa[x][i]!=fa[y][i])&#123;
-            x=fa[x][i],y=fa[y][i];
-        &#125;
-    &#125;
-    return fa[x][0];
-  &#125;;
-  vector dp(n+1,vector&lt;int&gt;(n+1));
-  for(int i=1;i&lt;=n;++i)&#123;
-    dp[0][i]=1;
+    ans[i]=res;
+    E[p[leave[i]]].push_back(c[leave[i]]);
   &#125;
-  for(int i=1;i&lt;=n;++i)&#123;
-    for(int j=1;j&lt;=n;++j)&#123;
-        dp[i][j]=(dp[i-1][j]+dp[i][j-1])*INV%MOD;
-    &#125;
+  for(int i=1;i&lt;=d;++i)&#123;
+    cout&lt;&lt;ans[i]&lt;&lt;&quot;\n&quot;;
   &#125;
-  int ans=0;
-  for(int i=1;i&lt;=n;++i)&#123;
-    dfs(i,0);
-    for(int j=1;j&lt;=n;++j)&#123;
-        for(int k=1;k&lt;j;++k)&#123;
-            int lca=LCA(j,k);
-            ans=(ans+dp[dep[j]-dep[lca]][dep[k]-dep[lca]])%MOD;
-        &#125;
-    &#125;
-  &#125;
-  cout&lt;&lt;ans*quick_pow(n,MOD-2,MOD)%MOD&lt;&lt;&#39;\n&#39;;
   return;
 &#125;
 </code></pre>
