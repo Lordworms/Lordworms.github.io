@@ -139,7 +139,7 @@
             <span class="icon">
                 <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
-            2023/5/17
+            2023/5/22
         </span>
         
         
@@ -150,7 +150,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/daily/" style="color: #00a596">daily</a>
+                <a href="/tags/daily/" style="color: #03a9f4">daily</a>
             </span>
             
         </span>
@@ -158,41 +158,42 @@
     </div>
     
     <div class="content" v-pre>
-        <p>CF 1283E</p>
-<pre><code class="lang-C++">void solve()&#123;
+        <p>CF 264B</p>
+<p>简单DP，先把所有的因子预处理出来，然后每次更新就好了</p>
+<pre><code class="lang-C++">vector&lt;int&gt;fac[MAXN];
+void init()&#123;
+    for(int i=2;i&lt;MAXN;++i)&#123;
+        for(int j=i;j&lt;MAXN;j+=i)&#123;
+            fac[j].push_back(i);
+        &#125;
+    &#125;
+&#125;
+void solve()&#123;
   int n;
   cin&gt;&gt;n;
   vector&lt;int&gt;a(n+1);
-  for(int i=1;i&lt;=n;++i)cin&gt;&gt;a[i];
-  sort(a.begin()+1,a.end());
-  int maxans=n,minans=n;
+  map&lt;int,int&gt;dp;
   for(int i=1;i&lt;=n;++i)&#123;
-    for(int j=i+1;j&lt;=n;++j)&#123;
-        if(a[j]&lt;=a[i]+2)&#123;
-            --minans;
-            if(j==n)i=j-1;
-        &#125;
-        else&#123;
-            i=j-1;
-            break;
-        &#125;
+    cin&gt;&gt;a[i];
+    for(int f:fac[a[i]])&#123;
+        dp[f]=0;
     &#125;
   &#125;
-  vector&lt;int&gt;vis(N);
   for(int i=1;i&lt;=n;++i)&#123;
-    if(vis[a[i]-1]==0)&#123;
-        vis[a[i]-1]=1;
+    int cur_max=-1;
+    for(int f:fac[a[i]])&#123;
+        dp[f]+=1;
+        cur_max=max(cur_max,dp[f]);
     &#125;
-    else if(vis[a[i]]==0)&#123;
-        vis[a[i]]=1;
-    &#125;
-    else if(vis[a[i]+1]==0)&#123;
-        vis[a[i]+1]=1;
-    &#125;else&#123;
-        --maxans;
+    for(int f:fac[a[i]])&#123;
+        dp[f]=max(dp[f],cur_max);
     &#125;
   &#125;
-  cout&lt;&lt;minans&lt;&lt;&#39; &#39;&lt;&lt;maxans&lt;&lt;&#39;\n&#39;;
+  int ans=1;
+  for(auto&amp;k:dp)&#123;
+    ans=max(k.second,ans);
+  &#125;
+  cout&lt;&lt;ans&lt;&lt;&#39;\n&#39;;
   return;
 &#125;
 </code></pre>
