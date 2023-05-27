@@ -342,12 +342,38 @@
 <h5 id="ISOLATION"><a href="#ISOLATION" class="headerlink" title="ISOLATION"></a>ISOLATION</h5><p>Won’t see any other transaction when executing the current one </p>
 <h6 id="Serial-Schedule"><a href="#Serial-Schedule" class="headerlink" title="Serial Schedule"></a>Serial Schedule</h6><p>A schedule that does not interleave the actions of different transactions</p>
 <h6 id="Equal-Schedule"><a href="#Equal-Schedule" class="headerlink" title="Equal Schedule"></a>Equal Schedule</h6><p>Same effect</p>
-<h4 id="CONFLICTING-OPERATIONS"><a href="#CONFLICTING-OPERATIONS" class="headerlink" title="CONFLICTING OPERATIONS"></a>CONFLICTING OPERATIONS</h4><p>Read-Write COnflicts</p>
+<h4 id="CONFLICTING-OPERATIONS"><a href="#CONFLICTING-OPERATIONS" class="headerlink" title="CONFLICTING OPERATIONS"></a>CONFLICTING OPERATIONS</h4><p>Read-Write Conflicts</p>
 <p>Write-Read Conflicts</p>
 <p>Write Write Conflicts</p>
 <h4 id="Conflict-Serializability-and-View-Serializability"><a href="#Conflict-Serializability-and-View-Serializability" class="headerlink" title="Conflict Serializability and View Serializability"></a>Conflict Serializability and View Serializability</h4><h4 id="Conclict-Serializability"><a href="#Conclict-Serializability" class="headerlink" title="Conclict Serializability"></a>Conclict Serializability</h4><p><img src="https://i.ibb.co/PGT39X1/WX20230520-165734-2x.png" alt></p>
 <h4 id="DEPENDENCY-GRAPH"><a href="#DEPENDENCY-GRAPH" class="headerlink" title="DEPENDENCY GRAPH"></a>DEPENDENCY GRAPH</h4><p><img src="https://i.ibb.co/VwRD0yz/WX20230520-170304-2x.png" alt></p>
 <h4 id="View-Serializability"><a href="#View-Serializability" class="headerlink" title="View Serializability"></a>View Serializability</h4><p>if the condition you want to know could been done with some conflicts, then it is View serializable<br><img src="https://i.ibb.co/t2J63YQ/WX20230520-171727-2x.png" alt></p>
+<h3 id="two-PHASE-LOCKING"><a href="#two-PHASE-LOCKING" class="headerlink" title="two PHASE-LOCKING"></a>two PHASE-LOCKING</h3><p><img src="https://i.ibb.co/nbQd5TD/WX20230526-111124-2x.png" alt></p>
+<h3 id="Cascading-aborts"><a href="#Cascading-aborts" class="headerlink" title="Cascading aborts"></a>Cascading aborts</h3><p>a performance issue<br><img src="https://i.ibb.co/KKwFzmV/WX20230526-111935-2x.png" alt></p>
+<p><img src="https://i.ibb.co/SP3jR1T/WX20230526-112256-2x.png" alt></p>
+<h3 id="STRONG-TWO-PHASE-LOCKING"><a href="#STRONG-TWO-PHASE-LOCKING" class="headerlink" title="STRONG TWO-PHASE LOCKING"></a>STRONG TWO-PHASE LOCKING</h3><p><img src="https://i.ibb.co/PGwBN2k/WX20230526-112548-2x.png" alt></p>
+<h3 id="types"><a href="#types" class="headerlink" title="types"></a>types</h3><p><img src="https://i.ibb.co/RNf4ttT/WX20230526-114000-2x.png" alt></p>
+<h3 id="deadlock-detection-and-prevention"><a href="#deadlock-detection-and-prevention" class="headerlink" title="deadlock detection and prevention"></a>deadlock detection and prevention</h3><p><img src="https://i.ibb.co/J7SQQfX/WX20230526-133521-2x.png" alt></p>
+<h3 id="detect-and-pick-up-victim"><a href="#detect-and-pick-up-victim" class="headerlink" title="detect and pick up victim"></a>detect and pick up victim</h3><p><img src="https://i.ibb.co/tH5B0nj/WX20230526-134453-2x.png" alt></p>
+<p><img src="https://i.ibb.co/HFDm3qd/WX20230526-134551-2x.png" alt></p>
+<h3 id="Deadlock-prevention"><a href="#Deadlock-prevention" class="headerlink" title="Deadlock prevention"></a>Deadlock prevention</h3><p>instead of using a thread to detect the deadlock, we decide whether it would cause a deadlock when required for a lock</p>
+<p><img src="https://i.ibb.co/DMXWGNm/WX20230526-140708-2x.png" alt></p>
+<h3 id="Granularity"><a href="#Granularity" class="headerlink" title="Granularity"></a>Granularity</h3><p><img src="https://i.ibb.co/2nqbsK6/WX20230526-141508-2x.png" alt></p>
+<h3 id="Intention-Locks"><a href="#Intention-Locks" class="headerlink" title="Intention Locks"></a>Intention Locks</h3><p><img src="https://i.ibb.co/5xycqBD/WX20230526-141806-2x.png" alt><br><img src="https://i.ibb.co/j8Cvxcn/WX20230526-141856-2x.png" alt></p>
+<h3 id="TimeStamp-Ordering"><a href="#TimeStamp-Ordering" class="headerlink" title="TimeStamp Ordering"></a>TimeStamp Ordering</h3><p>It is a optimistic way<br><img src="https://i.ibb.co/MPPMLfV/WX20230526-145829-2x.png" alt></p>
+<h3 id="Basic-T-O"><a href="#Basic-T-O" class="headerlink" title="Basic T/O"></a>Basic T/O</h3><p><img src="https://i.ibb.co/k44xR7C/WX20230526-150448-2x.png" alt></p>
+<h3 id="OPTIMISTIC-CONCURRENCY-CONTROL-OCC"><a href="#OPTIMISTIC-CONCURRENCY-CONTROL-OCC" class="headerlink" title="OPTIMISTIC CONCURRENCY CONTROL(OCC)"></a>OPTIMISTIC CONCURRENCY CONTROL(OCC)</h3><p><img src="https://i.ibb.co/Y2cjQ6h/WX20230526-154018-2x.png" alt> </p>
+<h3 id="OCC-PHASES"><a href="#OCC-PHASES" class="headerlink" title="OCC PHASES"></a>OCC PHASES</h3><p><img src="https://i.ibb.co/Zmr4Nk4/WX20230526-154557-2x.png" alt></p>
+<h3 id="VALIDATION-PHASE"><a href="#VALIDATION-PHASE" class="headerlink" title="VALIDATION PHASE"></a>VALIDATION PHASE</h3><p><img src="https://i.ibb.co/RTmm47B/WX20230526-155332-2x.png" alt></p>
+<h3 id="STEP-I"><a href="#STEP-I" class="headerlink" title="STEP I"></a>STEP I</h3><p><img src="https://i.ibb.co/8z7yRS1/WX20230526-160322-2x.png" alt></p>
+<h3 id="STEP-II"><a href="#STEP-II" class="headerlink" title="STEP II"></a>STEP II</h3><p><img src="https://i.ibb.co/5hN3ygy/WX20230526-160427-2x.png" alt></p>
+<h3 id="STEP-III"><a href="#STEP-III" class="headerlink" title="STEP III"></a>STEP III</h3><p><img src="https://i.ibb.co/LPFMdL2/WX20230526-162631-2x.png" alt></p>
+<h3 id="PHANTON-PROBLEM-SOLUTION"><a href="#PHANTON-PROBLEM-SOLUTION" class="headerlink" title="PHANTON PROBLEM SOLUTION"></a>PHANTON PROBLEM SOLUTION</h3><p><img src="https://i.ibb.co/KjTyrnY/WX20230526-170800-2x.png" alt></p>
+<h3 id="isolation-level"><a href="#isolation-level" class="headerlink" title="isolation level"></a>isolation level</h3><p><img src="https://i.ibb.co/56cZFnJ/WX20230526-175416-2x.png" alt></p>
+<p><img src="https://i.ibb.co/Mkw0YSQ/WX20230526-175812-2x.png" alt></p>
+<h3 id="MVCC"><a href="#MVCC" class="headerlink" title="MVCC"></a>MVCC</h3><p><img src="https://i.ibb.co/QK6qKWy/WX20230526-180743-2x.png" alt></p>
+<h3 id="MVCC-VERSION-STORAGE"><a href="#MVCC-VERSION-STORAGE" class="headerlink" title="MVCC VERSION STORAGE"></a>MVCC VERSION STORAGE</h3><p><img src="https://i.ibb.co/syFdPQT/WX20230526-184212-2x.png" alt></p>
+<h3 id="garbage-collection"><a href="#garbage-collection" class="headerlink" title="garbage collection"></a>garbage collection</h3><p><img src="https://i.ibb.co/ByMD40P/WX20230526-185639-2x.png" alt></p>
 
     </div>
     
