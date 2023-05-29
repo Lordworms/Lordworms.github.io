@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>daily 2 | Waiting for the dawn</title>
+        <title>daily 1 | Waiting for the dawn</title>
         <meta name="author" content="Yanxin Xiang">
         <meta name="description" content="">
         <meta name="keywords" content="">
@@ -132,120 +132,37 @@
 
                 <div class="article">
     <div>
-        <h1>daily 2 </h1>
+        <h1>daily 1 </h1>
     </div>
     <div class="info">
         <span class="date">
             <span class="icon">
                 <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
-            2023/3/28
+            2023/5/28
         </span>
         
-        
-        <span class="tags">
-            <span class="icon">
-                <i class="fa-solid fa-tags fa-fw"></i>
-            </span>
-            
-            <span class="tag">
-                
-                <a href="/tags/daily/" style="color: #ff7d73">daily</a>
-            </span>
-            
-        </span>
         
     </div>
     
     <div class="content" v-pre>
-        <p>CF 455A</p>
-<p>常规DP，首先不要从n来想，一般针对于这个值的大小的转移方程多去值来想，因为这里是1e5，肯定可以去从值来想的</p>
-<p>转移方程很简单</p>
-<p>$dp[i]=max(dp[i-1],dp[i-2]+cnt[i]*i)$</p>
-<pre><code class="lang-C++">void solve()&#123;
-  int n;
-  cin&gt;&gt;n;
-  vector&lt;int&gt;cnt(MAXN);
-  vector&lt;int&gt;dp(cnt);
-  for(int i=0;i&lt;n;++i)&#123;
-    int x;cin&gt;&gt;x;
-    cnt[x]++;
-  &#125;
-  dp[1]=cnt[1];
-  dp[0]=0;
-  for(int i=2;i&lt;MAXN;++i)&#123;
-    dp[i]=max(dp[i-1],dp[i-2]+cnt[i]*i);
-  &#125;
-  cout&lt;&lt;dp[MAXN-1]&lt;&lt;&#39;\n&#39;;
-  return;
+        <p>CF 1833A</p>
+<pre><code class="lang-C++">void solve()
+&#123;
+    cin&gt;&gt;n&gt;&gt;m;
+    for(int i=1;i&lt;=n;i++) c[i] = i;
+    for(int i=1;i&lt;=n;i++) cin&gt;&gt;a[i];
+    for(int i=1;i&lt;=n;i++) cin&gt;&gt;b[i];
+
+    sort(c+1, c+n+1,[&amp;](int x, int y)&#123;
+        return a[x]&lt;a[y];
+    &#125;);
+    sort(b+1, b+n+1);
+    for(int i=1;i&lt;=n;i++) res[c[i]] = b[i];
+    for(int i=1;i&lt;=n;i++) cout&lt;&lt;res[i]&lt;&lt;&quot; &quot;;
+    cout&lt;&lt;endl;
 &#125;
 </code></pre>
-<p>CF 455B</p>
-<p>博弈+dp</p>
-<p>先计算出当前有必败策略和必胜策略的节点，然后我们对于同时拥有必败和必胜策略的根节点，那么肯定是先手赢（随意控制）</p>
-<p>如果根节点只有必胜策略，那么就是交替赢，算k的奇偶性就好了</p>
-<p>如果根节点只有必败策略，那么一定输</p>
-<pre><code class="lang-C++">int tree[MAXN&lt;&lt;2][26];
-int is_leaf[MAXN&lt;&lt;2];
-int cnt;
-int win[MAXN&lt;&lt;2],lose[MAXN&lt;&lt;2];
-void add(string s)&#123;
-    int cur=0;
-    for(int i=0;i&lt;s.size();++i)&#123;
-        is_leaf[cur]=0;
-        int x=s[i]-&#39;a&#39;;
-        if(!tree[cur][x])&#123;
-            tree[cur][x]=++cnt;
-        &#125;
-        cur=tree[cur][x];
-    &#125;
-&#125;
-int dfs_win(int x)&#123;
-    if(is_leaf[x])&#123;
-        return win[x]=0;
-    &#125;
-    for(int i=0;i&lt;26;++i)&#123;
-        if(tree[x][i]&amp;&amp;!dfs_win(tree[x][i]))&#123;//有一个后继节点是没有必胜策略的，那么可以走到这个节点导致必胜
-            return win[x]=1;
-        &#125;
-    &#125;
-    return win[x]=0;
-&#125;
-int dfs_lose(int x)&#123;
-    if(is_leaf[x])&#123;
-        return lose[x]=1;
-    &#125;
-    for(int i=0;i&lt;26;++i)&#123;
-        if(tree[x][i]&amp;&amp;!dfs_lose(tree[x][i]))&#123;//有一个节点没有必败策略，那么我们可以走到这个节点导致当前必败
-            return lose[x]=1;
-        &#125;
-    &#125;
-    return lose[x]=0;
-&#125;
-void solve()&#123;
-  ll n,k;
-  cin&gt;&gt;n&gt;&gt;k;
-  memset(is_leaf,1,sizeof(is_leaf));
-  for(int i=0;i&lt;n;++i)&#123;
-    string s;
-    cin&gt;&gt;s;
-    add(s);
-  &#125;
-  dfs_win(0);
-  dfs_lose(0);
-  if(win[0])&#123;
-    if(lose[0])&#123;
-        cout&lt;&lt;&quot;First\n&quot;;
-    &#125;else&#123;
-        cout&lt;&lt;(k&amp;1?&quot;First&quot;:&quot;Second&quot;)&lt;&lt;&#39;\n&#39;;
-    &#125;
-  &#125;else&#123;
-    cout&lt;&lt;&quot;Second\n&quot;;
-  &#125;
-  return;
-&#125;
-</code></pre>
-<p>写lc去了，这几天面试太鸡吧多了</p>
 
     </div>
     
