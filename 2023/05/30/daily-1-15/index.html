@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>CS 336 shits | Waiting for the dawn</title>
+        <title>daily 1 | Waiting for the dawn</title>
         <meta name="author" content="Yanxin Xiang">
         <meta name="description" content="">
         <meta name="keywords" content="">
@@ -132,34 +132,38 @@
 
                 <div class="article">
     <div>
-        <h1>CS 336 shits </h1>
+        <h1>daily 1 </h1>
     </div>
     <div class="info">
         <span class="date">
             <span class="icon">
                 <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
-            2023/4/26
+            2023/5/30
         </span>
         
-        
-        <span class="tags">
-            <span class="icon">
-                <i class="fa-solid fa-tags fa-fw"></i>
-            </span>
-            
-            <span class="tag">
-                
-                <a href="/tags/class/" style="color: #ff7d73">class</a>
-            </span>
-            
-        </span>
         
     </div>
     
     <div class="content" v-pre>
-        <h2 id="Greedy-Algorithm"><a href="#Greedy-Algorithm" class="headerlink" title="Greedy Algorithm"></a>Greedy Algorithm</h2><h3 id="MST"><a href="#MST" class="headerlink" title="MST"></a>MST</h3><h4 id="Krusal’s-Algorithm"><a href="#Krusal’s-Algorithm" class="headerlink" title="Krusal’s Algorithm"></a>Krusal’s Algorithm</h4><h4 id="Prim’s-Algorithm"><a href="#Prim’s-Algorithm" class="headerlink" title="Prim’s Algorithm"></a>Prim’s Algorithm</h4><h3 id="INTERVAL-SCHEDULE-PROBLEM"><a href="#INTERVAL-SCHEDULE-PROBLEM" class="headerlink" title="INTERVAL SCHEDULE PROBLEM"></a>INTERVAL SCHEDULE PROBLEM</h3><p>Sort by finish time</p>
-<h3 id="Weighted-Selection"><a href="#Weighted-Selection" class="headerlink" title="Weighted Selection"></a>Weighted Selection</h3><p>Sort by </p>
+        <p>CF 710E</p>
+<pre><code class="lang-C++">void solve()&#123;
+  ll n,x,y;
+  cin&gt;&gt;n&gt;&gt;x&gt;&gt;y;
+  vector&lt;ll&gt;dp(n+1,INF);
+  dp[1]=x;
+  for(int i=2;i&lt;=n;++i)&#123;
+    if(i%2==0)&#123;
+      dp[i]=min(dp[i],dp[i/2]+y);
+    &#125;else&#123;
+      dp[i]=min(dp[(i+1)&gt;&gt;1]+x+y,dp[i]);
+    &#125;
+    dp[i]=min(dp[i-1]+x,dp[i]);
+  &#125;
+  cout&lt;&lt;dp[n]&lt;&lt;&#39;\n&#39;;
+  return;
+&#125;
+</code></pre>
 
     </div>
     
