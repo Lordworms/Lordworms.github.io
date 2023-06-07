@@ -1,0 +1,319 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>daily 2 | Waiting for the dawn</title>
+        <meta name="author" content="Yanxin Xiang">
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+        <link rel="icon" href="https://i.ibb.co/1T1D1D9/QQ20230529-1.jpg">
+        <script src="https://cdn.staticfile.org/vue/3.2.45/vue.global.prod.min.js"></script>
+        <script src="https://cdn.staticfile.org/highlight.js/11.7.0/highlight.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/11.7.0/styles/github.min.css">
+        <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/6.2.1/css/all.min.css">
+        
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+        
+        
+        <script src="https://cdn.staticfile.org/KaTeX/0.16.4/katex.min.js"></script>
+        <script src="https://cdn.staticfile.org/KaTeX/0.16.4/contrib/auto-render.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.staticfile.org/KaTeX/0.16.4/katex.min.css">
+        
+        
+        <link rel="stylesheet" href="/css/fonts.min.css">
+        <link rel="stylesheet" href="/css/particlex.css">
+    <meta name="generator" content="Hexo 6.3.0"></head>
+    <body>
+        <div id="loading" style="height: 100vh; width: 100vw; left: 0; top: 0; position: fixed; display: flex; z-index: 2147483647; background: #fff; transition: opacity 0.3s ease-out; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; pointer-events: none">
+    <div style="width: 50vmin; height: 50vmin; margin: auto; padding: 50px; border-radius: 50%; display: flex; border: solid 10px #a3ddfb">
+        <div style="margin: auto; text-align: center">
+            <h2>LOADING</h2>
+            <p>加载过慢请开启缓存，浏览器默认开启</p>
+            <img src="/images/loading.gif" style="height: 50px; border-radius: 0">
+        </div>
+    </div>
+</div>
+
+        <div id="layout">
+            <transition name="into">
+            <div id="main" v-show="showpage" style="display: -not-none">
+                <nav id="menu">
+    <div class="desktop-menu">
+        <a class="title" href="/">
+            <span>WAITING FOR THE DAWN</span>
+        </a>
+        
+        <a href="/">
+            <i class="fa-solid fa-house fa-fw"></i>
+            <span>&ensp;Home</span>
+        </a>
+        
+        <a href="/about">
+            <i class="fa-solid fa-id-card fa-fw"></i>
+            <span>&ensp;About</span>
+        </a>
+        
+        <a href="/archives">
+            <i class="fa-solid fa-box-archive fa-fw"></i>
+            <span>&ensp;Archives</span>
+        </a>
+        
+        <a href="/categories">
+            <i class="fa-solid fa-bookmark fa-fw"></i>
+            <span>&ensp;Categories</span>
+        </a>
+        
+        <a href="/tags">
+            <i class="fa-solid fa-tags fa-fw"></i>
+            <span>&ensp;Tags</span>
+        </a>
+        
+    </div>
+    <div :class="&quot;phone-menu &quot; + menushow" id="phone-menu">
+        <div class="curtain" @click="menushow = !menushow" v-show="menushow"></div>
+        <div class="title" @click="menushow = !menushow">
+            <i class="fa-solid fa-bars fa-fw"></i>
+            <span>&emsp;WAITING FOR THE DAWN</span>
+        </div>
+        <transition name="slide">
+        <div class="items" v-show="menushow">
+            
+            <a href="/">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-house fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Home</div>
+                </div>
+            </a>
+            
+            <a href="/about">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-id-card fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">About</div>
+                </div>
+            </a>
+            
+            <a href="/archives">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-box-archive fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Archives</div>
+                </div>
+            </a>
+            
+            <a href="/categories">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-bookmark fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Categories</div>
+                </div>
+            </a>
+            
+            <a href="/tags">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-tags fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Tags</div>
+                </div>
+            </a>
+            
+        </div>
+        </transition>
+    </div>
+</nav>
+
+                <div class="article">
+    <div>
+        <h1>daily 2 </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/6/8
+        </span>
+        
+        
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/daily/" style="color: #ffa2c4">daily</a>
+            </span>
+            
+        </span>
+        
+    </div>
+    
+    <div class="content" v-pre>
+        <p>CF 721 C</p>
+<p>本来是需要三维，来记录一下当前经过的点集合，但是我们可以先把图分个层，然后就ok了，用top sort就可以了</p>
+<pre><code class="lang-C++">void solve()&#123;
+  int n,m,T;
+  cin&gt;&gt;n&gt;&gt;m&gt;&gt;T;
+  vector&lt;vector&lt;int&gt;&gt;E(n+1);
+  vector&lt;vector&lt;int&gt;&gt;cost(n+1);
+  vector&lt;int&gt;in(n+1);
+  for(int i=1;i&lt;=m;++i)&#123;
+    int u,v,w;
+    cin&gt;&gt;u&gt;&gt;v&gt;&gt;w;
+    in[v]++;
+    E[u].push_back(v);
+    cost[u].push_back(w);
+  &#125;
+  vector bef(n+1,vector&lt;int&gt;(n+1,0)),dp(n+1,vector&lt;int&gt;(n+1,INF));
+  dp[1][1]=0;
+  bef[1][1]=-1;
+  //dp[i][j] to be the j times left, and we are in i so dp[i][j]=dp[k][j+v_k]
+  function&lt;void()&gt;topSort=[&amp;]()&#123;
+    queue&lt;int&gt;q;
+    for(int i=1;i&lt;=n;++i)&#123;
+      if(!in[i])&#123;
+        q.push(i);
+      &#125;
+    &#125;
+    while(!q.empty())&#123;
+      auto u=q.front();
+      q.pop();
+      for(int i=0;i&lt;E[u].size();++i)&#123;
+        int v=E[u][i],c=cost[u][i];
+        --in[v];
+        if(!in[v])&#123;
+          q.push(v);
+        &#125;
+        for(int j=2;j&lt;=n;++j)&#123;
+          if(dp[v][j]&gt;dp[u][j-1]+c)&#123;
+            dp[v][j]=dp[u][j-1]+c;
+            bef[v][j]=u;
+          &#125;
+        &#125;
+      &#125;
+    &#125;
+  &#125;;
+  topSort();
+  function&lt;void(int i,int j)&gt;printTrace=[&amp;](int i,int j)&#123;
+    if(bef[i][j]==-1)&#123;
+      cout&lt;&lt;i&lt;&lt;&#39; &#39;;
+      return;
+    &#125;
+    printTrace(bef[i][j],j-1);
+    cout&lt;&lt;i&lt;&lt;&#39; &#39;;
+  &#125;;
+  for(int i=n;i&gt;=1;--i)&#123;
+    if(dp[n][i]&lt;=T)&#123;
+      cout&lt;&lt;i&lt;&lt;&#39;\n&#39;;
+      printTrace(n,i);
+      break;
+    &#125;
+  &#125;
+  return;
+&#125;
+</code></pre>
+<p>CF 1096D</p>
+<pre><code class="lang-C++">void solve()&#123;
+  int n;
+  cin&gt;&gt;n;
+  string s;
+  cin&gt;&gt;s;
+  s=&#39;)&#39;+s;
+  map&lt;char,int&gt;mp;
+  vector&lt;int&gt;a(n+1);
+  vector dp(n+1,vector&lt;int&gt;(5));
+  mp[&#39;h&#39;]=1,mp[&#39;a&#39;]=2,mp[&#39;r&#39;]=3,mp[&#39;d&#39;]=4;
+  for(int i=1;i&lt;=n;++i)&#123;
+    cin&gt;&gt;a[i];
+    for(int j=1;j&lt;=4;++j)&#123;
+        if(mp[s[i]]==j)&#123;
+            if(j!=1)&#123;
+                dp[i][j]=min(dp[i-1][j-1],dp[i-1][j]+a[i]);
+            &#125;else&#123;
+                dp[i][j]=dp[i-1][j]+a[i];
+            &#125;
+        &#125;else&#123;
+            dp[i][j]=dp[i-1][j];
+        &#125;
+    &#125;
+  &#125;
+  cout&lt;&lt;dp[n][4]&lt;&lt;&quot;\n&quot;;
+  return;
+&#125;
+</code></pre>
+
+    </div>
+    
+    
+    
+    
+    
+    <div id="comment">
+        <div id="waline-container"></div>
+    </div>
+    
+    
+    
+</div>
+
+                <footer id="footer">
+    <div class="footer-wrap">
+        <div>
+            &copy;
+            2022 - 2023 Waiting for the dawn
+            <span class="footer-icon">
+                <i class="fa-solid fa-font-awesome fa-fw"></i>
+            </span>
+            &commat;Yanxin Xiang
+        </div>
+        <div>Based on the <a target="_blank" rel="noopener" href="https://hexo.io">Hexo Engine</a> &amp; <a target="_blank" rel="noopener" href="https://github.com/argvchs/hexo-theme-particlex">ParticleX Theme</a></div>
+        
+    </div>
+</footer>
+
+            </div>
+            </transition>
+            <div id="showimg">
+                <img id="showimg-content">
+            </div>
+        </div>
+        <script src="/js/functions.js"></script>
+<script src="/js/particlex.js"></script>
+
+
+
+
+<script src="https://cdn.staticfile.org/waline/2.14.7/waline.min.js"></script>
+<link rel="stylesheet" href="https://cdn.staticfile.org/waline/2.14.7/waline.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/waline/2.14.7/waline-meta.min.css">
+<script>
+    Waline.init({
+        el: "#waline-container",
+        serverURL: "https://blog-comment-one-pi.vercel.app",
+        commentCount: true,
+        pageview: false,
+        emoji: ["https://unpkg.com/@waline/emojis@1.2.0/weibo","https://unpkg.com/@waline/emojis@1.2.0/alus","https://unpkg.com/@waline/emojis@1.2.0/bilibili","https://unpkg.com/@waline/emojis@1.2.0/qq","https://unpkg.com/@waline/emojis@1.2.0/tieba","https://unpkg.com/@waline/emojis@1.2.0/tw-emoji"],
+        meta: ["nick","mail","link"],
+        requiredMeta: ["nick"],
+        lang: "zh-CN",
+        wordLimit: 0,
+        pageSize: "10",
+        login: "enable",
+        locale: {},
+    });
+</script>
+
+
+
+
+    </body>
+</html>
