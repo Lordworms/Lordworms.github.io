@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>daily 1 | Waiting for the dawn</title>
+        <title>daily 2 | Waiting for the dawn</title>
         <meta name="author" content="Yanxin Xiang">
         <meta name="description" content="">
         <meta name="keywords" content="">
@@ -132,14 +132,14 @@
 
                 <div class="article">
     <div>
-        <h1>daily 1 </h1>
+        <h1>daily 2 </h1>
     </div>
     <div class="info">
         <span class="date">
             <span class="icon">
                 <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
-            2023/3/21
+            2023/6/13
         </span>
         
         
@@ -150,7 +150,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/daily/" style="color: #00a596">daily</a>
+                <a href="/tags/daily/" style="color: #ffa2c4">daily</a>
             </span>
             
         </span>
@@ -158,35 +158,83 @@
     </div>
     
     <div class="content" v-pre>
-        <p>CF 1336Ad</p>
-<p>简单贪心，对于每个工业国，如果选到了它那么他的子树肯定都被选择了，那么贡献就是dep[i]-(siz[i]-1);<br>之后sort一下再计算就好了</p>
+        <p>CF 747D</p>
 <pre><code class="lang-C++">void solve()&#123;
-  int n,k;cin&gt;&gt;n&gt;&gt;k;
-  vector&lt;vector&lt;int&gt;&gt;E(n+1);
-  for(int i=0;i&lt;n-1;++i)&#123;
-    int a,b;cin&gt;&gt;a&gt;&gt;b;
-    E[a].push_back(b);
-    E[b].push_back(a);
-  &#125;
-  vector&lt;ll&gt;dep(n+1),siz(n+1);
-  function&lt;void(int,int)&gt;dfs=[&amp;](int x,int f)&#123;
-    siz[x]=1;
-    for(int v:E[x])&#123;
-        if(v==f)continue;
-        dep[v]=dep[x]+1;
-        dfs(v,x);
-        siz[x]+=siz[v];
+  int n,k;
+  cin&gt;&gt;n&gt;&gt;k;
+  vector&lt;int&gt;a(n+1);
+  vector&lt;int&gt;snow_range;
+  int last_snow=-1;
+  int ans=0;
+  for(int i=1;i&lt;=n;++i)&#123;
+    cin&gt;&gt;a[i];
+    if(a[i]&lt;0)&#123;
+        if(last_snow&gt;0)snow_range.push_back(i-last_snow-1);
+        last_snow=i;
+        ans+=2;
+        --k;
     &#125;
-    dep[x]-=(siz[x]-1);
-  &#125;;
-  dfs(1,0);
-  sort(dep.begin()+1,dep.end(),greater&lt;ll&gt;());
-  ll ans=accumulate(dep.begin()+1,dep.begin()+k+1,0ll);
+  &#125;
+  if(k&lt;0)&#123;
+    cout&lt;&lt;-1&lt;&lt;&#39;\n&#39;;
+    return;
+  &#125;
+  sort(snow_range.begin(),snow_range.end());
+  for(int r:snow_range)&#123;
+    if(k&gt;=r)&#123;
+        k-=r;
+        ans-=2;
+    &#125;else&#123;
+        break;
+    &#125;
+  &#125;
+  cout&lt;&lt;(n-last_snow&lt;=k?ans-1:ans)&lt;&lt;&#39;\n&#39;;
+  return;
+&#125;
+</code></pre>
+<p>CF 750D</p>
+<pre><code class="lang-C++">const int MOD=1e9+7;
+const int MAXN=310;
+const int MAXM=33;
+int dx[8]=&#123;0,-1,-1,-1,0,1,1,1&#125;;
+int dy[8]=&#123;1,1,0,-1,-1,-1,0,1&#125;;
+int mp[MAXN][MAXN];
+int dp[MAXN][MAXN][MAXM][8];
+struct node &#123;
+  int x,y,depth,dir;  
+&#125;;
+void solve()&#123;
+  int n;
+  cin&gt;&gt;n;
+  vector&lt;int&gt;t(n+1);
+  for(int i=1;i&lt;=n;++i)cin&gt;&gt;t[i];
+  queue&lt;node&gt;q;
+  q.push(&#123;152,152,1,2&#125;);
+  while(!q.empty())&#123;
+    auto cur=q.front();
+    q.pop();
+    if(cur.depth&gt;n||dp[cur.x][cur.y][cur.depth][cur.dir]==1)continue;
+    dp[cur.x][cur.y][cur.depth][cur.dir]=1;
+    for(int i=1;i&lt;=t[cur.depth];++i)&#123;
+        cur.x+=dx[cur.dir];
+        cur.y+=dy[cur.dir];
+        mp[cur.x][cur.y]=1;
+    &#125;
+    q.push(&#123;cur.x,cur.y,cur.depth+1,(cur.dir+1)%8&#125;);
+    q.push(&#123;cur.x,cur.y,cur.depth+1,(cur.dir+7)%8&#125;);
+  &#125;
+  int ans=0;
+  for(int i=1;i&lt;MAXN;++i)&#123;
+    for(int j=1;j&lt;MAXN;++j)&#123;
+        if(mp[i][j])&#123;
+            ++ans;
+        &#125;
+    &#125;
+  &#125;
   cout&lt;&lt;ans&lt;&lt;&#39;\n&#39;;
   return;
 &#125;
 </code></pre>
-<p>这两天都少做点，准备面试了，要背的东西太多了</p>
 
     </div>
     
