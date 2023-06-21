@@ -150,7 +150,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/daily/" style="color: #ffa2c4">daily</a>
+                <a href="/tags/daily/" style="color: #03a9f4">daily</a>
             </span>
             
         </span>
@@ -159,8 +159,52 @@
     
     <div class="content" v-pre>
         <p>CF 786A</p>
-<pre><code class="lang-C++">
-
+<pre><code class="lang-C++">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+const int MAXN=7010;
+bool dp[2][MAXN];//current in position i, its j&#39;s turn
+int sets[2][MAXN];
+int k[2];
+int n;
+bool vis[2][MAXN];
+int cnt[2][MAXN];
+void dfs(int p,int pos)&#123;
+    if(vis[p][pos])return;
+    vis[p][pos]=1;
+    int q=p^1;
+    for(int i=1;i&lt;=k[q];++i)&#123;
+        int pre_pos=(pos-sets[q][i]+n-1)%n+1;
+        if(pre_pos==1)continue;
+        if(!dp[p][pos])&#123;
+            dp[q][pre_pos]=1;
+            dfs(q,pre_pos);
+        &#125;else if(++cnt[q][pre_pos]==k[q])&#123;
+            dp[q][pre_pos]=0;
+            dfs(q,pre_pos);
+        &#125;
+    &#125;
+&#125;
+int main()&#123;
+    #ifdef DEBUG
+        freopen(&quot;in&quot;,&quot;r&quot;,stdin);
+        freopen(&quot;out&quot;,&quot;w&quot;,stdout);
+    #endif
+    cin&gt;&gt;n;
+    for(int i=0;i&lt;2;++i)&#123;
+        cin&gt;&gt;k[i];
+        for(int j=1;j&lt;=k[i];++j)&#123;
+            cin&gt;&gt;sets[i][j];
+        &#125;
+    &#125;
+    dfs(0,1);
+    dfs(1,1);
+    for(int i=0;i&lt;2;++i)&#123;
+        for(int j=2;j&lt;=n;++j)&#123;
+            cout&lt;&lt;(vis[i][j]?dp[i][j]?&quot;Win&quot;:&quot;Lose&quot;:&quot;Loop&quot;)&lt;&lt;&quot; \n&quot;[j==n];
+        &#125;
+    &#125;
+    return 0;
+&#125;
 </code></pre>
 
     </div>
