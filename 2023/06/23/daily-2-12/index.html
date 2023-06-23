@@ -139,7 +139,7 @@
             <span class="icon">
                 <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
-            2023/3/30
+            2023/6/23
         </span>
         
         
@@ -150,7 +150,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/daily/" style="color: #00a596">daily</a>
+                <a href="/tags/daily/" style="color: #ffa2c4">daily</a>
             </span>
             
         </span>
@@ -158,59 +158,95 @@
     </div>
     
     <div class="content" v-pre>
-        <p>CF 417A</p>
-<p>文字理解题，如题意，要么用c个选n个，要么用x*d个选x个</p>
-<p>那么分别考虑即可</p>
+        <p>CF 792E</p>
 <pre><code class="lang-C++">void solve()&#123;
-  int c,d,n,m,k;
-  cin&gt;&gt;c&gt;&gt;d&gt;&gt;n&gt;&gt;m&gt;&gt;k;
-  int sum=n*m-k;
-  if(sum&lt;=0)&#123;
-    cout&lt;&lt;0&lt;&lt;&#39;\n&#39;;
+  string s;
+  cin&gt;&gt;s;
+  int n=s.size();
+  s=&#39;)&#39;+s;
+  vector dp(n+1,vector&lt;ll&gt;(3,INF)),trace(dp);
+  if(n==1)&#123;
+    if((s[1]-&#39;0&#39;)%3==0)cout&lt;&lt;s[1]&lt;&lt;&#39;\n&#39;;
+    else cout&lt;&lt;-1&lt;&lt;&#39;\n&#39;;
     return;
   &#125;
-  int cnt=sum/n;
-  int rem=sum%n;
-  int ans=cnt*min(c,n*d)+min(rem*d,c);
-  cout&lt;&lt;ans&lt;&lt;&quot;\n&quot;;
-  return;
-&#125;
-</code></pre>
-<p>CF 459E</p>
-<p>也是简单题</p>
-<p>考虑每条边只会对比该边小的边产生影响，所以我们对边按照权值排序<br>之后就和最长上升子序列一样了</p>
-<pre><code class="lang-C++">struct edge&#123;
-    int from,to,w;
-&#125;;
-void solve()&#123;
-  int n,m;cin&gt;&gt;n&gt;&gt;m;
-  vector&lt;pair&lt;int,int&gt;&gt;state;
-  vector&lt;int&gt;dp(n+1);
-  vector&lt;edge&gt;E(m+1);
-  int ans=0;
-  auto calc=[&amp;]()&#123;
-    for(auto pi:state)&#123;
-        dp[pi.first]=max(dp[pi.first],pi.second);
-        ans=max(dp[pi.first],ans);
+  dp[1][0]=1;
+  dp[1][(s[1]-&#39;0&#39;)%3]=0;
+  for(int i=2;i&lt;=n;++i)&#123;
+    int num=s[i]-&#39;0&#39;;
+    int rem=num%3;
+    for(int j=0;j&lt;3;++j)&#123;
+        dp[i][j]=dp[i-1][j]+1;
+        trace[i][j]=j;
+        if(s[i]==&#39;0&#39;&amp;&amp;dp[i-1][j]==i-1)continue;
+        if(dp[i-1][(j-rem+3)%3]&lt;dp[i][j])&#123;
+            dp[i][j]=dp[i-1][(j-rem+3)%3];
+            trace[i][j]=(j-rem+3)%3;
+        &#125;
+    &#125;   
+  &#125;
+  if(dp[n][0]==n)&#123;
+    for(int i=1;i&lt;=n;++i)&#123;
+        if(s[i]==&#39;0&#39;)&#123;
+            cout&lt;&lt;s[i]&lt;&lt;&#39;\n&#39;;
+            return;
+        &#125;
     &#125;
-    state.clear();
-  &#125;;    
-  for(int i=1;i&lt;=m;++i)&#123;
-    cin&gt;&gt;E[i].from&gt;&gt;E[i].to&gt;&gt;E[i].w;
+    cout&lt;&lt;-1&lt;&lt;&#39;\n&#39;;
+    return;
   &#125;
-  sort(E.begin()+1,E.end(),[&amp;](edge a,edge b)&#123;
-    return a.w&lt;b.w;
-  &#125;);
-  for(int i=1;i&lt;=m;++i)&#123;
-    if(E[i].w!=E[i-1].w)calc();
-    state.push_back(&#123;E[i].to,dp[E[i].from]+1&#125;);
+  int pre;
+  vector&lt;char&gt;ans;
+  for(int i=n,j=0;i&gt;=2;j=pre,--i)&#123;
+    pre=trace[i][j];
+    if(dp[i-1][pre]==dp[i][j])&#123;
+        ans.push_back(s[i]);
+    &#125;
   &#125;
-  calc();
-  cout&lt;&lt;ans&lt;&lt;&#39;\n&#39;;
+  if((s[1]-&#39;0&#39;)%3==pre)&#123;
+    ans.push_back(s[1]);
+  &#125;
+  for(int i=ans.size()-1;i&gt;=0;--i)&#123;
+    cout&lt;&lt;ans[i];
+  &#125;
   return;
 &#125;
 </code></pre>
-<p>晚上字节二面和明天早上蚂蚁二面加油啦，确实蛮想去做oceanbase的，啊啊啊啊<br>干巴喽</p>
+<p>CF 797E</p>
+<pre><code class="lang-C++">void solve()&#123;
+  int n;
+  cin&gt;&gt;n;
+  int m=sqrt(n);
+  for(int i=1;i&lt;=n;++i)cin&gt;&gt;a[i];
+  for(int i=n;i&gt;=1;--i)&#123;
+    for(int j=1;j&lt;=m;++j)&#123;
+        if(i+a[i]+j&gt;n)&#123;
+            dp[i][j]=1;
+        &#125;else&#123;
+            dp[i][j]=dp[i+a[i]+j][j]+1;
+        &#125;
+    &#125;
+  &#125;
+  int q;
+  cin&gt;&gt;q;
+
+  while(q--)&#123;
+    int p,k;
+    cin&gt;&gt;p&gt;&gt;k;
+    if(k&lt;=m)&#123;
+        cout&lt;&lt;dp[p][k]&lt;&lt;&#39;\n&#39;;
+    &#125;else&#123;
+        int ans=0;
+        while(p&lt;=n)&#123;
+            ++ans;
+            p+=a[p]+k;
+        &#125;
+        cout&lt;&lt;ans&lt;&lt;&#39;\n&#39;;
+    &#125;
+  &#125; 
+  return;
+&#125;
+</code></pre>
 
     </div>
     
