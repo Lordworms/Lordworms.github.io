@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>CS 336 shits | Waiting for the dawn</title>
+        <title>daily 2 | Waiting for the dawn</title>
         <meta name="author" content="Yanxin Xiang">
         <meta name="description" content="">
         <meta name="keywords" content="">
@@ -132,14 +132,14 @@
 
                 <div class="article">
     <div>
-        <h1>CS 336 shits </h1>
+        <h1>daily 2 </h1>
     </div>
     <div class="info">
         <span class="date">
             <span class="icon">
                 <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
-            2023/4/26
+            2023/6/25
         </span>
         
         
@@ -150,7 +150,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/class/" style="color: #ff7d73">class</a>
+                <a href="/tags/daily/" style="color: #00bcd4">daily</a>
             </span>
             
         </span>
@@ -158,8 +158,87 @@
     </div>
     
     <div class="content" v-pre>
-        <h2 id="Greedy-Algorithm"><a href="#Greedy-Algorithm" class="headerlink" title="Greedy Algorithm"></a>Greedy Algorithm</h2><h3 id="MST"><a href="#MST" class="headerlink" title="MST"></a>MST</h3><h4 id="Krusal’s-Algorithm"><a href="#Krusal’s-Algorithm" class="headerlink" title="Krusal’s Algorithm"></a>Krusal’s Algorithm</h4><h4 id="Prim’s-Algorithm"><a href="#Prim’s-Algorithm" class="headerlink" title="Prim’s Algorithm"></a>Prim’s Algorithm</h4><h3 id="INTERVAL-SCHEDULE-PROBLEM"><a href="#INTERVAL-SCHEDULE-PROBLEM" class="headerlink" title="INTERVAL SCHEDULE PROBLEM"></a>INTERVAL SCHEDULE PROBLEM</h3><p>Sort by finish time</p>
-<h3 id="Weighted-Selection"><a href="#Weighted-Selection" class="headerlink" title="Weighted Selection"></a>Weighted Selection</h3><p>Sort by </p>
+        <p>CF 917A</p>
+<pre><code class="lang-C++">int main()&#123;
+    string s;
+    cin&gt;&gt;s;
+    int ans=0;
+    int n=s.size();
+    for(int i=0;i&lt;n;++i)&#123;
+        int left=0,vir=0;
+        for(int j=i;j&lt;n;++j)&#123;
+            if(s[j]==&#39;(&#39;)&#123;
+                ++left;
+            &#125;
+            if(s[j]==&#39;)&#39;)&#123;
+                --left;
+            &#125;
+            if(s[j]==&#39;?&#39;)&#123;
+                if(left&gt;0)&#123;
+                    --left,++vir;
+                &#125;else&#123;
+                    ++left;
+                &#125;
+
+            &#125;
+            if(left&lt;0&amp;&amp;vir)&#123;
+                left+=2,--vir;
+            &#125;
+            if(left&lt;0&amp;&amp;!vir)&#123;
+                break;
+            &#125;
+            if(left==0)&#123;
+                ++ans;
+            &#125;
+        &#125;
+    &#125;
+    cout&lt;&lt;ans&lt;&lt;&#39;\n&#39;;
+    return 0;
+&#125;
+</code></pre>
+<p>CF 930C</p>
+<pre><code class="lang-C++">int main()&#123;
+  int n,m;
+  cin&gt;&gt;n&gt;&gt;m;
+  vector&lt;int&gt;dif(m+2);
+  for(int i=0;i&lt;n;++i)&#123;
+    int l,r;
+    cin&gt;&gt;l&gt;&gt;r;
+    ++dif[l],--dif[r+1];
+  &#125;
+  for(int i=1;i&lt;=m;++i)&#123;
+    dif[i]+=dif[i-1];
+  &#125;
+  vector&lt;int&gt;seq(m+1);
+  int len=0;
+  vector&lt;int&gt;dp1(m+1),dp2(dp1);
+  for(int i=1;i&lt;=m;++i)&#123;
+    if(dif[i]&gt;=seq[len])&#123;
+      seq[++len]=dif[i];
+    &#125;else&#123;
+      int pos=upper_bound(seq.begin()+1,seq.begin()+len+1,dif[i])-seq.begin();
+      seq[pos]=dif[i];
+    &#125;
+    dp1[i]=len;
+  &#125;
+  len=0;
+  fill(seq.begin(),seq.end(),0);
+  for(int i=m;i&gt;=1;--i)&#123;
+    if(dif[i]&gt;=seq[len])&#123;
+      seq[++len]=dif[i];
+    &#125;else&#123;
+      int pos=upper_bound(seq.begin()+1,seq.begin()+len+1,dif[i])-seq.begin();
+      seq[pos]=dif[i];
+    &#125;
+    dp2[i]=len;
+  &#125;
+  int ans=0;
+  for(int i=1;i&lt;=m;++i)&#123;
+    ans=max(ans,dp1[i]+dp2[i]-1);
+  &#125;
+  cout&lt;&lt;ans&lt;&lt;&#39;\n&#39;;
+&#125;
+</code></pre>
 
     </div>
     
