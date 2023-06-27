@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>Categories: interview | Waiting for the dawn</title>
+        <title>daily 2 | Waiting for the dawn</title>
         <meta name="author" content="Yanxin Xiang">
         <meta name="description" content="">
         <meta name="keywords" content="">
@@ -130,119 +130,123 @@
     </div>
 </nav>
 
-                <div id="archives">
-    
-    <div class="categories-tags">
-        
-        
-        <span>
-            <a href="/categories/Algorithm/" style="background: #00a596">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                Algorithm
-            </a>
+                <div class="article">
+    <div>
+        <h1>daily 2 </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/6/27
         </span>
         
         
-        
-        <span>
-            <a href="/categories/compiler/" style="background: #03a9f4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                compiler
-            </a>
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/daily/" style="color: #00a596">daily</a>
+            </span>
+            
         </span>
-        
-        
-        
-        <span>
-            <a href="/categories/algorithm/" style="background: #00a596">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                algorithm
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/categories/database/" style="background: #ffa2c4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                database
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/categories/%E6%96%B0%E7%9A%84%E5%BC%80%E5%A7%8B/" style="background: #00bcd4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                -新的开始
-            </a>
-        </span>
-        
-        
-        
-        <span>
-            <a href="/categories/interview/" style="background: linear-gradient(120deg, #9abbf7 0%, #ffbbf4 100%)">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                interview
-            </a>
-        </span>
-        
-        
-        
         
     </div>
     
-    <div class="timeline">
-        <div class="timeline-tail"></div>
-        <div class="timeline-content">
-            <div class="item-time">2023/3/19</div>
-            <a href="/2023/03/19/interview-shit-network/">
-                <h3>interview shit network</h3>
-            </a>
-            <div class="info">
-                
-                <span class="category">
-                    <a href="/categories/interview/">
-                        <span class="icon">
-                            <i class="fa-solid fa-bookmark fa-fw"></i>
-                        </span>
-                        interview
-                    </a>
-                </span>
-                
-                
-                <span class="tags">
-                    <span class="icon">
-                        <i class="fa-solid fa-tags fa-fw"></i>
-                    </span>
-                    
-                    <span class="tag">
-                        
-                        <a href="/tags/interview/" style="color: #03a9f4">interview</a>
-                    </span>
-                    
-                    <span class="tag">
-                        
-                        <a href="/tags/computer-network/" style="color: #ff7d73">computer network</a>
-                    </span>
-                    
-                </span>
-                
-            </div>
-        </div>
+    <div class="content" v-pre>
+        <p>CF 845D</p>
+<pre><code class="lang-C++">int main()&#123;
+   int n,t,nsd,csd,overtake_cnt=0;
+   vector&lt;int&gt;pre_sp;
+   pre_sp.push_back(INF);
+   cin&gt;&gt;n;
+   int ans=0;
+   while(n--)&#123;
+    cin&gt;&gt;t;
+    if(t==1||t==3)&#123;//change speed or speed limit
+        cin&gt;&gt;nsd;
+    &#125;
+    if(t==1)&#123;
+        csd=nsd;
+        while(pre_sp.size()&amp;&amp;pre_sp.back()&lt;csd)&#123;
+            pre_sp.pop_back();
+            ++ans;
+        &#125;
+    &#125;
+    if(t==3)&#123;//speed limit
+       if(csd&gt;nsd)&#123;
+            ++ans;
+       &#125;else&#123;
+            pre_sp.push_back(nsd);
+       &#125;
+    &#125;
+    if(t==2)&#123;//overtake other car
+        ans+=overtake_cnt;
+        overtake_cnt=0;
+    &#125;
+    if(t==4)&#123;//allow overtakes
+        overtake_cnt=0;
+    &#125;
+    if(t==5)&#123;//no speed limit
+        pre_sp.push_back(INF);
+    &#125;
+    if(t==6)&#123;//no overtake
+        overtake_cnt++;
+    &#125;   
+   &#125; 
+   cout&lt;&lt;ans&lt;&lt;&#39;\n&#39;;
+&#125;
+</code></pre>
+<p>CF 835D</p>
+<pre><code class="lang-C++">int main()&#123;
+    string s;
+    cin&gt;&gt;s;
+    int n=s.size();
+    s=&#39;)&#39;+s;
+    vector dp(n+1,vector&lt;int&gt;(n+1));
+    vector&lt;int&gt;ans(n+1);
+    for(int i=1;i&lt;=n;++i)&#123;
+        dp[i][i]=1;
+        ans[1]++;
+    &#125;
+    for(int len=2;len&lt;=n;++len)&#123;
+        for(int l=1;l+len-1&lt;=n;++l)&#123;
+            int r=l+len-1;
+            if(s[l]!=s[r]||l+1&lt;=r-1&amp;&amp;dp[l+1][r-1]==0)&#123;
+                dp[l][r]=0;
+            &#125;else if(s[l]==s[r])&#123;
+                dp[l][r]=dp[l][l+len/2-1]+1;
+            &#125;
+            if(dp[l][r]&gt;0)&#123;
+                ans[dp[l][r]]++;
+            &#125;
+        &#125;
+    &#125;
+    for(int i=n-1;i&gt;=1;--i)&#123;
+        ans[i]+=ans[i+1];
+    &#125;
+    for(int i=1;i&lt;=n;++i)&#123;
+        cout&lt;&lt;ans[i]&lt;&lt;&quot; \n&quot;[i==n];
+    &#125;
+    return 0;
+&#125;
+</code></pre>
+
     </div>
+    
+    
+    
+    
+    
+    <div id="comment">
+        <div id="waline-container"></div>
+    </div>
+    
+    
     
 </div>
 
@@ -269,6 +273,31 @@
         </div>
         <script src="/js/functions.js"></script>
 <script src="/js/particlex.js"></script>
+
+
+
+
+<script src="https://cdn.staticfile.org/waline/2.14.7/waline.min.js"></script>
+<link rel="stylesheet" href="https://cdn.staticfile.org/waline/2.14.7/waline.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/waline/2.14.7/waline-meta.min.css">
+<script>
+    Waline.init({
+        el: "#waline-container",
+        serverURL: "https://blog-comment-one-pi.vercel.app",
+        commentCount: true,
+        pageview: false,
+        emoji: ["https://unpkg.com/@waline/emojis@1.2.0/weibo","https://unpkg.com/@waline/emojis@1.2.0/alus","https://unpkg.com/@waline/emojis@1.2.0/bilibili","https://unpkg.com/@waline/emojis@1.2.0/qq","https://unpkg.com/@waline/emojis@1.2.0/tieba","https://unpkg.com/@waline/emojis@1.2.0/tw-emoji"],
+        meta: ["nick","mail","link"],
+        requiredMeta: ["nick"],
+        lang: "zh-CN",
+        wordLimit: 0,
+        pageSize: "10",
+        login: "enable",
+        locale: {},
+    });
+</script>
+
+
 
 
     </body>
