@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>CS 336 shits | Waiting for the dawn</title>
+        <title>daily 2 | Waiting for the dawn</title>
         <meta name="author" content="Yanxin Xiang">
         <meta name="description" content="">
         <meta name="keywords" content="">
@@ -132,14 +132,14 @@
 
                 <div class="article">
     <div>
-        <h1>CS 336 shits </h1>
+        <h1>daily 2 </h1>
     </div>
     <div class="info">
         <span class="date">
             <span class="icon">
                 <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
-            2023/4/26
+            2023/6/30
         </span>
         
         
@@ -150,7 +150,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/class/" style="color: #ff7d73">class</a>
+                <a href="/tags/daily/" style="color: #ff7d73">daily</a>
             </span>
             
         </span>
@@ -158,8 +158,77 @@
     </div>
     
     <div class="content" v-pre>
-        <h2 id="Greedy-Algorithm"><a href="#Greedy-Algorithm" class="headerlink" title="Greedy Algorithm"></a>Greedy Algorithm</h2><h3 id="MST"><a href="#MST" class="headerlink" title="MST"></a>MST</h3><h4 id="Krusal’s-Algorithm"><a href="#Krusal’s-Algorithm" class="headerlink" title="Krusal’s Algorithm"></a>Krusal’s Algorithm</h4><h4 id="Prim’s-Algorithm"><a href="#Prim’s-Algorithm" class="headerlink" title="Prim’s Algorithm"></a>Prim’s Algorithm</h4><h3 id="INTERVAL-SCHEDULE-PROBLEM"><a href="#INTERVAL-SCHEDULE-PROBLEM" class="headerlink" title="INTERVAL SCHEDULE PROBLEM"></a>INTERVAL SCHEDULE PROBLEM</h3><p>Sort by finish time</p>
-<h3 id="Weighted-Selection"><a href="#Weighted-Selection" class="headerlink" title="Weighted Selection"></a>Weighted Selection</h3><p>Sort by </p>
+        <p>CF 814D</p>
+<pre><code class="lang-C++">struct node&#123;
+    double x,y,r,s;
+&#125;;
+int main()&#123;
+    int n;
+    cin&gt;&gt;n;
+    vector&lt;vector&lt;int&gt;&gt;E(n+1);
+    vector&lt;node&gt;a(n+1);
+    function&lt;double(int i,int j)&gt;dis=[&amp;](int i,int j)&#123;
+        return sqrt((a[i].x-a[j].x)*(a[i].x-a[j].x)+(a[i].y-a[j].y)*(a[i].y-a[j].y));
+    &#125;;
+    for(int i=1;i&lt;=n;++i)&#123;
+        cin&gt;&gt;a[i].x&gt;&gt;a[i].y&gt;&gt;a[i].r;
+        a[i].s=pi*a[i].r*a[i].r;
+    &#125;
+    sort(a.begin()+1,a.end(),[&amp;](node a,node b)&#123;
+        return a.r&lt;b.r;
+    &#125;);
+    vector&lt;int&gt;fa(n+1,-1);
+    for(int i=1;i&lt;=n;++i)&#123;
+        for(int j=1;j&lt;i;++j)&#123;
+            if(fa[j]==-1&amp;&amp;dis(i,j)&lt;a[i].r+a[j].r)&#123;
+                fa[j]=i;
+                E[i].push_back(j);
+            &#125;
+        &#125;
+    &#125;
+    double ans=0;
+    function&lt;void(int,int)&gt;dfs=[&amp;](int x,int t)&#123;
+        for(int v:E[x])&#123;
+            if(t%2==0)&#123;
+               ans+=a[v].s;  
+            &#125;else&#123;
+               ans-=a[v].s;
+            &#125;
+            dfs(v,t^1);
+        &#125;
+    &#125;;
+    for(int i=1;i&lt;=n;++i)&#123;
+        if(fa[i]==-1)&#123;//it is a odd shit so we add the area
+            ans+=a[i].s;
+            dfs(i,0);
+        &#125;
+    &#125;
+    cout.precision(10);
+    cout&lt;&lt;ans&lt;&lt;&#39;\n&#39;;
+&#125;
+</code></pre>
+<p>CF 959E</p>
+<pre><code class="lang-C++">int main()&#123;
+    ll n;
+    cin&gt;&gt;n;
+    /*
+        f(x)=f(x-1)+()
+    */
+    /*
+        how to calculate the prefix sum of lowbit within log(n) time?
+        well, we could think about such a situation that for every odd number within the range
+        we must only add 1 to the ans, and then we right shift for 1 bit and then we found other &#39;odd&#39; number in &#39;even&#39; number
+    */
+    ll ans=0,base=1;
+    while(n&gt;1)&#123;
+       ans+=base*(n&gt;&gt;1);
+       n-=(n&gt;&gt;1);
+       base&lt;&lt;=1;
+    &#125;
+    cout&lt;&lt;ans&lt;&lt;&#39;\n&#39;;
+    return 0;
+&#125;
+</code></pre>
 
     </div>
     
