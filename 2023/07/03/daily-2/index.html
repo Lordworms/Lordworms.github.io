@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>daily 1 | Waiting for the dawn</title>
+        <title>daily 2 | Waiting for the dawn</title>
         <meta name="author" content="Yanxin Xiang">
         <meta name="description" content="">
         <meta name="keywords" content="">
@@ -132,14 +132,14 @@
 
                 <div class="article">
     <div>
-        <h1>daily 1 </h1>
+        <h1>daily 2 </h1>
     </div>
     <div class="info">
         <span class="date">
             <span class="icon">
                 <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
-            2023/3/21
+            2023/7/3
         </span>
         
         
@@ -150,7 +150,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/daily/" style="color: #00a596">daily</a>
+                <a href="/tags/daily/" style="color: #03a9f4">daily</a>
             </span>
             
         </span>
@@ -158,35 +158,112 @@
     </div>
     
     <div class="content" v-pre>
-        <p>CF 1336Ad</p>
-<p>简单贪心，对于每个工业国，如果选到了它那么他的子树肯定都被选择了，那么贡献就是dep[i]-(siz[i]-1);<br>之后sort一下再计算就好了</p>
-<pre><code class="lang-C++">void solve()&#123;
-  int n,k;cin&gt;&gt;n&gt;&gt;k;
-  vector&lt;vector&lt;int&gt;&gt;E(n+1);
-  for(int i=0;i&lt;n-1;++i)&#123;
-    int a,b;cin&gt;&gt;a&gt;&gt;b;
-    E[a].push_back(b);
-    E[b].push_back(a);
-  &#125;
-  vector&lt;ll&gt;dep(n+1),siz(n+1);
-  function&lt;void(int,int)&gt;dfs=[&amp;](int x,int f)&#123;
-    siz[x]=1;
-    for(int v:E[x])&#123;
-        if(v==f)continue;
-        dep[v]=dep[x]+1;
-        dfs(v,x);
-        siz[x]+=siz[v];
+        <p>CF 1324F</p>
+<pre><code class="lang-C++">int main()&#123;
+    int n;
+    cin&gt;&gt;n;
+    vector&lt;int&gt;a(n+1);
+    for(int i=1;i&lt;=n;++i)&#123;
+        cin&gt;&gt;a[i];
+        a[i]=(a[i]==0?-1:1);
     &#125;
-    dep[x]-=(siz[x]-1);
+    vector&lt;vector&lt;int&gt;&gt;E(n+1);
+    for(int i=1;i&lt;=n-1;++i)&#123;
+        int u,v;
+        cin&gt;&gt;u&gt;&gt;v;
+        E[u].push_back(v);
+        E[v].push_back(u);
+    &#125;
+    function&lt;void(int,int)&gt;dfs1=[&amp;](int x,int f)&#123;
+        for(int v:E[x])&#123;
+            if(v==f)continue;
+            dfs1(v,x);
+            if(a[v]&gt;0)a[x]+=a[v];
+        &#125;
+    &#125;;
+    function&lt;void(int,int)&gt;dfs2=[&amp;](int x,int f)&#123;
+        for(int v:E[x])&#123;
+            if(v==f)continue;
+            if(a[v]&gt;0)&#123;
+                a[v]=max(a[x],a[v]);
+            &#125;else&#123;
+                a[v]=max(a[v],a[x]+a[v]);
+            &#125;
+            dfs2(v,x);
+        &#125;
+    &#125;;
+    dfs1(1,0);
+    dfs2(1,0);
+    for(int i=1;i&lt;=n;++i)&#123;
+        cout&lt;&lt;a[i]&lt;&lt;&quot; \n&quot;[i==n];
+    &#125;
+    return 0;
+&#125;
+</code></pre>
+<p>CF 1244D</p>
+<pre><code class="lang-C++">void solve()&#123;
+  int n;
+  cin&gt;&gt;n;
+  vector&lt;vector&lt;int&gt;&gt;colors(n+1,vector&lt;int&gt;(4));
+  vector&lt;vector&lt;int&gt;&gt;E(n+1);
+  for(int i=1;i&lt;=3;++i)&#123;
+    for(int j=1;j&lt;=n;++j)&#123;
+        cin&gt;&gt;colors[j][i];
+    &#125;
+  &#125;
+  int u,v;
+  vector&lt;int&gt;deg(n+1);
+  for(int i=1;i&lt;=n-1;++i)&#123;
+    cin&gt;&gt;u&gt;&gt;v;
+    E[u].push_back(v);
+    E[v].push_back(u);
+    deg[u]++;
+    deg[v]++;
+  &#125;
+  vector&lt;int&gt;color(n+1);
+  for(int i=1;i&lt;=n;++i)&#123;
+    if(deg[i]&gt;=3)&#123;
+        cout&lt;&lt;-1&lt;&lt;&#39;\n&#39;;
+        return;
+    &#125;
+  &#125;
+  function&lt;void(int,int,int,int)&gt;dfs=[&amp;](int x,int f,int xc,int fc)&#123;
+    for(int to:E[x])&#123;
+      if(to==f)continue;
+      color[to]=rem(xc,fc);
+      dfs(to,x,color[to],xc);
+    &#125;
   &#125;;
-  dfs(1,0);
-  sort(dep.begin()+1,dep.end(),greater&lt;ll&gt;());
-  ll ans=accumulate(dep.begin()+1,dep.begin()+k+1,0ll);
+  vector&lt;int&gt;ans_vec(n+1);
+  ll ans=1e18;
+  for(int f=1;f&lt;=3;++f)&#123;
+    for(int s=1;s&lt;=3;++s)&#123;
+      if(f==s)&#123;
+        continue;
+      &#125;
+      color[u]=f;
+      color[v]=s;
+      dfs(u,v,f,s);
+      dfs(v,u,s,f);
+      ll tmp=0;
+      for(int i=1;i&lt;=n;++i)&#123;
+        tmp+=colors[i][color[i]];
+      &#125;
+      if(tmp&lt;ans)&#123;
+        for(int i=1;i&lt;=n;++i)&#123;
+          ans_vec[i]=color[i];
+        &#125;
+        ans=tmp;
+      &#125;
+    &#125;
+  &#125;
   cout&lt;&lt;ans&lt;&lt;&#39;\n&#39;;
+  for(int i=1;i&lt;=n;++i)&#123;
+    cout&lt;&lt;ans_vec[i]&lt;&lt;&quot; \n&quot;[i==n];
+  &#125;
   return;
 &#125;
 </code></pre>
-<p>这两天都少做点，准备面试了，要背的东西太多了</p>
 
     </div>
     
