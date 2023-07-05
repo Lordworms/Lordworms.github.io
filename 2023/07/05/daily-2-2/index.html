@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>daily 3 | Waiting for the dawn</title>
+        <title>daily 2 | Waiting for the dawn</title>
         <meta name="author" content="Yanxin Xiang">
         <meta name="description" content="">
         <meta name="keywords" content="">
@@ -132,14 +132,14 @@
 
                 <div class="article">
     <div>
-        <h1>daily 3 </h1>
+        <h1>daily 2 </h1>
     </div>
     <div class="info">
         <span class="date">
             <span class="icon">
                 <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
-            2023/5/10
+            2023/7/5
         </span>
         
         
@@ -150,7 +150,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/daily/" style="color: #ff7d73">daily</a>
+                <a href="/tags/daily/" style="color: #03a9f4">daily</a>
             </span>
             
         </span>
@@ -158,96 +158,104 @@
     </div>
     
     <div class="content" v-pre>
-        <p>今天三道双指针</p>
-<p>CF 1324D</p>
-<p>简单双指针，转化为$c[i]=a[i]-b[i]$即可</p>
-<pre><code class="lang-C++">void solve()&#123;
-  int n;cin&gt;&gt;n;
-  vector&lt;int&gt;a(n+1);
-  for(int i=1;i&lt;=n;++i)&#123;
-    cin&gt;&gt;a[i];
-  &#125;
-  for(int i=1;i&lt;=n;++i)&#123;
-    int x;cin&gt;&gt;x;
-    a[i]-=x;
-  &#125;
-  sort(a.begin()+1,a.end());
-  ll ans=0;
-  for(int l=1,r=n;l&lt;=n;++l)&#123;
-    while(r&gt;1&amp;&amp;a[l]+a[r]&gt;0)--r;
-    ans+=n-max(l,r);
-  &#125;
-  cout&lt;&lt;ans&lt;&lt;&#39;\n&#39;;
-  return;
-&#125;
-</code></pre>
-<p>CF 1680C</p>
-<p>我们需要尽可能地让删除的1和剩下的0相等，否则不管怎么样都会增大cost，那就双指针去搜就可以了</p>
-<pre><code class="lang-C++">void solve()&#123;
-  string s;
-  cin&gt;&gt;s;
-  int n=s.size();
-  int cnt_1=0;
-  for(int i=0;i&lt;s.size();++i)&#123;
-    if(s[i]==&#39;1&#39;)++cnt_1;
-  &#125;
-  int ans=INT_MAX;
-  int cnt_0=0;
-  for(int l=0,r=-1;l&lt;n;++l)&#123;
-    while(r&lt;n&amp;&amp;cnt_0&lt;cnt_1)&#123;
-        ++r;
-        if(s[r]==&#39;1&#39;)&#123;
-            cnt_1--;
-        &#125;else&#123;
-            cnt_0++;
+        <p>CF 855C</p>
+<pre><code class="lang-C++">int dp[N][K][3];//dp[i][j][k] means using j colors in i&#39;s subtrees and k=0/1/2 indicates the current one is less/equal/greater than k
+int cur[N][K];
+int main()&#123;
+    int n,m,k,X;
+    cin&gt;&gt;n&gt;&gt;m;
+    vector&lt;vector&lt;int&gt;&gt;E(n+1);
+    for(int i=1;i&lt;=n-1;++i)&#123;
+        int u,v;
+        cin&gt;&gt;u&gt;&gt;v;
+        E[u].push_back(v);
+        E[v].push_back(u);
+    &#125;
+    cin&gt;&gt;k&gt;&gt;X;
+    vector&lt;int&gt;sz(n+1);
+    function&lt;void(int,int)&gt;dfs=[&amp;](int x,int f)&#123;
+        sz[x]=1;
+        dp[x][0][0]=k-1;
+        dp[x][1][1]=1;
+        dp[x][0][2]=m-k;
+        for(int v:E[x])&#123;
+            if(v==f)continue;
+            dfs(v,x);
+            int lim1=min(sz[x],X),lim2;
+            for(int i=0;i&lt;=lim1;++i)&#123;
+                for(int j=0;j&lt;=2;++j)&#123;
+                    cur[i][j]=dp[x][i][j];
+                    dp[x][i][j]=0;
+                &#125;
+            &#125;
+            for(int i=0;i&lt;=lim1;++i)&#123;
+                lim2=min(X-i,sz[v]);
+                for(int j=0;j&lt;=lim2;++j)&#123;
+                    dp[x][i+j][0]=(dp[x][i+j][0]+(1ll*cur[i][0]*((dp[v][j][0]+dp[v][j][1])%MOD+dp[v][j][2])%MOD))%MOD;
+                    dp[x][i+j][1]=(dp[x][i+j][1]+(1ll*cur[i][1]*((dp[v][j][0]))%MOD))%MOD;
+                    dp[x][i+j][2]=(dp[x][i+j][2]+(1ll*cur[i][2]*((dp[v][j][0]+dp[v][j][2]))%MOD)%MOD)%MOD;
+                &#125;
+            &#125;
+            sz[x]+=sz[v];
         &#125;
-        ans=min(ans,max(cnt_0,cnt_1));
+    &#125;;
+    dfs(1,0);
+    ll ans=0;
+    for(int i=0;i&lt;=X;++i)&#123;
+        for(int j=0;j&lt;=2;++j)&#123;
+            ans=(ans+dp[1][i][j])%MOD;
+        &#125;
     &#125;
-    if(s[l]==&#39;0&#39;)&#123;
-        --cnt_0;
-    &#125;else&#123;
-        ++cnt_1;
-    &#125;
-    ans=min(ans,max(cnt_0,cnt_1));
-  &#125;
-  cout&lt;&lt;ans&lt;&lt;&#39;\n&#39;;
-  return;
+    cout&lt;&lt;ans&lt;&lt;&#39;\n&#39;;
 &#125;
 </code></pre>
-<p>CF 386C<br>三指针的题<br>每次搜索对应unique为i的长度的最大和最小的r，然后更新答案</p>
-<pre><code class="lang-C++">#define int ll
-void solve()&#123;
-  string s;
-  cin&gt;&gt;s;
-  int n=s.size();
-  s=&#39;0&#39;+s;
-  vector&lt;ll&gt;ans;
-  auto calc=[&amp;](int lim)&#123;
-    int l=1,r1=0,r2=1,res=0;
-    int now_cnt=0;
-    vector&lt;int&gt;cnt(26);
-    for(;l&lt;=n;++l)&#123;
-        while(r1&lt;n&amp;&amp;now_cnt&lt;lim)&#123;
-            if(++cnt[s[++r1]-&#39;a&#39;]==1)&#123;
-                ++now_cnt;
+<p>CF 1015E2</p>
+<pre><code class="lang-C++">int main()&#123;
+    int n,m;
+    cin&gt;&gt;n&gt;&gt;m;
+    vector mp(n+1,vector&lt;int&gt;(m+1)),mark(mp),sz(mp);
+    for(int i=1;i&lt;=n;++i)&#123;
+        for(int j=1;j&lt;=m;++j)&#123;
+            char c;
+            cin&gt;&gt;c;
+            mp[i][j]=(c==&#39;*&#39;);
+        &#125;
+    &#125;
+    auto check=[&amp;](int x,int y,int k)&#123;
+        return (x-k)&amp;&amp;(x+k)&lt;=n&amp;&amp;(y-k)&amp;&amp;(y+k)&lt;=m&amp;&amp;mp[x+k][y]&amp;&amp;mp[x-k][y]&amp;&amp;mp[x][y+k]&amp;&amp;mp[x][y-k];
+    &#125;;
+    int ans=0;
+    for(int i=2;i&lt;n;++i)&#123;
+        for(int j=2;j&lt;m;++j)&#123;
+            if(!mp[i][j]||!mp[i-1][j]||!mp[i][j-1]||!mp[i][j+1]||!mp[i+1][j])&#123;//do not do non-center point again
+                continue;
+            &#125;
+            mark[i][j]=1;
+            int len=1;
+            for(;check(i,j,len);len++)&#123;
+                mark[i-len][j]=mark[i+len][j]=mark[i][j+len]=mark[i][j-len]=1;
+            &#125;
+            sz[i][j]=len-1;
+            ++ans;
+        &#125;
+    &#125;
+    for(int i=1;i&lt;=n;++i)&#123;
+        for(int j=1;j&lt;=m;++j)&#123;
+            if(mp[i][j]&amp;&amp;!mark[i][j])&#123;
+                cout&lt;&lt;-1&lt;&lt;&#39;\n&#39;;
+                return 0;
             &#125;
         &#125;
-        if(now_cnt&lt;lim)break;
-        r2=max(r1,r2);
-        while(r2&lt;=n&amp;&amp;cnt[s[r2]-&#39;a&#39;])++r2;
-        res+=(r2-r1);
-        if(--cnt[s[l]-&#39;a&#39;]==0)--now_cnt;
     &#125;
-    if(res&gt;0)ans.push_back(res);
-  &#125;;
-  for(int i=1;i&lt;=26;++i)&#123;
-    calc(i);
-  &#125;
-  cout&lt;&lt;ans.size()&lt;&lt;&#39;\n&#39;;
-  for(int i=0;i&lt;ans.size();++i)&#123;
-    cout&lt;&lt;ans[i]&lt;&lt;&#39;\n&#39;;
-  &#125;
-  return;
+    cout&lt;&lt;ans&lt;&lt;&#39;\n&#39;;
+    for(int i=1;i&lt;=n;++i)&#123;
+        for(int j=1;j&lt;=m;++j)&#123;
+            if(sz[i][j])&#123;
+                cout&lt;&lt;i&lt;&lt;&#39; &#39;&lt;&lt;j&lt;&lt;&#39; &#39;&lt;&lt;sz[i][j]&lt;&lt;&#39;\n&#39;;
+            &#125;
+        &#125;
+    &#125;
+    return 0;
 &#125;
 </code></pre>
 
