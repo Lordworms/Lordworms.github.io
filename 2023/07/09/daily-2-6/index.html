@@ -139,7 +139,7 @@
             <span class="icon">
                 <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
-            2023/6/18
+            2023/7/9
         </span>
         
         
@@ -150,7 +150,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/daily/" style="color: #00bcd4">daily</a>
+                <a href="/tags/daily/" style="color: #ff7d73">daily</a>
             </span>
             
         </span>
@@ -158,107 +158,65 @@
     </div>
     
     <div class="content" v-pre>
-        <p>CF 893D</p>
-<p>贪心，由于我们次都可以往里面打钱，所以不需要害怕&lt;0的情况，那么我们只要管超过d的情况,我们维护一个后x天的最大balance的值，然后我们从前往后遍历，每次我们对应看当前是否要加，要加的话我们得加上后缀能够允许的钱的数量，如果加上了还是&lt;0那么就是非法的</p>
-<pre><code class="lang-C++">void solve()&#123;
-  int n,d;
-  cin&gt;&gt;n&gt;&gt;d;
-  vector&lt;int&gt;a(n+1);
-  vector&lt;ll&gt;sum(n+1);
-  vector&lt;ll&gt;suffix_sum(n+1);
-  for(int i=1;i&lt;=n;++i)&#123;
-    cin&gt;&gt;a[i];
-    sum[i]=sum[i-1]+a[i];
-  &#125;
-  suffix_sum[n]=sum[n];
-  for(int i=n-1;i&gt;=1;--i)&#123;
-    suffix_sum[i]=max(sum[i],suffix_sum[i+1]);
-  &#125;
-  if(suffix_sum[1]&gt;d)&#123;
-    cout&lt;&lt;-1&lt;&lt;&#39;\n&#39;;
-    return;
-  &#125;
-  ll cur=0,delta=0;
-  int ans=0;
-  for(int i=1;i&lt;=n;++i)&#123;
-    if(a[i]!=0)&#123;
-        cur+=a[i];
-    &#125;else&#123;//did some shit
-        if(cur&gt;=0)continue;
-        ll cur_add=d-(delta+suffix_sum[i]);
-        cur+=cur_add;
-        delta+=cur_add;
-        if(cur&lt;0)&#123;
-            cout&lt;&lt;-1&lt;&lt;&#39;\n&#39;;
-            return;
-        &#125;
-        ++ans;
+        <p>CF 963B</p>
+<pre><code class="lang-C++">int main()&#123;
+    int n;
+    cin&gt;&gt;n;
+    vector&lt;int&gt;a(n+1),deg(n+1);
+    vector&lt;vector&lt;int&gt;&gt;E(n+1);
+    for(int i=1;i&lt;=n;++i)&#123;
+       int v;
+       cin&gt;&gt;v;
+       if(v)&#123;
+        E[i].push_back(v);
+        E[v].push_back(i);
+        ++deg[i];
+        ++deg[v];
+       &#125;
     &#125;
-  &#125;
-  cout&lt;&lt;ans&lt;&lt;&#39;\n&#39;;
-  return;
+    vector&lt;int&gt;fa(n+1);
+    vector&lt;int&gt;st;
+    function&lt;void(int,int)&gt;dfs1=[&amp;](int x,int f)&#123;
+        st.push_back(x);
+        fa[x]=f;
+        for(int v:E[x])&#123;
+            if(v==f)continue;
+            dfs1(v,x);
+        &#125;
+    &#125;;
+    vector&lt;int&gt;ans;
+    vector&lt;int&gt;vis(n+1);
+    function&lt;void(int)&gt;dfs2=[&amp;](int x)&#123;
+        ans.push_back(x);
+        vis[x]=1;
+        for(int v:E[x])&#123;
+            deg[v]--;
+            if(v==fa[x]||vis[v])continue;
+            if(deg[v]%2==0)dfs2(v);
+        &#125;
+    &#125;;
+    dfs1(1,0);
+    while(!st.empty())&#123;
+        auto cur=st.back();
+        st.pop_back();
+        if(deg[cur]%2==0)&#123;
+            dfs2(cur);
+        &#125;
+    &#125;
+    if(ans.size()==n)&#123;
+        cout&lt;&lt;&quot;YES\n&quot;;
+        for(int i=0;i&lt;n;++i)&#123;
+            cout&lt;&lt;ans[i]&lt;&lt;&quot;\n&quot;;
+        &#125;
+    &#125;else&#123;
+        cout&lt;&lt;&quot;NO\n&quot;;
+    &#125;
+    return 0;
 &#125;
 </code></pre>
-<p>CF 893E</p>
-<p>傻子都知道要质因数分解,然后就是一个隔板法的问题，最后记得可以有偶数个负数，乘上二项式定理的一半即可</p>
-<pre><code class="lang-C++">ll quick_pow(ll x,ll exp,int p)
-&#123;
-      ll ans=1;
-      while(exp)
-      &#123;
-        if(exp&amp;1)ans=ans*x%p;
-        exp&gt;&gt;=1;
-        x=x*x%p;
-      &#125;
-      return ans;
-&#125;
-ll inv[MAXN],fac[MAXN];
-void init(int n,int p)
-&#123;
-  memset(inv,0,sizeof(inv));
-  memset(fac,0,sizeof(fac));
-  inv[0]=fac[0]=1;
-  for(int i=1;i&lt;=n;++i)
-  &#123;
-    fac[i]=fac[i-1]*i%p;
-  &#125;
-  inv[n]=quick_pow(fac[n],p-2,p)%p;
-  for(int i=n;i&gt;=1;--i)inv[i-1]=inv[i]*i%p;
-  for(int i=2;i&lt;MAXN;++i)&#123;
-    if(!pi[i])&#123;
-        prime.push_back(i);
-    &#125;
-    for(int j=0;j&lt;prime.size()&amp;&amp;prime[j]*i&lt;MAXN;++j)&#123;
-        pi[prime[j]*i]=1;
-        if(i%prime[j])&#123;
-            break;
-        &#125;
-    &#125;
-  &#125;
-&#125;
-ll C(ll n,ll m,ll p)
-&#123;
-  if(m&gt;n||m&lt;0)return 0;
-  return fac[n]*inv[n-m]%p*inv[m]%p;
-&#125;
-void solve()&#123;
-  int x,y;
-  cin&gt;&gt;x&gt;&gt;y;
-  ll ans=1;
-  for(int i=0;prime[i]*prime[i]&lt;=x;++i)&#123;
-    int cnt=0;
-    while(x%prime[i]==0)&#123;
-      x/=prime[i];
-      ++cnt;
-    &#125;
-    if(cnt&gt;0)ans=(ans*C(cnt+y-1,y-1,MOD))%MOD;
-  &#125;
-  if(x&gt;1)&#123;
-    ans=(ans*C(y,y-1,MOD))%MOD;
-  &#125;
-  cout&lt;&lt;ans*quick_pow(2,y-1,MOD)%MOD&lt;&lt;&#39;\n&#39;;
-  return;
-&#125;
+<p>CF 1119E</p>
+<pre><code class="lang-C++">
+
 </code></pre>
 
     </div>
