@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>CF_800 | Waiting for the dawn</title>
+        <title>daily 1 | Waiting for the dawn</title>
         <meta name="author" content="Yanxin Xiang">
         <meta name="description" content="">
         <meta name="keywords" content="">
@@ -132,23 +132,14 @@
 
                 <div class="article">
     <div>
-        <h1>CF_800 </h1>
+        <h1>daily 1 </h1>
     </div>
     <div class="info">
         <span class="date">
             <span class="icon">
                 <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
-            2023/3/4
-        </span>
-        
-        <span class="category">
-            <a href="/categories/Algorithm/">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                Algorithm
-            </a>
+            2023/7/15
         </span>
         
         
@@ -159,7 +150,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/CodeForces/" style="color: #00bcd4">CodeForces</a>
+                <a href="/tags/daily/" style="color: #03a9f4">daily</a>
             </span>
             
         </span>
@@ -167,166 +158,10 @@
     </div>
     
     <div class="content" v-pre>
-        <p>800 div 2的6道题，这场全是思维题<br><br>A</p>
-<p>照着差值最小去构造即可</p>
-<pre><code class="lang-C++">void solve()
-&#123;
-  int a,b;
-  cin&gt;&gt;a&gt;&gt;b;
-  string ans;
-  for(int i=0;i&lt;min(a,b);++i)
-  &#123;
-    ans+=&#39;0&#39;;
-    ans+=&#39;1&#39;;
-  &#125;
-  if(a&gt;b)
-  &#123;
-    ans+=string(a-b,&#39;0&#39;);
-  &#125;
-  else
-  &#123;
-    ans+=string(b-a,&#39;1&#39;);
-  &#125;
-  cout&lt;&lt;ans&lt;&lt;&#39;\n&#39;;
-  return;
-&#125;
+        <p>CF 1153D</p>
+<pre><code class="lang-C++">
+
 </code></pre>
-<p><br><br>B</p>
-<p>我们有两种操作，第一种 ${01}=1$ 第二种${10}=0$</p>
-<p>现在考虑什么样的情况是无解的，我们枚举一下，发现 ${011}$ ${100}$这两种情况都是无解的，而这两种情况的最后两位都相同，直接猜结论，最后两位是否相同等价于一个数组是否有解，证明也很好证</p>
-<pre><code class="lang-C++">void solve()
-&#123;
-  int n;cin&gt;&gt;n;
-  string s;cin&gt;&gt;s;
-  ll ans=1;
-  for(int i=1;i&lt;n;++i)
-  &#123;
-    if(s[i]!=s[i-1])
-    &#123;
-        ans+=i+1;
-    &#125;
-    else ans++;
-  &#125;
-  cout&lt;&lt;ans&lt;&lt;&#39;\n&#39;;
-  return;
-&#125;
-</code></pre>
-<p>C</p>
-<p>很巧妙的一道题，首先由于增加减少的操作数相同，所以如果数组的和不为0肯定无解。</p>
-<p>我们最后要返回原点，有一段距离的值需要进行平衡（一段操作是无效的），又因为我们只能够增加当前值，减少后面的值，所以如果有一段的前缀和小于0，那么肯定是无解的</p>
-<p>那么最后，对于前缀和等于0的部分，我们进行一个判断，如果当前已经收敛了，那么随后如果还有前缀和&gt;0的段，那么肯定无法构造出来</p>
-<pre><code class="lang-C++">void solve()
-&#123;
-  int n;
-  cin&gt;&gt;n;
-  vector&lt;ll&gt;pre(n+1);
-  for(int i=1;i&lt;=n;++i)
-  &#123;
-    cin&gt;&gt;pre[i];
-    pre[i]+=pre[i-1];
-  &#125;
-  if(pre[n]!=0)
-  &#123;
-    cout&lt;&lt;&quot;NO\n&quot;;
-    return;
-  &#125;
-  bool ispre_zero=false;
-  for(int i=1;i&lt;=n;++i)
-  &#123;
-    if(pre[i]==0)
-    &#123;
-        ispre_zero=true;
-        continue;
-    &#125;
-    if(ispre_zero)
-    &#123;
-        if(pre[i]!=0)
-        &#123;
-            cout&lt;&lt;&quot;NO\n&quot;;
-            return;
-        &#125;
-    &#125;
-    if(pre[i]&lt;0)
-    &#123;
-        cout&lt;&lt;&quot;NO\n&quot;;
-        return;
-    &#125;
-  &#125;
-  cout&lt;&lt;&quot;YES\n&quot;;
-  return;
-&#125;
-</code></pre>
-<p>D</p>
-<p>同样很巧妙的一道题(所以说这场全是智力题)</p>
-<p>这道题最关键的部分就是，所有儿子的id都比父母节点的id要大，而原修改序列又是从根到叶结点的</p>
-<p>因此我们对于每次询问，可以先把小于l[i]的叶子结点直接设为r[i]，这样做的好处是因为修改序列是递减的，所以我们给了祖先结点们更多的调整空间，当我们修改儿子后，直接把对应的值加到父亲节点中，然后从n-&gt;1进行处理。</p>
-<pre><code class="lang-C++">void solve()
-&#123;
-  int n;cin&gt;&gt;n;
-  vector&lt;int&gt;pa(n+1);
-  for(int i=2;i&lt;=n;++i)
-  &#123;
-    cin&gt;&gt;pa[i];
-  &#125;
-  vector&lt;int&gt;l(n+1),r(l);
-  vector&lt;ll&gt;a(n+1);
-  for(int i=1;i&lt;=n;++i)cin&gt;&gt;l[i]&gt;&gt;r[i];
-  int ans=0;
-  for(int i=n;i&gt;=1;--i)
-  &#123;
-    if(a[i]&lt;l[i])a[i]=r[i],++ans;
-    if(a[i]&gt;r[i])a[i]=r[i];
-    a[pa[i]]+=a[i];
-  &#125;
-  cout&lt;&lt;ans&lt;&lt;&#39;\n&#39;;
-  return;
-&#125;
-</code></pre>
-<p>E</p>
-<p>一开始一点头绪都没有的一道题,本来以为是概率，结果其实是贪心题</p>
-<p>首先需要反向建边，因为正向的话处理环更麻烦</p>
-<p>首先我们先看应该采取什么样的策略来进行删边，很显然，由于每次我们选择的路是随机的，那么最坏的情况就是我们每次都选择最远的路，那么我们删除的话应该删除最远的边，然后我们思考边权是什么，很显然就是该节点的入度（反向建边），我们每次按照dijistra的方式更新即可</p>
-<pre><code class="lang-C++">void solve()
-&#123;
-  priority_queue&lt;pii,vector&lt;pii&gt;,greater&lt;pii&gt;&gt;q;
-  int n,m;cin&gt;&gt;n&gt;&gt;m;
-  vector&lt;vector&lt;int&gt;&gt;E(n+1);
-  vector&lt;int&gt;deg(n+1);
-  for(int i=0;i&lt;m;++i)
-  &#123;
-    int x,y;cin&gt;&gt;x&gt;&gt;y;
-    E[y].push_back(x);
-    ++deg[x];
-  &#125;
-  q.push(&#123;0,n&#125;);
-  vector&lt;int&gt;vis(n+1);
-  vector&lt;ll&gt;dis(n+1,(ll)MOD);
-  dis[n]=0;
-  while(!q.empty())
-  &#123;
-    auto [d,now]=q.top();
-    q.pop();
-    if(vis[now])continue;
-    vis[now]=1;
-    for(int v:E[now])
-    &#123;
-        if(d+deg[v]&lt;dis[v])
-        &#123;
-            dis[v]=d+deg[v];
-            q.push(&#123;dis[v],v&#125;);
-        &#125;
-        --deg[v];
-    &#125;
-  &#125;
-  cout&lt;&lt;dis[1]&lt;&lt;&#39;\n&#39;;
-  return;
-&#125;
-</code></pre>
-<p>F</p>
-<p>感觉没完全懂，就不在这瞎jb写了，似懂非懂了属于是，依旧贴一个大佬的解答</p>
-<p>(<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43346722/article/details/127250722">https://blog.csdn.net/weixin_43346722/article/details/127250722</a>)</p>
-<p>这场自己做的时候D没做出来（不知道什么时候能稳定出D），最近没那么多时间扑在算法上了，感觉每天一套DIV2可能不太行的通，从明天开始开始做专题吧，每天三道专题,先从dp开始吧！<br>先从DP开始，之后明天把KV的LSM tree给写了。</p>
-<p>（又是没干啥事的一天，我这条懒🐶真是辛苦了呢！）</p>
 
     </div>
     
