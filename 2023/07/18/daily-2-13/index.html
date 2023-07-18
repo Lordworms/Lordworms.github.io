@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>daily 1 | Waiting for the dawn</title>
+        <title>daily 2 | Waiting for the dawn</title>
         <meta name="author" content="Yanxin Xiang">
         <meta name="description" content="">
         <meta name="keywords" content="">
@@ -132,14 +132,14 @@
 
                 <div class="article">
     <div>
-        <h1>daily 1 </h1>
+        <h1>daily 2 </h1>
     </div>
     <div class="info">
         <span class="date">
             <span class="icon">
                 <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
-            2023/7/15
+            2023/7/18
         </span>
         
         
@@ -150,7 +150,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/daily/" style="color: #ffa2c4">daily</a>
+                <a href="/tags/daily/" style="color: #00bcd4">daily</a>
             </span>
             
         </span>
@@ -158,7 +158,85 @@
     </div>
     
     <div class="content" v-pre>
-        <p>CF 1153D</p>
+        <p>CF 1131D</p>
+<pre><code class="lang-C++">int main()&#123;
+    int n,m;
+    cin&gt;&gt;n&gt;&gt;m;
+    vector&lt;int&gt;fa(n+m+1);
+    iota(fa.begin(),fa.end(),0);
+    vector&lt;vector&lt;int&gt;&gt;E(n+m+1);
+    vector&lt;int&gt;deg(n+m+1);
+    function&lt;int(int)&gt;find=[&amp;](int x)&#123;
+        return fa[x]==x?x:(fa[x]=find(fa[x]));
+    &#125;;
+    function&lt;void(int,int)&gt;merge=[&amp;](int x,int y)&#123;
+        int fx=find(x),fy=find(y);
+        fa[fy]=fx;
+    &#125;;
+    function&lt;bool(int,int)&gt;check=[&amp;](int x,int y)&#123;
+        return find(x)==find(y);
+    &#125;;
+    vector&lt;string&gt;mp(n+1);
+    for(int i=1;i&lt;=n;++i)&#123;
+        cin&gt;&gt;mp[i];
+        mp[i]=&#39;s&#39;+mp[i];
+        for(int j=1;j&lt;=m;++j)&#123;
+            char c=mp[i][j];
+            if(c==&#39;=&#39;)&#123;
+                merge(i,j+n);
+            &#125;
+        &#125;
+    &#125;
+    for(int i=1;i&lt;=n;++i)&#123;
+        for(int j=1;j&lt;=m;++j)&#123;
+            char c=mp[i][j];
+            if(c==&#39;&lt;&#39;)&#123;
+                E[find(i)].push_back(find(j+n));
+                deg[find(j+n)]++;
+            &#125;else if(c==&#39;&gt;&#39;)&#123;
+                E[find(j+n)].push_back(find(i));
+                deg[find(i)]++;
+            &#125;
+        &#125;
+    &#125;
+    queue&lt;int&gt;q;
+    vector&lt;ll&gt;ans(n+m+1);
+    int blocks=0,cur_blocks=0;
+    for(int i=1;i&lt;=n+m;++i)&#123;
+        if(!deg[i]&amp;&amp;fa[i]==i)&#123;
+            q.push(i); 
+        &#125;
+        if(fa[i]==i)++blocks;
+        if(!deg[i])ans[i]=1;
+    &#125;
+    while(!q.empty())&#123;
+        auto x=q.front();
+        q.pop();
+        ++cur_blocks;
+        for(int v:E[x])&#123;
+            --deg[v];
+            ans[v]=max(ans[v],ans[x]+1);
+            if(!deg[v])&#123;
+                q.push(v);
+
+            &#125;
+        &#125;
+    &#125;
+    if(cur_blocks!=blocks)&#123;
+        cout&lt;&lt;&quot;NO\n&quot;;
+    &#125;else&#123;
+        cout&lt;&lt;&quot;YES\n&quot;;
+        for(int i=1;i&lt;=n;++i)&#123;
+            cout&lt;&lt;ans[find(i)]&lt;&lt;&quot; \n&quot;[i==n];
+        &#125;
+        for(int i=n+1;i&lt;=n+m;++i)&#123;
+            cout&lt;&lt;ans[find(i)]&lt;&lt;&quot; \n&quot;[i==n+m];
+        &#125;
+    &#125;
+    return 0;
+&#125;
+</code></pre>
+<p>CF 1183H</p>
 <pre><code class="lang-C++">
 
 </code></pre>
