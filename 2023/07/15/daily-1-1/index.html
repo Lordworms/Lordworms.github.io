@@ -150,7 +150,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/daily/" style="color: #00bcd4">daily</a>
+                <a href="/tags/daily/" style="color: #00a596">daily</a>
             </span>
             
         </span>
@@ -159,8 +159,39 @@
     
     <div class="content" v-pre>
         <p>CF 1153D</p>
-<pre><code class="lang-C++">
-
+<pre><code class="lang-C++">void solve()&#123;
+  int n;
+  cin&gt;&gt;n;
+  vector&lt;int&gt;op(n+1);
+  for(int i=1;i&lt;=n;++i)cin&gt;&gt;op[i];
+  vector&lt;vector&lt;int&gt;&gt;E(n+1);
+  for(int i=2;i&lt;=n;++i)&#123;
+    int x;
+    cin&gt;&gt;x;
+    E[x].push_back(i);
+    E[i].push_back(x);
+  &#125;
+  vector&lt;ll&gt;dp(n+1);
+  int k=0;
+  function&lt;void(int,int)&gt;dfs=[&amp;](int x,int f)&#123;
+    int sz=0;
+    if(op[x])dp[x]=1e18;
+    for(int v:E[x])&#123;
+      if(v==f)continue;
+      dfs(v,x);
+      sz++;
+      if(op[x])dp[x]=min(dp[x],dp[v]);
+      else dp[x]+=dp[v];
+    &#125;
+    if(!sz)&#123;
+      dp[x]=1;
+      ++k;
+    &#125;
+  &#125;;
+  dfs(1,-1);
+  cout&lt;&lt;k+1-dp[1]&lt;&lt;&#39;\n&#39;;
+  return;
+&#125;
 </code></pre>
 
     </div>

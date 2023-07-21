@@ -150,7 +150,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/daily/" style="color: #ff7d73">daily</a>
+                <a href="/tags/daily/" style="color: #03a9f4">daily</a>
             </span>
             
         </span>
@@ -237,8 +237,44 @@
 &#125;
 </code></pre>
 <p>CF 1183H</p>
-<pre><code class="lang-C++">
-
+<pre><code class="lang-C++">int main()&#123;
+    ll n,k;
+    cin&gt;&gt;n&gt;&gt;k;
+    string s;
+    cin&gt;&gt;s;
+    s=&#39;&amp;&#39;+s;
+    vector&lt;int&gt;pre(n+1),last(26);
+    for(int i=1;i&lt;=n;++i)&#123;
+        int x=s[i]-&#39;a&#39;;
+        pre[i]=last[x];
+        last[x]=i;
+    &#125;
+    vector dp(n+1,vector&lt;ll&gt;(n+1));//number of distinct subsequence in [1,i] with length j
+    for(int i=0;i&lt;=n;++i)&#123;//starts from 0! important
+        dp[i][0]=1;
+    &#125;
+    for(int i=1;i&lt;=n;++i)&#123;
+        for(int j=1;j&lt;=i;++j)&#123;
+            dp[i][j]=dp[i-1][j-1]+dp[i-1][j];//choose or not choose
+            if(pre[i])&#123;
+                dp[i][j]-=dp[pre[i]-1][j-1];
+            &#125;
+        &#125;
+    &#125;
+    ll ans=0;
+    for(int i=n;i&gt;=0;--i)&#123;
+        if(k&gt;=dp[n][i])&#123;
+            k-=dp[n][i];
+            ans+=1ll*(n-i)*dp[n][i];
+        &#125;else&#123;
+            ans+=1ll*(n-i)*k;
+            k=0;
+            break;
+        &#125;
+    &#125;
+    cout&lt;&lt;(k==0?ans:-1)&lt;&lt;&#39;\n&#39;;
+    return 0;
+&#125;
 </code></pre>
 
     </div>

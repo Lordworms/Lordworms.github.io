@@ -146,7 +146,26 @@
     </div>
     
     <div class="content" v-pre>
-        
+        <p>CF 14A</p>
+<pre><code class="lang-C++">cin &gt;&gt; n &gt;&gt; m; 
+    for (int i = 1; i &lt;= n; i++)
+        for (int j = 1; j &lt;= m; j++)&#123;
+            cin &gt;&gt; str[i][j];
+            if (str[i][j] == &#39;*&#39;) &#123;
+                if (i &lt;= x1) x1 = i; 
+                if (j &lt;= x2) x2 = j;
+                if (i &gt;= y1) y1 = i;
+                if (j &gt;= y2) y2 = j;
+            &#125;
+        &#125;
+    for(int i = x1; i &lt;= y1; i++)&#123;
+        for (int j = x2; j &lt;= y2; j++)
+            cout &lt;&lt; str[i][j];
+        cout &lt;&lt; endl;
+    &#125;
+    return 0;
+</code></pre>
+
     </div>
     
     

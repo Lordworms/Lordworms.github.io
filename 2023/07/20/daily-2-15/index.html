@@ -150,7 +150,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/daily/" style="color: #ffa2c4">daily</a>
+                <a href="/tags/daily/" style="color: #03a9f4">daily</a>
             </span>
             
         </span>
@@ -231,8 +231,57 @@
 &#125;
 </code></pre>
 <p>CF 1328D</p>
-<pre><code class="lang-C++">
+<pre><code class="lang-C++">int main()&#123;
+    // freopen(&quot;/Users/yanxinxiang/code/Algorithm/in&quot;,&quot;r&quot;,stdin);
+    // freopen(&quot;/Users/yanxinxiang/code/Algorithm/out&quot;,&quot;w&quot;,stdout);
+    int q,n;
+    cin&gt;&gt;q;
 
+    while(q--)&#123;
+        cin&gt;&gt;n;
+        for(int i=1;i&lt;=n;++i)cin&gt;&gt;a[i];
+        a[n+1]=a[1];
+        bool f1=false,f2=false;
+        int x=-1;
+        for(int i=1;i&lt;=n;++i)&#123;
+            if(a[i]==a[i+1])&#123;
+                f1=true;
+                x=i;
+            &#125;else&#123;
+                f2=true;
+            &#125;
+        &#125;
+        if(!f2)&#123;
+            cout&lt;&lt;1&lt;&lt;&#39;\n&#39;;
+            for(int i=1;i&lt;=n;++i)&#123;
+                cout&lt;&lt;1&lt;&lt;&quot; \n&quot;[i==n];
+            &#125;
+        &#125;
+        else &#123;
+            if(n%2==0)&#123;
+                cout&lt;&lt;2&lt;&lt;&#39;\n&#39;;
+                for(int i=1;i&lt;=n;++i)&#123;
+                    cout&lt;&lt;((i%2)?1:2)&lt;&lt;&quot; \n&quot;[i==n];
+                &#125;
+            &#125;else if(f1)&#123;//至少有一对相邻的相同，断开后交替染色
+                cout&lt;&lt;2&lt;&lt;&#39;\n&#39;;
+                for(int i=1;i&lt;=n;++i)&#123;
+                    c[(x+i-1)%n+1]=i&amp;1;
+                &#125;
+                for(int i=1;i&lt;=n;++i)&#123;
+                    cout&lt;&lt;c[i]+1&lt;&lt;&quot; \n&quot;[i==n];
+                &#125;
+            &#125;else&#123;
+                cout&lt;&lt;3&lt;&lt;&#39;\n&#39;;
+                for(int i=1;i&lt;=n-1;++i)&#123;
+                    cout&lt;&lt;((i&amp;1)+1)&lt;&lt;&#39; &#39;;
+                &#125;
+                cout&lt;&lt;3&lt;&lt;&#39;\n&#39;;
+            &#125;
+        &#125;
+    &#125;
+    return 0;
+&#125;
 </code></pre>
 
     </div>

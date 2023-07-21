@@ -150,7 +150,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/daily/" style="color: #ff7d73">daily</a>
+                <a href="/tags/daily/" style="color: #03a9f4">daily</a>
             </span>
             
         </span>
@@ -178,8 +178,17 @@
 &#125;
 </code></pre>
 <p>CF 997B</p>
-<pre><code class="lang-C++">
-
+<pre><code class="lang-C++">int main()&#123;
+    int n;
+    cin&gt;&gt;n;
+    long long ans=0;
+    for(int i=0;i&lt;=min(8,n);++i)&#123;
+        for(int j=0;i+j&lt;=n&amp;&amp;j&lt;=(i==0?8:4);++j)&#123;
+            ans+=n-i-j+1;
+        &#125;
+    &#125;
+    cout&lt;&lt;ans&lt;&lt;&#39;\n&#39;;
+&#125;
 </code></pre>
 
     </div>

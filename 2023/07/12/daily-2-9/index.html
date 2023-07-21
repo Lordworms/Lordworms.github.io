@@ -150,7 +150,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/daily/" style="color: #03a9f4">daily</a>
+                <a href="/tags/daily/" style="color: #ff7d73">daily</a>
             </span>
             
         </span>
@@ -159,8 +159,66 @@
     
     <div class="content" v-pre>
         <p>CF 1060E</p>
-<pre><code class="lang-C++">
+<pre><code class="lang-C++">int main()&#123;
+    int n;
+    cin&gt;&gt;n;
+    vector&lt;vector&lt;int&gt;&gt;E(n+1);
+    for(int i=1;i&lt;=n-1;++i)&#123;
+        int u,v;
+        cin&gt;&gt;u&gt;&gt;v;
+        E[u].push_back(v);
+        E[v].push_back(u);
+    &#125;
+    vector&lt;ll&gt;sz(n+1),dep(n+1);
+    function&lt;void(int,int)&gt;dfs=[&amp;](int x,int f)&#123;
+        sz[x]=1;
+        for(int v:E[x])&#123;
+            if(v==f)continue;
+            dep[v]=dep[x]+1;
+            dfs(v,x);
+            sz[x]+=sz[v];
+        &#125;
+    &#125;;
+    dfs(1,0);
+    ll ans=0;
+    ll num=0;
+    for(int i=1;i&lt;=n;++i)&#123;
+        ans+=sz[i]*(n-sz[i]);
+        if(dep[i]%2==1)++num;
+    &#125;
+    ans+=(num)*(n-num);
+    cout&lt;&lt;ans/2&lt;&lt;&#39;\n&#39;;
+&#125;
+</code></pre>
+<p>CF 1114D</p>
+<pre><code class="lang-C++">int dp[N][N];
+int a[N];
+int num;
+int main()&#123;
+    int n;
+    cin&gt;&gt;n;
+    int pre=-1;
 
+    for(int i=1;i&lt;=n;++i)&#123;
+        int x;
+        cin&gt;&gt;x;
+        if(x!=pre)&#123;
+            a[++num]=x;
+        &#125;
+        pre=x;
+    &#125;
+    for(int len=1;len&lt;=num;++len)&#123;
+        for(int l=1;l+len&lt;=num;++l)&#123;
+            int r=l+len;
+            if(a[l]==a[r])&#123;
+                dp[l][r]=dp[l+1][r-1]+1;
+            &#125;else&#123;
+                dp[l][r]=min(dp[l][r-1],dp[l+1][r])+1;
+            &#125;
+        &#125;
+    &#125;
+    cout&lt;&lt;dp[1][num]&lt;&lt;&#39;\n&#39;;
+&#125;
 </code></pre>
 
     </div>
