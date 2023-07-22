@@ -139,7 +139,7 @@
             <span class="icon">
                 <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
-            2023/7/17
+            2023/7/22
         </span>
         
         
@@ -150,7 +150,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/daily/" style="color: #ffa2c4">daily</a>
+                <a href="/tags/daily/" style="color: #00a596">daily</a>
             </span>
             
         </span>
@@ -158,55 +158,81 @@
     </div>
     
     <div class="content" v-pre>
-        <p>CF 1121D</p>
-<pre><code class="lang-C++">ll a[MAXN],b[MAXN];
-ll dp[MAXN][3];
-int main()&#123;
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
-    int q;
-    cin&gt;&gt;q;
-    memset(dp,0x3f,sizeof(dp));
-    while(q--)&#123;
-        int n;
-        cin&gt;&gt;n;
-        for(int i=1;i&lt;=n;++i)&#123;
-            cin&gt;&gt;a[i]&gt;&gt;b[i];
+        <p>CF 1209E1</p>
+<pre><code class="lang-C++">void solve() &#123;
+  int n, m;
+  cin &gt;&gt; n &gt;&gt; m;
+  vector mp(n + 1, vector&lt;int&gt;(m + 1));
+  vector dp(m + 1, vector&lt;int&gt;(25));
+  for (int i = 1; i &lt;= n; ++i)
+    for (int j = 1; j &lt;= m; ++j) cin &gt;&gt; mp[i][j];
+  for (int i = 1; i &lt;= m; ++i) &#123;
+    for (int s = 0; s &lt; (1 &lt;&lt; n); ++s) &#123;
+      for (int iter = 1; iter &lt;= n; ++iter) &#123;
+        int val = 0;
+        for (int j = 1; j &lt;= n; ++j) &#123;
+          if (s &amp; (1 &lt;&lt; j - 1)) &#123;
+            val += mp[j][i];
+          &#125;
         &#125;
-        for(int i=0;i&lt;=n;++i)dp[i][0]=dp[i][1]=dp[i][2]=INF;
-        dp[0][0]=0;
-        for(int i=1;i&lt;=n;++i)&#123;
-            for(int k1=0;k1&lt;3;++k1)&#123;
-                for(int k2=0;k2&lt;3;++k2)&#123;
-                    if(a[i-1]+k2!=a[i]+k1)&#123;
-                        dp[i][k1]=min(dp[i][k1],dp[i-1][k2]+b[i]*k1);
-                    &#125;
-                &#125;
-            &#125;
+        for (int p = 0; p &lt; (1 &lt;&lt; n); ++p) &#123;
+          if (!(s &amp; p)) &#123;
+            dp[i][s | p] = max(dp[i][s | p], dp[i - 1][p] + val);
+          &#125;
         &#125;
-        ll ans=INF;
-        for(int i=0;i&lt;3;++i)&#123;
-            ans=min(ans,dp[n][i]);
+        for (int j = 1; j &lt;= n; ++j) &#123;
+          mp[j - 1][i] = mp[j][i];
         &#125;
-        cout&lt;&lt;ans&lt;&lt;&#39;\n&#39;;
+        mp[n][i] = mp[0][i];
+      &#125;
     &#125;
+  &#125;
+  cout &lt;&lt; dp[m][(1 &lt;&lt; n) - 1] &lt;&lt; &#39;\n&#39;;
+  return;
 &#125;
 </code></pre>
-<p>CF 1172B</p>
-<pre><code class="lang-C++">int main()&#123;
-    int n;
-    cin&gt;&gt;n;
-    ll ans=n;
-    vector&lt;ll&gt;deg(n+1);
-    for(int i=1;i&lt;=n-1;++i)&#123;
-        int u,v;
-        cin&gt;&gt;u&gt;&gt;v;
-        deg[v]++;
-        deg[u]++;
-        ans=ans*deg[u]%MOD*deg[v]%MOD;
+<p>CF 1260D</p>
+<pre><code class="lang-C++">void solve() &#123;
+  int m, n, k, t;
+  cin &gt;&gt; m &gt;&gt; n &gt;&gt; k &gt;&gt; t;
+  vector&lt;int&gt; a(m + 1);
+  vector&lt;node&gt; s(k + 1);
+  vector&lt;int&gt; dif(n + 2);
+  for (int i = 1; i &lt;= m; ++i) cin &gt;&gt; a[i];
+  for (int i = 1; i &lt;= k; ++i) &#123;
+    cin &gt;&gt; s[i].l &gt;&gt; s[i].r &gt;&gt; s[i].d;
+  &#125;
+  sort(a.begin() + 1, a.end(),greater&lt;int&gt;());
+  auto check = [&amp;](int cur) &#123;
+    int sum = 0;
+    fill(dif.begin(), dif.end(), 0);
+    for (int i = 1; i &lt;= k; ++i) &#123;
+      if (s[i].d &gt; cur) &#123;
+        dif[s[i].l]++;
+        dif[s[i].r + 1]--;
+      &#125;
     &#125;
-    cout&lt;&lt;ans&lt;&lt;&quot;\n&quot;;
-    return 0;
+    for (int i = 1; i &lt;= n + 1; ++i) &#123;
+      dif[i] += dif[i - 1];
+      if (dif[i]) &#123;
+        sum += 3;
+      &#125; else &#123;
+        sum += 1;
+      &#125;
+    &#125;
+    return sum &lt;= t;
+  &#125;;
+  int l = 0, r = m+1;
+  while (l &lt; r) &#123;
+    int mid = (l + r) &gt;&gt; 1;
+    if (check(a[mid])) &#123;
+      l = mid + 1;
+    &#125; else &#123;
+      r = mid;
+    &#125;
+  &#125;
+  cout &lt;&lt; max(r-1,0) &lt;&lt; &#39;\n&#39;;
+  return;
 &#125;
 </code></pre>
 
