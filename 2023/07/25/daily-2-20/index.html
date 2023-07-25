@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>daily 1 | Waiting for the dawn</title>
+        <title>daily 2 | Waiting for the dawn</title>
         <meta name="author" content="Yanxin Xiang">
         <meta name="description" content="">
         <meta name="keywords" content="">
@@ -132,14 +132,14 @@
 
                 <div class="article">
     <div>
-        <h1>daily 1 </h1>
+        <h1>daily 2 </h1>
     </div>
     <div class="info">
         <span class="date">
             <span class="icon">
                 <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
-            2023/6/12
+            2023/7/25
         </span>
         
         
@@ -150,7 +150,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/daily/" style="color: #03a9f4">daily</a>
+                <a href="/tags/daily/" style="color: #ff7d73">daily</a>
             </span>
             
         </span>
@@ -158,53 +158,79 @@
     </div>
     
     <div class="content" v-pre>
-        <p>CF 743D<br>简单树形dp</p>
-<pre><code class="lang-C++">void solve()&#123;
+        <p>CF 1157F</p>
+<pre><code class="lang-C++">void solve() &#123;
   int n;
-  cin&gt;&gt;n;
-  vector&lt;int&gt;a(n+1);
-  vector&lt;vector&lt;int&gt;&gt;E(n+1);
-  for(int i=1;i&lt;=n;++i)cin&gt;&gt;a[i];
-  for(int i=1;i&lt;=n-1;++i)&#123;
-    int u,v;
-    cin&gt;&gt;u&gt;&gt;v;
-    E[u].push_back(v);
-    E[v].push_back(u);
+  cin &gt;&gt; n;
+  vector&lt;int&gt; a(N);
+  for (int i = 1; i &lt;= n; ++i) &#123;
+    int x;
+    cin &gt;&gt; x;
+    a[x]++;
   &#125;
-  vector&lt;ll&gt;dp(n+1);
-  function&lt;void(int,int)&gt;dfs1=[&amp;](int x,int fa)&#123;
-    dp[x]=a[x];
-    for(int v:E[x])&#123;
-        if(v==fa)continue;
-        dfs1(v,x);
-        dp[x]+=dp[v];
+  int st = 0, ed = 0, ans = 1, cur_len = 0, ans_st = 0;
+  for (int i = 1; i &lt; N; ++i) &#123;
+    if (st &amp;&amp; a[i] &lt; 2) &#123;
+      cur_len += a[i];
+      if (cur_len &gt;= ans) &#123;
+        ans = cur_len;
+        ans_st = st;
+        ed = i;
+      &#125;
+      st = 0;
+      cur_len = 0;
+    &#125; else if (st &amp;&amp; a[i] &gt;= 2) &#123;
+      cur_len += a[i];
     &#125;
-  &#125;;
-  dfs1(1,-1);
-  ll ans=-INF;
-  function&lt;void(int,int)&gt;dfs2=[&amp;](int x,int fa)&#123;
-    ll max_first=-INF,max_second=max_first;
-    for(int v:E[x])&#123;
-        if(v==fa)continue;
-        dfs2(v,x);
-        if(dp[v]&gt;=max_first)&#123;
-            max_second=max_first;
-            max_first=dp[v];
-        &#125;else if(dp[v]&gt;max_second)&#123;
-            max_second=dp[v];
-        &#125;
-        dp[x]=max(dp[x],dp[v]);
+    if (!st &amp;&amp; a[i]) &#123;
+      st = i;
+      cur_len += a[i];
     &#125;
-    if(max_first!=-INF&amp;&amp;max_second!=-INF)&#123;
-        ans=max(ans,max_first+max_second);
-    &#125;
-  &#125;;
-  dfs2(1,-1);
-  if(ans==-INF)&#123;
-    cout&lt;&lt;&quot;Impossible&quot;&lt;&lt;&#39;\n&#39;;
-  &#125;else&#123;
-    cout&lt;&lt;ans&lt;&lt;&#39;\n&#39;;
   &#125;
+  cout &lt;&lt; ans &lt;&lt; &#39;\n&#39;;
+  for (int i = ans_st; i &lt;= ed; ++i) &#123;
+    for (int j = 1; j &lt; a[i]; ++j) &#123;
+      cout &lt;&lt; i &lt;&lt; &#39; &#39;;
+    &#125;
+  &#125;
+  for (int i = ed; i &gt;= ans_st; --i) &#123;
+    if (a[i]) &#123;
+      cout &lt;&lt; i &lt;&lt; &#39; &#39;;
+    &#125;
+  &#125;
+  return;
+&#125;
+</code></pre>
+<p>CF 1257E</p>
+<pre><code class="lang-C++">void solve() &#123;
+  int k1, k2, k3, x;
+  cin &gt;&gt; k1 &gt;&gt; k2 &gt;&gt; k3;
+  int n = k1 + k2 + k3;
+  for (int i = 1; i &lt;= k1; ++i) &#123;
+    cin &gt;&gt; x;
+    a[x] = 1;
+  &#125;
+  for (int i = 1; i &lt;= k2; ++i) &#123;
+    cin &gt;&gt; x;
+    a[x] = 2;
+  &#125;
+  for (int i = 1; i &lt;= k3; ++i) &#123;
+    cin &gt;&gt; x;
+    a[x] = 3;
+  &#125;
+  int pre = INT_MIN, ans = INT_MIN, cnt1 = 0, cnt2 = 0, cnt3 = 0;
+  for (int i = 0; i &lt;= n; ++i) &#123;
+    if (a[i] == 1) &#123;
+      ++cnt1;
+    &#125; else if (a[i] == 2) &#123;
+      ++cnt2;
+    &#125; else if (a[i] == 3) &#123;
+      ++cnt3;
+    &#125;
+    pre = max(pre, cnt1 - cnt2);
+    ans = max(ans, pre + k3 - cnt3 + cnt2);
+  &#125;
+  cout &lt;&lt; n - ans &lt;&lt; &#39;\n&#39;; // n - ans is the answer
   return;
 &#125;
 </code></pre>
