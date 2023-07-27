@@ -139,7 +139,7 @@
             <span class="icon">
                 <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
-            2023/7/17
+            2023/7/27
         </span>
         
         
@@ -150,7 +150,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/daily/" style="color: #ffa2c4">daily</a>
+                <a href="/tags/daily/" style="color: #00a596">daily</a>
             </span>
             
         </span>
@@ -158,55 +158,107 @@
     </div>
     
     <div class="content" v-pre>
-        <p>CF 1121D</p>
-<pre><code class="lang-C++">ll a[MAXN],b[MAXN];
-ll dp[MAXN][3];
-int main()&#123;
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
-    int q;
-    cin&gt;&gt;q;
-    memset(dp,0x3f,sizeof(dp));
-    while(q--)&#123;
-        int n;
-        cin&gt;&gt;n;
-        for(int i=1;i&lt;=n;++i)&#123;
-            cin&gt;&gt;a[i]&gt;&gt;b[i];
-        &#125;
-        for(int i=0;i&lt;=n;++i)dp[i][0]=dp[i][1]=dp[i][2]=INF;
-        dp[0][0]=0;
-        for(int i=1;i&lt;=n;++i)&#123;
-            for(int k1=0;k1&lt;3;++k1)&#123;
-                for(int k2=0;k2&lt;3;++k2)&#123;
-                    if(a[i-1]+k2!=a[i]+k1)&#123;
-                        dp[i][k1]=min(dp[i][k1],dp[i-1][k2]+b[i]*k1);
-                    &#125;
-                &#125;
-            &#125;
-        &#125;
-        ll ans=INF;
-        for(int i=0;i&lt;3;++i)&#123;
-            ans=min(ans,dp[n][i]);
-        &#125;
-        cout&lt;&lt;ans&lt;&lt;&#39;\n&#39;;
+        <p>CF 1256E</p>
+<pre><code class="lang-C++">struct node &#123;
+  int a, id;
+&#125;;
+void solve() &#123;
+  int n;
+  cin &gt;&gt; n;
+  vector&lt;node&gt; a(n + 1);
+  vector&lt;int&gt; group(n + 1);
+  for (int i = 1; i &lt;= n; ++i) &#123;
+    cin &gt;&gt; a[i].a;
+    a[i].id = i;
+  &#125;
+  sort(a.begin() + 1, a.end(), [&amp;](node a, node b) &#123; return a.a &lt; b.a; &#125;);
+  vector&lt;int&gt; dp(n + 1);
+  dp[3] = a[3].a - a[1].a;
+  int cur_min = 1e9, cnt = 0;
+  for (int i = 4; i &lt;= n; ++i) &#123;
+    if (i &gt;= 6 &amp;&amp; cur_min &gt; dp[i - 3] - a[i - 2].a) &#123;
+      cur_min = dp[i - 3] - a[i - 2].a;  // we generate another team
+      cnt = i - 2;  // write down the start of current group
     &#125;
+    dp[i] = dp[i - 1] + a[i].a - a[i - 1].a;  // new team
+    group[i] = group[i - 1];
+    if (dp[i] &gt; cur_min + a[i].a) &#123;
+      dp[i] = cur_min + a[i].a;
+      group[i] = cnt;
+    &#125;
+  &#125;
+  int ans = 1, cur = group[n];
+  vector&lt;int&gt; ans_sets(n + 1);
+  for (int i = n; i &gt;= 1; --i) &#123;
+    ans_sets[a[i].id] = ans;
+    if (i == cur) &#123;
+      ans++;
+      cur = group[i - 1];
+    &#125;
+  &#125;
+  cout &lt;&lt; dp[n] &lt;&lt; &#39; &#39; &lt;&lt; ans &lt;&lt; &#39;\n&#39;;
+  for (int i = 1; i &lt;= n; ++i) &#123;
+    cout &lt;&lt; ans_sets[i] &lt;&lt; &quot; \n&quot;[i == n];
+  &#125;
+  return;
 &#125;
 </code></pre>
-<p>CF 1172B</p>
-<pre><code class="lang-C++">int main()&#123;
-    int n;
-    cin&gt;&gt;n;
-    ll ans=n;
-    vector&lt;ll&gt;deg(n+1);
-    for(int i=1;i&lt;=n-1;++i)&#123;
-        int u,v;
-        cin&gt;&gt;u&gt;&gt;v;
-        deg[v]++;
-        deg[u]++;
-        ans=ans*deg[u]%MOD*deg[v]%MOD;
+<p>CF 1294F</p>
+<pre><code class="lang-C++">void solve() &#123;
+  int n;
+  cin &gt;&gt; n;
+  vector&lt;vector&lt;int&gt;&gt; E(n + 1);
+  for (int i = 1; i &lt;= n; ++i) &#123;
+    int u, v;
+    cin &gt;&gt; u &gt;&gt; v;
+    E[u].push_back(v);
+    E[v].push_back(u);
+  &#125;
+  int c = 0, st = 0, ed = 0;
+  vector&lt;int&gt; dis(n + 1), bef(n + 1);
+  // find diameter
+  function&lt;void(int)&gt; dfs = [&amp;](int x) &#123;
+    c = dis[x] &gt; dis[c] ? x : c;
+    for (int v : E[x]) &#123;
+      if (v == bef[x]) continue;
+      dis[v] = dis[x] + 1;
+      bef[v] = x;
+      dfs(v);
     &#125;
-    cout&lt;&lt;ans&lt;&lt;&quot;\n&quot;;
-    return 0;
+  &#125;;
+  dfs(1);
+  st = c;
+  dis[st] = 0;
+  bef[st] = -1;
+  dfs(st);
+  ed = c;
+  queue&lt;pii&gt; q;
+  vector&lt;int&gt; vis(n + 1);
+  while (c != -1) &#123;
+    q.push(&#123;c, 0&#125;);
+    vis[c] = 1;
+    c = bef[c];
+  &#125;
+  int d, x, extra = 0, p = bef[ed];
+  while (!q.empty()) &#123;
+    x = q.front().first;
+    d = q.front().second;
+    q.pop();
+    if (d &gt; extra) &#123;
+      p = x;
+      extra = d;
+    &#125;
+    for (int v : E[x]) &#123;
+      if (vis[v]) &#123;
+        continue;
+      &#125;
+      q.push(&#123;v, d + 1&#125;);
+      vis[v] = 1;
+    &#125;
+  &#125;
+  cout &lt;&lt; extra + dis[ed] &lt;&lt; &#39;\n&#39;;
+  cout &lt;&lt; st &lt;&lt; &#39; &#39; &lt;&lt; ed &lt;&lt; &#39; &#39; &lt;&lt; p &lt;&lt; &#39;\n&#39;;
+  return;
 &#125;
 </code></pre>
 
