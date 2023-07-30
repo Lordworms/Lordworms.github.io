@@ -139,7 +139,7 @@
             <span class="icon">
                 <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
-            2023/6/3
+            2023/7/30
         </span>
         
         
@@ -150,7 +150,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/daily/" style="color: #03a9f4">daily</a>
+                <a href="/tags/daily/" style="color: #00a596">daily</a>
             </span>
             
         </span>
@@ -158,27 +158,42 @@
     </div>
     
     <div class="content" v-pre>
-        <p>CF 474D</p>
-<pre><code class="lang-C++">void solve()&#123;
-  int t,k;
-  cin&gt;&gt;t&gt;&gt;k;
-  vector&lt;ll&gt;dp(MAXN);
-  vector&lt;ll&gt;sum(MAXN);
-  dp[0]=1;
-  for(int i=1;i&lt;MAXN;++i)&#123;
-    dp[i]=dp[i-1];
-    if(i-k&gt;=0)&#123;
-        dp[i]=(dp[i]+dp[i-k])%MOD;
+        <p>CF 1359D</p>
+<pre><code class="lang-C++">void solve() &#123;
+  int n;
+  cin &gt;&gt; n;
+  vector&lt;int&gt; a(n + 1);
+  vector dp (n + 1, vector&lt;int&gt; (61, -INF));
+  for (int i = 1; i &lt;= n; ++i) &#123;
+    cin &gt;&gt; a[i];
+  &#125; 
+  /*
+    dp[i][a[i] + 30] = max (dp[i][j], dp[i - 1][j] + j - 30)
+  */
+  dp[1][a[1] + 30] = 0;
+  for (int i = 2; i &lt;= n; ++i) &#123;
+    int cur = a[i] + 30;
+    dp[i][cur] = 0; //important ! just pick up one shit
+    for (int j = 0; j &lt;= cur; ++j) &#123;
+      dp[i][cur] = max(dp[i][cur], dp[i - 1][j] + j - 30);
     &#125;
-    sum[i]=(sum[i-1]+dp[i])%MOD;
+    for (int j = cur + 1; j &lt;= 60; ++j) &#123;
+      dp[i][j] = max(dp[i][j], dp[i - 1][j] + a[i]);
+    &#125;
   &#125;
-  while(t--)&#123;
-    int a,b;
-    cin&gt;&gt;a&gt;&gt;b;
-    cout&lt;&lt;(sum[b]-sum[a-1]+MOD)%MOD&lt;&lt;&quot;\n&quot;;
+  int ans = 0;
+  for (int i = 1; i &lt;= n; ++i) &#123;
+    for (int j = 0; j &lt;= 60; ++j) &#123;
+      ans = max(ans, dp[i][j]);    
+    &#125;
   &#125;
-  return;
+  cout &lt;&lt; ans &lt;&lt; &#39;\n&#39;;
+  return ;
 &#125;
+</code></pre>
+<p>CF 1369D</p>
+<pre><code class="lang-C++">
+
 </code></pre>
 
     </div>
