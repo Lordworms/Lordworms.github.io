@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>daily 3 | Waiting for the dawn</title>
+        <title>daily 1 | Waiting for the dawn</title>
         <meta name="author" content="Yanxin Xiang">
         <meta name="description" content="">
         <meta name="keywords" content="">
@@ -132,14 +132,14 @@
 
                 <div class="article">
     <div>
-        <h1>daily 3 </h1>
+        <h1>daily 1 </h1>
     </div>
     <div class="info">
         <span class="date">
             <span class="icon">
                 <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
-            2023/3/27
+            2023/8/4
         </span>
         
         
@@ -150,17 +150,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/daily/" style="color: #03a9f4">daily</a>
-            </span>
-            
-            <span class="tag">
-                
-                <a href="/tags/Codeforces/" style="color: #03a9f4">Codeforces</a>
-            </span>
-            
-            <span class="tag">
-                
-                <a href="/tags/constructive-problem/" style="color: #ff7d73">constructive problem</a>
+                <a href="/tags/daily/" style="color: #00bcd4">daily</a>
             </span>
             
         </span>
@@ -168,86 +158,10 @@
     </div>
     
     <div class="content" v-pre>
-        <p>CF 643B</p>
-<p>这样构造就可以了</p>
-<pre><code>a      b
-|中间连接|
-c      d
-</code></pre><pre><code class="lang-C++">void solve()&#123;
-  int n,k,a,b,c,d;
-  cin&gt;&gt;n&gt;&gt;k&gt;&gt;a&gt;&gt;b&gt;&gt;c&gt;&gt;d;
-  if(k&lt;n+1||n==4)&#123;
-    cout&lt;&lt;-1&lt;&lt;&#39;\n&#39;;
-  &#125;
-  else&#123;
-    vector&lt;int&gt;vis(n+1);
-    vis[a]=vis[b]=vis[c]=vis[d]=1;
-    cout&lt;&lt;a&lt;&lt;&#39; &#39;&lt;&lt;c&lt;&lt;&#39; &#39;;
-    for(int i=1;i&lt;=n;++i)&#123;
-        if(!vis[i])cout&lt;&lt;i&lt;&lt;&#39; &#39;;
-    &#125;
-    cout&lt;&lt;d&lt;&lt;&#39; &#39;&lt;&lt;b&lt;&lt;&#39;\n&#39;;
-    cout&lt;&lt;c&lt;&lt;&#39; &#39;&lt;&lt;a&lt;&lt;&#39; &#39;;
-    for(int i=1;i&lt;=n;++i)&#123;
-        if(!vis[i])cout&lt;&lt;i&lt;&lt;&#39; &#39;;
-    &#125;
-    cout&lt;&lt;b&lt;&lt;&#39; &#39;&lt;&lt;d&lt;&lt;&#39;\n&#39;;
-  &#125;
-  return;
-&#125;
+        <p>CF 9A</p>
+<pre><code class="lang-C++">
+
 </code></pre>
-<p>CF 644B</p>
-<p>常规</p>
-<pre><code class="lang-C++">void solve()&#123;
-  int n,b;
-  cin&gt;&gt;n&gt;&gt;b;
-  deque&lt;ll&gt;q;
-  vector&lt;ll&gt;t(n),d(n);
-  for(int i=0;i&lt;n;++i)&#123;
-    cin&gt;&gt;t[i]&gt;&gt;d[i];
-  &#125;
-  for(int i=0;i&lt;n;++i)&#123;
-    while(q.size()&amp;&amp;q.front()&lt;=t[i])&#123;
-        q.pop_front();
-    &#125;
-    if(q.empty())&#123;
-        q.push_back(t[i]+d[i]);
-        cout&lt;&lt;q.front()&lt;&lt;&#39; &#39;;
-    &#125;else&#123;
-        if(q.size()&gt;b)&#123;
-            cout&lt;&lt;-1&lt;&lt;&quot; &quot;;
-        &#125;else&#123;
-            cout&lt;&lt;q.back()+d[i]&lt;&lt;&#39; &#39;;
-            q.push_back(q.back()+d[i]);
-        &#125;
-    &#125;
-  &#125;
-  return;
-&#125;
-</code></pre>
-<p>CF 662D</p>
-<p>长度为k的后缀可以表示$\sum_{1}^k(10^i)$个不同的值，那么我们加一下，然后每次加上base即可</p>
-<pre><code class="lang-C++">void solve()&#123;
-  int n;
-  cin&gt;&gt;n;
-  for(int i=0;i&lt;n;++i)&#123;
-    string s;
-    cin&gt;&gt;s;
-    s=s.substr(4);
-    int num=stoi(s);
-    int base=10,tmp=0;
-    for(int i=1;i&lt;s.size();++i)&#123;
-        tmp+=base;
-        base*=10;
-    &#125;
-    while(1989+tmp&gt;num)
-        num+=base;
-    cout&lt;&lt;num&lt;&lt;&#39;\n&#39;;
-  &#125;
-  return;
-&#125;
-</code></pre>
-<p>今晚开始要连面四场，有点难熬</p>
 
     </div>
     
