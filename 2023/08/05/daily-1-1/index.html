@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>dp practice day 8 | Waiting for the dawn</title>
+        <title>daily 1 | Waiting for the dawn</title>
         <meta name="author" content="Yanxin Xiang">
         <meta name="description" content="">
         <meta name="keywords" content="">
@@ -132,166 +132,21 @@
 
                 <div class="article">
     <div>
-        <h1>dp practice day 8 </h1>
+        <h1>daily 1 </h1>
     </div>
     <div class="info">
         <span class="date">
             <span class="icon">
                 <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
-            2023/3/12
+            2023/8/5
         </span>
         
-        <span class="category">
-            <a href="/categories/Algorithm/">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                Algorithm
-            </a>
-        </span>
-        
-        
-        <span class="tags">
-            <span class="icon">
-                <i class="fa-solid fa-tags fa-fw"></i>
-            </span>
-            
-            <span class="tag">
-                
-                <a href="/tags/dp/" style="color: #ff7d73">dp</a>
-            </span>
-            
-            <span class="tag">
-                
-                <a href="/tags/dp-practice-plan/" style="color: #ffa2c4">dp_practice_plan</a>
-            </span>
-            
-        </span>
         
     </div>
     
     <div class="content" v-pre>
-        <p>CF 837B</p>
-<p>简单dp，记录一下[1..i]区间内的0和1的数量关系，然后用map记录dp值，存在相同的dp值的话就可以获得一个答案</p>
-<pre><code class="lang-C++">void solve()&#123;
-  int n;cin&gt;&gt;n;
-  string s;cin&gt;&gt;s;
-  vector&lt;int&gt;dp(n+1,0);
-  for(int i=1;i&lt;=n;++i)&#123;
-    if(s[i-1]==&#39;1&#39;)&#123;
-        dp[i]=dp[i-1]+1;
-    &#125;else&#123;
-        dp[i]=dp[i-1]-1;
-    &#125;
-  &#125;
-  map&lt;int,int&gt;mp;
-  mp[0]=0;
-  int ans=0;
-  for(int i=1;i&lt;=n;++i)&#123;
-    if(mp.count(dp[i]))&#123;
-        ans=max(ans,i-mp[dp[i]]);
-    &#125;else&#123;
-        mp[dp[i]]=i;
-    &#125;
-  &#125;
-  cout&lt;&lt;ans&lt;&lt;&#39;\n&#39;;
-  return;
-&#125;
-</code></pre>
-<p>CF 869C</p>
-<p>不会做，看的题解，首先同色的肯定不能连边，其次两个相同颜色的点不能和同一个点相连，所以就只能两两相连，两两计算后把答案想乘即可</p>
-<pre><code class="lang-C++">ll quick_pow(ll x,ll exp,int p)
-&#123;
-      ll ans=1;
-      while(exp)
-      &#123;
-        if(exp&amp;1)ans=ans*x%p;
-        exp&gt;&gt;=1;
-        x=x*x%p;
-      &#125;
-      return ans;
-&#125;
-ll inv[MAXN],fac[MAXN];
-void init(int n,int p)
-&#123;
-  memset(inv,0,sizeof(inv));
-  memset(fac,0,sizeof(fac));
-  inv[0]=fac[0]=1;
-  for(int i=1;i&lt;=n;++i)
-  &#123;
-    fac[i]=fac[i-1]*i%p;
-  &#125;
-  inv[n]=quick_pow(fac[n],p-2,p)%p;
-  for(int i=n;i&gt;=1;--i)inv[i-1]=inv[i]*i%p;
-&#125;
-ll C(ll n,ll m,ll p)
-&#123;
-  if(m&gt;n||m&lt;0)return 0;
-  return fac[n]*inv[n-m]%p*inv[m]%p;
-&#125;
-void solve()&#123;
-  ll a,b,c;cin&gt;&gt;a&gt;&gt;b&gt;&gt;c;
-  ll ans=1;
-  auto calc=[&amp;](ll x,ll y)&#123;
-    ll minx=min(x,y);
-    ll res=0;
-    for(int i=0;i&lt;=minx;++i)&#123;
-        res=(res+C(x,i,MOD)*C(y,i,MOD)%MOD*fac[i]%MOD)%MOD;
-    &#125;
-    return res;
-  &#125;;
-  ans=(ans*calc(a,b))%MOD;
-  ans=(ans*calc(b,c))%MOD;
-  ans=(ans*calc(a,c))%MOD;
-  cout&lt;&lt;ans&lt;&lt;&#39;\n&#39;;
-  return;
-&#125;
-</code></pre>
-<p>CF 864E</p>
-<p>带有时间的01背包，我们可以先按照销毁时间进行排序，然后按照01背包的去做，注意最后获得解集的时候需要从0-2000进行遍历，这是因为时间改变了我们的背包大小</p>
-<pre><code class="lang-C++">struct node&#123;
-    int t,d,v,id;
-&#125;;
-void solve()&#123;
-  int n;cin&gt;&gt;n;
-  vector&lt;node&gt;a(n+1);
-  for(int i=1;i&lt;=n;++i)&#123;
-    cin&gt;&gt;a[i].t&gt;&gt;a[i].d&gt;&gt;a[i].v;
-    a[i].id=i;
-  &#125;
-  sort(a.begin()+1,a.end(),[&amp;](node a,node b)&#123;
-    return a.d&lt;b.d;
-  &#125;);
-  vector&lt;vector&lt;int&gt;&gt;st(2001);
-  vector&lt;int&gt;dp(2001);
-  for(int i=1;i&lt;=n;++i)&#123;
-    int d=a[i].d,v=a[i].v,id=a[i].id,t=a[i].t;
-    for(int j=d-1;j&gt;=t;--j)&#123;
-        if(dp[j]&lt;dp[j-t]+v)&#123;
-            dp[j]=dp[j-t]+v;
-            st[j]=st[j-t];
-            st[j].push_back(id);
-        &#125;
-    &#125;
-  &#125;
-  int ans=0;
-  for(int i=0;i&lt;=2000;++i)&#123;
-    if(dp[i]&gt;dp[ans])&#123;
-        ans=i;
-    &#125;
-  &#125;
-  cout&lt;&lt;dp[ans]&lt;&lt;&#39;\n&#39;;
-  cout&lt;&lt;st[ans].size()&lt;&lt;&#39;\n&#39;;
-  for(int i=0;i&lt;st[ans].size();++i)&#123;
-    cout&lt;&lt;st[ans][i]&lt;&lt;&#39; &#39;;
-  &#125;
-  cout&lt;&lt;&#39;\n&#39;;
-  return;
-&#125;
-</code></pre>
-<p>明天要考试了，最近投了很多份国内建立，希望能够有好结果</p>
-
+        
     </div>
     
     
