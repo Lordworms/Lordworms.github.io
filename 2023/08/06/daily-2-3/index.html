@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>daily 1 | Waiting for the dawn</title>
+        <title>daily 2 | Waiting for the dawn</title>
         <meta name="author" content="Yanxin Xiang">
         <meta name="description" content="">
         <meta name="keywords" content="">
@@ -132,14 +132,14 @@
 
                 <div class="article">
     <div>
-        <h1>daily 1 </h1>
+        <h1>daily 2 </h1>
     </div>
     <div class="info">
         <span class="date">
             <span class="icon">
                 <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
-            2023/6/16
+            2023/8/6
         </span>
         
         
@@ -150,7 +150,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/daily/" style="color: #00bcd4">daily</a>
+                <a href="/tags/daily/" style="color: #00a596">daily</a>
             </span>
             
         </span>
@@ -158,30 +158,39 @@
     </div>
     
     <div class="content" v-pre>
-        <p>CF 868C<br>如果有一套题满足要求，那么至少有两题，枚举就好</p>
-<pre><code class="lang-C++">void solve()&#123;
-  int n,k;
-  cin&gt;&gt;n&gt;&gt;k;
-  vector&lt;int&gt;vis(20);
-  for(int i=1;i&lt;=n;++i)&#123;
-    int sta=0;
-    for(int j=0;j&lt;k;++j)&#123;
-        int x;cin&gt;&gt;x;
-        sta+=(1&lt;&lt;j)*x;
-    &#125;
-    vis[sta]=1;
+        <p>CF 208B</p>
+<pre><code class="lang-C++">void solve() &#123;
+  vector&lt;int&gt; st;
+  int n;
+  cin &gt;&gt; n;
+  vector&lt;int&gt; a(n + 1);
+  for (int i = 1; i &lt;= n; ++i) &#123;
+    cin &gt;&gt; a[i];
   &#125;
-  for(int i=0;i&lt;16;++i)&#123;
-    for(int j=0;j&lt;16;++j)&#123;
-        if(vis[i]&amp;&amp;vis[j]&amp;&amp;!(i&amp;j))&#123;
-            cout&lt;&lt;&quot;YES&quot;&lt;&lt;&#39;\n&#39;;
-            return;
-        &#125;
+  // reverse order
+  int ans = 0;
+  for (int i = 1; i &lt;= n; ++i) &#123;
+    while (st.size() &amp;&amp; a[st.back()] &lt; a[i]) st.pop_back();
+    if (st.size()) &#123;
+      ans = max(ans, a[st.back()] ^ a[i]);
     &#125;
+    st.push_back(i);
   &#125;
-  cout&lt;&lt;&quot;NO&quot;&lt;&lt;&#39;\n&#39;;
+  // non-reverse order
+  for (int i = n; i &gt;= 1; --i) &#123;
+    while (st.size() &amp;&amp; a[st.back()] &lt; a[i]) st.pop_back();
+    if (st.size()) &#123;
+      ans = max(ans, a[st.back()] ^ a[i]);
+    &#125;
+    st.push_back(i);
+  &#125;
+  cout &lt;&lt; ans &lt;&lt; &#39;\n&#39;;
   return;
 &#125;
+</code></pre>
+<p>CF 1394A</p>
+<pre><code class="lang-C++">
+
 </code></pre>
 
     </div>
