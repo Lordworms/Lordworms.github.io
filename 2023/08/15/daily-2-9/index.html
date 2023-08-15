@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>daily 3 | Waiting for the dawn</title>
+        <title>daily 2 | Waiting for the dawn</title>
         <meta name="author" content="Yanxin Xiang">
         <meta name="description" content="">
         <meta name="keywords" content="">
@@ -132,125 +132,21 @@
 
                 <div class="article">
     <div>
-        <h1>daily 3 </h1>
+        <h1>daily 2 </h1>
     </div>
     <div class="info">
         <span class="date">
             <span class="icon">
                 <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
-            2023/5/10
+            2023/8/15
         </span>
         
-        
-        <span class="tags">
-            <span class="icon">
-                <i class="fa-solid fa-tags fa-fw"></i>
-            </span>
-            
-            <span class="tag">
-                
-                <a href="/tags/daily/" style="color: #ff7d73">daily</a>
-            </span>
-            
-        </span>
         
     </div>
     
     <div class="content" v-pre>
-        <p>今天三道双指针</p>
-<p>CF 1324D</p>
-<p>简单双指针，转化为$c[i]=a[i]-b[i]$即可</p>
-<pre><code class="lang-C++">void solve()&#123;
-  int n;cin&gt;&gt;n;
-  vector&lt;int&gt;a(n+1);
-  for(int i=1;i&lt;=n;++i)&#123;
-    cin&gt;&gt;a[i];
-  &#125;
-  for(int i=1;i&lt;=n;++i)&#123;
-    int x;cin&gt;&gt;x;
-    a[i]-=x;
-  &#125;
-  sort(a.begin()+1,a.end());
-  ll ans=0;
-  for(int l=1,r=n;l&lt;=n;++l)&#123;
-    while(r&gt;1&amp;&amp;a[l]+a[r]&gt;0)--r;
-    ans+=n-max(l,r);
-  &#125;
-  cout&lt;&lt;ans&lt;&lt;&#39;\n&#39;;
-  return;
-&#125;
-</code></pre>
-<p>CF 1680C</p>
-<p>我们需要尽可能地让删除的1和剩下的0相等，否则不管怎么样都会增大cost，那就双指针去搜就可以了</p>
-<pre><code class="lang-C++">void solve()&#123;
-  string s;
-  cin&gt;&gt;s;
-  int n=s.size();
-  int cnt_1=0;
-  for(int i=0;i&lt;s.size();++i)&#123;
-    if(s[i]==&#39;1&#39;)++cnt_1;
-  &#125;
-  int ans=INT_MAX;
-  int cnt_0=0;
-  for(int l=0,r=-1;l&lt;n;++l)&#123;
-    while(r&lt;n&amp;&amp;cnt_0&lt;cnt_1)&#123;
-        ++r;
-        if(s[r]==&#39;1&#39;)&#123;
-            cnt_1--;
-        &#125;else&#123;
-            cnt_0++;
-        &#125;
-        ans=min(ans,max(cnt_0,cnt_1));
-    &#125;
-    if(s[l]==&#39;0&#39;)&#123;
-        --cnt_0;
-    &#125;else&#123;
-        ++cnt_1;
-    &#125;
-    ans=min(ans,max(cnt_0,cnt_1));
-  &#125;
-  cout&lt;&lt;ans&lt;&lt;&#39;\n&#39;;
-  return;
-&#125;
-</code></pre>
-<p>CF 386C<br>三指针的题<br>每次搜索对应unique为i的长度的最大和最小的r，然后更新答案</p>
-<pre><code class="lang-C++">#define int ll
-void solve()&#123;
-  string s;
-  cin&gt;&gt;s;
-  int n=s.size();
-  s=&#39;0&#39;+s;
-  vector&lt;ll&gt;ans;
-  auto calc=[&amp;](int lim)&#123;
-    int l=1,r1=0,r2=1,res=0;
-    int now_cnt=0;
-    vector&lt;int&gt;cnt(26);
-    for(;l&lt;=n;++l)&#123;
-        while(r1&lt;n&amp;&amp;now_cnt&lt;lim)&#123;
-            if(++cnt[s[++r1]-&#39;a&#39;]==1)&#123;
-                ++now_cnt;
-            &#125;
-        &#125;
-        if(now_cnt&lt;lim)break;
-        r2=max(r1,r2);
-        while(r2&lt;=n&amp;&amp;cnt[s[r2]-&#39;a&#39;])++r2;
-        res+=(r2-r1);
-        if(--cnt[s[l]-&#39;a&#39;]==0)--now_cnt;
-    &#125;
-    if(res&gt;0)ans.push_back(res);
-  &#125;;
-  for(int i=1;i&lt;=26;++i)&#123;
-    calc(i);
-  &#125;
-  cout&lt;&lt;ans.size()&lt;&lt;&#39;\n&#39;;
-  for(int i=0;i&lt;ans.size();++i)&#123;
-    cout&lt;&lt;ans[i]&lt;&lt;&#39;\n&#39;;
-  &#125;
-  return;
-&#125;
-</code></pre>
-
+        
     </div>
     
     
