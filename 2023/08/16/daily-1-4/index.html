@@ -139,54 +139,17 @@
             <span class="icon">
                 <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
-            2023/3/21
+            2023/8/16
         </span>
         
-        
-        <span class="tags">
-            <span class="icon">
-                <i class="fa-solid fa-tags fa-fw"></i>
-            </span>
-            
-            <span class="tag">
-                
-                <a href="/tags/daily/" style="color: #00a596">daily</a>
-            </span>
-            
-        </span>
         
     </div>
     
     <div class="content" v-pre>
-        <p>CF 1336Ad</p>
-<p>简单贪心，对于每个工业国，如果选到了它那么他的子树肯定都被选择了，那么贡献就是dep[i]-(siz[i]-1);<br>之后sort一下再计算就好了</p>
-<pre><code class="lang-C++">void solve()&#123;
-  int n,k;cin&gt;&gt;n&gt;&gt;k;
-  vector&lt;vector&lt;int&gt;&gt;E(n+1);
-  for(int i=0;i&lt;n-1;++i)&#123;
-    int a,b;cin&gt;&gt;a&gt;&gt;b;
-    E[a].push_back(b);
-    E[b].push_back(a);
-  &#125;
-  vector&lt;ll&gt;dep(n+1),siz(n+1);
-  function&lt;void(int,int)&gt;dfs=[&amp;](int x,int f)&#123;
-    siz[x]=1;
-    for(int v:E[x])&#123;
-        if(v==f)continue;
-        dep[v]=dep[x]+1;
-        dfs(v,x);
-        siz[x]+=siz[v];
-    &#125;
-    dep[x]-=(siz[x]-1);
-  &#125;;
-  dfs(1,0);
-  sort(dep.begin()+1,dep.end(),greater&lt;ll&gt;());
-  ll ans=accumulate(dep.begin()+1,dep.begin()+k+1,0ll);
-  cout&lt;&lt;ans&lt;&lt;&#39;\n&#39;;
-  return;
-&#125;
+        <p>CF 34A</p>
+<pre><code class="lang-C++">
+
 </code></pre>
-<p>这两天都少做点，准备面试了，要背的东西太多了</p>
 
     </div>
     
