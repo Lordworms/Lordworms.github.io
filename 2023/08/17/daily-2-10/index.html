@@ -139,7 +139,7 @@
             <span class="icon">
                 <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
-            2023/8/6
+            2023/8/17
         </span>
         
         
@@ -150,7 +150,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/daily/" style="color: #00bcd4">daily</a>
+                <a href="/tags/daily/" style="color: #ff7d73">daily</a>
             </span>
             
         </span>
@@ -158,37 +158,7 @@
     </div>
     
     <div class="content" v-pre>
-        <p>CF 208B</p>
-<pre><code class="lang-C++">void solve() &#123;
-  vector&lt;int&gt; st;
-  int n;
-  cin &gt;&gt; n;
-  vector&lt;int&gt; a(n + 1);
-  for (int i = 1; i &lt;= n; ++i) &#123;
-    cin &gt;&gt; a[i];
-  &#125;
-  // reverse order
-  int ans = 0;
-  for (int i = 1; i &lt;= n; ++i) &#123;
-    while (st.size() &amp;&amp; a[st.back()] &lt; a[i]) st.pop_back();
-    if (st.size()) &#123;
-      ans = max(ans, a[st.back()] ^ a[i]);
-    &#125;
-    st.push_back(i);
-  &#125;
-  // non-reverse order
-  for (int i = n; i &gt;= 1; --i) &#123;
-    while (st.size() &amp;&amp; a[st.back()] &lt; a[i]) st.pop_back();
-    if (st.size()) &#123;
-      ans = max(ans, a[st.back()] ^ a[i]);
-    &#125;
-    st.push_back(i);
-  &#125;
-  cout &lt;&lt; ans &lt;&lt; &#39;\n&#39;;
-  return;
-&#125;
-</code></pre>
-<p>CF 1394A</p>
+        <p>CF 1227D</p>
 <pre><code class="lang-C++">
 
 </code></pre>
