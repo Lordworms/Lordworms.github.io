@@ -154,6 +154,71 @@
             
 
 <div class="post">
+    <a href="/2023/08/12/daily-1-2/">
+        <h2 class="post-title">daily 1</h2>
+    </a>
+    <div class="category-and-date">
+        
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/8/12
+        </span>
+        
+        
+    </div>
+    <div class="description">
+        <div class="content" v-pre>
+            
+            <p>cf </p>
+<pre><code class="lang-C++">#include&lt;bits/stdc++.h&gt;
+using namespace std;
+int n,d,a[1010],ans,s[1010];//s用来存前一个人的身高
+bool p[1010];//p用来标记已选过的人
+void dfs(int t)
+&#123;
+    if(t&gt;2)
+    &#123;
+        ans++;
+        return;
+    &#125;
+    for(int i=1; i&lt;=n; i++)
+    &#123;
+        s[0]=a[i];//s[0]需要设成a[i]，这样第一个人才能选
+        if(abs(a[i]-s[t-1])&lt;=d&amp;&amp;!p[i])
+        &#123;
+            p[i]=1;
+            s[t]=a[i];//记录前一个人的身高
+            dfs(t+1);
+            p[i]=0;//回溯
+        &#125;
+    &#125;
+&#125;
+int main()
+&#123;
+    scanf(&quot;%d%d&quot;,&amp;n,&amp;d);
+    for(int i=1; i&lt;=n; i++)
+    &#123;
+        scanf(&quot;%d&quot;,&amp;a[i]);
+    &#125;
+    dfs(1);
+    printf(&quot;%d&quot;,ans);
+    return 0;
+&#125;
+</code></pre>
+
+            
+        </div>
+    </div>
+    <div class="post-tags">
+        
+        
+    </div>
+    <a href="/2023/08/12/daily-1-2/" class="go-post">阅读全文</a>
+</div>
+
+<div class="post">
     <a href="/2023/08/10/daily-2-7/">
         <h2 class="post-title">daily 2</h2>
     </a>
@@ -214,7 +279,7 @@
         
         <span class="tag">
             
-            <a href="/tags/daily/" style="color: #00bcd4">
+            <a href="/tags/daily/" style="color: #ffa2c4">
                 daily
             </a>
         </span>
@@ -255,7 +320,7 @@
         
         <span class="tag">
             
-            <a href="/tags/daily/" style="color: #ffa2c4">
+            <a href="/tags/daily/" style="color: #03a9f4">
                 daily
             </a>
         </span>
@@ -337,7 +402,7 @@
         
         <span class="tag">
             
-            <a href="/tags/daily/" style="color: #00a596">
+            <a href="/tags/daily/" style="color: #03a9f4">
                 daily
             </a>
         </span>
@@ -407,7 +472,7 @@
         
         <span class="tag">
             
-            <a href="/tags/daily/" style="color: #00bcd4">
+            <a href="/tags/daily/" style="color: #ff7d73">
                 daily
             </a>
         </span>
@@ -553,39 +618,6 @@ void solve() &#123;
         
     </div>
     <a href="/2023/08/02/daily-2-1/" class="go-post">阅读全文</a>
-</div>
-
-<div class="post">
-    <a href="/2023/08/01/daily-2/">
-        <h2 class="post-title">daily 2</h2>
-    </a>
-    <div class="category-and-date">
-        
-        <span class="date">
-            <span class="icon">
-                <i class="fa-solid fa-calendar fa-fw"></i>
-            </span>
-            2023/8/1
-        </span>
-        
-        
-    </div>
-    <div class="description">
-        <div class="content" v-pre>
-            
-            <p>CF 1370D</p>
-<pre><code class="lang-C++">
-
-</code></pre>
-
-            
-        </div>
-    </div>
-    <div class="post-tags">
-        
-        
-    </div>
-    <a href="/2023/08/01/daily-2/" class="go-post">阅读全文</a>
 </div>
 
 

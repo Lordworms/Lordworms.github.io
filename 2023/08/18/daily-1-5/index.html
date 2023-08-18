@@ -139,73 +139,27 @@
             <span class="icon">
                 <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
-            2023/6/12
+            2023/8/18
         </span>
         
-        
-        <span class="tags">
-            <span class="icon">
-                <i class="fa-solid fa-tags fa-fw"></i>
-            </span>
-            
-            <span class="tag">
-                
-                <a href="/tags/daily/" style="color: #03a9f4">daily</a>
-            </span>
-            
-        </span>
         
     </div>
     
     <div class="content" v-pre>
-        <p>CF 743D<br>简单树形dp</p>
-<pre><code class="lang-C++">void solve()&#123;
-  int n;
-  cin&gt;&gt;n;
-  vector&lt;int&gt;a(n+1);
-  vector&lt;vector&lt;int&gt;&gt;E(n+1);
-  for(int i=1;i&lt;=n;++i)cin&gt;&gt;a[i];
-  for(int i=1;i&lt;=n-1;++i)&#123;
-    int u,v;
-    cin&gt;&gt;u&gt;&gt;v;
-    E[u].push_back(v);
-    E[v].push_back(u);
-  &#125;
-  vector&lt;ll&gt;dp(n+1);
-  function&lt;void(int,int)&gt;dfs1=[&amp;](int x,int fa)&#123;
-    dp[x]=a[x];
-    for(int v:E[x])&#123;
-        if(v==fa)continue;
-        dfs1(v,x);
-        dp[x]+=dp[v];
-    &#125;
-  &#125;;
-  dfs1(1,-1);
-  ll ans=-INF;
-  function&lt;void(int,int)&gt;dfs2=[&amp;](int x,int fa)&#123;
-    ll max_first=-INF,max_second=max_first;
-    for(int v:E[x])&#123;
-        if(v==fa)continue;
-        dfs2(v,x);
-        if(dp[v]&gt;=max_first)&#123;
-            max_second=max_first;
-            max_first=dp[v];
-        &#125;else if(dp[v]&gt;max_second)&#123;
-            max_second=dp[v];
-        &#125;
-        dp[x]=max(dp[x],dp[v]);
-    &#125;
-    if(max_first!=-INF&amp;&amp;max_second!=-INF)&#123;
-        ans=max(ans,max_first+max_second);
-    &#125;
-  &#125;;
-  dfs2(1,-1);
-  if(ans==-INF)&#123;
-    cout&lt;&lt;&quot;Impossible&quot;&lt;&lt;&#39;\n&#39;;
-  &#125;else&#123;
-    cout&lt;&lt;ans&lt;&lt;&#39;\n&#39;;
-  &#125;
-  return;
+        <p>CF 38A</p>
+<pre><code class="lang-C++">#include&lt;bits/stdc++.h&gt;
+using namespace std;
+int main()&#123;
+    int n,s[101],ans=0;
+    cin&gt;&gt;n;
+    int a,b;
+    for(int i=1;i&lt;n;i++)
+    cin&gt;&gt;s[i];
+    cin&gt;&gt;a&gt;&gt;b;
+    for(int i=a;i&lt;b;i++)
+    ans+=s[i];
+    cout&lt;&lt;ans&lt;&lt;&quot;\n&quot;;
+    return 0;
 &#125;
 </code></pre>
 
