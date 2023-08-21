@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>CS 336 shits | Waiting for the dawn</title>
+        <title>daily 2 | Waiting for the dawn</title>
         <meta name="author" content="Yanxin Xiang">
         <meta name="description" content="">
         <meta name="keywords" content="">
@@ -132,14 +132,14 @@
 
                 <div class="article">
     <div>
-        <h1>CS 336 shits </h1>
+        <h1>daily 2 </h1>
     </div>
     <div class="info">
         <span class="date">
             <span class="icon">
                 <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
-            2023/4/26
+            2023/8/21
         </span>
         
         
@@ -150,7 +150,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/class/" style="color: #ff7d73">class</a>
+                <a href="/tags/daily/" style="color: #00bcd4">daily</a>
             </span>
             
         </span>
@@ -158,8 +158,86 @@
     </div>
     
     <div class="content" v-pre>
-        <h2 id="Greedy-Algorithm"><a href="#Greedy-Algorithm" class="headerlink" title="Greedy Algorithm"></a>Greedy Algorithm</h2><h3 id="MST"><a href="#MST" class="headerlink" title="MST"></a>MST</h3><h4 id="Krusal’s-Algorithm"><a href="#Krusal’s-Algorithm" class="headerlink" title="Krusal’s Algorithm"></a>Krusal’s Algorithm</h4><h4 id="Prim’s-Algorithm"><a href="#Prim’s-Algorithm" class="headerlink" title="Prim’s Algorithm"></a>Prim’s Algorithm</h4><h3 id="INTERVAL-SCHEDULE-PROBLEM"><a href="#INTERVAL-SCHEDULE-PROBLEM" class="headerlink" title="INTERVAL SCHEDULE PROBLEM"></a>INTERVAL SCHEDULE PROBLEM</h3><p>Sort by finish time</p>
-<h3 id="Weighted-Selection"><a href="#Weighted-Selection" class="headerlink" title="Weighted Selection"></a>Weighted Selection</h3><p>Sort by </p>
+        <p>CF 1219G</p>
+<pre><code class="lang-C++">#define id(i, j) ((i - 1) * m + j)
+void solve() &#123;
+  int n, m, id;
+  cin &gt;&gt; n &gt;&gt; m;
+  vector&lt;int&gt; mp((n + 1) * (m + 1) + 1), tmp(mp);
+  vector&lt;ll&gt; X(n + 5), Y(m + 5);
+  for (int i = 1; i &lt;= n; ++i) &#123;
+    for (int j = 1; j &lt;= m; ++j) &#123;
+      id = (i - 1) * m + j cin &gt;&gt; mp[id];
+      X[i] += mp[id];
+      Y[j] += mp[id];
+    &#125;
+  &#125;
+  ll ans = 0;
+  // case 1: pick up four rows
+  vector&lt;int&gt; xx(n + 1);
+  for (int i = 1; i &lt;= n; ++i) &#123;
+    xx[i] = X[i];
+  &#125;
+  sort(xx.begin() + 1, xx.begin() + 1 + n, greater&lt;ll&gt;());
+  ans = max(ans, accumulate(xx.begin() + 1, xx.begin() + 5, 0ll));
+
+  // case 2: pick up four columns
+  vector&lt;int&gt; yy(m + 1);
+  for (int i = 1; i &lt;= m; ++i) &#123;
+    yy[i] = Y[i];
+  &#125;
+  sort(yy.begin() + 1, yy.begin() + 5, greater&lt;ll&gt;());
+  ans = max(ans, accumulate(yy.begin() + 1, yy.begin() + 5, 0ll));
+  // case 3: one row and three columns
+  for (int i = 1; i &lt;= n; ++i) &#123;
+    ll max1 = 0, max2 = 0, max3 = 0;
+    for (int j = 1; j &lt;= m; ++j) &#123;
+      yy[j] = Y[j] - mp[id(i, j)];
+      if (yy[j] &gt; max1) &#123;
+        max1 = yy[j];
+      &#125; else if (yy[j] &gt; max2) &#123;
+        max3 = max2;
+        max2 = yy[j];
+      &#125; else if (yy[j] &gt; max3) &#123;
+        max2 = max3;
+        max3 = yy[j];
+      &#125;
+    &#125;
+    ans = max(ans, max1 + max2 + max3 + X[i]);
+  &#125;
+  // case 4: three rows and one column
+  for (int j = 1; j &lt;= m; ++j) &#123;
+    ll max1 = 0, max2 = 0, max3 = 0;
+    for (int i = 1; i &lt;= n; ++i) &#123;
+      xx[i] = X[i] - mp[id(i, j)];
+      if (xx[i] &gt; max1) &#123;
+        max1 = xx[i];
+      &#125; else if (xx[i] &gt; max2) &#123;
+        max3 = max2;
+        max2 = xx[i];
+      &#125; else if (xx[i] &gt; max3) &#123;
+        max2 = max3;
+        max3 = xx[i];
+      &#125;
+    &#125;
+    ans = max(ans, max1 + max2 + max3 + Y[j]);
+  &#125;
+  // case 5: two rows and two columns
+  if (n &gt; m) &#123; // exchange n and m if n is greater than m
+    for (int i = 1; i &lt;= n; ++i) &#123;
+      for (int j = 1; j &lt;= m; ++j) &#123;
+
+      &#125;
+    &#125;
+  &#125;
+  cout &lt;&lt; ans &lt;&lt; &#39;\n&#39;;
+  return;
+&#125;
+</code></pre>
+<p>CF 1214E</p>
+<pre><code class="lang-C++">
+
+</code></pre>
 
     </div>
     
