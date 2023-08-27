@@ -139,55 +139,32 @@
             <span class="icon">
                 <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
-            2023/4/13
+            2023/8/27
         </span>
         
-        
-        <span class="tags">
-            <span class="icon">
-                <i class="fa-solid fa-tags fa-fw"></i>
-            </span>
-            
-            <span class="tag">
-                
-                <a href="/tags/daily/" style="color: #ffa2c4">daily</a>
-            </span>
-            
-        </span>
         
     </div>
     
     <div class="content" v-pre>
-        <p>CF 1679F<br>参考了这篇题解(<a target="_blank" rel="noopener" href="https://www.cnblogs.com/zhiyangfan/p/16276097.html">https://www.cnblogs.com/zhiyangfan/p/16276097.html</a>)</p>
-<p>先处理出(j,k)j在前面和在后面不允许出现的数字</p>
-<p>然后dp[i][sta]表示当前选择到地i个数，不允许出现的数的状态为sta的等价类个数</p>
-<p>然后根据j在前面和后面计算出当前转移的sta</p>
-<pre><code class="lang-C++">void solve()&#123;
-  int n,m;
-  cin&gt;&gt;n&gt;&gt;m;
-  vector dp(n+1,vector&lt;int&gt;(1&lt;&lt;10));
-  vector&lt;int&gt; a(1&lt;&lt;10),b(a);//a[i] means (i,*) b[i] means (*,i)
-  for(int i=1;i&lt;=m;++i)&#123;
-    int u,v;
-    cin&gt;&gt;u&gt;&gt;v;
-    a[u]|=(1&lt;&lt;v);
-    b[v]|=(1&lt;&lt;u);
-  &#125;
-  dp[0][0]=1;
-  for(int i=1;i&lt;=n;++i)&#123;
-    for(int sta=0;sta&lt;(1&lt;&lt;10);++sta)&#123;
-      for(int j=0;j&lt;10;++j)&#123;
-        if(sta&amp;(1&lt;&lt;j))continue;//we could not pick some digit which could be placed earlier
-        (dp[i][(sta&amp;a[j])|b[j]]+=dp[i-1][sta])%=MOD;
-      &#125;
+        <p>CF 49A</p>
+<pre><code class="lang-C++">#include&lt;bits/stdc++.h&gt;
+using namespace std;
+int main()
+&#123;
+    char ch;
+    bool flag=false;                
+    while((ch=getchar())!=EOF)
+    &#123;
+        if(ch==&#39;A&#39;||ch==&#39;a&#39;||ch==&#39;E&#39;||ch==&#39;e&#39;||ch==&#39;I&#39;||ch==&#39;i&#39;||ch==&#39;O&#39;||ch==&#39;o&#39;||ch==&#39;U&#39;||ch==&#39;u&#39;||ch==&#39;V&#39;||ch==&#39;v&#39;||ch==&#39;Y&#39;||ch==&#39;y&#39;)
+            flag=true;
+        else if((ch&gt;=&#39;A&#39;&amp;&amp;ch&lt;=&#39;Z&#39;)||(ch&gt;=&#39;a&#39;&amp;&amp;ch&lt;=&#39;z&#39;))
+            flag=false;
     &#125;
-  &#125;
-  int ans=0;
-  for(int sta=0;sta&lt;(1&lt;&lt;10);++sta)&#123;
-    ans=(ans+dp[n][sta])%MOD;
-  &#125;
-  cout&lt;&lt;ans&lt;&lt;&#39;\n&#39;;
-  return;
+    if(flag)
+        cout&lt;&lt;&quot;YES&quot;;
+    else
+        cout&lt;&lt;&quot;NO&quot;;
+    return 0;
 &#125;
 </code></pre>
 
