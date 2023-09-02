@@ -147,8 +147,59 @@
     
     <div class="content" v-pre>
         <p>CF 1667B</p>
-<pre><code class="lang-C++">
-
+<pre><code class="lang-C++">struct fenwick &#123;
+  ll PartialSum[MAXN];
+  fenwick() &#123;
+    for (int i = 0; i &lt; MAXN; i++) PartialSum[i] = 0;
+  &#125;
+  inline void add(ll index, ll increase) &#123;
+    while (index &lt; MAXN) &#123;
+      PartialSum[index] = max(increase, PartialSum[index]);
+      index += index &amp; -index;
+    &#125;
+  &#125;
+  inline ll get(int index) &#123;
+    ll sum = -INF;
+    while (index) &#123;
+      sum = max(sum, PartialSum[index]);
+      index -= index &amp; -index;
+    &#125;
+    return sum;
+  &#125;
+&#125;;
+ll a[MAXN], ord[MAXN], dp[MAXN], sum[MAXN];
+void solve() &#123;
+  int T;
+  cin &gt;&gt; T;
+  int n;
+  fenwick tr;
+  while (T--) &#123;
+   cin &gt;&gt; n;
+   vector&lt;pii&gt; pre;
+   for (int i = 1; i &lt;= n; ++i) &#123;
+     tr.PartialSum[i] = -INF;
+   &#125;
+   for (int i = 1; i &lt;= n; ++i) &#123;
+     cin &gt;&gt; a[i];
+     sum[i] = sum[i - 1] + a[i];
+     pre.push_back(&#123;sum[i], -i&#125;);
+   &#125;
+   sort(pre.begin(), pre.end());
+   for (int i = 1; i &lt;= n; ++i) &#123;
+     ord[-pre[i - 1].second] = i;
+   &#125;
+   for (int i = 1; i &lt;= n; ++i) &#123;
+     dp[i] = dp[i - 1] + (a[i] &gt; 0 ? 1 : (a[i] &lt; 0 ? -1 : 0));
+     auto pp = tr.get(ord[i]);
+     dp[i] = max(dp[i], tr.get(ord[i]) + i);
+     if (sum[i] &gt; 0) dp[i] = i;
+     tr.add(ord[i], dp[i] - i);
+   &#125;
+   cout &lt;&lt; dp[n] &lt;&lt; &#39;\n&#39;;
+   dp[0] = sum[0] = 0;
+  &#125; 
+  return ;
+&#125;
 </code></pre>
 
     </div>

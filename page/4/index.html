@@ -154,6 +154,35 @@
             
 
 <div class="post">
+    <a href="/2023/08/29/daily-2-17/">
+        <h2 class="post-title">daily 2</h2>
+    </a>
+    <div class="category-and-date">
+        
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/8/29
+        </span>
+        
+        
+    </div>
+    <div class="description">
+        <div class="content" v-pre>
+            
+            
+            
+        </div>
+    </div>
+    <div class="post-tags">
+        
+        
+    </div>
+    <a href="/2023/08/29/daily-2-17/" class="go-post">阅读全文</a>
+</div>
+
+<div class="post">
     <a href="/2023/08/28/daily-1-9/">
         <h2 class="post-title">daily 1</h2>
     </a>
@@ -171,7 +200,59 @@
     <div class="description">
         <div class="content" v-pre>
             
-            
+            <p>CF 900C</p>
+<pre><code class="lang-C++">struct fenwick &#123;
+  ll PartialSum[MAXN];
+  fenwick() &#123;
+    for (int i = 0; i &lt; MAXN; i++) PartialSum[i] = 0;
+  &#125;
+  inline void add(ll index, ll increase) &#123;
+    while (index &lt; MAXN) &#123;
+      PartialSum[index] += increase;
+      index += index &amp; -index;
+    &#125;
+  &#125;
+  inline ll get(int index) &#123;
+    ll sum = 0;
+    while (index) &#123;
+      sum += PartialSum[index];
+      index -= index &amp; -index;
+    &#125;
+    return sum;
+  &#125;
+&#125;;
+void solve() &#123;
+  int n;
+  cin &gt;&gt; n;
+  vector&lt;int&gt; p(n + 1);
+  fenwick tr;
+  for (int i = 1; i &lt;= n; ++i) &#123;
+    cin &gt;&gt; p[i];
+  &#125;
+  ll ans = -1, ans_i = 1;
+  int cur_max = -1;
+  vector&lt;int&gt; cnt(n + 1);
+  for (int i = 1; i &lt;= n; ++i) &#123;
+    cur_max = max(cur_max, p[i]);
+    int cur_num = tr.get(p[i]);
+    if (cur_num == i - 2) &#123;
+      cnt[cur_max]++;
+    &#125; else if (cur_num == i - 1)&#123;
+      cnt[cur_max]--;
+    &#125;
+    tr.add(p[i], 1);
+  &#125;
+  for (int i = 1; i &lt;= n; ++i) &#123;
+    if (cnt[i] &gt; ans) &#123;
+      ans = cnt[i];
+      ans_i = i;
+    &#125;
+  &#125;
+  cout &lt;&lt; ans_i &lt;&lt; &#39;\n&#39;;
+  return;
+&#125;
+</code></pre>
+
             
         </div>
     </div>
@@ -396,7 +477,7 @@ void solve() &#123;
         
         <span class="tag">
             
-            <a href="/tags/daily/" style="color: #00a596">
+            <a href="/tags/daily/" style="color: #00bcd4">
                 daily
             </a>
         </span>
@@ -437,7 +518,7 @@ void solve() &#123;
         
         <span class="tag">
             
-            <a href="/tags/daily/" style="color: #ffa2c4">
+            <a href="/tags/daily/" style="color: #ff7d73">
                 daily
             </a>
         </span>
@@ -478,7 +559,7 @@ void solve() &#123;
         
         <span class="tag">
             
-            <a href="/tags/daily/" style="color: #ffa2c4">
+            <a href="/tags/daily/" style="color: #ff7d73">
                 daily
             </a>
         </span>
@@ -519,7 +600,7 @@ void solve() &#123;
         
         <span class="tag">
             
-            <a href="/tags/daily/" style="color: #ffa2c4">
+            <a href="/tags/daily/" style="color: #00bcd4">
                 daily
             </a>
         </span>
@@ -576,47 +657,6 @@ int main()
         
     </div>
     <a href="/2023/08/20/daily-1-6/" class="go-post">阅读全文</a>
-</div>
-
-<div class="post">
-    <a href="/2023/08/19/daily-2-11/">
-        <h2 class="post-title">daily 2</h2>
-    </a>
-    <div class="category-and-date">
-        
-        <span class="date">
-            <span class="icon">
-                <i class="fa-solid fa-calendar fa-fw"></i>
-            </span>
-            2023/8/19
-        </span>
-        
-        
-    </div>
-    <div class="description">
-        <div class="content" v-pre>
-            
-            <p>daily codeforces</p>
-
-            
-        </div>
-    </div>
-    <div class="post-tags">
-        
-        <span class="icon">
-            <i class="fa-solid fa-tags fa-fw"></i>
-        </span>
-        
-        
-        <span class="tag">
-            
-            <a href="/tags/daily/" style="color: #ffa2c4">
-                daily
-            </a>
-        </span>
-        
-    </div>
-    <a href="/2023/08/19/daily-2-11/" class="go-post">阅读全文</a>
 </div>
 
 

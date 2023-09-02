@@ -143,10 +143,147 @@
         </span>
         
         
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/daily/" style="color: #03a9f4">daily</a>
+            </span>
+            
+        </span>
+        
     </div>
     
     <div class="content" v-pre>
-        
+        <p>CF 1679C</p>
+<pre><code class="lang-C++">struct fenwick &#123;
+  ll PartialSum[MAXN];
+  fenwick() &#123;
+    for (int i = 0; i &lt; MAXN; i++) PartialSum[i] = 0;
+  &#125;
+  inline void add(ll index, ll increase) &#123;
+    while (index &lt; MAXN) &#123;
+      PartialSum[index] += increase;
+      index += index &amp; -index;
+    &#125;
+  &#125;
+  inline ll get(int index) &#123;
+    ll sum = 0;
+    while (index) &#123;
+      sum += PartialSum[index];
+      index -= index &amp; -index;
+    &#125;
+    return sum;
+  &#125;
+&#125;;
+void solve() &#123;
+  int n, q, op, x, y, xx, yy;
+  cin &gt;&gt; n &gt;&gt; q;
+  vector&lt;int&gt; r(n + 1), c(n + 1);
+  fenwick row, col;
+  while (q--) &#123;
+    cin &gt;&gt; op;
+    switch (op) &#123;
+      case 1: &#123;  // put
+        cin &gt;&gt; x &gt;&gt; y;
+        r[x]++;
+        if (r[x] == 1) row.add(x, 1);
+        c[y]++;
+        if (c[y] == 1) col.add(y, 1);
+        break;
+      &#125;
+      case 2: &#123;
+        cin &gt;&gt; x &gt;&gt; y;
+        r[x]--;
+        if (r[x] == 0) row.add(x, -1);
+        c[y]--;
+        if (c[y] == 0) col.add(y, -1);
+        break;
+      &#125;
+      case 3: &#123;
+        cin &gt;&gt; x &gt;&gt; y;
+        cin &gt;&gt; xx &gt;&gt; yy;
+        if (xx - x + 1 == row.get(xx) - row.get(x - 1) || // the whole row or column all contains rook
+            yy - y + 1 == col.get(yy) - col.get(y - 1)) &#123;
+          cout &lt;&lt; &quot;YES&quot; &lt;&lt; &#39;\n&#39;;
+        &#125; else &#123;
+          cout &lt;&lt; &quot;NO&quot; &lt;&lt; &#39;\n&#39;;
+        &#125;
+        break;
+      &#125;
+      default:
+        break;
+    &#125;
+  &#125;
+  return;
+&#125;
+</code></pre>
+<p>CF 301D</p>
+<pre><code class="lang-C++">struct fenwick &#123;
+  ll PartialSum[MAXN];
+  fenwick() &#123;
+    for (int i = 0; i &lt; MAXN; i++) PartialSum[i] = 0;
+  &#125;
+  inline void add(ll index, ll increase) &#123;
+    while (index &lt; MAXN) &#123;
+      PartialSum[index] += increase;
+      index += index &amp; -index;
+    &#125;
+  &#125;
+  inline ll get(int index) &#123;
+    ll sum = 0;
+    while (index) &#123;
+      sum += PartialSum[index];
+      index -= index &amp; -index;
+    &#125;
+    return sum;
+  &#125;
+&#125;;
+void solve() &#123;
+  int n, m;
+  cin &gt;&gt; n &gt;&gt; m;
+  vector&lt;int&gt; p(n + 1), id(n + 1);
+  vector&lt;vector&lt;int&gt;&gt; group(n + 1);
+  fenwick tr;
+  for (int i = 1; i &lt;= n; ++i)  &#123;
+    cin &gt;&gt; p[i];
+    id[p[i]] = i;
+  &#125;
+  int x, y;
+  for (int i = 1; i &lt;= n; ++i) &#123;
+    for (int j = i ; j &lt;= n; j += i) &#123;
+      x = id[i], y = id[j];
+      if (y &gt; x) &#123;
+        swap(x, y);
+      &#125;
+      group[x].push_back(y);
+    &#125;
+  &#125;// group[i] stores the actual factor which is less than i
+  int l, r;
+  vector&lt;vector&lt;pii&gt;&gt; query(n + 1);
+  for (int i = 1; i &lt;= m; ++i) &#123;
+    cin &gt;&gt; l &gt;&gt; r;
+    query[r].push_back(&#123;l, i&#125;); // query[i] stores the actual query left ptr and the is of the query
+  &#125;
+  vector&lt;int&gt; ans(m + 1);
+  for (int i = 1; i &lt;= n; ++i) &#123;
+    for (int v : group[i]) &#123;
+      tr.add(v, 1); // the shit we are adding could be counted as the paris between [1, i]
+    &#125;
+    for (auto&amp; [l, now] : query[i]) &#123;
+      ans[now] = tr.get(i) - tr.get(l - 1); // now we are calculating the pair between [l, i] which is like this
+    &#125;
+  &#125;
+  for (int i = 1; i &lt;= m; ++i) &#123;
+    cout &lt;&lt; ans[i] &lt;&lt; &quot; \n&quot;;
+  &#125;
+  return ;
+&#125;
+</code></pre>
+
     </div>
     
     

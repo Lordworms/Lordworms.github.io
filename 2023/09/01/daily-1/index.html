@@ -143,10 +143,108 @@
         </span>
         
         
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/daily/" style="color: #ffa2c4">daily</a>
+            </span>
+            
+        </span>
+        
     </div>
     
     <div class="content" v-pre>
-        
+        <p>CF 501D</p>
+<pre><code class="lang-C++">int n;
+struct fenwick &#123;
+  int PartialSum[MAXN];
+  fenwick() &#123;
+    for (int i = 0; i &lt; MAXN; i++) PartialSum[i] = 0;
+  &#125;
+  inline void add(ll index, ll increase) &#123;
+    while (index &lt;= n) &#123;
+      PartialSum[index] += increase;
+      index += index &amp; -index;
+    &#125;
+  &#125;
+  inline ll get(int index) &#123;
+    ll sum = 0;
+    while (index) &#123;
+      sum += PartialSum[index];
+      index -= index &amp; -index;
+    &#125;
+    return sum;
+  &#125;
+  inline void init() &#123;
+    memset(PartialSum, 0 ,sizeof(PartialSum));
+    for (int i = 1; i &lt;= n; ++i) &#123;
+      add(i, 1);
+    &#125;
+  &#125;
+&#125;;
+void solve() &#123;
+  cin &gt;&gt; n;
+  vector&lt;int&gt; p(n + 1), q(n + 1);
+  for (int i = 1; i &lt;= n; ++i) &#123; // we let index starts from 1 in order not to get into infinite loop
+    cin &gt;&gt; p[i];
+    p[i]++;
+  &#125; 
+  for (int i = 1; i &lt;= n; ++i) &#123;
+    cin &gt;&gt; q[i];
+    q[i]++;
+  &#125;
+  fenwick tr;
+  tr.init();
+  vector&lt;ll&gt; f(n + 1);
+  for (int i = 1; i &lt; n; ++i) &#123; // f[n - i] represent the number of number which is less than q[i]
+    f[n - i] += tr.get(q[i] - 1);
+    tr.add(q[i], -1);
+  &#125;
+  tr.init();
+  for (int i = 1; i &lt; n; ++i) &#123;
+    f[n - i] += tr.get(p[i] - 1);
+    tr.add(p[i], -1);
+  &#125;
+  for (int i = 1; i &lt; n; ++i) &#123;
+    f[i + 1] += f[i] / (i + 1); // now f[n - i] store the value ai in contor expandation
+    f[i] %= (i + 1);
+  &#125;
+  tr.init();
+  int cur = 1;
+  for (int i = n - 1; i &gt;= 1; --i) &#123;
+    int l = 1, r = n, ans = -1, m;
+    ll sum;
+    while (l &lt;= r) &#123;
+      m = (l + r) &gt;&gt; 1;
+      sum = tr.get(m - 1);
+      if (sum &lt;= f[i]) &#123;
+        l = m + 1;
+        ans = m;
+      &#125; else &#123;
+        r = m - 1;
+      &#125;
+    &#125;
+    if (ans == -1) &#123;
+      ans = cur;
+    &#125;
+    cout &lt;&lt; ans - 1 &lt;&lt; &#39; &#39;;
+    tr.add(ans, -1);
+    while (!tr.PartialSum[cur]) ++cur;
+  &#125;
+  for (int i = 1; i &lt;= n; ++i) &#123;
+    if (tr.PartialSum[i]) &#123;
+      cout &lt;&lt; i - 1 &lt;&lt; &#39;\n&#39;;
+      break;
+    &#125;
+  &#125;
+  return ;
+&#125;
+</code></pre>
+
     </div>
     
     

@@ -150,7 +150,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/daily/" style="color: #ff7d73">daily</a>
+                <a href="/tags/daily/" style="color: #03a9f4">daily</a>
             </span>
             
         </span>
@@ -205,8 +205,58 @@ void solve() &#123;
 &#125;
 </code></pre>
 <p>CF 1659D</p>
-<pre><code class="lang-C++">
-
+<pre><code class="lang-C++">int C[MAXN];
+int n;
+struct fenwick &#123;
+  ll PartialSum[MAXN];
+  fenwick() &#123;
+    for (int i = 0; i &lt; MAXN; i++) PartialSum[i] = 0;
+  &#125;
+  inline void add(ll index, ll increase) &#123;
+    while (index &lt;= n) &#123;
+      PartialSum[index] += increase;
+      index += index &amp; -index;
+    &#125;
+  &#125;
+  inline ll get(int index) &#123;
+    ll sum = 0;
+    while (index) &#123;
+      sum += PartialSum[index];
+      index -= index &amp; -index;
+    &#125;
+    return sum;
+  &#125;
+  inline void modify(int l, int r, ll v) &#123;
+    add(l, v);
+    add(r + 1, -v);
+  &#125;
+&#125;;
+fenwick tr;
+void solve() &#123;
+  cin &gt;&gt; n;
+  ll sum = 0;
+  fill(tr.PartialSum, tr.PartialSum + n + 2, 0);
+  for (int i = 1; i &lt;= n; ++i) &#123;
+    cin &gt;&gt; C[i];
+    sum += C[i];
+    tr.modify(i, i, C[i]);
+  &#125;
+  sum /= n;
+  for (int i = n; i &gt;= 1; --i) &#123;
+    int sub = 0;
+    if (tr.get(i) == i) &#123;  // means the 1 in position i always exists
+      sub++;
+      C[i] = 1;
+    &#125; else &#123;
+      C[i] = 0;
+    &#125;
+    tr.modify(i - sum + 1, i, -1);
+    sum -= sub;
+  &#125;
+  for (int i = 1; i &lt;= n; ++i) &#123;
+    cout &lt;&lt; C[i] &lt;&lt; &quot; \n&quot;[i == n];
+  &#125;
+&#125;
 </code></pre>
 
     </div>
