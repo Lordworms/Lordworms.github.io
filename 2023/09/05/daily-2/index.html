@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>daily 2 | Waiting for the dawn</title>
+        <title>daily 1 | Waiting for the dawn</title>
         <meta name="author" content="Yanxin Xiang">
         <meta name="description" content="">
         <meta name="keywords" content="">
@@ -132,21 +132,56 @@
 
                 <div class="article">
     <div>
-        <h1>daily 2 </h1>
+        <h1>daily 1 </h1>
     </div>
     <div class="info">
         <span class="date">
             <span class="icon">
                 <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
-            2023/9/3
+            2023/9/5
         </span>
         
         
     </div>
     
     <div class="content" v-pre>
-        
+        <p>CF 1717D</p>
+<pre><code class="lang-C++">ll quick_pow(ll x, ll exp, int p) &#123;
+  ll ans = 1;
+  while (exp) &#123;
+    if (exp &amp; 1) ans = ans * x % p;
+    exp &gt;&gt;= 1;
+    x = x * x % p;
+  &#125;
+  return ans;
+&#125;
+ll inv[MAXN], fac[MAXN];
+void init(int n, int p) &#123;
+  memset(inv, 0, sizeof(inv));
+  memset(fac, 0, sizeof(fac));
+  inv[0] = fac[0] = 1;
+  for (int i = 1; i &lt;= n; ++i) &#123;
+    fac[i] = fac[i - 1] * i % p;
+  &#125;
+  inv[n] = quick_pow(fac[n], p - 2, p) % p;
+  for (int i = n; i &gt;= 1; --i) inv[i - 1] = inv[i] * i % p;
+&#125;
+ll C(ll n, ll m, ll p) &#123;
+  if (m &gt; n || m &lt; 0) return 0;
+  return fac[n] * inv[n - m] % p * inv[m] % p;
+&#125;
+void solve() &#123;
+  int n, k;
+  cin &gt;&gt; n &gt;&gt; k;
+  ll ans = 1;
+  for (int i = 1; i &lt;= min(n, k); ++i) &#123;
+    ans = (ans + C(n, i, MOD) % MOD) % MOD;
+  &#125;
+  cout &lt;&lt; ans &lt;&lt; &#39;\n&#39;;
+&#125;
+</code></pre>
+
     </div>
     
     
