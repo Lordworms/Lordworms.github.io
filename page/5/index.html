@@ -154,6 +154,90 @@
             
 
 <div class="post">
+    <a href="/2023/08/29/daily-1-10/">
+        <h2 class="post-title">daily 1</h2>
+    </a>
+    <div class="category-and-date">
+        
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/8/29
+        </span>
+        
+        
+    </div>
+    <div class="description">
+        <div class="content" v-pre>
+            
+            <p>CF 1667B</p>
+<pre><code class="lang-C++">struct fenwick &#123;
+  ll PartialSum[MAXN];
+  fenwick() &#123;
+    for (int i = 0; i &lt; MAXN; i++) PartialSum[i] = 0;
+  &#125;
+  inline void add(ll index, ll increase) &#123;
+    while (index &lt; MAXN) &#123;
+      PartialSum[index] = max(increase, PartialSum[index]);
+      index += index &amp; -index;
+    &#125;
+  &#125;
+  inline ll get(int index) &#123;
+    ll sum = -INF;
+    while (index) &#123;
+      sum = max(sum, PartialSum[index]);
+      index -= index &amp; -index;
+    &#125;
+    return sum;
+  &#125;
+&#125;;
+ll a[MAXN], ord[MAXN], dp[MAXN], sum[MAXN];
+void solve() &#123;
+  int T;
+  cin &gt;&gt; T;
+  int n;
+  fenwick tr;
+  while (T--) &#123;
+   cin &gt;&gt; n;
+   vector&lt;pii&gt; pre;
+   for (int i = 1; i &lt;= n; ++i) &#123;
+     tr.PartialSum[i] = -INF;
+   &#125;
+   for (int i = 1; i &lt;= n; ++i) &#123;
+     cin &gt;&gt; a[i];
+     sum[i] = sum[i - 1] + a[i];
+     pre.push_back(&#123;sum[i], -i&#125;);
+   &#125;
+   sort(pre.begin(), pre.end());
+   for (int i = 1; i &lt;= n; ++i) &#123;
+     ord[-pre[i - 1].second] = i;
+   &#125;
+   for (int i = 1; i &lt;= n; ++i) &#123;
+     dp[i] = dp[i - 1] + (a[i] &gt; 0 ? 1 : (a[i] &lt; 0 ? -1 : 0));
+     auto pp = tr.get(ord[i]);
+     dp[i] = max(dp[i], tr.get(ord[i]) + i);
+     if (sum[i] &gt; 0) dp[i] = i;
+     tr.add(ord[i], dp[i] - i);
+   &#125;
+   cout &lt;&lt; dp[n] &lt;&lt; &#39;\n&#39;;
+   dp[0] = sum[0] = 0;
+  &#125; 
+  return ;
+&#125;
+</code></pre>
+
+            
+        </div>
+    </div>
+    <div class="post-tags">
+        
+        
+    </div>
+    <a href="/2023/08/29/daily-1-10/" class="go-post">阅读全文</a>
+</div>
+
+<div class="post">
     <a href="/2023/08/29/daily-2-17/">
         <h2 class="post-title">daily 2</h2>
     </a>
@@ -477,7 +561,7 @@ void solve() &#123;
         
         <span class="tag">
             
-            <a href="/tags/daily/" style="color: #03a9f4">
+            <a href="/tags/daily/" style="color: #ffa2c4">
                 daily
             </a>
         </span>
@@ -518,7 +602,7 @@ void solve() &#123;
         
         <span class="tag">
             
-            <a href="/tags/daily/" style="color: #00bcd4">
+            <a href="/tags/daily/" style="color: #03a9f4">
                 daily
             </a>
         </span>
@@ -559,7 +643,7 @@ void solve() &#123;
         
         <span class="tag">
             
-            <a href="/tags/daily/" style="color: #ff7d73">
+            <a href="/tags/daily/" style="color: #ffa2c4">
                 daily
             </a>
         </span>
@@ -600,63 +684,13 @@ void solve() &#123;
         
         <span class="tag">
             
-            <a href="/tags/daily/" style="color: #03a9f4">
+            <a href="/tags/daily/" style="color: #ffa2c4">
                 daily
             </a>
         </span>
         
     </div>
     <a href="/2023/08/21/daily-2-12/" class="go-post">阅读全文</a>
-</div>
-
-<div class="post">
-    <a href="/2023/08/20/daily-1-6/">
-        <h2 class="post-title">daily 1</h2>
-    </a>
-    <div class="category-and-date">
-        
-        <span class="date">
-            <span class="icon">
-                <i class="fa-solid fa-calendar fa-fw"></i>
-            </span>
-            2023/8/20
-        </span>
-        
-        
-    </div>
-    <div class="description">
-        <div class="content" v-pre>
-            
-            <p>CF 41A</p>
-<pre><code class="lang-C++">#include&lt;bits/stdc++.h&gt;
-using namespace std;
-string s1,s2;
-bool V()
-&#123;
-    if(s1.size()!=s2.size())return 0;
-    for(int i=0;i&lt;s1.size();i++)
-        if(s1[i]!=s2[s1.size()-i-1])return 0;
-    return 1;
-&#125;
-int main()
-&#123;
-    getline(cin,s1);
-    getline(cin,s2);
-    if(V())cout&lt;&lt;&quot;YES&quot;&lt;&lt;endl;
-    else cout&lt;&lt;&quot;NO&quot;&lt;&lt;endl;
-        //在输入后判断，输出相应的答案。
-    return 0;
-&#125;
-</code></pre>
-
-            
-        </div>
-    </div>
-    <div class="post-tags">
-        
-        
-    </div>
-    <a href="/2023/08/20/daily-1-6/" class="go-post">阅读全文</a>
 </div>
 
 

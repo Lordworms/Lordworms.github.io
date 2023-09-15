@@ -198,14 +198,14 @@
         
         <span class="tag">
             
-            <a href="/tags/interview/" style="color: #ff7d73">
+            <a href="/tags/interview/" style="color: #ffa2c4">
                 interview
             </a>
         </span>
         
         <span class="tag">
             
-            <a href="/tags/computer-network/" style="color: #00a596">
+            <a href="/tags/computer-network/" style="color: #00bcd4">
                 computer network
             </a>
         </span>
@@ -250,14 +250,14 @@
         
         <span class="tag">
             
-            <a href="/tags/interview/" style="color: #03a9f4">
+            <a href="/tags/interview/" style="color: #00bcd4">
                 interview
             </a>
         </span>
         
         <span class="tag">
             
-            <a href="/tags/algorithm/" style="color: #ff7d73">
+            <a href="/tags/algorithm/" style="color: #00bcd4">
                 algorithm
             </a>
         </span>
@@ -302,7 +302,7 @@
         
         <span class="tag">
             
-            <a href="/tags/interview/" style="color: #03a9f4">
+            <a href="/tags/interview/" style="color: #00bcd4">
                 interview
             </a>
         </span>
@@ -354,14 +354,14 @@
         
         <span class="tag">
             
-            <a href="/tags/interview/" style="color: #03a9f4">
+            <a href="/tags/interview/" style="color: #00a596">
                 interview
             </a>
         </span>
         
         <span class="tag">
             
-            <a href="/tags/C/" style="color: #ffa2c4">
+            <a href="/tags/C/" style="color: #00bcd4">
                 C++
             </a>
         </span>
@@ -406,20 +406,71 @@
         
         <span class="tag">
             
-            <a href="/tags/interview/" style="color: #00a596">
+            <a href="/tags/interview/" style="color: #ff7d73">
                 interview
             </a>
         </span>
         
         <span class="tag">
             
-            <a href="/tags/C/" style="color: #00bcd4">
+            <a href="/tags/C/" style="color: #ffa2c4">
                 C++
             </a>
         </span>
         
     </div>
     <a href="/2023/03/16/C++%20-interview%20keywords/" class="go-post">阅读全文</a>
+</div>
+
+<div class="post">
+    <a href="/2023/09/15/daily-1-5/">
+        <h2 class="post-title">daily 1</h2>
+    </a>
+    <div class="category-and-date">
+        
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/9/15
+        </span>
+        
+        
+    </div>
+    <div class="description">
+        <div class="content" v-pre>
+            
+            <p>CF 1680E</p>
+<pre><code class="lang-C++">void solve() &#123;
+  int n;
+  cin &gt;&gt; n;
+  int l = 1, r = n;
+  vector&lt;vector&lt;int&gt;&gt; a(n + 2, vector&lt;int&gt;(3)), dp(a);
+  for (int j = 0; j &lt; 2; ++j) &#123;
+    for (int i = 1; i &lt;= n; ++i) &#123;
+      char c;
+      cin &gt;&gt; c;
+      a[i][j] = (c == &#39;*&#39; ? 1 : 0);
+    &#125;
+  &#125;
+  while (!a[l][0] &amp;&amp; !a[l][1]) ++l;
+  while (!a[r][0] &amp;&amp; !a[r][1]) --r;
+  for (int i = l; i &lt;= r; ++i) &#123;
+    dp[i][0] = min(dp[i - 1][0] + 1 + a[i][1], dp[i - 1][1] + 2);
+    dp[i][1] = min(dp[i - 1][1] + 1 + a[i][0], dp[i - 1][0] + 2);
+  &#125;
+  cout &lt;&lt; min(dp[r][0], dp[r][1]) - 1 &lt;&lt; &#39;\n&#39;;
+&#125;
+</code></pre>
+
+            
+        </div>
+    </div>
+    <div class="post-tags">
+        
+        
+    </div>
+    <a href="/2023/09/15/daily-1-5/" class="go-post">阅读全文</a>
 </div>
 
 <div class="post">
@@ -576,35 +627,6 @@
         
     </div>
     <a href="/2023/09/11/daily-2-4/" class="go-post">阅读全文</a>
-</div>
-
-<div class="post">
-    <a href="/2023/09/10/daily-2-3/">
-        <h2 class="post-title">daily 2</h2>
-    </a>
-    <div class="category-and-date">
-        
-        <span class="date">
-            <span class="icon">
-                <i class="fa-solid fa-calendar fa-fw"></i>
-            </span>
-            2023/9/10
-        </span>
-        
-        
-    </div>
-    <div class="description">
-        <div class="content" v-pre>
-            
-            
-            
-        </div>
-    </div>
-    <div class="post-tags">
-        
-        
-    </div>
-    <a href="/2023/09/10/daily-2-3/" class="go-post">阅读全文</a>
 </div>
 
 
