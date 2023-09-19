@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>daily 1 | Waiting for the dawn</title>
+        <title>daily 3 | Waiting for the dawn</title>
         <meta name="author" content="Yanxin Xiang">
         <meta name="description" content="">
         <meta name="keywords" content="">
@@ -132,71 +132,21 @@
 
                 <div class="article">
     <div>
-        <h1>daily 1 </h1>
+        <h1>daily 3 </h1>
     </div>
     <div class="info">
         <span class="date">
             <span class="icon">
                 <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
-            2023/5/8
+            2023/9/19
         </span>
         
-        
-        <span class="tags">
-            <span class="icon">
-                <i class="fa-solid fa-tags fa-fw"></i>
-            </span>
-            
-            <span class="tag">
-                
-                <a href="/tags/daily/" style="color: #00a596">daily</a>
-            </span>
-            
-        </span>
         
     </div>
     
     <div class="content" v-pre>
-        <p>CF 261B</p>
-<p>$dp[i][j][k]$表示处理了前i个数，当前选择了前j个数，剩余的大小为k的方案数，那么我们的答案就是把所有的$dp[i][j][k]$加起来除以$n!$即可</p>
-<pre><code class="lang-C++">void solve()&#123;
-  ll n,p;
-  cin&gt;&gt;n;
-  vector&lt;int&gt;a(n+1);
-  vector&lt;double&gt;fac(n+1);
-  fac[0]=fac[1]=1;
-  ll sum=0;
-  for(int i=1;i&lt;=n;++i)&#123;
-    cin&gt;&gt;a[i];
-    fac[i]=fac[i-1]*i;
-    sum+=a[i];
-  &#125;
-  cin&gt;&gt;p;
-  if(sum&lt;=p)&#123;
-    cout&lt;&lt;n&lt;&lt;&#39;\n&#39;;
-    return;
-  &#125;
-  vector dp(n+1,vector&lt;ll&gt;(p+1,0));
-  dp[0][0]=1;
-  for(int i=1;i&lt;=n;++i)&#123;
-    for(int j=i;j&gt;=1;--j)&#123;
-        for(int v=p;v&gt;=a[i];--v)&#123;
-            dp[j][v]+=dp[j-1][v-a[i]];
-        &#125;
-    &#125;
-  &#125;
-  double ans=0;
-  for(int i=1;i&lt;=n;++i)&#123;
-    for(int j=0;j&lt;=p;++j)&#123;
-        ans+=(double)dp[i][j]*fac[i]*fac[n-i];
-    &#125;
-  &#125;
-  cout&lt;&lt;ans/fac[n]&lt;&lt;&#39;\n&#39;;
-  return;
-&#125;
-</code></pre>
-
+        
     </div>
     
     
