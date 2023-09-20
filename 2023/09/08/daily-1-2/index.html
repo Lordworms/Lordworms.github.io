@@ -143,10 +143,85 @@
         </span>
         
         
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/daily/" style="color: #00a596">daily</a>
+            </span>
+            
+        </span>
+        
     </div>
     
     <div class="content" v-pre>
-        
+        <p>CF 41D</p>
+<pre><code class="lang-C++">ll dp[MAXN][MAXN][MAXP];
+void solve() &#123;
+  int n, m, p;
+  memset(dp, -1, sizeof(dp));
+  cin &gt;&gt; n &gt;&gt; m &gt;&gt; p;
+  ++p;
+  vector&lt;vector&lt;int&gt;&gt; mp(n, vector&lt;int&gt;(m));
+  char c;
+  for (int i = 0; i &lt; n; ++i) &#123;
+    for (int j = 0; j &lt; m; ++j) &#123;
+      cin &gt;&gt; c;
+      mp[i][j] = c - &#39;0&#39;;
+    &#125;
+  &#125;
+  for (int j = 0; j &lt; m; ++j) &#123;
+    dp[n - 1][j][mp[n - 1][j] % p] = mp[n - 1][j];
+  &#125;
+  for (int i = n - 2; i &gt;= 0; --i) &#123;
+    for (int j = 0; j &lt; m; ++j) &#123;
+      for (int k = 0; k &lt; p; ++k) &#123;
+        int y = (k - mp[i][j] % p + p) % p;
+        if (j &gt; 0 &amp;&amp; dp[i + 1][j - 1][y] != -1) &#123;
+          dp[i][j][k] = max(dp[i][j][k], dp[i + 1][j - 1][y] + mp[i][j]);
+        &#125;
+        if (j &lt; m - 1 &amp;&amp; dp[i + 1][j + 1][y] != -1) &#123;
+          dp[i][j][k] = max(dp[i][j][k], dp[i + 1][j + 1][y] + mp[i][j]);
+        &#125;
+      &#125;
+    &#125;
+  &#125;
+  int pos = 0;
+  for (int i = 1; i &lt; m; ++i) &#123;
+    if (dp[0][i][0] &gt; dp[0][pos][0]) &#123;
+      pos = i;
+    &#125;
+  &#125;
+  if (dp[0][pos][0] == -1) &#123;
+    cout &lt;&lt; -1 &lt;&lt; &#39;\n&#39;;
+    return;
+  &#125;
+  cout &lt;&lt; dp[0][pos][0] &lt;&lt; &#39;\n&#39;;
+  stack&lt;char&gt; st;
+  int x = 0, y = 0, j = pos;
+  for (int i = 0; i &lt; n - 1; ++i) &#123;
+    y = (x - mp[i][j] % p + p) % p;
+    if (j == 0 || dp[i][j][x] == dp[i + 1][j + 1][y] + mp[i][j]) &#123;
+      st.push(&#39;L&#39;);
+      ++j;
+    &#125; else &#123;
+      st.push(&#39;R&#39;);
+      --j;
+    &#125;
+    x = y;
+  &#125;
+  cout &lt;&lt; j + 1 &lt;&lt; &#39;\n&#39;;
+  while (!st.empty()) &#123;
+    cout &lt;&lt; st.top();
+    st.pop();
+  &#125;
+  return;
+&#125;
+</code></pre>
+
     </div>
     
     

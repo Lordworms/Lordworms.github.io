@@ -146,7 +146,83 @@
     </div>
     
     <div class="content" v-pre>
-        
+        <p>CF 295C</p>
+<pre><code class="lang-C++">#define total(x, y) ((x * 50 + y * 100))
+ll A[N][N][N][N];
+ll C[N][N];
+ll dp[N &lt;&lt; 2][N][N];
+void solve() &#123;
+  ll n, lim;
+  cin &gt;&gt; n &gt;&gt; lim;
+  vector&lt;int&gt; a(n + 1);
+  int cnta = 0, cntb = 0;
+  for (int i = 1; i &lt;= n; ++i) &#123;
+    cin &gt;&gt; a[i];
+    if (a[i] == 50) &#123;
+      cnta++;
+    &#125; else &#123;
+      cntb++;
+    &#125;
+  &#125;
+  for (int i = 0; i &lt; N; ++i) &#123;
+    for (int j = C[i][0] = 1; j &lt;= i; ++j) &#123;
+      C[i][j] = (C[i - 1][j] + C[i - 1][j - 1]) % MOD;
+    &#125;
+  &#125;
+  for (int a = 0; a &lt; N; ++a) &#123;
+    for (int b = 0; b &lt; N; ++b) &#123;
+      for (int c = 0; c &lt;= a; ++c) &#123;
+        for (int d = 0; d &lt;= b; ++d) &#123;
+          A[a][b][c][d] = (C[a][c] * C[b][d]) % MOD;
+        &#125;
+      &#125;
+    &#125;
+  &#125;
+  dp[0][cnta][cntb] = 1;
+  for (int i = 1; i &lt;= 4 * n + 1; i += 2) &#123;
+    ll res = 0;
+    // positive direction
+    for (int x = 0; x &lt;= cnta; ++x) &#123;
+      for (int y = 0; y &lt;= cntb; ++y) &#123;
+        if (dp[i - 1][x][y]) &#123;
+          for (int a = 0; a &lt;= x; ++a) &#123;
+            for (int b = 0; b &lt;= y; ++b) &#123;
+              if ((a | b) &amp;&amp; (total(a, b) &lt;= lim)) &#123;
+                dp[i][x - a][y - b] +=
+                    (A[x][y][a][b] * dp[i - 1][x][y]);
+                dp[i][x - a][y - b] %= MOD;
+              &#125;
+            &#125;
+          &#125;
+        &#125;
+      &#125;
+    &#125;
+    if (dp[i][0][0]) &#123;
+      cout &lt;&lt; i &lt;&lt; &#39;\n&#39; &lt;&lt; dp[i][0][0] &lt;&lt; &#39;\n&#39;;
+      return;
+    &#125;
+    // negative direction
+    for (int x = 0; x &lt;= cnta; ++x) &#123;
+      for (int y = 0; y &lt;= cntb; ++y) &#123;
+        if (dp[i][x][y]) &#123;
+          for (int a = 0; a &lt;= cnta - x; ++a) &#123;
+            for (int b = 0; b &lt;= cntb - y; ++b) &#123;
+              if ((a | b) &amp;&amp; (total(a, b) &lt;= lim)) &#123;
+                dp[i + 1][x + a][y + b] +=
+                    (A[cnta - x][cntb - y][a][b] * dp[i][x][y]);
+                dp[i + 1][x + a][y + b] %= MOD;
+              &#125;
+            &#125;
+          &#125;
+        &#125;
+      &#125;
+    &#125;
+  &#125;
+  cout &lt;&lt; -1 &lt;&lt; &#39;\n&#39; &lt;&lt;0 &lt;&lt;&#39;\n&#39;;
+  return;
+&#125;
+</code></pre>
+
     </div>
     
     

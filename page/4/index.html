@@ -154,6 +154,47 @@
             
 
 <div class="post">
+    <a href="/2023/09/17/23/">
+        <h2 class="post-title">23</h2>
+    </a>
+    <div class="category-and-date">
+        
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/9/17
+        </span>
+        
+        
+    </div>
+    <div class="description">
+        <div class="content" v-pre>
+            
+            <p>birthday</p>
+
+            
+        </div>
+    </div>
+    <div class="post-tags">
+        
+        <span class="icon">
+            <i class="fa-solid fa-tags fa-fw"></i>
+        </span>
+        
+        
+        <span class="tag">
+            
+            <a href="/tags/life/" style="color: #00a596">
+                life
+            </a>
+        </span>
+        
+    </div>
+    <a href="/2023/09/17/23/" class="go-post">阅读全文</a>
+</div>
+
+<div class="post">
     <a href="/2023/09/15/daily-1-5/">
         <h2 class="post-title">daily 1</h2>
     </a>
@@ -291,7 +332,67 @@
     <div class="description">
         <div class="content" v-pre>
             
-            
+            <p>CF 721C</p>
+<pre><code class="lang-C++">void solve() &#123;
+  int n, m, T;
+  cin &gt;&gt; n &gt;&gt; m &gt;&gt; T;
+  vector&lt;vector&lt;int&gt;&gt; E(n + 1), cost(n + 1);
+  vector&lt;vector&lt;int&gt;&gt; dp(n + 1, vector&lt;int&gt;(n + 1, INF)), pre(dp);
+  vector&lt;int&gt; in(n + 1);
+  for (int i = 1; i &lt;= m; ++i) &#123;
+    int u, v, t;
+    cin &gt;&gt; u &gt;&gt; v &gt;&gt; t;
+    E[u].push_back(v);
+    cost[u].push_back(t);
+    in[v]++;
+  &#125;
+  queue&lt;int&gt; q;
+  for (int v = 1; v &lt;= n; ++v) &#123;
+    if (!in[v]) &#123;
+      q.push(v);
+    &#125;
+  &#125;
+  pre[1][1] = -1;
+  dp[1][1] = 0;
+  // dp[i][j] means the answer when passes j points and the current point is i
+  while (!q.empty()) &#123;
+    auto u = q.front();
+    q.pop();
+    for (int i = 0; i &lt; E[u].size(); ++i) &#123;
+      int v = E[u][i], c = cost[u][i];
+      --in[v];
+      if (!in[v]) &#123;
+        q.push(v);
+      &#125;
+      for (int t = 2; t &lt;= n; ++t) &#123;
+        if (dp[v][t] &gt; dp[u][t - 1] + c) &#123;
+          dp[v][t] = dp[u][t - 1] + c;
+          pre[v][t] = u;
+        &#125;
+      &#125;
+    &#125;
+  &#125;
+  function&lt;void(int, int)&gt; print_trace = [&amp;] (int cur, int t) &#123;
+    if (pre[cur][t] == -1) &#123;
+      cout &lt;&lt; cur &lt;&lt; &#39; &#39;;
+      return;
+    &#125;  
+    print_trace(pre[cur][t], t - 1);
+    cout &lt;&lt; cur &lt;&lt; &#39; &#39;;
+  &#125;;
+  // reverse iteration
+  for (int i = n; i &gt;= 1; --i) &#123;
+    if (dp[n][i] &lt;= T) &#123;
+      cout &lt;&lt; i &lt;&lt; &#39;\n&#39;;
+      print_trace(n, i);
+      break;
+    &#125;
+  &#125;
+
+  return;
+&#125;
+</code></pre>
+
             
         </div>
     </div>
@@ -320,7 +421,79 @@
     <div class="description">
         <div class="content" v-pre>
             
-            
+            <p>CF 453 A</p>
+<pre><code class="lang-C++">void solve() &#123;
+  int m, n;
+  cin &gt;&gt; m &gt;&gt; n;
+  long double ans = 0;
+  for (double i = 1; i &lt;= m; i += 1) &#123;
+    ans += i * (pow(i / m, n) - pow((i - 1) / m, n));  
+  &#125;
+  cout &lt;&lt; ans &lt;&lt; &#39;\n&#39;;
+  return ;
+&#125;
+</code></pre>
+<p>CF 721C</p>
+<pre><code class="lang-C++">void solve() &#123;
+  int n, m, T;
+  cin &gt;&gt; n &gt;&gt; m &gt;&gt; T;
+  vector&lt;vector&lt;int&gt;&gt; E(n + 1), cost(n + 1);
+  vector&lt;vector&lt;int&gt;&gt; dp(n + 1, vector&lt;int&gt;(n + 1, INF)), pre(dp);
+  vector&lt;int&gt; in(n + 1);
+  for (int i = 1; i &lt;= m; ++i) &#123;
+    int u, v, t;
+    cin &gt;&gt; u &gt;&gt; v &gt;&gt; t;
+    E[u].push_back(v);
+    cost[u].push_back(t);
+    in[v]++;
+  &#125;
+  queue&lt;int&gt; q;
+  for (int v = 1; v &lt;= n; ++v) &#123;
+    if (!in[v]) &#123;
+      q.push(v);
+    &#125;
+  &#125;
+  pre[1][1] = -1;
+  dp[1][1] = 0;
+  // dp[i][j] means the answer when passes j points and the current point is i
+  while (!q.empty()) &#123;
+    auto u = q.front();
+    q.pop();
+    for (int i = 0; i &lt; E[u].size(); ++i) &#123;
+      int v = E[u][i], c = cost[u][i];
+      --in[v];
+      if (!in[v]) &#123;
+        q.push(v);
+      &#125;
+      for (int t = 2; t &lt;= n; ++t) &#123;
+        if (dp[v][t] &gt; dp[u][t - 1] + c) &#123;
+          dp[v][t] = dp[u][t - 1] + c;
+          pre[v][t] = u;
+        &#125;
+      &#125;
+    &#125;
+  &#125;
+  function&lt;void(int, int)&gt; print_trace = [&amp;] (int cur, int t) &#123;
+    if (pre[cur][t] == -1) &#123;
+      cout &lt;&lt; cur &lt;&lt; &#39; &#39;;
+      return;
+    &#125;  
+    print_trace(pre[cur][t], t - 1);
+    cout &lt;&lt; cur &lt;&lt; &#39; &#39;;
+  &#125;;
+  // reverse iteration
+  for (int i = n; i &gt;= 1; --i) &#123;
+    if (dp[n][i] &lt;= T) &#123;
+      cout &lt;&lt; i &lt;&lt; &#39;\n&#39;;
+      print_trace(n, i);
+      break;
+    &#125;
+  &#125;
+
+  return;
+&#125;
+</code></pre>
+
             
         </div>
     </div>
@@ -349,7 +522,70 @@
     <div class="description">
         <div class="content" v-pre>
             
-            
+            <p>CF 940E</p>
+<pre><code class="lang-C++">void solve() &#123;
+  int n, c;
+  cin &gt;&gt; n &gt;&gt; c;
+  vector&lt;int&gt; a(n + 1);
+  ll sum = 0;
+  for (int i = 1; i &lt;= n; ++i) &#123;
+    cin &gt;&gt; a[i];
+    sum += a[i];
+  &#125; 
+  deque&lt;int&gt; q;
+  vector&lt;ll&gt; dp(n + 1);
+  for (int i = 1; i &lt;= n; ++i) &#123;
+    // we maintain a queue to store the increasing queue
+    while(q.size() &amp;&amp; a[q.back()] &gt;= a[i]) q.pop_back();
+    q.push_back(i);
+    while(q.size() &amp;&amp; i - q.front() &gt;= c) q.pop_front();
+    if(i &gt;= c) dp[i] = max(dp[i - 1], dp[i - c] + a[q.front()]);
+  &#125;
+  cout &lt;&lt; sum - dp[n] &lt;&lt; &#39;\n&#39;;
+  return ;
+&#125;
+</code></pre>
+<p>CF 580D</p>
+<pre><code class="lang-C++">void solve() &#123;
+  int n, m, k;
+  cin &gt;&gt; n &gt;&gt; m &gt;&gt; k;
+  vector&lt;int&gt; a(n);
+  vector&lt;vector&lt;ll&gt;&gt; dp(n,
+                        vector&lt;ll&gt;(1 &lt;&lt; n));  // the status is sta and ends in i
+  for (int i = 0; i &lt; n; ++i) &#123;
+    cin &gt;&gt; a[i];
+    dp[i][1 &lt;&lt; i] = a[i];
+  &#125;
+  int u, v, c;
+  vector&lt;vector&lt;int&gt;&gt; mp(n, vector&lt;int&gt;(n));
+  for (int i = 0; i &lt; k; ++i) &#123;
+    cin &gt;&gt; u &gt;&gt; v &gt;&gt; c;
+    --u, --v;
+    mp[u][v] = c;
+  &#125;
+  for (int sta = 0; sta &lt; (1 &lt;&lt; n); ++sta) &#123;
+    for (int i = 0; i &lt; n; ++i) &#123;
+      if (!(sta &amp; (1 &lt;&lt; i))) continue;
+      for (int j = 0; j &lt; n; ++j) &#123;
+        if (i == j || !(sta &amp; (1 &lt;&lt; j))) continue;
+        dp[i][sta] = max(dp[i][sta], dp[j][sta ^ (1 &lt;&lt; i)] + mp[j][i] + a[i]);
+      &#125;
+    &#125;
+  &#125;
+  ll ans = 0;
+  for (int i = 0; i &lt; (1 &lt;&lt; n); ++i) &#123;
+    if (__builtin_popcount(i) != m) &#123;
+      continue;
+    &#125;
+    for (int j = 0; j &lt; n; ++j) &#123;
+      ans = max(ans, dp[j][i]);
+    &#125;
+  &#125;
+  cout &lt;&lt; ans &lt;&lt; &#39;\n&#39;;
+  return;
+&#125;
+</code></pre>
+
             
         </div>
     </div>
@@ -378,7 +614,83 @@
     <div class="description">
         <div class="content" v-pre>
             
-            
+            <p>CF 295C</p>
+<pre><code class="lang-C++">#define total(x, y) ((x * 50 + y * 100))
+ll A[N][N][N][N];
+ll C[N][N];
+ll dp[N &lt;&lt; 2][N][N];
+void solve() &#123;
+  ll n, lim;
+  cin &gt;&gt; n &gt;&gt; lim;
+  vector&lt;int&gt; a(n + 1);
+  int cnta = 0, cntb = 0;
+  for (int i = 1; i &lt;= n; ++i) &#123;
+    cin &gt;&gt; a[i];
+    if (a[i] == 50) &#123;
+      cnta++;
+    &#125; else &#123;
+      cntb++;
+    &#125;
+  &#125;
+  for (int i = 0; i &lt; N; ++i) &#123;
+    for (int j = C[i][0] = 1; j &lt;= i; ++j) &#123;
+      C[i][j] = (C[i - 1][j] + C[i - 1][j - 1]) % MOD;
+    &#125;
+  &#125;
+  for (int a = 0; a &lt; N; ++a) &#123;
+    for (int b = 0; b &lt; N; ++b) &#123;
+      for (int c = 0; c &lt;= a; ++c) &#123;
+        for (int d = 0; d &lt;= b; ++d) &#123;
+          A[a][b][c][d] = (C[a][c] * C[b][d]) % MOD;
+        &#125;
+      &#125;
+    &#125;
+  &#125;
+  dp[0][cnta][cntb] = 1;
+  for (int i = 1; i &lt;= 4 * n + 1; i += 2) &#123;
+    ll res = 0;
+    // positive direction
+    for (int x = 0; x &lt;= cnta; ++x) &#123;
+      for (int y = 0; y &lt;= cntb; ++y) &#123;
+        if (dp[i - 1][x][y]) &#123;
+          for (int a = 0; a &lt;= x; ++a) &#123;
+            for (int b = 0; b &lt;= y; ++b) &#123;
+              if ((a | b) &amp;&amp; (total(a, b) &lt;= lim)) &#123;
+                dp[i][x - a][y - b] +=
+                    (A[x][y][a][b] * dp[i - 1][x][y]);
+                dp[i][x - a][y - b] %= MOD;
+              &#125;
+            &#125;
+          &#125;
+        &#125;
+      &#125;
+    &#125;
+    if (dp[i][0][0]) &#123;
+      cout &lt;&lt; i &lt;&lt; &#39;\n&#39; &lt;&lt; dp[i][0][0] &lt;&lt; &#39;\n&#39;;
+      return;
+    &#125;
+    // negative direction
+    for (int x = 0; x &lt;= cnta; ++x) &#123;
+      for (int y = 0; y &lt;= cntb; ++y) &#123;
+        if (dp[i][x][y]) &#123;
+          for (int a = 0; a &lt;= cnta - x; ++a) &#123;
+            for (int b = 0; b &lt;= cntb - y; ++b) &#123;
+              if ((a | b) &amp;&amp; (total(a, b) &lt;= lim)) &#123;
+                dp[i + 1][x + a][y + b] +=
+                    (A[cnta - x][cntb - y][a][b] * dp[i][x][y]);
+                dp[i + 1][x + a][y + b] %= MOD;
+              &#125;
+            &#125;
+          &#125;
+        &#125;
+      &#125;
+    &#125;
+  &#125;
+  cout &lt;&lt; -1 &lt;&lt; &#39;\n&#39; &lt;&lt;0 &lt;&lt;&#39;\n&#39;;
+  return;
+&#125;
+</code></pre>
+
             
         </div>
     </div>
@@ -407,7 +719,36 @@
     <div class="description">
         <div class="content" v-pre>
             
-            
+            <p>CF 59A</p>
+<pre><code class="lang-C++">#include&lt;iostream&gt;
+#include&lt;string&gt;
+using namespace std;
+int main()&#123;
+    string s;
+    while(cin&gt;&gt;s)&#123;
+        int low=0,up=0;
+        for(int i=0;i&lt;s.length();++i)&#123;
+            if(s[i]&gt;=65&amp;&amp;s[i]&lt;=90)  ++up;
+            else if(s[i]&gt;=97&amp;&amp;s[i]&lt;=122)    ++low;
+        &#125;
+        if(low&gt;=up)&#123;
+            for(int i=0;i&lt;s.length();++i)&#123;
+                if(s[i]&gt;=65&amp;&amp;s[i]&lt;=90)
+                    s[i]+=32;
+            &#125;
+        &#125;
+        else&#123;
+            for(int i=0;i&lt;s.length();++i)&#123;
+                if(s[i]&gt;=97&amp;&amp;s[i]&lt;=122)
+                    s[i]-=32;
+            &#125;
+        &#125;
+        cout&lt;&lt;s&lt;&lt;&#39;\n&#39;;
+    &#125;
+    return 0;
+&#125;
+</code></pre>
+
             
         </div>
     </div>
@@ -436,12 +777,24 @@
     <div class="description">
         <div class="content" v-pre>
             
-            
+            <p>daily codeforces</p>
+
             
         </div>
     </div>
     <div class="post-tags">
         
+        <span class="icon">
+            <i class="fa-solid fa-tags fa-fw"></i>
+        </span>
+        
+        
+        <span class="tag">
+            
+            <a href="/tags/daily/" style="color: #ffa2c4">
+                daily
+            </a>
+        </span>
         
     </div>
     <a href="/2023/09/08/daily-1-2/" class="go-post">阅读全文</a>
@@ -465,44 +818,27 @@
     <div class="description">
         <div class="content" v-pre>
             
-            
+            <p>daily codeforces</p>
+
             
         </div>
     </div>
     <div class="post-tags">
         
-        
-    </div>
-    <a href="/2023/09/07/daily-2-2/" class="go-post">阅读全文</a>
-</div>
-
-<div class="post">
-    <a href="/2023/09/06/daily-2-1/">
-        <h2 class="post-title">daily 2</h2>
-    </a>
-    <div class="category-and-date">
-        
-        <span class="date">
-            <span class="icon">
-                <i class="fa-solid fa-calendar fa-fw"></i>
-            </span>
-            2023/9/6
+        <span class="icon">
+            <i class="fa-solid fa-tags fa-fw"></i>
         </span>
         
         
-    </div>
-    <div class="description">
-        <div class="content" v-pre>
+        <span class="tag">
             
-            
-            
-        </div>
-    </div>
-    <div class="post-tags">
-        
+            <a href="/tags/daily/" style="color: #03a9f4">
+                daily
+            </a>
+        </span>
         
     </div>
-    <a href="/2023/09/06/daily-2-1/" class="go-post">阅读全文</a>
+    <a href="/2023/09/07/daily-2-2/" class="go-post">阅读全文</a>
 </div>
 
 

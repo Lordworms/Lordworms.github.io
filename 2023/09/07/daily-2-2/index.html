@@ -143,10 +143,117 @@
         </span>
         
         
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/daily/" style="color: #03a9f4">daily</a>
+            </span>
+            
+        </span>
+        
     </div>
     
     <div class="content" v-pre>
-        
+        <p>CF 1644E</p>
+<pre><code class="lang-C++">#define int ll
+void solve() &#123;
+  int n;
+  cin &gt;&gt; n;
+  string s;
+  cin &gt;&gt; s;
+  s = &#39;0&#39; + s;
+  bool flag = false;
+  auto calc = [&amp;] (string &amp;s, char c) &#123;
+    int pre = 0;
+    // first we calculate how many characters left in this column
+    for (char&amp; cc: s) &#123;
+      pre += (cc == c);
+    &#125;
+    bool pre_have = false;
+    ll ans = 0;
+    for (int i = 0 ; i &lt;= s.size() - 1; ++i) &#123;
+      if (s[i] == c) &#123;
+        pre_have = true;
+        --pre;
+      &#125;
+      if (i == s.size() - 1 || s[i + 1] == (c == &#39;D&#39; ? &#39;R&#39; : &#39;D&#39;)) &#123;
+        ans += pre_have ? pre : n - 1;
+      &#125;
+    &#125;
+    return ans;
+  &#125;;
+  int numr = 0, numd = 0;
+  for (int i = 0 ; i &lt; s.size(); ++i) &#123;
+    if (s[i] == &#39;R&#39;) numr++;
+    if (s[i] == &#39;D&#39;) numd++;
+  &#125;
+  if (!numr || !numd) &#123;
+    cout &lt;&lt; n &lt;&lt; &#39;\n&#39;;
+    return;
+  &#125;
+  cout &lt;&lt; n * n - calc(s, &#39;R&#39;) - calc(s, &#39;D&#39;) &lt;&lt; &#39;\n&#39;;
+  return ;
+&#125;
+</code></pre>
+<p>CF 1673D</p>
+<pre><code class="lang-C++">int gcd(int a, int b) &#123; return b ? gcd(b, a % b) : a; &#125;
+void solve() &#123;
+  ll bi, bd, bl, ci, cd, cl;
+  cin &gt;&gt; bi &gt;&gt; bd &gt;&gt; bl &gt;&gt; ci &gt;&gt; cd &gt;&gt; cl;
+  ll endb = bi + (bl - 1) * bd;
+  ll endc = ci + (cl - 1) * cd;
+  // cases when no answer could show off
+  if (cd % bd != 0    // case 1: the difference could not divided entirely
+      || endc &gt; endb  // case 2: no intersection
+      || ci &lt; bi      // case 2: no intersection
+      || abs(bi - ci) % bd != 0  // case 3: similar to case 2
+  ) &#123;
+    cout &lt;&lt; 0 &lt;&lt; &#39;\n&#39;;
+    return;
+  &#125;
+  // cases when there are infinite answer
+  if (ci - cd &lt;
+          bi ||  // case 1: when leftesth - 1 element is less than the initial
+                 // element of b, then a could starts in any position
+      endc + cd &gt; endb  // case 2: same as case1
+  ) &#123;
+    cout &lt;&lt; -1 &lt;&lt; &#39;\n&#39;;
+    return;
+  &#125;
+  // cases when there are finite answer
+  vector&lt;int&gt; fac;
+  int i;
+  for (i = 2; i * i &lt; cd; ++i) &#123;
+    if (cd % i == 0) &#123;  // all factors
+      fac.push_back(i);
+      fac.push_back(cd / i);
+    &#125;
+  &#125;
+  if (i * i == cd) &#123;
+    fac.push_back(i);
+  &#125;
+  ll ans = 1;
+  for (auto&amp; f : fac) &#123;
+    int g = gcd(f, bd);
+    int lcm = f * bd / g;
+    if (lcm != cd) &#123;  // we have to let the lcm equal to cd otherwise it is not
+                      // possible to intersect
+      continue;
+    &#125;
+    ans = (ans + 1ll * cd / f * cd / f) % MOD;
+  &#125;
+  if (cd == bd) &#123;
+    ans = (ans + 1ll * bd * bd) % MOD;
+  &#125;
+  cout &lt;&lt; ans &lt;&lt; &#39;\n&#39;;
+  return;
+&#125;
+</code></pre>
+
     </div>
     
     

@@ -146,7 +146,36 @@
     </div>
     
     <div class="content" v-pre>
-        
+        <p>CF 59A</p>
+<pre><code class="lang-C++">#include&lt;iostream&gt;
+#include&lt;string&gt;
+using namespace std;
+int main()&#123;
+    string s;
+    while(cin&gt;&gt;s)&#123;
+        int low=0,up=0;
+        for(int i=0;i&lt;s.length();++i)&#123;
+            if(s[i]&gt;=65&amp;&amp;s[i]&lt;=90)  ++up;
+            else if(s[i]&gt;=97&amp;&amp;s[i]&lt;=122)    ++low;
+        &#125;
+        if(low&gt;=up)&#123;
+            for(int i=0;i&lt;s.length();++i)&#123;
+                if(s[i]&gt;=65&amp;&amp;s[i]&lt;=90)
+                    s[i]+=32;
+            &#125;
+        &#125;
+        else&#123;
+            for(int i=0;i&lt;s.length();++i)&#123;
+                if(s[i]&gt;=97&amp;&amp;s[i]&lt;=122)
+                    s[i]-=32;
+            &#125;
+        &#125;
+        cout&lt;&lt;s&lt;&lt;&#39;\n&#39;;
+    &#125;
+    return 0;
+&#125;
+</code></pre>
+
     </div>
     
     

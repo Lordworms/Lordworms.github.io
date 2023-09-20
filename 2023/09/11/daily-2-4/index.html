@@ -146,7 +146,70 @@
     </div>
     
     <div class="content" v-pre>
-        
+        <p>CF 940E</p>
+<pre><code class="lang-C++">void solve() &#123;
+  int n, c;
+  cin &gt;&gt; n &gt;&gt; c;
+  vector&lt;int&gt; a(n + 1);
+  ll sum = 0;
+  for (int i = 1; i &lt;= n; ++i) &#123;
+    cin &gt;&gt; a[i];
+    sum += a[i];
+  &#125; 
+  deque&lt;int&gt; q;
+  vector&lt;ll&gt; dp(n + 1);
+  for (int i = 1; i &lt;= n; ++i) &#123;
+    // we maintain a queue to store the increasing queue
+    while(q.size() &amp;&amp; a[q.back()] &gt;= a[i]) q.pop_back();
+    q.push_back(i);
+    while(q.size() &amp;&amp; i - q.front() &gt;= c) q.pop_front();
+    if(i &gt;= c) dp[i] = max(dp[i - 1], dp[i - c] + a[q.front()]);
+  &#125;
+  cout &lt;&lt; sum - dp[n] &lt;&lt; &#39;\n&#39;;
+  return ;
+&#125;
+</code></pre>
+<p>CF 580D</p>
+<pre><code class="lang-C++">void solve() &#123;
+  int n, m, k;
+  cin &gt;&gt; n &gt;&gt; m &gt;&gt; k;
+  vector&lt;int&gt; a(n);
+  vector&lt;vector&lt;ll&gt;&gt; dp(n,
+                        vector&lt;ll&gt;(1 &lt;&lt; n));  // the status is sta and ends in i
+  for (int i = 0; i &lt; n; ++i) &#123;
+    cin &gt;&gt; a[i];
+    dp[i][1 &lt;&lt; i] = a[i];
+  &#125;
+  int u, v, c;
+  vector&lt;vector&lt;int&gt;&gt; mp(n, vector&lt;int&gt;(n));
+  for (int i = 0; i &lt; k; ++i) &#123;
+    cin &gt;&gt; u &gt;&gt; v &gt;&gt; c;
+    --u, --v;
+    mp[u][v] = c;
+  &#125;
+  for (int sta = 0; sta &lt; (1 &lt;&lt; n); ++sta) &#123;
+    for (int i = 0; i &lt; n; ++i) &#123;
+      if (!(sta &amp; (1 &lt;&lt; i))) continue;
+      for (int j = 0; j &lt; n; ++j) &#123;
+        if (i == j || !(sta &amp; (1 &lt;&lt; j))) continue;
+        dp[i][sta] = max(dp[i][sta], dp[j][sta ^ (1 &lt;&lt; i)] + mp[j][i] + a[i]);
+      &#125;
+    &#125;
+  &#125;
+  ll ans = 0;
+  for (int i = 0; i &lt; (1 &lt;&lt; n); ++i) &#123;
+    if (__builtin_popcount(i) != m) &#123;
+      continue;
+    &#125;
+    for (int j = 0; j &lt; n; ++j) &#123;
+      ans = max(ans, dp[j][i]);
+    &#125;
+  &#125;
+  cout &lt;&lt; ans &lt;&lt; &#39;\n&#39;;
+  return;
+&#125;
+</code></pre>
+
     </div>
     
     
