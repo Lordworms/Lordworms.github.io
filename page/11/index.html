@@ -154,6 +154,111 @@
             
 
 <div class="post">
+    <a href="/2023/07/07/daily-2-4/">
+        <h2 class="post-title">daily 2</h2>
+    </a>
+    <div class="category-and-date">
+        
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/7/7
+        </span>
+        
+        
+    </div>
+    <div class="description">
+        <div class="content" v-pre>
+            
+            <p>CF 1036C</p>
+<pre><code class="lang-C++">ll dp[MAXN][MAXB];
+ll a[MAXN];
+ll dfs(int pos,int st,bool flag)&#123;
+    if(pos==-1)return 1;
+    if(dp[pos][st]!=-1&amp;&amp;!flag)return dp[pos][st];
+    int lim=flag?a[pos]:9;
+    ll ans=0;
+    for(int i=0;i&lt;=lim;++i)&#123;
+        if(i==0)&#123;
+            ans+=dfs(pos-1,st,flag&amp;&amp;a[pos]==i);
+        &#125;else if(st!=3)&#123;
+            ans+=dfs(pos-1,st+1,flag&amp;&amp;a[pos]==i);
+        &#125;
+    &#125;
+    if(!flag)dp[pos][st]=ans;
+    return ans;
+&#125;
+ll cal(ll x)&#123;
+    int len=0;
+    while(x)&#123;
+        a[len++]=x%10;
+        x/=10;
+    &#125;
+    return dfs(len-1,0,true);
+&#125;
+int main()&#123;
+    memset(dp,-1,sizeof(dp));
+    int T;
+    cin&gt;&gt;T;
+    while(T--)&#123;
+        ll l,r;
+        cin&gt;&gt;l&gt;&gt;r;
+        cout&lt;&lt;cal(r)-cal(l-1)&lt;&lt;&#39;\n&#39;;
+    &#125;
+&#125;
+</code></pre>
+<p>CF 1092F</p>
+<pre><code class="lang-C++">int main()&#123;
+    int n;cin&gt;&gt;n;
+    vector&lt;ll&gt;a(n+1),dp(n+1);
+    for(int i=1;i&lt;=n;++i)cin&gt;&gt;a[i];
+    vector&lt;vector&lt;int&gt;&gt;E(n+1);
+    for(int i=1;i&lt;=n-1;++i)&#123;
+        int u,v;
+        cin&gt;&gt;u&gt;&gt;v;
+        E[u].push_back(v);
+        E[v].push_back(u);
+    &#125;
+    vector&lt;ll&gt;s(n+1);
+    function&lt;void(int,int)&gt;dfs1=[&amp;](int x,int f)&#123;
+        s[x]=a[x];
+        dp[x]=0;
+        for(int v:E[x])&#123;
+            if(v==f)continue;
+            dfs1(v,x);
+            s[x]+=s[v];
+            dp[x]+=dp[v]+s[v];
+        &#125;
+    &#125;;
+    function&lt;void(int,int,ll)&gt;dfs2=[&amp;](int x,int f,ll extra)&#123;
+        for(int v:E[x])&#123;
+            if(v==f)continue;
+            dp[v]=(extra+s[x]-s[v])+dp[x]-s[v];//the subtree node of v would be subtraceted s[v] and other nodes would be adding s[x]-s[v];
+            dfs2(v,x,extra+s[x]-s[v]);
+        &#125;
+    &#125;;
+    dfs1(1,0);
+    dfs2(1,0,0);
+    ll ans=-1;
+    for(int i=1;i&lt;=n;++i)&#123;
+        ans=max(ans,dp[i]);
+    &#125;
+    cout&lt;&lt;ans&lt;&lt;&#39;\n&#39;;
+&#125;
+</code></pre>
+
+            
+        </div>
+    </div>
+    <div class="post-tags">
+        
+        
+    </div>
+    <a href="/2023/07/07/daily-2-4/" class="go-post">阅读全文</a>
+</div>
+
+<div class="post">
     <a href="/2023/07/06/daily-2-3/">
         <h2 class="post-title">daily 2</h2>
     </a>
@@ -185,7 +290,7 @@
         
         <span class="tag">
             
-            <a href="/tags/daily/" style="color: #00a596">
+            <a href="/tags/daily/" style="color: #00bcd4">
                 daily
             </a>
         </span>
@@ -226,7 +331,7 @@
         
         <span class="tag">
             
-            <a href="/tags/daily/" style="color: #ffa2c4">
+            <a href="/tags/daily/" style="color: #00a596">
                 daily
             </a>
         </span>
@@ -327,7 +432,7 @@
         
         <span class="tag">
             
-            <a href="/tags/daily/" style="color: #ffa2c4">
+            <a href="/tags/daily/" style="color: #00bcd4">
                 daily
             </a>
         </span>
@@ -411,7 +516,7 @@
         
         <span class="tag">
             
-            <a href="/tags/daily/" style="color: #ff7d73">
+            <a href="/tags/daily/" style="color: #00a596">
                 daily
             </a>
         </span>
@@ -452,7 +557,7 @@
         
         <span class="tag">
             
-            <a href="/tags/daily/" style="color: #03a9f4">
+            <a href="/tags/daily/" style="color: #ffa2c4">
                 daily
             </a>
         </span>
@@ -593,47 +698,6 @@
         
     </div>
     <a href="/2023/06/28/daily-2-16/" class="go-post">阅读全文</a>
-</div>
-
-<div class="post">
-    <a href="/2023/06/27/daily-2-15/">
-        <h2 class="post-title">daily 2</h2>
-    </a>
-    <div class="category-and-date">
-        
-        <span class="date">
-            <span class="icon">
-                <i class="fa-solid fa-calendar fa-fw"></i>
-            </span>
-            2023/6/27
-        </span>
-        
-        
-    </div>
-    <div class="description">
-        <div class="content" v-pre>
-            
-            <p>daily codeforces</p>
-
-            
-        </div>
-    </div>
-    <div class="post-tags">
-        
-        <span class="icon">
-            <i class="fa-solid fa-tags fa-fw"></i>
-        </span>
-        
-        
-        <span class="tag">
-            
-            <a href="/tags/daily/" style="color: #00bcd4">
-                daily
-            </a>
-        </span>
-        
-    </div>
-    <a href="/2023/06/27/daily-2-15/" class="go-post">阅读全文</a>
 </div>
 
 

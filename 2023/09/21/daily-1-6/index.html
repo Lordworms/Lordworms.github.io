@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>daily 2 | Waiting for the dawn</title>
+        <title>daily 1 | Waiting for the dawn</title>
         <meta name="author" content="Yanxin Xiang">
         <meta name="description" content="">
         <meta name="keywords" content="">
@@ -132,84 +132,21 @@
 
                 <div class="article">
     <div>
-        <h1>daily 2 </h1>
+        <h1>daily 1 </h1>
     </div>
     <div class="info">
         <span class="date">
             <span class="icon">
                 <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
-            2023/7/17
+            2023/9/21
         </span>
         
-        
-        <span class="tags">
-            <span class="icon">
-                <i class="fa-solid fa-tags fa-fw"></i>
-            </span>
-            
-            <span class="tag">
-                
-                <a href="/tags/daily/" style="color: #ffa2c4">daily</a>
-            </span>
-            
-        </span>
         
     </div>
     
     <div class="content" v-pre>
-        <p>CF 1121D</p>
-<pre><code class="lang-C++">ll a[MAXN],b[MAXN];
-ll dp[MAXN][3];
-int main()&#123;
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
-    int q;
-    cin&gt;&gt;q;
-    memset(dp,0x3f,sizeof(dp));
-    while(q--)&#123;
-        int n;
-        cin&gt;&gt;n;
-        for(int i=1;i&lt;=n;++i)&#123;
-            cin&gt;&gt;a[i]&gt;&gt;b[i];
-        &#125;
-        for(int i=0;i&lt;=n;++i)dp[i][0]=dp[i][1]=dp[i][2]=INF;
-        dp[0][0]=0;
-        for(int i=1;i&lt;=n;++i)&#123;
-            for(int k1=0;k1&lt;3;++k1)&#123;
-                for(int k2=0;k2&lt;3;++k2)&#123;
-                    if(a[i-1]+k2!=a[i]+k1)&#123;
-                        dp[i][k1]=min(dp[i][k1],dp[i-1][k2]+b[i]*k1);
-                    &#125;
-                &#125;
-            &#125;
-        &#125;
-        ll ans=INF;
-        for(int i=0;i&lt;3;++i)&#123;
-            ans=min(ans,dp[n][i]);
-        &#125;
-        cout&lt;&lt;ans&lt;&lt;&#39;\n&#39;;
-    &#125;
-&#125;
-</code></pre>
-<p>CF 1172B</p>
-<pre><code class="lang-C++">int main()&#123;
-    int n;
-    cin&gt;&gt;n;
-    ll ans=n;
-    vector&lt;ll&gt;deg(n+1);
-    for(int i=1;i&lt;=n-1;++i)&#123;
-        int u,v;
-        cin&gt;&gt;u&gt;&gt;v;
-        deg[v]++;
-        deg[u]++;
-        ans=ans*deg[u]%MOD*deg[v]%MOD;
-    &#125;
-    cout&lt;&lt;ans&lt;&lt;&quot;\n&quot;;
-    return 0;
-&#125;
-</code></pre>
-
+        
     </div>
     
     
