@@ -139,43 +139,14 @@
             <span class="icon">
                 <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
-            2023/4/10
+            2023/10/6
         </span>
         
-        
-        <span class="tags">
-            <span class="icon">
-                <i class="fa-solid fa-tags fa-fw"></i>
-            </span>
-            
-            <span class="tag">
-                
-                <a href="/tags/daily/" style="color: #00bcd4">daily</a>
-            </span>
-            
-        </span>
         
     </div>
     
     <div class="content" v-pre>
-        <p>昨天字节下offer了，感觉心里的压力小了一些，目前在等鹅厂，今天吵了一架，感觉有时候你对别人的关心和对未来的期望并不会很好的导致相互的关心和期望，我开始思考我放弃的东西，也开始考虑未来的东西了，不多说了，把今天的水题上过来</p>
-<p>CF 407B<br>进入一个房间，如果次数是奇数那么走pi,否则走i+1</p>
-<p>转移方程就是你自己模拟一下走的状态就好了，水题</p>
-<pre><code class="lang-C++">void solve()&#123;
-  int n;
-  cin&gt;&gt;n;
-  vector&lt;int&gt;p(n+1);
-  for(int i=1;i&lt;=n;++i)cin&gt;&gt;p[i];
-  vector&lt;int&gt;dp(n+2);
-  dp[1]=0;
-  for(int i=2;i&lt;=n+1;++i)&#123;
-    dp[i]=dp[i-1]+1+dp[i-1]-dp[p[i-1]]+1;
-  &#125;
-  cout&lt;&lt;dp[n+1]&lt;&lt;&#39;\n&#39;;
-  return;
-&#125;
-</code></pre>
-
+        
     </div>
     
     
