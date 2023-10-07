@@ -154,6 +154,57 @@
             
 
 <div class="post">
+    <a href="/2023/09/15/daily-1-5/">
+        <h2 class="post-title">daily 1</h2>
+    </a>
+    <div class="category-and-date">
+        
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/9/15
+        </span>
+        
+        
+    </div>
+    <div class="description">
+        <div class="content" v-pre>
+            
+            <p>CF 1680E</p>
+<pre><code class="lang-C++">void solve() &#123;
+  int n;
+  cin &gt;&gt; n;
+  int l = 1, r = n;
+  vector&lt;vector&lt;int&gt;&gt; a(n + 2, vector&lt;int&gt;(3)), dp(a);
+  for (int j = 0; j &lt; 2; ++j) &#123;
+    for (int i = 1; i &lt;= n; ++i) &#123;
+      char c;
+      cin &gt;&gt; c;
+      a[i][j] = (c == &#39;*&#39; ? 1 : 0);
+    &#125;
+  &#125;
+  while (!a[l][0] &amp;&amp; !a[l][1]) ++l;
+  while (!a[r][0] &amp;&amp; !a[r][1]) --r;
+  for (int i = l; i &lt;= r; ++i) &#123;
+    dp[i][0] = min(dp[i - 1][0] + 1 + a[i][1], dp[i - 1][1] + 2);
+    dp[i][1] = min(dp[i - 1][1] + 1 + a[i][0], dp[i - 1][0] + 2);
+  &#125;
+  cout &lt;&lt; min(dp[r][0], dp[r][1]) - 1 &lt;&lt; &#39;\n&#39;;
+&#125;
+</code></pre>
+
+            
+        </div>
+    </div>
+    <div class="post-tags">
+        
+        
+    </div>
+    <a href="/2023/09/15/daily-1-5/" class="go-post">阅读全文</a>
+</div>
+
+<div class="post">
     <a href="/2023/09/14/daily-1-4/">
         <h2 class="post-title">daily 1</h2>
     </a>
@@ -699,7 +750,7 @@ int main()&#123;
         
         <span class="tag">
             
-            <a href="/tags/daily/" style="color: #00bcd4">
+            <a href="/tags/daily/" style="color: #00a596">
                 daily
             </a>
         </span>
@@ -740,7 +791,7 @@ int main()&#123;
         
         <span class="tag">
             
-            <a href="/tags/daily/" style="color: #03a9f4">
+            <a href="/tags/daily/" style="color: #00a596">
                 daily
             </a>
         </span>
@@ -846,70 +897,6 @@ void solve() &#123;
         
     </div>
     <a href="/2023/09/06/daily-2-1/" class="go-post">阅读全文</a>
-</div>
-
-<div class="post">
-    <a href="/2023/09/05/daily-2/">
-        <h2 class="post-title">daily 1</h2>
-    </a>
-    <div class="category-and-date">
-        
-        <span class="date">
-            <span class="icon">
-                <i class="fa-solid fa-calendar fa-fw"></i>
-            </span>
-            2023/9/5
-        </span>
-        
-        
-    </div>
-    <div class="description">
-        <div class="content" v-pre>
-            
-            <p>CF 1717D</p>
-<pre><code class="lang-C++">ll quick_pow(ll x, ll exp, int p) &#123;
-  ll ans = 1;
-  while (exp) &#123;
-    if (exp &amp; 1) ans = ans * x % p;
-    exp &gt;&gt;= 1;
-    x = x * x % p;
-  &#125;
-  return ans;
-&#125;
-ll inv[MAXN], fac[MAXN];
-void init(int n, int p) &#123;
-  memset(inv, 0, sizeof(inv));
-  memset(fac, 0, sizeof(fac));
-  inv[0] = fac[0] = 1;
-  for (int i = 1; i &lt;= n; ++i) &#123;
-    fac[i] = fac[i - 1] * i % p;
-  &#125;
-  inv[n] = quick_pow(fac[n], p - 2, p) % p;
-  for (int i = n; i &gt;= 1; --i) inv[i - 1] = inv[i] * i % p;
-&#125;
-ll C(ll n, ll m, ll p) &#123;
-  if (m &gt; n || m &lt; 0) return 0;
-  return fac[n] * inv[n - m] % p * inv[m] % p;
-&#125;
-void solve() &#123;
-  int n, k;
-  cin &gt;&gt; n &gt;&gt; k;
-  ll ans = 1;
-  for (int i = 1; i &lt;= min(n, k); ++i) &#123;
-    ans = (ans + C(n, i, MOD) % MOD) % MOD;
-  &#125;
-  cout &lt;&lt; ans &lt;&lt; &#39;\n&#39;;
-&#125;
-</code></pre>
-
-            
-        </div>
-    </div>
-    <div class="post-tags">
-        
-        
-    </div>
-    <a href="/2023/09/05/daily-2/" class="go-post">阅读全文</a>
 </div>
 
 
