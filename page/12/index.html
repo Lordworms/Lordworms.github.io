@@ -154,6 +154,47 @@
             
 
 <div class="post">
+    <a href="/2023/07/08/daily-2-5/">
+        <h2 class="post-title">daily 2</h2>
+    </a>
+    <div class="category-and-date">
+        
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/7/8
+        </span>
+        
+        
+    </div>
+    <div class="description">
+        <div class="content" v-pre>
+            
+            <p>daily codeforces</p>
+
+            
+        </div>
+    </div>
+    <div class="post-tags">
+        
+        <span class="icon">
+            <i class="fa-solid fa-tags fa-fw"></i>
+        </span>
+        
+        
+        <span class="tag">
+            
+            <a href="/tags/daily/" style="color: #03a9f4">
+                daily
+            </a>
+        </span>
+        
+    </div>
+    <a href="/2023/07/08/daily-2-5/" class="go-post">阅读全文</a>
+</div>
+
+<div class="post">
     <a href="/2023/07/07/daily-2-4/">
         <h2 class="post-title">daily 2</h2>
     </a>
@@ -290,7 +331,7 @@ int main()&#123;
         
         <span class="tag">
             
-            <a href="/tags/daily/" style="color: #ff7d73">
+            <a href="/tags/daily/" style="color: #03a9f4">
                 daily
             </a>
         </span>
@@ -331,7 +372,7 @@ int main()&#123;
         
         <span class="tag">
             
-            <a href="/tags/daily/" style="color: #00a596">
+            <a href="/tags/daily/" style="color: #03a9f4">
                 daily
             </a>
         </span>
@@ -516,7 +557,7 @@ int main()&#123;
         
         <span class="tag">
             
-            <a href="/tags/daily/" style="color: #00a596">
+            <a href="/tags/daily/" style="color: #ff7d73">
                 daily
             </a>
         </span>
@@ -557,7 +598,7 @@ int main()&#123;
         
         <span class="tag">
             
-            <a href="/tags/daily/" style="color: #ffa2c4">
+            <a href="/tags/daily/" style="color: #00a596">
                 daily
             </a>
         </span>
@@ -598,106 +639,13 @@ int main()&#123;
         
         <span class="tag">
             
-            <a href="/tags/daily/" style="color: #ffa2c4">
+            <a href="/tags/daily/" style="color: #00bcd4">
                 daily
             </a>
         </span>
         
     </div>
     <a href="/2023/06/29/daily-2-17/" class="go-post">阅读全文</a>
-</div>
-
-<div class="post">
-    <a href="/2023/06/28/daily-2-16/">
-        <h2 class="post-title">daily 2</h2>
-    </a>
-    <div class="category-and-date">
-        
-        <span class="date">
-            <span class="icon">
-                <i class="fa-solid fa-calendar fa-fw"></i>
-            </span>
-            2023/6/28
-        </span>
-        
-        
-    </div>
-    <div class="description">
-        <div class="content" v-pre>
-            
-            <p>CF 940E</p>
-<pre><code class="lang-C++">int main()&#123;
-    int n,c;
-    cin&gt;&gt;n&gt;&gt;c;
-    vector&lt;int&gt;a(n+1);
-    ll sum=0;
-    for(int i=1;i&lt;=n;++i)&#123;
-        cin&gt;&gt;a[i];
-        sum+=a[i];
-    &#125;
-    vector&lt;int&gt;Q(n+5);
-    int l=1,r=0;
-    vector&lt;ll&gt;dp(n+1);
-    for(int i=1;i&lt;=n;++i)&#123;
-        while(l&lt;=r&amp;&amp;a[Q[r]]&gt;=a[i])&#123;
-            r--;
-        &#125;
-        Q[++r]=i;
-        while(l&lt;=r&amp;&amp;Q[l]&lt;=i-c)++l;
-        if(i&gt;=c)&#123;
-            dp[i]=max(dp[i-1],dp[i-c]+a[Q[l]]);
-        &#125;
-    &#125;
-    cout&lt;&lt;sum-dp[n]&lt;&lt;&#39;\n&#39;;
-&#125;
-</code></pre>
-<p>CF 946D</p>
-<pre><code class="lang-C++">int main()&#123;
-    int n,m,k;
-    cin&gt;&gt;n&gt;&gt;m&gt;&gt;k;
-    vector&lt;string&gt;days(n+1);
-    vector&lt;int&gt;cnt(n+1);
-    vector&lt;vector&lt;int&gt;&gt;dp(n+1,vector&lt;int&gt;(k+1,INF));
-    vector&lt;vector&lt;int&gt;&gt;skip(n+1,vector&lt;int&gt;(m+1,INF));
-    for(int i=1;i&lt;=n;++i)&#123;
-        cin&gt;&gt;days[i];
-        days[i]=&#39;)&#39;+days[i];
-        vector&lt;int&gt;pos(m+1);
-        for(int j=1;j&lt;days[i].size();++j)&#123;
-            if(days[i][j]==&#39;1&#39;)&#123;
-                pos[++cnt[i]]=j;
-            &#125;
-        &#125;
-        skip[i][cnt[i]]=0;
-        for(int len=1;len&lt;=cnt[i];++len)&#123;
-            for(int l=1;l+len-1&lt;=cnt[i];++l)&#123;
-                int r=l+len-1;
-                skip[i][cnt[i]-len]=min(skip[i][cnt[i]-len],pos[r]-pos[l]+1);//the minimal time you need to stay at schoool if you skip cnt[i]-len class
-            &#125;
-        &#125;
-    &#125;
-    for(int i=0;i&lt;=k;++i)&#123;
-        dp[0][i]=0;
-    &#125;
-    for(int i=1;i&lt;=n;++i)&#123;
-        for(int j=0;j&lt;=k;++j)&#123;
-            for(int sk=0;sk&lt;=min(j,cnt[i]);++sk)&#123;
-                dp[i][j]=min(dp[i][j],dp[i-1][j-sk]+skip[i][sk]);
-            &#125;
-        &#125;
-    &#125;
-    cout&lt;&lt;dp[n][k]&lt;&lt;&#39;\n&#39;;
-&#125;
-</code></pre>
-
-            
-        </div>
-    </div>
-    <div class="post-tags">
-        
-        
-    </div>
-    <a href="/2023/06/28/daily-2-16/" class="go-post">阅读全文</a>
 </div>
 
 
@@ -734,7 +682,7 @@ int main()&#123;
             
             
             <span class="page-omit">...</span>
-            <a class="page-num" href="/page/25">25</a>
+            <a class="page-num" href="/page/26">26</a>
             
         </span>
         
