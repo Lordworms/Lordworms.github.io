@@ -154,6 +154,64 @@
             
 
 <div class="post">
+    <a href="/2023/10/06/daily-1-2/">
+        <h2 class="post-title">daily 1</h2>
+    </a>
+    <div class="category-and-date">
+        
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/10/6
+        </span>
+        
+        
+    </div>
+    <div class="description">
+        <div class="content" v-pre>
+            
+            
+            
+        </div>
+    </div>
+    <div class="post-tags">
+        
+        
+    </div>
+    <a href="/2023/10/06/daily-1-2/" class="go-post">阅读全文</a>
+</div>
+
+<div class="post">
+    <a href="/2023/10/05/daily-2-1/">
+        <h2 class="post-title">daily 2</h2>
+    </a>
+    <div class="category-and-date">
+        
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/10/5
+        </span>
+        
+        
+    </div>
+    <div class="description">
+        <div class="content" v-pre>
+            
+            
+            
+        </div>
+    </div>
+    <div class="post-tags">
+        
+        
+    </div>
+    <a href="/2023/10/05/daily-2-1/" class="go-post">阅读全文</a>
+</div>
+
+<div class="post">
     <a href="/2023/10/04/daily-1-1/">
         <h2 class="post-title">daily 1</h2>
     </a>
@@ -244,7 +302,7 @@
         
         <span class="tag">
             
-            <a href="/tags/daily/" style="color: #00a596">
+            <a href="/tags/daily/" style="color: #03a9f4">
                 daily
             </a>
         </span>
@@ -502,123 +560,6 @@ void solve() &#123;
     <a href="/2023/09/19/daily-3/" class="go-post">阅读全文</a>
 </div>
 
-<div class="post">
-    <a href="/2023/09/18/daily-2-7/">
-        <h2 class="post-title">daily 2</h2>
-    </a>
-    <div class="category-and-date">
-        
-        <span class="date">
-            <span class="icon">
-                <i class="fa-solid fa-calendar fa-fw"></i>
-            </span>
-            2023/9/18
-        </span>
-        
-        
-    </div>
-    <div class="description">
-        <div class="content" v-pre>
-            
-            <p>CF 300B</p>
-<pre><code class="lang-C++">void solve() &#123;
-  int n, m;
-  cin &gt;&gt; n &gt;&gt; m;
-  DSU dsu(n + 1);
-  for (int i = 1; i &lt;= m; ++i) &#123;
-    int u, v;
-    cin &gt;&gt; u &gt;&gt; v;
-    dsu.merge(u, v);
-  &#125;
-  vector&lt;vector&lt;int&gt;&gt; group(n + 1);
-  for (int i = 1; i &lt;= n; ++i) &#123;
-    group[dsu.f[i]].push_back(i);
-  &#125;
-  vector&lt;vector&lt;int&gt;&gt; ans;
-  vector&lt;vector&lt;int&gt;&gt; one_set, two_set;
-  for (int i = 1; i &lt;= n; ++i) &#123;
-    if (group[i].size() == 3) &#123;
-      ans.push_back(group[i]);
-    &#125; else if(group[i].size() == 2) &#123;
-      two_set.push_back(group[i]);
-    &#125; else if (group[i].size() == 1) &#123;
-      one_set.push_back(group[i]);
-    &#125; else if (group[i].size() &gt; 3) &#123;
-      cout &lt;&lt; -1 &lt;&lt; &#39;\n&#39;;
-      return;
-    &#125;
-  &#125;
-  while (!one_set.empty() &amp;&amp; !two_set.empty()) &#123;
-    one_set.front().insert(one_set.front().begin(), two_set.front().begin(), two_set.front().end());
-    two_set.erase(two_set.begin());
-    ans.push_back(one_set.front()); // front gives a reference
-    one_set.erase(one_set.begin());
-  &#125;
-  if (two_set.size() &gt; 0) &#123;
-    cout &lt;&lt; -1 &lt;&lt; &#39;\n&#39;;
-    return;
-  &#125;
-  while (one_set.size() &gt;= 3) &#123;
-    int a, b, c;
-    auto f = one_set.begin();
-    a = f-&gt;front(), f = one_set.erase(f);
-    b = f-&gt;front(), f = one_set.erase(f);
-    c = f-&gt;front(), f = one_set.erase(f);
-    ans.push_back(&#123;a, b, c&#125;);
-  &#125;
-  if (one_set.size()) &#123;
-    cout &lt;&lt; -1 &lt;&lt; &#39;\n&#39;;
-    return;
-  &#125;
-  for (auto &amp;v : ans) &#123;
-    for (auto &amp;e : v) &#123;
-      cout &lt;&lt; e &lt;&lt; &#39; &#39;;
-    &#125;
-    cout &lt;&lt; &#39;\n&#39;;
-  &#125;
-  return ;
-&#125;
-</code></pre>
-
-            
-        </div>
-    </div>
-    <div class="post-tags">
-        
-        
-    </div>
-    <a href="/2023/09/18/daily-2-7/" class="go-post">阅读全文</a>
-</div>
-
-<div class="post">
-    <a href="/2023/09/17/daily-5/">
-        <h2 class="post-title">daily 5</h2>
-    </a>
-    <div class="category-and-date">
-        
-        <span class="date">
-            <span class="icon">
-                <i class="fa-solid fa-calendar fa-fw"></i>
-            </span>
-            2023/9/17
-        </span>
-        
-        
-    </div>
-    <div class="description">
-        <div class="content" v-pre>
-            
-            
-            
-        </div>
-    </div>
-    <div class="post-tags">
-        
-        
-    </div>
-    <a href="/2023/09/17/daily-5/" class="go-post">阅读全文</a>
-</div>
-
 
             <div class="page-current">
     <div class="prev">
@@ -653,7 +594,7 @@ void solve() &#123;
             
             
             <span class="page-omit">...</span>
-            <a class="page-num" href="/page/26">26</a>
+            <a class="page-num" href="/page/27">27</a>
             
         </span>
         
