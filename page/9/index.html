@@ -154,6 +154,187 @@
             
 
 <div class="post">
+    <a href="/2023/09/08/daily-1-2/">
+        <h2 class="post-title">daily 1</h2>
+    </a>
+    <div class="category-and-date">
+        
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/9/8
+        </span>
+        
+        
+    </div>
+    <div class="description">
+        <div class="content" v-pre>
+            
+            <p>daily codeforces</p>
+
+            
+        </div>
+    </div>
+    <div class="post-tags">
+        
+        <span class="icon">
+            <i class="fa-solid fa-tags fa-fw"></i>
+        </span>
+        
+        
+        <span class="tag">
+            
+            <a href="/tags/daily/" style="color: #ffa2c4">
+                daily
+            </a>
+        </span>
+        
+    </div>
+    <a href="/2023/09/08/daily-1-2/" class="go-post">阅读全文</a>
+</div>
+
+<div class="post">
+    <a href="/2023/09/07/daily-2-2/">
+        <h2 class="post-title">daily 2</h2>
+    </a>
+    <div class="category-and-date">
+        
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/9/7
+        </span>
+        
+        
+    </div>
+    <div class="description">
+        <div class="content" v-pre>
+            
+            <p>daily codeforces</p>
+
+            
+        </div>
+    </div>
+    <div class="post-tags">
+        
+        <span class="icon">
+            <i class="fa-solid fa-tags fa-fw"></i>
+        </span>
+        
+        
+        <span class="tag">
+            
+            <a href="/tags/daily/" style="color: #00bcd4">
+                daily
+            </a>
+        </span>
+        
+    </div>
+    <a href="/2023/09/07/daily-2-2/" class="go-post">阅读全文</a>
+</div>
+
+<div class="post">
+    <a href="/2023/09/06/daily-2-1/">
+        <h2 class="post-title">daily 2</h2>
+    </a>
+    <div class="category-and-date">
+        
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/9/6
+        </span>
+        
+        
+    </div>
+    <div class="description">
+        <div class="content" v-pre>
+            
+            <p>CF 1696E</p>
+<pre><code class="lang-C++">ll quick_pow(ll x,ll exp,int p)
+&#123;
+      ll ans=1;
+      while(exp)
+      &#123;
+        if(exp&amp;1)ans=ans*x%p;
+        exp&gt;&gt;=1;
+        x=x*x%p;
+      &#125;
+      return ans;
+&#125;
+ll inv[MAXN],fac[MAXN];
+void init(int n,int p)
+&#123;
+  memset(inv,0,sizeof(inv));
+  memset(fac,0,sizeof(fac));
+  inv[0]=fac[0]=1;
+  for(int i=1;i&lt;=n;++i)
+  &#123;
+    fac[i]=fac[i-1]*i%p;
+  &#125;
+  inv[n]=quick_pow(fac[n],p-2,p)%p;
+  for(int i=n;i&gt;=1;--i)inv[i-1]=inv[i]*i%p;
+&#125;
+ll C(ll n,ll m,ll p)
+&#123;
+  if(m&gt;n||m&lt;0)return 0;
+  return fac[n]*inv[n-m]%p*inv[m]%p;
+&#125;
+void solve() &#123;
+  int n;
+  cin &gt;&gt; n;
+  ++n;
+  vector&lt;ll&gt; a(n + 1);
+  for (int i = 1 ; i &lt;= n; ++i) &#123;
+    cin &gt;&gt; a[i];
+  &#125; 
+  ll ans = 0;
+  for (int i = 1; i &lt;= n; ++i) &#123;
+    ans = (ans + C(a[i] + i - 1, a[i] - 1, MOD)) %MOD;
+  &#125;
+  cout &lt;&lt; ans &lt;&lt; &#39;\n&#39;;
+  return ;
+&#125;
+</code></pre>
+<p>CF 1699C</p>
+<pre><code class="lang-C++">void solve() &#123;
+  int n;
+  cin &gt;&gt; n;
+  vector&lt;int&gt; a(n), pos(n);
+  for (int i = 0; i &lt;= n - 1; ++i) &#123;
+    cin &gt;&gt; a[i];
+    pos[a[i]] = i;
+  &#125;
+  int l = pos[0], r = pos[0];
+  ll ans = 1;
+  for (int i = 1; i &lt;= n - 1; ++i) &#123;
+    if (pos[i] &lt; l) &#123;
+      l = pos[i];
+    &#125; else if (pos[i] &gt; r) &#123;
+      r = pos[i];
+    &#125; else &#123;
+      ans = ans * (r - l + 1 - i) % MOD;
+    &#125;
+  &#125;
+  cout &lt;&lt; ans &lt;&lt; &#39;\n&#39;;
+  return ;
+&#125;
+</code></pre>
+
+            
+        </div>
+    </div>
+    <div class="post-tags">
+        
+        
+    </div>
+    <a href="/2023/09/06/daily-2-1/" class="go-post">阅读全文</a>
+</div>
+
+<div class="post">
     <a href="/2023/09/05/daily-2/">
         <h2 class="post-title">daily 1</h2>
     </a>
@@ -304,7 +485,7 @@ int main()&#123;
         
         <span class="tag">
             
-            <a href="/tags/daily/" style="color: #ff7d73">
+            <a href="/tags/daily/" style="color: #00bcd4">
                 daily
             </a>
         </span>
@@ -345,7 +526,7 @@ int main()&#123;
         
         <span class="tag">
             
-            <a href="/tags/daily/" style="color: #00a596">
+            <a href="/tags/daily/" style="color: #ffa2c4">
                 daily
             </a>
         </span>
@@ -508,182 +689,6 @@ void solve() &#123;
     <a href="/2023/08/29/daily-2-17/" class="go-post">阅读全文</a>
 </div>
 
-<div class="post">
-    <a href="/2023/08/28/daily-1-9/">
-        <h2 class="post-title">daily 1</h2>
-    </a>
-    <div class="category-and-date">
-        
-        <span class="date">
-            <span class="icon">
-                <i class="fa-solid fa-calendar fa-fw"></i>
-            </span>
-            2023/8/28
-        </span>
-        
-        
-    </div>
-    <div class="description">
-        <div class="content" v-pre>
-            
-            <p>CF 900C</p>
-<pre><code class="lang-C++">struct fenwick &#123;
-  ll PartialSum[MAXN];
-  fenwick() &#123;
-    for (int i = 0; i &lt; MAXN; i++) PartialSum[i] = 0;
-  &#125;
-  inline void add(ll index, ll increase) &#123;
-    while (index &lt; MAXN) &#123;
-      PartialSum[index] += increase;
-      index += index &amp; -index;
-    &#125;
-  &#125;
-  inline ll get(int index) &#123;
-    ll sum = 0;
-    while (index) &#123;
-      sum += PartialSum[index];
-      index -= index &amp; -index;
-    &#125;
-    return sum;
-  &#125;
-&#125;;
-void solve() &#123;
-  int n;
-  cin &gt;&gt; n;
-  vector&lt;int&gt; p(n + 1);
-  fenwick tr;
-  for (int i = 1; i &lt;= n; ++i) &#123;
-    cin &gt;&gt; p[i];
-  &#125;
-  ll ans = -1, ans_i = 1;
-  int cur_max = -1;
-  vector&lt;int&gt; cnt(n + 1);
-  for (int i = 1; i &lt;= n; ++i) &#123;
-    cur_max = max(cur_max, p[i]);
-    int cur_num = tr.get(p[i]);
-    if (cur_num == i - 2) &#123;
-      cnt[cur_max]++;
-    &#125; else if (cur_num == i - 1)&#123;
-      cnt[cur_max]--;
-    &#125;
-    tr.add(p[i], 1);
-  &#125;
-  for (int i = 1; i &lt;= n; ++i) &#123;
-    if (cnt[i] &gt; ans) &#123;
-      ans = cnt[i];
-      ans_i = i;
-    &#125;
-  &#125;
-  cout &lt;&lt; ans_i &lt;&lt; &#39;\n&#39;;
-  return;
-&#125;
-</code></pre>
-
-            
-        </div>
-    </div>
-    <div class="post-tags">
-        
-        
-    </div>
-    <a href="/2023/08/28/daily-1-9/" class="go-post">阅读全文</a>
-</div>
-
-<div class="post">
-    <a href="/2023/08/27/daily-1-8/">
-        <h2 class="post-title">daily 1</h2>
-    </a>
-    <div class="category-and-date">
-        
-        <span class="date">
-            <span class="icon">
-                <i class="fa-solid fa-calendar fa-fw"></i>
-            </span>
-            2023/8/27
-        </span>
-        
-        
-    </div>
-    <div class="description">
-        <div class="content" v-pre>
-            
-            <p>CF 49A</p>
-<pre><code class="lang-C++">#include&lt;bits/stdc++.h&gt;
-using namespace std;
-int main()
-&#123;
-    char ch;
-    bool flag=false;                
-    while((ch=getchar())!=EOF)
-    &#123;
-        if(ch==&#39;A&#39;||ch==&#39;a&#39;||ch==&#39;E&#39;||ch==&#39;e&#39;||ch==&#39;I&#39;||ch==&#39;i&#39;||ch==&#39;O&#39;||ch==&#39;o&#39;||ch==&#39;U&#39;||ch==&#39;u&#39;||ch==&#39;V&#39;||ch==&#39;v&#39;||ch==&#39;Y&#39;||ch==&#39;y&#39;)
-            flag=true;
-        else if((ch&gt;=&#39;A&#39;&amp;&amp;ch&lt;=&#39;Z&#39;)||(ch&gt;=&#39;a&#39;&amp;&amp;ch&lt;=&#39;z&#39;))
-            flag=false;
-    &#125;
-    if(flag)
-        cout&lt;&lt;&quot;YES&quot;;
-    else
-        cout&lt;&lt;&quot;NO&quot;;
-    return 0;
-&#125;
-</code></pre>
-
-            
-        </div>
-    </div>
-    <div class="post-tags">
-        
-        
-    </div>
-    <a href="/2023/08/27/daily-1-8/" class="go-post">阅读全文</a>
-</div>
-
-<div class="post">
-    <a href="/2023/08/26/daily-1-7/">
-        <h2 class="post-title">daily 1</h2>
-    </a>
-    <div class="category-and-date">
-        
-        <span class="date">
-            <span class="icon">
-                <i class="fa-solid fa-calendar fa-fw"></i>
-            </span>
-            2023/8/26
-        </span>
-        
-        
-    </div>
-    <div class="description">
-        <div class="content" v-pre>
-            
-            <p>CF 46A</p>
-<pre><code class="lang-C++">#include&lt;iostream&gt;
-using namespace std;
-int main()&#123;
-    int n,I=1,a[100];
-    cin&gt;&gt;n;
-    for(int i=1;i&lt;=n-1;i++)&#123;
-        I=I+i;
-        if(I&gt;n)
-            I=I-n;
-        a[i]=I;
-    &#125;
-    for(int i=1;i&lt;=n-1;i++)
-        cout&lt;&lt;a[i]&lt;&lt;&#39; &#39;;
-&#125;
-</code></pre>
-
-            
-        </div>
-    </div>
-    <div class="post-tags">
-        
-        
-    </div>
-    <a href="/2023/08/26/daily-1-7/" class="go-post">阅读全文</a>
-</div>
-
 
             <div class="page-current">
     <div class="prev">
@@ -718,7 +723,7 @@ int main()&#123;
             
             
             <span class="page-omit">...</span>
-            <a class="page-num" href="/page/28">28</a>
+            <a class="page-num" href="/page/29">29</a>
             
         </span>
         
