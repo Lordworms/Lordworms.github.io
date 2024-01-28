@@ -1,0 +1,336 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>datafusion | Waiting for the dawn</title>
+        <meta name="author" content="Yanxin Xiang">
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+        <link rel="icon" href="https://i.ibb.co/1T1D1D9/QQ20230529-1.jpg">
+        <script src="https://cdn.staticfile.org/vue/3.2.45/vue.global.prod.min.js"></script>
+        <script src="https://cdn.staticfile.org/highlight.js/11.7.0/highlight.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/11.7.0/styles/github.min.css">
+        <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/6.2.1/css/all.min.css">
+        
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+        
+        
+        <script src="https://cdn.staticfile.org/KaTeX/0.16.4/katex.min.js"></script>
+        <script src="https://cdn.staticfile.org/KaTeX/0.16.4/contrib/auto-render.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.staticfile.org/KaTeX/0.16.4/katex.min.css">
+        
+        
+        <link rel="stylesheet" href="/css/fonts.min.css">
+        <link rel="stylesheet" href="/css/particlex.css">
+    <meta name="generator" content="Hexo 6.3.0"></head>
+    <body>
+        <div id="loading" style="height: 100vh; width: 100vw; left: 0; top: 0; position: fixed; display: flex; z-index: 2147483647; background: #fff; transition: opacity 0.3s ease-out; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; pointer-events: none">
+    <div style="width: 50vmin; height: 50vmin; margin: auto; padding: 50px; border-radius: 50%; display: flex; border: solid 10px #a3ddfb">
+        <div style="margin: auto; text-align: center">
+            <h2>LOADING</h2>
+            <p>加载过慢请开启缓存，浏览器默认开启</p>
+            <img src="/images/loading.gif" style="height: 50px; border-radius: 0">
+        </div>
+    </div>
+</div>
+
+        <div id="layout">
+            <transition name="into">
+            <div id="main" v-show="showpage" style="display: -not-none">
+                <nav id="menu">
+    <div class="desktop-menu">
+        <a class="title" href="/">
+            <span>WAITING FOR THE DAWN</span>
+        </a>
+        
+        <a href="/">
+            <i class="fa-solid fa-house fa-fw"></i>
+            <span>&ensp;Home</span>
+        </a>
+        
+        <a href="/about">
+            <i class="fa-solid fa-id-card fa-fw"></i>
+            <span>&ensp;About</span>
+        </a>
+        
+        <a href="/archives">
+            <i class="fa-solid fa-box-archive fa-fw"></i>
+            <span>&ensp;Archives</span>
+        </a>
+        
+        <a href="/categories">
+            <i class="fa-solid fa-bookmark fa-fw"></i>
+            <span>&ensp;Categories</span>
+        </a>
+        
+        <a href="/tags">
+            <i class="fa-solid fa-tags fa-fw"></i>
+            <span>&ensp;Tags</span>
+        </a>
+        
+    </div>
+    <div :class="&quot;phone-menu &quot; + menushow" id="phone-menu">
+        <div class="curtain" @click="menushow = !menushow" v-show="menushow"></div>
+        <div class="title" @click="menushow = !menushow">
+            <i class="fa-solid fa-bars fa-fw"></i>
+            <span>&emsp;WAITING FOR THE DAWN</span>
+        </div>
+        <transition name="slide">
+        <div class="items" v-show="menushow">
+            
+            <a href="/">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-house fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Home</div>
+                </div>
+            </a>
+            
+            <a href="/about">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-id-card fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">About</div>
+                </div>
+            </a>
+            
+            <a href="/archives">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-box-archive fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Archives</div>
+                </div>
+            </a>
+            
+            <a href="/categories">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-bookmark fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Categories</div>
+                </div>
+            </a>
+            
+            <a href="/tags">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-tags fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">Tags</div>
+                </div>
+            </a>
+            
+        </div>
+        </transition>
+    </div>
+</nav>
+
+                <div class="article">
+    <div>
+        <h1>datafusion </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2024/1/20
+        </span>
+        
+        
+    </div>
+    
+    <div class="content" v-pre>
+        <p>structure of datafusion</p>
+<p>0.config<br>datafusion的所有config都写在一个macro!里,这个marco会生成对应的变量</p>
+<pre><code>macro_rules! config_namespace &#123;
+    (
+     $(#[doc = $struct_d:tt])*
+     $vis:vis struct $struct_name:ident &#123;
+        $(
+        $(#[doc = $d:tt])*
+        $field_vis:vis $field_name:ident : $field_type:ty, default = $default:expr
+        )*$(,)*
+    &#125;
+    ) =&gt; &#123;
+
+        $(#[doc = $struct_d])*
+        #[derive(Debug, Clone)]
+        #[non_exhaustive]
+        $vis struct $struct_name&#123;
+            $(
+            $(#[doc = $d])*
+            $field_vis $field_name : $field_type,
+            )*
+        &#125;
+
+        impl ConfigField for $struct_name &#123;
+            fn set(&amp;mut self, key: &amp;str, value: &amp;str) -&gt; Result&lt;()&gt; &#123;
+                let (key, rem) = key.split_once(&#39;.&#39;).unwrap_or((key, &quot;&quot;));
+                match key &#123;
+                    $(
+                       stringify!($field_name) =&gt; self.$field_name.set(rem, value),
+                    )*
+                    _ =&gt; _internal_err!(
+                        &quot;Config value \&quot;&#123;&#125;\&quot; not found on &#123;&#125;&quot;, key, stringify!($struct_name)
+                    )
+                &#125;
+            &#125;
+
+            fn visit&lt;V: Visit&gt;(&amp;self, v: &amp;mut V, key_prefix: &amp;str, _description: &amp;&#39;static str) &#123;
+                $(
+                let key = format!(concat!(&quot;&#123;&#125;.&quot;, stringify!($field_name)), key_prefix);
+                let desc = concat!($($d),*).trim();
+                self.$field_name.visit(v, key.as_str(), desc);
+                )*
+            &#125;
+        &#125;
+
+        impl Default for $struct_name &#123;
+            fn default() -&gt; Self &#123;
+                Self &#123;
+                    $($field_name: $default),*
+                &#125;
+            &#125;
+        &#125;
+    &#125;
+&#125;
+</code></pre><p>1.SessionContext<br>使用SessionConfig来初始化,一步一步地来初始化catalog_list、SessionState(之后会继续分析，目前未知)</p>
+<pre><code class="lang-Rust">pub struct SessionContext &#123;
+    /// UUID for the session
+    session_id: String,
+    /// Session start time
+    session_start_time: DateTime&lt;Utc&gt;,
+    /// Shared session state for the session
+    state: Arc&lt;RwLock&lt;SessionState&gt;&gt;,
+&#125;
+</code></pre>
+<p>类似mysql 的con* 负责一个sesson的链接和对应的用户变量</p>
+<p>options涵盖了所有的对应config（physical plan/ logical plan etc）<br>extensions 是个Hashmap : 目前不知道对应什么</p>
+<pre><code class="lang-Rust">pub struct SessionConfig &#123;
+    /// Configuration options
+    options: ConfigOptions,
+    /// Opaque extensions.
+    extensions: AnyMap,
+&#125;
+</code></pre>
+<p>没太多好分析的，注视里基本上都有了，看一看，这玩意儿就喝THD一样，要的时候往里面塞往里面拿就好<br>SessionStates</p>
+<pre><code>pub struct SessionState &#123;
+    /// A unique UUID that identifies the session
+    session_id: String,
+    /// Responsible for analyzing and rewrite a logical plan before optimization
+    analyzer: Analyzer,
+    /// Responsible for optimizing a logical plan
+    optimizer: Optimizer,
+    /// Responsible for optimizing a physical execution plan
+    physical_optimizers: PhysicalOptimizer,
+    /// Responsible for planning `LogicalPlan`s, and `ExecutionPlan`
+    query_planner: Arc&lt;dyn QueryPlanner + Send + Sync&gt;,
+    /// Collection of catalogs containing schemas and ultimately TableProviders
+    catalog_list: Arc&lt;dyn CatalogList&gt;,
+    /// Table Functions
+    table_functions: HashMap&lt;String, Arc&lt;TableFunction&gt;&gt;,
+    /// Scalar functions that are registered with the context
+    scalar_functions: HashMap&lt;String, Arc&lt;ScalarUDF&gt;&gt;,
+    /// Aggregate functions registered in the context
+    aggregate_functions: HashMap&lt;String, Arc&lt;AggregateUDF&gt;&gt;,
+    /// Window functions registered in the context
+    window_functions: HashMap&lt;String, Arc&lt;WindowUDF&gt;&gt;,
+    /// Deserializer registry for extensions.
+    serializer_registry: Arc&lt;dyn SerializerRegistry&gt;,
+    /// Session configuration
+    config: SessionConfig,
+    /// Execution properties
+    execution_props: ExecutionProps,
+    /// TableProviderFactories for different file formats.
+    ///
+    /// Maps strings like &quot;JSON&quot; to an instance of  [`TableProviderFactory`]
+    ///
+    /// This is used to create [`TableProvider`] instances for the
+    /// `CREATE EXTERNAL TABLE ... STORED AS &lt;FORMAT&gt;` for custom file
+    /// formats other than those built into DataFusion
+    table_factories: HashMap&lt;String, Arc&lt;dyn TableProviderFactory&gt;&gt;,
+    /// Runtime environment
+    runtime_env: Arc&lt;RuntimeEnv&gt;,
+&#125;
+</code></pre><h2 id="OPTIMIZER"><a href="#OPTIMIZER" class="headerlink" title="OPTIMIZER"></a>OPTIMIZER</h2><p>有四种不同的Analyze类型</p>
+<pre><code class="lang-rust">InlineTableScan
+CountWildcardRule
+OperatorToFunction
+TypeCoercion
+MyAnalyzerRule
+</code></pre>
+<h2 id="LOGICAL-OPTIMIZER"><a href="#LOGICAL-OPTIMIZER" class="headerlink" title="LOGICAL OPTIMIZER"></a>LOGICAL OPTIMIZER</h2><p>这么总结下去太慢了，得找点对应的活才行</p>
+<h3 id><a href="#" class="headerlink" title=" "></a> </h3><p><img src="/.io//image.png" alt="Alt text"></p>
+<h3 id="TABLE-SCAN"><a href="#TABLE-SCAN" class="headerlink" title="TABLE SCAN"></a>TABLE SCAN</h3>
+    </div>
+    
+    
+    
+    
+    
+    <div id="comment">
+        <div id="waline-container"></div>
+    </div>
+    
+    
+    
+</div>
+
+                <footer id="footer">
+    <div class="footer-wrap">
+        <div>
+            &copy;
+            2022 - 2024 Waiting for the dawn
+            <span class="footer-icon">
+                <i class="fa-solid fa-font-awesome fa-fw"></i>
+            </span>
+            &commat;Yanxin Xiang
+        </div>
+        <div>Based on the <a target="_blank" rel="noopener" href="https://hexo.io">Hexo Engine</a> &amp; <a target="_blank" rel="noopener" href="https://github.com/argvchs/hexo-theme-particlex">ParticleX Theme</a></div>
+        
+    </div>
+</footer>
+
+            </div>
+            </transition>
+            <div id="showimg">
+                <img id="showimg-content">
+            </div>
+        </div>
+        <script src="/js/functions.js"></script>
+<script src="/js/particlex.js"></script>
+
+
+
+
+<script src="https://cdn.staticfile.org/waline/2.14.7/waline.min.js"></script>
+<link rel="stylesheet" href="https://cdn.staticfile.org/waline/2.14.7/waline.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/waline/2.14.7/waline-meta.min.css">
+<script>
+    Waline.init({
+        el: "#waline-container",
+        serverURL: "https://blog-comment-one-pi.vercel.app",
+        commentCount: true,
+        pageview: false,
+        emoji: ["https://unpkg.com/@waline/emojis@1.2.0/weibo","https://unpkg.com/@waline/emojis@1.2.0/alus","https://unpkg.com/@waline/emojis@1.2.0/bilibili","https://unpkg.com/@waline/emojis@1.2.0/qq","https://unpkg.com/@waline/emojis@1.2.0/tieba","https://unpkg.com/@waline/emojis@1.2.0/tw-emoji"],
+        meta: ["nick","mail","link"],
+        requiredMeta: ["nick"],
+        lang: "zh-CN",
+        wordLimit: 0,
+        pageSize: "10",
+        login: "enable",
+        locale: {},
+    });
+</script>
+
+
+
+
+    </body>
+</html>
