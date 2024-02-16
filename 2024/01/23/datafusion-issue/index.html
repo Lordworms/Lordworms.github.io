@@ -150,7 +150,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/datafusion/" style="color: #00a596">datafusion</a>
+                <a href="/tags/datafusion/" style="color: #ffa2c4">datafusion</a>
             </span>
             
         </span>
@@ -175,8 +175,11 @@
 <li>final register<br><img src="/.io//image-7.png" alt="Alt text"></li>
 <li>entry for doing optimization on logical plan<br><img src="/.io//image-8.png" alt="Alt text"></li>
 <li>analyze the plan<br><img src="/.io//image-9.png" alt="Alt text"></li>
-<li>optimize plan<br><img src="/.io//image-10.png" alt="Alt text"><br>11.<br><img src="/.io//image-11.png" alt="Alt text"><br>EXPLAIN<br>SELECT<br>CAST(c_customer_sk AS BIGINT) AS a,<br>CAST(c_current_cdemo_sk AS BIGINT)  AS b<br>FROM delta_encoding_required_column<br>ORDER BY a DESC;</li>
+<li>optimize plan<br><img src="/.io//image-10.png" alt="Alt text"><br>11.<br><img src="/.io//image-11.png" alt="Alt text"><br>EXPLAIN<br>SELECT<br>CAST(c_customer_sk AS BIGINT) AS a,<br>CAST(c_current_cdemo_sk AS BIGINT)  AS b<br>FROM delta_encoding_required_column<br>ORDER BY a DESC;<br>12.<br>where does it build oeq_class?</li>
 </ol>
+<p>EXPLAIN<br>SELECT<br>    c_customer_sk AS c_customer_sk_big,<br>    c_current_cdemo_sk<br>FROM delta_encoding_required_column<br>ORDER BY c_customer_sk_big DESC, c_current_cdemo_sk DESC;</p>
+<p>EXPLAIN<br>SELECT<br>    CAST(c_customer_sk AS BIGINT) AS c_customer_sk_big,<br>    c_current_cdemo_sk<br>FROM delta_encoding_required_column<br>ORDER BY c_customer_sk_big DESC, c_current_cdemo_sk DESC;</p>
+<p><img src="/.io//image-12.png" alt="Alt text"></p>
 
     </div>
     
