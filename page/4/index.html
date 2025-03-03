@@ -154,6 +154,197 @@
             
 
 <div class="post">
+    <a href="/2024/01/23/datafusion-issue/">
+        <h2 class="post-title">datafusion_issue</h2>
+    </a>
+    <div class="category-and-date">
+        
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2024/1/23
+        </span>
+        
+        
+    </div>
+    <div class="description">
+        <div class="content" v-pre>
+            
+            <p>a record of all the issues I have done in datafusion</p>
+
+            
+        </div>
+    </div>
+    <div class="post-tags">
+        
+        <span class="icon">
+            <i class="fa-solid fa-tags fa-fw"></i>
+        </span>
+        
+        
+        <span class="tag">
+            
+            <a href="/tags/datafusion/" style="color: #00bcd4">
+                datafusion
+            </a>
+        </span>
+        
+    </div>
+    <a href="/2024/01/23/datafusion-issue/" class="go-post">阅读全文</a>
+</div>
+
+<div class="post">
+    <a href="/2024/01/20/datafusion/">
+        <h2 class="post-title">datafusion</h2>
+    </a>
+    <div class="category-and-date">
+        
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2024/1/20
+        </span>
+        
+        
+    </div>
+    <div class="description">
+        <div class="content" v-pre>
+            
+            <p>structure of datafusion</p>
+<p>0.config<br>datafusion的所有config都写在一个macro!里,这个marco会生成对应的变量</p>
+<pre><code>macro_rules! config_namespace &#123;
+    (
+     $(#[doc = $struct_d:tt])*
+     $vis:vis struct $struct_name:ident &#123;
+        $(
+        $(#[doc = $d:tt])*
+        $field_vis:vis $field_name:ident : $field_type:ty, default = $default:expr
+        )*$(,)*
+    &#125;
+    ) =&gt; &#123;
+
+        $(#[doc = $struct_d])*
+        #[derive(Debug, Clone)]
+        #[non_exhaustive]
+        $vis struct $struct_name&#123;
+            $(
+            $(#[doc = $d])*
+            $field_vis $field_name : $field_type,
+            )*
+        &#125;
+
+        impl ConfigField for $struct_name &#123;
+            fn set(&amp;mut self, key: &amp;str, value: &amp;str) -&gt; Result&lt;()&gt; &#123;
+                let (key, rem) = key.split_once(&#39;.&#39;).unwrap_or((key, &quot;&quot;));
+                match key &#123;
+                    $(
+                       stringify!($field_name) =&gt; self.$field_name.set(rem, value),
+                    )*
+                    _ =&gt; _internal_err!(
+                        &quot;Config value \&quot;&#123;&#125;\&quot; not found on &#123;&#125;&quot;, key, stringify!($struct_name)
+                    )
+                &#125;
+            &#125;
+
+            fn visit&lt;V: Visit&gt;(&amp;self, v: &amp;mut V, key_prefix: &amp;str, _description: &amp;&#39;static str) &#123;
+                $(
+                let key = format!(concat!(&quot;&#123;&#125;.&quot;, stringify!($field_name)), key_prefix);
+                let desc = concat!($($d),*).trim();
+                self.$field_name.visit(v, key.as_str(), desc);
+                )*
+            &#125;
+        &#125;
+
+        impl Default for $struct_name &#123;
+            fn default() -&gt; Self &#123;
+                Self &#123;
+                    $($field_name: $default),*
+                &#125;
+            &#125;
+        &#125;
+    &#125;
+&#125;
+</code></pre><p>1.SessionContext<br>使用SessionConfig来初始化,一步一步地来初始化catalog_list、SessionState(之后会继续分析，目前未知)</p>
+<pre><code class="lang-Rust">pub struct SessionContext &#123;
+    /// UUID for the session
+    session_id: String,
+    /// Session start time
+    session_start_time: DateTime&lt;Utc&gt;,
+    /// Shared session state for the session
+    state: Arc&lt;RwLock&lt;SessionState&gt;&gt;,
+&#125;
+</code></pre>
+<p>类似mysql 的con* 负责一个sesson的链接和对应的用户变量</p>
+<p>options涵盖了所有的对应config（physical plan/ logical plan etc）<br>extensions 是个Hashmap : 目前不知道对应什么</p>
+<pre><code class="lang-Rust">pub struct SessionConfig &#123;
+    /// Configuration options
+    options: ConfigOptions,
+    /// Opaque extensions.
+    extensions: AnyMap,
+&#125;
+</code></pre>
+<p>没太多好分析的，注视里基本上都有了，看一看，这玩意儿就喝THD一样，要的时候往里面塞往里面拿就好<br>SessionStates</p>
+<pre><code>pub struct SessionState &#123;
+    /// A unique UUID that identifies the session
+    session_id: String,
+    /// Responsible for analyzing and rewrite a logical plan before optimization
+    analyzer: Analyzer,
+    /// Responsible for optimizing a logical plan
+    optimizer: Optimizer,
+    /// Responsible for optimizing a physical execution plan
+    physical_optimizers: PhysicalOptimizer,
+    /// Responsible for planning `LogicalPlan`s, and `ExecutionPlan`
+    query_planner: Arc&lt;dyn QueryPlanner + Send + Sync&gt;,
+    /// Collection of catalogs containing schemas and ultimately TableProviders
+    catalog_list: Arc&lt;dyn CatalogList&gt;,
+    /// Table Functions
+    table_functions: HashMap&lt;String, Arc&lt;TableFunction&gt;&gt;,
+    /// Scalar functions that are registered with the context
+    scalar_functions: HashMap&lt;String, Arc&lt;ScalarUDF&gt;&gt;,
+    /// Aggregate functions registered in the context
+    aggregate_functions: HashMap&lt;String, Arc&lt;AggregateUDF&gt;&gt;,
+    /// Window functions registered in the context
+    window_functions: HashMap&lt;String, Arc&lt;WindowUDF&gt;&gt;,
+    /// Deserializer registry for extensions.
+    serializer_registry: Arc&lt;dyn SerializerRegistry&gt;,
+    /// Session configuration
+    config: SessionConfig,
+    /// Execution properties
+    execution_props: ExecutionProps,
+    /// TableProviderFactories for different file formats.
+    ///
+    /// Maps strings like &quot;JSON&quot; to an instance of  [`TableProviderFactory`]
+    ///
+    /// This is used to create [`TableProvider`] instances for the
+    /// `CREATE EXTERNAL TABLE ... STORED AS &lt;FORMAT&gt;` for custom file
+    /// formats other than those built into DataFusion
+    table_factories: HashMap&lt;String, Arc&lt;dyn TableProviderFactory&gt;&gt;,
+    /// Runtime environment
+    runtime_env: Arc&lt;RuntimeEnv&gt;,
+&#125;
+</code></pre><h2 id="OPTIMIZER"><a href="#OPTIMIZER" class="headerlink" title="OPTIMIZER"></a>OPTIMIZER</h2><p>有四种不同的Analyze类型</p>
+<pre><code class="lang-rust">InlineTableScan
+CountWildcardRule
+OperatorToFunction
+TypeCoercion
+MyAnalyzerRule
+</code></pre>
+<h2 id="LOGICAL-OPTIMIZER"><a href="#LOGICAL-OPTIMIZER" class="headerlink" title="LOGICAL OPTIMIZER"></a>LOGICAL OPTIMIZER</h2><p>这么总结下去太慢了，得找点对应的活才行</p>
+<h3 id><a href="#" class="headerlink" title=" "></a> </h3><p><img src="/.io//image.png" alt="Alt text"></p>
+<h3 id="TABLE-SCAN"><a href="#TABLE-SCAN" class="headerlink" title="TABLE SCAN"></a>TABLE SCAN</h3>
+            
+        </div>
+    </div>
+    <div class="post-tags">
+        
+        
+    </div>
+    <a href="/2024/01/20/datafusion/" class="go-post">阅读全文</a>
+</div>
+
+<div class="post">
     <a href="/2024/01/19/datafusion-doc/">
         <h2 class="post-title">datafusion doc</h2>
     </a>
@@ -255,7 +446,7 @@
         
         <span class="tag">
             
-            <a href="/tags/mysql/" style="color: #03a9f4">
+            <a href="/tags/mysql/" style="color: #ffa2c4">
                 mysql
             </a>
         </span>
@@ -337,7 +528,7 @@
         
         <span class="tag">
             
-            <a href="/tags/life/" style="color: #00a596">
+            <a href="/tags/life/" style="color: #03a9f4">
                 life
             </a>
         </span>
@@ -379,7 +570,7 @@
         
         <span class="tag">
             
-            <a href="/tags/network/" style="color: #00bcd4">
+            <a href="/tags/network/" style="color: #00a596">
                 network
             </a>
         </span>
@@ -420,14 +611,14 @@
         
         <span class="tag">
             
-            <a href="/tags/Algorithm/" style="color: #ff7d73">
+            <a href="/tags/Algorithm/" style="color: #00a596">
                 Algorithm
             </a>
         </span>
         
         <span class="tag">
             
-            <a href="/tags/Game-thory/" style="color: #ffa2c4">
+            <a href="/tags/Game-thory/" style="color: #00bcd4">
                 Game thory
             </a>
         </span>
@@ -475,90 +666,13 @@
         
         <span class="tag">
             
-            <a href="/tags/influxDB/" style="color: #00a596">
+            <a href="/tags/influxDB/" style="color: #03a9f4">
                 influxDB
             </a>
         </span>
         
     </div>
     <a href="/2023/12/16/influxDB-structure/" class="go-post">阅读全文</a>
-</div>
-
-<div class="post">
-    <a href="/2023/12/14/a-proxy-setup/">
-        <h2 class="post-title">a proxy setup</h2>
-    </a>
-    <div class="category-and-date">
-        
-        <span class="date">
-            <span class="icon">
-                <i class="fa-solid fa-calendar fa-fw"></i>
-            </span>
-            2023/12/14
-        </span>
-        
-        
-    </div>
-    <div class="description">
-        <div class="content" v-pre>
-            
-            <p>record a try to setup proxy</p>
-
-            
-        </div>
-    </div>
-    <div class="post-tags">
-        
-        <span class="icon">
-            <i class="fa-solid fa-tags fa-fw"></i>
-        </span>
-        
-        
-        <span class="tag">
-            
-            <a href="/tags/proxy-setup/" style="color: #00a596">
-                proxy setup
-            </a>
-        </span>
-        
-        <span class="tag">
-            
-            <a href="/tags/firewall/" style="color: #00bcd4">
-                firewall
-            </a>
-        </span>
-        
-    </div>
-    <a href="/2023/12/14/a-proxy-setup/" class="go-post">阅读全文</a>
-</div>
-
-<div class="post">
-    <a href="/2023/12/05/daily-1/">
-        <h2 class="post-title">daily 1</h2>
-    </a>
-    <div class="category-and-date">
-        
-        <span class="date">
-            <span class="icon">
-                <i class="fa-solid fa-calendar fa-fw"></i>
-            </span>
-            2023/12/5
-        </span>
-        
-        
-    </div>
-    <div class="description">
-        <div class="content" v-pre>
-            
-            
-            
-        </div>
-    </div>
-    <div class="post-tags">
-        
-        
-    </div>
-    <a href="/2023/12/05/daily-1/" class="go-post">阅读全文</a>
 </div>
 
 
@@ -660,7 +774,7 @@
     <div class="footer-wrap">
         <div>
             &copy;
-            2022 - 2024 Waiting for the dawn
+            2022 - 2025 Waiting for the dawn
             <span class="footer-icon">
                 <i class="fa-solid fa-font-awesome fa-fw"></i>
             </span>
