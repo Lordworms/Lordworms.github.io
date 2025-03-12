@@ -154,6 +154,93 @@
             
 
 <div class="post">
+    <a href="/2023/08/25/daily-2-16/">
+        <h2 class="post-title">daily 2</h2>
+    </a>
+    <div class="category-and-date">
+        
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/8/25
+        </span>
+        
+        
+    </div>
+    <div class="description">
+        <div class="content" v-pre>
+            
+            <p>CF 1065C</p>
+<pre><code class="lang-C++">struct fenwick &#123;
+  ll PartialSum[MAXN];
+  fenwick() &#123;
+    for (int i = 0; i &lt; MAXN; i++) PartialSum[i] = 0;
+  &#125;
+  inline void add(ll index, ll increase) &#123;
+    while (index &lt; MAXN) &#123;
+      PartialSum[index] += increase;
+      index += index &amp; -index;
+    &#125;
+  &#125;
+  inline ll get(int index) &#123;
+    ll sum = 0;
+    while (index) &#123;
+      sum += PartialSum[index];
+      index -= index &amp; -index;
+    &#125;
+    return sum;
+  &#125;
+&#125;;
+void solve() &#123;
+  int n, k, ans = 0;
+  cin &gt;&gt; n &gt;&gt; k;
+  fenwick tr;
+  vector&lt;int&gt; h(n + 1);
+  int maxx = INT_MIN, minx = INT_MAX;
+  for (int i = 1; i &lt;= n; ++i) &#123;
+    cin &gt;&gt; h[i];
+    maxx = max(maxx, h[i]);
+    minx = min(minx, h[i]);
+    tr.add(1, 1);
+    tr.add(h[i] + 1, -1);
+  &#125; 
+  if (maxx == minx) &#123;
+    cout &lt;&lt; 0 &lt;&lt; &#39;\n&#39;;
+    return;
+  &#125;
+  ll sum = 0;
+  bool flag = true;
+  for (int i = maxx; i &gt;= minx; --i) &#123;
+    auto cur = tr.get(i); //how many shits is greater or equal than height i
+    if (cur + sum &gt; k) &#123;
+      ans++;
+      sum = cur;
+      flag = false;
+    &#125; else &#123;// other wise one shot to make them equal
+      sum += cur;
+      flag = true;
+    &#125;
+  &#125;
+  if (flag) &#123;
+    ++ans;
+  &#125;
+  cout &lt;&lt; ans &lt;&lt; &#39;\n&#39;;
+  return ;
+&#125;
+</code></pre>
+
+            
+        </div>
+    </div>
+    <div class="post-tags">
+        
+        
+    </div>
+    <a href="/2023/08/25/daily-2-16/" class="go-post">阅读全文</a>
+</div>
+
+<div class="post">
     <a href="/2023/08/24/daily-2-15/">
         <h2 class="post-title">daily 2</h2>
     </a>
@@ -185,7 +272,7 @@
         
         <span class="tag">
             
-            <a href="/tags/daily/" style="color: #03a9f4">
+            <a href="/tags/daily/" style="color: #ffa2c4">
                 daily
             </a>
         </span>
@@ -267,7 +354,7 @@
         
         <span class="tag">
             
-            <a href="/tags/daily/" style="color: #00a596">
+            <a href="/tags/daily/" style="color: #ff7d73">
                 daily
             </a>
         </span>
@@ -485,7 +572,7 @@ int main()&#123;
         
         <span class="tag">
             
-            <a href="/tags/daily/" style="color: #03a9f4">
+            <a href="/tags/daily/" style="color: #ffa2c4">
                 daily
             </a>
         </span>
@@ -525,35 +612,6 @@ int main()&#123;
         
     </div>
     <a href="/2023/08/16/daily-1-4/" class="go-post">阅读全文</a>
-</div>
-
-<div class="post">
-    <a href="/2023/08/15/daily-2-9/">
-        <h2 class="post-title">daily 2</h2>
-    </a>
-    <div class="category-and-date">
-        
-        <span class="date">
-            <span class="icon">
-                <i class="fa-solid fa-calendar fa-fw"></i>
-            </span>
-            2023/8/15
-        </span>
-        
-        
-    </div>
-    <div class="description">
-        <div class="content" v-pre>
-            
-            
-            
-        </div>
-    </div>
-    <div class="post-tags">
-        
-        
-    </div>
-    <a href="/2023/08/15/daily-2-9/" class="go-post">阅读全文</a>
 </div>
 
 
